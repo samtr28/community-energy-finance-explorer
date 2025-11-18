@@ -11,83 +11,109 @@ import anvil.js
 
 class projects_explorer(projects_explorerTemplate):
   def __init__(self, **properties):
-#===========SET FORM PROPERTIES AND DATA BINDINGS
+    # Set form properties and data bindings
     self.init_components(**properties)
-    self._hi_card = None  
-#============ MAKE MAP 
-    self.project_map.data=anvil.server.call('get_map_data')
-    #map appearance
+    self._hi_card = None
+    self._selected_idx = None
+
+    # Don't load data here - let the form_show or filter change event handle it
+    # This prevents initial loading before user interaction
+
+  def form_show(self, **event_args):
+    """This method is called when the form is shown on the page"""
+    self.layout.reset_links()
+    self.layout.projects_nav.role = 'selected'
+
+    # Configure map appearance
     self.project_map.layout.map = dict(center=dict(lat=57, lon=-97), zoom=2, style="carto-voyager")
     self.project_map.layout.template = "mykonos_light"
     self.project_map.layout.margin = dict(t=5, b=5, l=5, r=5)
-#============ MAKE PROJECT CARDS 
-    self.project_cards.items=anvil.server.call('get_project_card_data')
 
-#============ FILTER FUNCTION
+    # Load initial data when form is shown
+    self.apply_filters()
+
+  # ============ FILTER FUNCTIONS ============
+  def schedule_filter_update(self):
+    """Schedule a filter update with debouncing - waits 300ms after last change"""
+    self.filter_timer.interval = 1  # 300ms
+
   def apply_filters(self):
-    # read both current selections
-    provinces  = self.provinces_dd.selected
+    """Apply filters and update map + cards with ONE server call"""
+    # Read current filter selections
+    provinces = self.provinces_dd.selected
     proj_types = self.proj_types_dd.selected
     stages = self.stages_dd.selected
     indigenous_ownership = self.indig_owners_dd.selected
     project_scale = self.project_scale_dd.selected
-    
-    # pass only the filters that are set
+
+    # Build kwargs with only set filters
     kwargs = {}
-    if provinces:  kwargs["provinces"]  = provinces
-    if proj_types: kwargs["proj_types"] = proj_types
-    if stages: kwargs["stages"] = stages
-    if indigenous_ownership: kwargs["indigenous_ownership"] = indigenous_ownership
-    if project_scale: kwargs["project_scale"] = project_scale
-      
-    # update both pieces using the same combined filters
-    self.project_map.data = anvil.server.call("get_map_data", **kwargs)
-    self.project_cards.items = anvil.server.call("get_project_card_data", **kwargs)
+    if provinces:
+      kwargs["provinces"] = provinces
+    if proj_types:
+      kwargs["proj_types"] = proj_types
+    if stages:
+      kwargs["stages"] = stages
+    if indigenous_ownership:
+      kwargs["indigenous_ownership"] = indigenous_ownership
+    if project_scale:
+      kwargs["project_scale"] = project_scale
 
-#============ DROPDOWNS THAT CALL THE FILTER FUNCTION
-  def stages_dd_change(self, **event_args):
-    """This method is called when the selected values change"""
+    # SINGLE SERVER CALL - gets both map and cards at once
+    print("Fetching map and card data...")
+    all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
+    print("Data received, updating UI...")
+
+    # Update map
+    self.project_map.data = [all_data['map_data']]
+
+    # Update project cards
+    self.project_cards.items = all_data['project_cards']
+
+    print("Map and cards updated!")
+
+  def filter_timer_tick(self, **event_args):
+    """This method is called when the timer fires"""
+    self.filter_timer.interval = 0  # Stop the timer
     self.apply_filters()
-    pass
 
+  # ============ DROPDOWN CHANGE EVENTS ============
   def provinces_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    self.apply_filters()
-    pass
+    self.schedule_filter_update()
 
   def proj_types_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    self.apply_filters()
-    pass
+    self.schedule_filter_update()
+
+  def stages_dd_change(self, **event_args):
+    """This method is called when the selected values change"""
+    self.schedule_filter_update()
 
   def indig_owners_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    self.apply_filters()
-    pass
+    self.schedule_filter_update()
 
   def project_scale_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    self.apply_filters()
-    pass
+    self.schedule_filter_update()
 
-
-
-#============ CLICK EVENTS
+  # ============ MAP CLICK EVENTS ============
   def _select_index(self, idx: int):
     """Highlight point idx on the map and the matching card."""
-    # -- map: select just this point
+    # Map: select just this point
     fig = self.project_map.figure
     if fig and fig.data:
       fig.data[0].selectedpoints = [idx]
       self.project_map.figure = fig
 
-    # -- card: scroll + highlight
+    # Card: scroll + highlight
     rows = self.project_cards.get_components()
     if 0 <= idx < len(rows):
       row = rows[idx]
       row.scroll_into_view()
 
-      # clear previous highlight (efficient)
+      # Clear previous highlight
       if self._hi_card:
         self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
 
@@ -99,21 +125,22 @@ class projects_explorer(projects_explorerTemplate):
 
   def _unselect_all(self):
     """Clear selection from both map and cards."""
-    # -- map: clear selection
+    # Map: clear selection
     fig = self.project_map.figure
     if fig and fig.data:
       fig.data[0].selectedpoints = []
       self.project_map.figure = fig
 
-    # -- card: remove highlight
+    # Card: remove highlight
     if self._hi_card:
       self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
       self._hi_card = None
 
-    # -- clear tracking
+    # Clear tracking
     self._selected_idx = None
 
   def project_map_click(self, points, **event_args):
+    """Handle map click events"""
     if not points:
       # Clicked empty area - unselect
       self._unselect_all()
@@ -122,24 +149,12 @@ class projects_explorer(projects_explorerTemplate):
     idx = points[0]["point_number"]
 
     # Toggle: if clicking same point, unselect
-    if hasattr(self, '_selected_idx') and self._selected_idx == idx:
+    if self._selected_idx == idx:
       self._unselect_all()
     else:
       self._select_index(idx)
 
-  def form_show(self, **event_args):
-    """This method is called when the form is shown on the page"""
-    self.layout.reset_links()
-    self.layout.projects_nav.role = 'selected'
-    pass
-
+  # ============ OTHER EVENTS ============
   def load_more_button_click(self, **event_args):
     """This method is called when the component is clicked."""
     pass
-
-
-
-
-
-
-    

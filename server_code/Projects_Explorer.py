@@ -7,7 +7,6 @@ import anvil.server
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-import ast
 from collections.abc import Iterable
 from .Global_Server_Functions import add_formatted_list_columns, format_number_column, get_data
 from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors
@@ -55,19 +54,13 @@ DEFAULT_PALETTE = ['#7f7f7f', '#a0a0a0', '#c0c0c0', '#d9d9d9', '#efefef']
 OWNERSHIP_COLORS = gradient_palette[::-1]
 
 # ============= DATA LOADING =============
+# Load data ONCE at module level - cached in memory
 DATA = get_data(project_privacy=True)
 
 # ============= HELPER FUNCTIONS =============
 def build_ownership_bar(owners, ownership_colors):
   """Build bar traces for ownership data. Returns list of go.Bar traces."""
-  # Parse string representation if needed
-  if isinstance(owners, str):
-    try:
-      owners = ast.literal_eval(owners)
-    except Exception:
-      return []
-
-    # Normalize to list
+  # Normalize to list
   if owners is None:
     return []
   elif isinstance(owners, dict):
@@ -75,7 +68,7 @@ def build_ownership_bar(owners, ownership_colors):
   elif not isinstance(owners, (list, tuple)):
     return []
 
-    # Build bar traces
+  # Build bar traces
   bars = []
   for i, o in enumerate(owners):
     if not isinstance(o, dict):
@@ -88,7 +81,7 @@ def build_ownership_bar(owners, ownership_colors):
     except Exception:
       pct = 0.0
 
-      # Cycle through ownership colors
+    # Cycle through ownership colors
     color = ownership_colors[i % len(ownership_colors)]
 
     bars.append(
@@ -107,30 +100,20 @@ def build_ownership_bar(owners, ownership_colors):
 
 def build_capital_mix_traces(capital_mix, category_palettes):
   """Build bar traces for a single capital mix entry. Returns list of go.Bar traces."""
-
-  # Parse mix data
-  if isinstance(capital_mix, str):
-    try:
-      mix = ast.literal_eval(capital_mix)
-    except Exception:
-      return []
-  else:
-    mix = capital_mix
-
-    # Normalize to list
-  if mix is None:
+  # Normalize to list
+  if capital_mix is None:
     return []
-  elif isinstance(mix, dict):
-    mix = [mix]
-  elif not isinstance(mix, (list, tuple)):
+  elif isinstance(capital_mix, dict):
+    capital_mix = [capital_mix]
+  elif not isinstance(capital_mix, (list, tuple)):
     return []
 
-  mix_df = pd.DataFrame(mix)
+  mix_df = pd.DataFrame(capital_mix)
 
   if mix_df.empty:
     return []
 
-    # Data cleaning
+  # Data cleaning
   mix_df["name"] = mix_df["name"].astype(str).replace({"nan": "Unnamed"})
   mix_df["category"] = mix_df["category"].astype(str).fillna("Unknown")
   mix_df["percent"] = pd.to_numeric(mix_df["percent"], errors='coerce').fillna(0)
@@ -155,7 +138,6 @@ def build_capital_mix_traces(capital_mix, category_palettes):
     mix_df["display_percent"] = mix_df["percent"]
 
     # Calculate the unknown amount based on the proportion
-    # If we know the total amount, calculate the missing amount
     if total_amount > 0 and total_percent > 0:
       unknown_amount = (difference / total_percent) * total_amount
     else:
@@ -174,7 +156,7 @@ def build_capital_mix_traces(capital_mix, category_palettes):
   else:  # difference < -7.5 (over-accounted)
     mix_df["display_percent"] = mix_df["percent"]
 
-    # Build traces
+  # Build traces
   traces = []
   for cat, group in mix_df.groupby("category", sort=False):
     palette = category_palettes.get(cat, DEFAULT_PALETTE)
@@ -207,8 +189,12 @@ def build_capital_mix_traces(capital_mix, category_palettes):
   return traces
 
 
-def apply_filters(df, provinces=None, proj_types=None, stages=None, indigenous_ownership=None, project_scale=None):
-  """Apply filters to dataframe. Returns filtered copy."""
+def apply_filters(df, provinces=None, proj_types=None, stages=None, 
+                  indigenous_ownership=None, project_scale=None):
+  """
+  Apply filters to dataframe. Returns filtered copy.
+  Uses list filtering for now - will be updated to set filtering later.
+  """
   df = df.copy()
 
   if provinces:
@@ -229,28 +215,8 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None, indigenous_o
   return df
 
 
-# ============= PREPROCESS DATA =============
-# Add traces to DATA using lambda to pass colors/palettes
-DATA["ownership_traces"] = DATA["owners"].apply(
-  lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
-)
-DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
-  lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
-)
-
-
-# ============= CALLABLE FUNCTIONS =============
-@anvil.server.callable
-def get_map_data(provinces=None, proj_types=None, stages=None, indigenous_ownership=None, project_scale=None):
-  """Get filtered map data for visualization."""
-  cols = ["record_id", "project_name", "community", "latitude", "longitude", 
-          "province", "stage", "project_type", "indigenous_ownership","project_scale"]
-  df = DATA.loc[:, cols]
-
-  # Apply filters
-  df = apply_filters(df, provinces, proj_types, stages, indigenous_ownership, project_scale)
-
-  # Create map trace
+def get_map_data_internal(df):
+  """Internal function to create map trace from filtered data."""
   map_data = go.Scattermap(
     lat=df['latitude'], 
     lon=df['longitude'], 
@@ -261,23 +227,62 @@ def get_map_data(provinces=None, proj_types=None, stages=None, indigenous_owners
     selected=dict(marker=dict(color='#c63527')),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>"
   )
-
   return map_data
 
 
-@anvil.server.callable
-def get_project_card_data(provinces=None, proj_types=None, stages=None, indigenous_ownership=None, project_scale=None):
-  """Get filtered project card data."""
-  cols = ["record_id", "project_name","data_source", "stage", "project_type", "province", "total_cost", "project_scale",
-          "all_financing_mechanisms", "owners", "indigenous_ownership", "ownership_traces", 
-          "capital_mix_traces"]
-  df = DATA.loc[:, cols].copy()
-
+def get_project_card_data_internal(df):
+  """Internal function to prepare project card data from filtered dataframe."""
   # Format columns
   df = add_formatted_list_columns(df, ["project_type", "all_financing_mechanisms"])
   df = format_number_column(df, "total_cost", 0)
 
-  # Apply filters
-  df = apply_filters(df, provinces, proj_types, stages, indigenous_ownership, project_scale)
-
   return df.to_dict(orient="records")
+
+
+# ============= PREPROCESS DATA =============
+# Add traces to DATA using lambda to pass colors/palettes
+DATA["ownership_traces"] = DATA["owners"].apply(
+  lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
+)
+DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
+  lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
+)
+
+
+# ============= CALLABLE FUNCTION =============
+@anvil.server.callable
+def get_all_map_and_cards(provinces=None, proj_types=None, stages=None, 
+                          indigenous_ownership=None, project_scale=None):
+  """
+  Single server call that returns BOTH map data and project cards at once.
+  """
+  print("Loading map and card data...")
+
+  # Select columns needed for map
+  map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
+              "province", "stage", "project_type", "indigenous_ownership", "project_scale"]
+  df_map = DATA.loc[:, map_cols].copy()
+
+  # Select columns needed for cards
+  card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
+               "province", "total_cost", "project_scale", "all_financing_mechanisms", 
+               "owners", "indigenous_ownership", "ownership_traces", "capital_mix_traces"]
+  df_cards = DATA.loc[:, card_cols].copy()
+
+  # Apply filters to BOTH dataframes
+  df_map_filtered = apply_filters(df_map, provinces, proj_types, stages, 
+                                  indigenous_ownership, project_scale)
+  df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
+                                    indigenous_ownership, project_scale)
+
+  print("Generating map and card data...")
+
+  # Generate both outputs
+  results = {
+    'map_data': get_map_data_internal(df_map_filtered),
+    'project_cards': get_project_card_data_internal(df_cards_filtered)
+  }
+
+  print("Map and card data generated successfully!")
+
+  return results

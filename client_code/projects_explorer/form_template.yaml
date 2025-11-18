@@ -1,5 +1,10 @@
 components_by_slot:
   content_slot:
+  - event_bindings: {tick: filter_timer_tick}
+    layout_properties: {}
+    name: filter_timer
+    properties: {}
+    type: Timer
   - components:
     - components:
       - layout_properties: {}

@@ -119,7 +119,7 @@ components_by_slot:
               margin: ['', null, null, null]
             style: title
             text: Where do projects need help?
-            text_color: theme:On Secondary Container
+            text_color: ''
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: lollipop_chart
