@@ -25,8 +25,8 @@ dependencies:
 - dep_id: dep_ar2wlcmlppsllr
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.5.0}
-metadata: {description: Community Energy Dashboard}
-name: Clone of Community Energy Dashboard
+metadata: {description: Community Energy Dashboard, title: Community Energy Finance Explorer}
+name: Comunity Energy Finance Explorer
 native_deps:
   head_html: |-
     <link rel="preconnect" href="https://fonts.googleapis.com">
