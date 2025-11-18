@@ -1,0 +1,55 @@
+allow_embedding: false
+correct_dependency_ids: {dep_9kcxnwm3upyjd: 4UK6WHQ6UX7AKELK, dep_ar2wlcmlppsllr: C6ZZPAPN4YYF5NVJ, dep_l2jshl74w4hl: ZHR7M4WMRTC43K4Z}
+db_schema:
+  files:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      name: path
+      type: string
+    - admin_ui: {order: 1, width: 200}
+      name: file
+      type: media
+    - admin_ui: {order: 2, width: 200}
+      name: file_version
+      type: string
+    server: full
+    title: Files
+dependencies:
+- dep_id: dep_9kcxnwm3upyjd
+  resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}
+  version: {version_tag: v1.2.6}
+- dep_id: dep_l2jshl74w4hl
+  resolution_hints: {app_id: ZHR7M4WMRTC43K4Z, name: IFrame Components, package_name: IFrame}
+  version: {branch: master}
+- dep_id: dep_ar2wlcmlppsllr
+  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
+  version: {version_tag: v3.5.0}
+metadata: {description: Community Energy Dashboard}
+name: Clone of Community Energy Dashboard
+native_deps:
+  head_html: |-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+package_name: M3_App_3
+renamed: true
+runtime_options:
+  client_version: '3'
+  legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
+  server_spec: {base: python310-datascience}
+  server_version: python3-sandbox
+  version: 3
+services:
+- client_config: {}
+  server_config: {}
+  source: /runtime/services/tables.yml
+- client_config: {}
+  server_config: {}
+  source: /runtime/services/anvil/files.yml
+startup: {module: capital_explorer, type: form}
+startup_form: null

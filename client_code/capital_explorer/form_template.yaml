@@ -1,0 +1,328 @@
+components_by_slot:
+  content_slot:
+  - components:
+    - layout_properties: {width: null}
+      name: filter_heading
+      properties:
+        bold: true
+        scale: small
+        spacing:
+          margin: [null, 0.1%, null, null]
+        style: title
+        text: 'Filter by:'
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - event_bindings: {change: proj_types_dd_change}
+      layout_properties: {width: null}
+      name: proj_types_dd
+      properties:
+        background: ''
+        foreground: ''
+        items: [Biofuel/Biogas, Biomass, Building efficiency upgrades, Electro-mobility, Energy storage, Geothermal, Hydro, Hydrogen, Microgrid, Solar, Tidal/wave, Waste to energy, Wind]
+        placeholder: Project Type
+        width: 170px
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - event_bindings: {change: provinces_dd_change}
+      layout_properties: {expand: false, width: null}
+      name: provinces_dd
+      properties:
+        background: ''
+        foreground: ''
+        items: [Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon]
+        placeholder: Province/Territory
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - event_bindings: {change: stages_dd_change}
+      layout_properties: {expand: false, width: null}
+      name: stages_dd
+      properties:
+        align: left
+        background: ''
+        foreground: ''
+        items: [Construction, Operation]
+        multiple: false
+        placeholder: Project Stage
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - data_bindings: []
+      event_bindings: {change: indig_owners_dd_change}
+      layout_properties: {width: null}
+      name: indig_owners_dd
+      properties:
+        items: [Wholly Indigenous owned (100%), Majority Indigenous owned (51-99%), Half Indigenous owned (50%), Minority Indigenous owned (1-49%), No Indigenous ownership]
+        placeholder: Indigenous Ownership
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - data_bindings: []
+      event_bindings: {change: project_scale_dd_change}
+      layout_properties: {width: null}
+      name: project_scale_dd
+      properties:
+        items: [Micro (< $100K), Small ($100K-$1M), Medium ($1M-$5M), Large ($5M-$25M), Very Large ($25M-$100M), Mega (> $100M)]
+        placeholder: Project Scale
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    layout_properties: {full_width_row: true}
+    name: filter_panel
+    properties:
+      gap: tiny
+      spacing:
+        margin: [null, null, '0', null]
+    type: FlowPanel
+  - event_bindings: {tick: filter_timer_tick}
+    layout_properties: {}
+    name: filter_timer
+    properties: {}
+    type: Timer
+  - components:
+    - layout_properties: {width: null}
+      name: filter_heading_copy
+      properties:
+        bold: true
+        scale: small
+        spacing:
+          margin: [null, 0.1%, null, null]
+        style: title
+        text: 'Selected: '
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {expand: false, width: null}
+      name: filter_chips_panel
+      properties:
+        item_template: capital_explorer.FilterChip
+        margin: ['0', null, '0', null]
+        role: 'horizontal-repeater '
+      type: RepeatingPanel
+    layout_properties: {full_width_row: true}
+    name: flow_panel_1
+    properties: {}
+    type: FlowPanel
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'AZYXBE,FORDYM'}
+      name: heading_1
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: How is capital flowing into community energy?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - components:
+      - layout_properties: {slot: card-content-container-slot}
+        name: text_1
+        properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'JDUVTD,YDSMDU EYCXOE,GYLVEJ'}
+      name: card_content_container_2
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: heading_1_copy_2
+          properties:
+            scale: large
+            spacing:
+              margin: ['', null, null, null]
+            style: title
+            text: Where do projects need help?
+            text_color: theme:On Secondary Container
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - layout_properties: {slot: card-content-container-slot}
+          name: lollipop_chart
+          properties: {height: 30vh}
+          type: Plot
+        - layout_properties: {slot: card-content-container-slot}
+          name: button_1
+          properties:
+            align: center
+            background_color: theme:On Secondary Container
+            bold: true
+            font_size: 14
+            icon: mi:question_exchange
+            icon_color: theme:Tertiary Container
+            icon_size: 25
+            spacing:
+              padding: [null, '16', null, null]
+            text: How can I get help for my project?
+          type: form:dep_9kcxnwm3upyjd:_Components.Button
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_1
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'JDUVTD,YDSMDU LJTJDK,GEAOPC'}
+      name: card_1
+      properties: {background_color: 'theme:Secondary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,WPOENU'}
+      name: capital_flow_plot
+      properties:
+        height: 70vh
+        margin: ['8', null, '8', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'LFTYHJ,UVJNTD'}
+      name: heading_1_copy
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Which financing mechanisms are used the most?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GUCLJM,PWAGAM'}
+      name: bubble_plot
+      properties: {height: 65vh}
+      type: Plot
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: debt_heading
+          properties: {background_color: '', bold: true, font_family: '', icon: loa, scale: medium, style: title, text: 'Common debt structure:', text_color: 'theme:On Tertiary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - components:
+          - data_bindings: []
+            layout_properties: {slot: slot}
+            name: debt_interest
+            properties: {}
+            type: form:dep_9kcxnwm3upyjd:_Components.Text
+          - data_bindings: []
+            layout_properties: {slot: slot2}
+            name: debt_type
+            properties: {}
+            type: form:dep_9kcxnwm3upyjd:_Components.Text
+          - data_bindings: []
+            layout_properties: {slot: slot1}
+            name: debt_repayment
+            properties: {}
+            type: form:dep_9kcxnwm3upyjd:_Components.Text
+          - data_bindings: []
+            layout_properties: {slot: slot3}
+            name: debt_source
+            properties: {}
+            type: form:dep_9kcxnwm3upyjd:_Components.Text
+          layout_properties: {slot: card-content-container-slot}
+          name: debt_rt
+          properties:
+            content: |2-
+                 **Interest rate:** {slot}
+              **Repayment period:** {slot1}
+              **Type:** {slot2}
+              **Source:** {slot3}
+            font: ''
+            foreground: theme:On Tertiary Container
+            format: markdown
+            spacing:
+              padding: ['2', '6', '2', '6']
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: debt_card_content
+        properties:
+          margin: ['4', '8', '4', '8']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'GUCLJM,JGWTSW CORBEJ,VXJTBT'}
+      name: debt_card
+      properties:
+        appearance: elevated
+        background_color: theme:Tertiary Container
+        border: ''
+        spacing:
+          margin: ['8', '2', '8', '2']
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: grants_heading
+          properties: {background_color: '', bold: true, font_family: '', icon: loa, scale: medium, style: title, text: 'Frequently used grants:', text_color: 'theme:On Primary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - components: []
+          layout_properties: {slot: card-content-container-slot}
+          name: grants_rt
+          properties:
+            content: 'Manually go through data and add the grants here '
+            font: ''
+            foreground: theme:On Primary Container
+            format: markdown
+            spacing:
+              padding: ['2', '6', '2', '6']
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: grants_card_content
+        properties:
+          margin: ['4', '8', '4', '8']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'GUCLJM,JGWTSW WZRFOK,AGSNFL'}
+      name: grants_card
+      properties:
+        appearance: elevated
+        background_color: theme:Primary Container
+        border: ''
+        spacing:
+          margin: ['2', '2', '2', '2']
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'JJTAMT,EPXQPI'}
+      name: heading_2
+      properties: {font_family: serif, text: 'Another title here '}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'ENMWCZ,OFQLVY'}
+      name: stacked_plot
+      properties:
+        height: 30vh
+        margin: ['8', null, '8', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'ENMWCZ,WAMEZI'}
+      name: funding_time_plot
+      properties:
+        height: 30vh
+        margin: ['8', null, '8', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'MIKSGD,AMQXDT'}
+      name: heading_2_copy
+      properties: {font_family: serif, text: 'Another title here '}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'ZFLEWF,LXTUMR'}
+      name: box_plot
+      properties:
+        height: 45vh
+        margin: ['8', null, '8', null]
+      type: Plot
+    - components:
+      - layout_properties: {slot: card-content-container-slot}
+        name: text_1_copy_copy
+        properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {grid_position: 'ZFLEWF,UYECVV'}
+      name: card_content_container_4
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+    layout_properties: {}
+    name: column_panel_1
+    properties:
+      col_spacing: large
+      col_widths: '{"YDSMDU":20,"WPOENU":40,"OFQLVY":40,"WAMEZI":20,"LXTUMR":40,"UYECVV":20,"PWAGAM":40,"JGWTSW":20}'
+      spacing:
+        padding: ['0', null, null, null]
+      spacing_above: medium
+      spacing_below: medium
+    type: ColumnPanel
+  slot_3: []
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 150}
+      name: title
+      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Capital Explorer}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {expand: false, width: 750}
+      name: description
+      properties:
+        font_size: 16
+        scale: large
+        spacing:
+          margin: ['0', null, null, null]
+        style: body
+        text: By default, the filter for project scale automatically omits mega projects due to their skewing of the data.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
+is_package: true
+layout:
+  form_event_bindings: {show: form_show}
+  type: form:Base

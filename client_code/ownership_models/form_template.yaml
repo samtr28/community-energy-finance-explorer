@@ -1,0 +1,5 @@
+components_by_slot:
+  content_slot: []
+  title_slot: []
+is_package: true
+layout: {type: 'form:Base'}

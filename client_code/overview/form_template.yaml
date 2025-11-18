@@ -1,0 +1,115 @@
+components_by_slot:
+  content_slot:
+  - components:
+    - layout_properties: {col_xs: 0, row: WTPNJX, width_xs: 12}
+      name: main_heading
+      properties:
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: headline
+        text: Tracking Community Energy Financing in Canada
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {col_xs: 0, row: GSAJLF, width_xs: 5}
+      name: main_text
+      properties: {text: '"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - components:
+          - components:
+            - layout_properties: {slot: default}
+              name: card_header
+              properties:
+                font_family: serif
+                scale: medium
+                spacing:
+                  margin: [null, null, '0', null]
+                  padding: [null, null, '', null]
+                style: headline
+                text: Our Progress
+              type: form:dep_9kcxnwm3upyjd:_Components.Heading
+            - layout_properties: {slot: default}
+              name: spacer_lottie
+              properties: {height: 241.75}
+              type: Spacer
+            layout_properties: {grid_position: 'UFONKC,VQOTIJ'}
+            name: lottie_iframe
+            properties: {url: 'https://lottie.host/embed/55ccd603-3dc3-4a60-8a31-5bebab675713/heWoMvX8IU.lottie'}
+            type: form:dep_l2jshl74w4hl:Lottie_IFrame
+          - layout_properties: {grid_position: 'UFONKC,NVFLTN JJMTBC,SGMNWL'}
+            name: project_number
+            properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {grid_position: 'UFONKC,NVFLTN NXMJVV,BKGEUT'}
+            name: project_number_caption
+            properties:
+              align: center
+              scale: medium
+              spacing:
+                margin: ['-20', null, null, null]
+              style: title
+              text: projects surveyed
+              text_color: theme:On Tertiary
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {grid_position: 'UFONKC,NVFLTN VOOSCV,ERSFWR'}
+            name: total_funding_number
+            properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {grid_position: 'UFONKC,NVFLTN AODUVD,TSQQHS'}
+            name: total_funding_caption
+            properties:
+              align: center
+              scale: medium
+              spacing:
+                margin: ['-20', null, null, null]
+              style: title
+              text: in funding accounted
+              text_color: theme:On Tertiary Container
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          layout_properties: {slot: card-content-container-slot}
+          name: lottie_card_column
+          properties: {col_spacing: none, col_widths: '{"VQOTIJ":45,"NVFLTN":15}', spacing_above: none, spacing_below: none}
+          type: ColumnPanel
+        layout_properties: {slot: card-content-slot}
+        name: lottie_card_content
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {col_xs: 5, row: GSAJLF, width_xs: 7}
+      name: lottie_card
+      properties: {appearance: filled, background_color: 'theme:Tertiary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    layout_properties: {full_width_row: true}
+    name: grid_panel_1
+    properties: {}
+    type: GridPanel
+  slot_1: []
+  slot_2: []
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 150}
+      name: title
+      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Overview}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {expand: false, width: 750}
+      name: description
+      properties:
+        font_size: 16
+        scale: large
+        spacing:
+          margin: ['0', null, null, null]
+        style: body
+        text: Description of Page
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
+is_package: true
+layout: {type: 'form:Base'}

@@ -1,0 +1,73 @@
+components:
+- components:
+  - components:
+    - components:
+      - data_bindings:
+        - {code: 'self.item[''project_name'']', property: text, writeback: false}
+        layout_properties: {grid_position: 'VBARGX,AUEWVP'}
+        name: project_lbl
+        properties: {bold: true, scale: medium, style: title, text_color: '#002754'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - components:
+        - data_bindings:
+          - {code: 'self.item[''project_type_formatted'']', property: text, writeback: false}
+          layout_properties: {slot: type_slot}
+          name: type
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        layout_properties: {grid_position: 'USEBSI,ASFRGZ'}
+        name: rich_text_1
+        properties: {content: '<b>Type(s):<b> {type_slot}', format: restricted_html, spacing_above: none, spacing_below: none, visible: true}
+        type: RichText
+      - data_bindings:
+        - {code: 'self.item[''data_source'']', property: message, writeback: false}
+        layout_properties: {grid_position: 'USEBSI,COVGGE'}
+        name: data_source_pill
+        properties: {level: info, message: 'self.item[''data_source'']'}
+        type: form:dep_ar2wlcmlppsllr:MessagePill
+      - data_bindings:
+        - {code: 'self.item[''ownership_traces'']', property: data, writeback: false}
+        layout_properties: {grid_position: 'VHKRZF,SMRJRB'}
+        name: ownership_plot
+        properties:
+          height: 10vh
+          margin: ['2', null, '2', null]
+        type: Plot
+      - components:
+        - data_bindings:
+          - {code: 'self.item[''total_cost'']', property: text, writeback: false}
+          layout_properties: {slot: cost_slot}
+          name: cost
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        layout_properties: {grid_position: 'UUEEQT,PJJNTO'}
+        name: total_cost_rich_text
+        properties: {content: '<b>Total Cost:</b> ${cost_slot}', format: restricted_html, spacing_above: none, spacing_below: none, visible: true}
+        type: RichText
+      - data_bindings:
+        - {code: 'self.item[''capital_mix_traces'']', property: data, writeback: false}
+        layout_properties: {grid_position: 'AYOXBW,IJBVKV'}
+        name: capital_mix_plot
+        properties:
+          height: 15vh
+          margin: ['2', null, '2', null]
+        type: Plot
+      layout_properties: {slot: card-content-container-slot}
+      name: column_panel_1
+      properties:
+        col_widths: '{"ASFRGZ":35,"COVGGE":25}'
+        spacing:
+          margin: ['0', null, '0', null]
+      type: ColumnPanel
+    layout_properties: {slot: card-content-slot}
+    name: card_content_container_2
+    properties:
+      margin: ['4', '8', '4', '8']
+    type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+  event_bindings: {click: project_card_click}
+  layout_properties: {grid_position: 'HXJKRZ,SATLEW'}
+  name: project_card
+  properties: {appearance: elevated, background_color: 'theme:On Primary', enabled: true, role: null}
+  type: form:dep_9kcxnwm3upyjd:_Components.InteractiveCard
+container: {type: ColumnPanel}
+is_package: true
