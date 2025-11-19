@@ -55,7 +55,7 @@ OWNERSHIP_COLORS = gradient_palette[::-1]
 
 # ============= DATA LOADING =============
 # Load data ONCE at module level - cached in memory
-DATA = get_data(project_privacy=True)
+DATA = get_data(project_privacy=False)
 
 # ============= HELPER FUNCTIONS =============
 def build_ownership_bar(owners, ownership_colors):
