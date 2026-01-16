@@ -1,5 +1,138 @@
 components_by_slot:
-  content_slot: []
-  title_slot: []
+  content_slot:
+  - components:
+    - layout_properties: {width: null}
+      name: filter_heading
+      properties:
+        bold: true
+        scale: small
+        spacing:
+          margin: [null, 0.1%, null, null]
+        style: title
+        text: 'Filter by:'
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - event_bindings: {change: proj_types_dd_change}
+      layout_properties: {width: null}
+      name: proj_types_dd
+      properties:
+        background: ''
+        foreground: ''
+        items: [Biofuel/Biogas, Biomass, Building efficiency upgrades, Electro-mobility, Energy storage, Geothermal, Hydro, Hydrogen, Microgrid, Solar, Tidal/wave, Waste to energy, Wind]
+        placeholder: Project Type
+        width: 170px
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - event_bindings: {change: provinces_dd_change}
+      layout_properties: {expand: false, width: null}
+      name: provinces_dd
+      properties:
+        background: ''
+        foreground: ''
+        items: [Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon]
+        placeholder: Province/Territory
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - event_bindings: {change: stages_dd_change}
+      layout_properties: {expand: false, width: null}
+      name: stages_dd
+      properties:
+        align: left
+        background: ''
+        foreground: ''
+        items: [Construction, Operation]
+        multiple: false
+        placeholder: Project Stage
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - data_bindings: []
+      event_bindings: {change: indig_owners_dd_change}
+      layout_properties: {width: null}
+      name: indig_owners_dd
+      properties:
+        items: [Wholly Indigenous owned (100%), Majority Indigenous owned (51-99%), Half Indigenous owned (50%), Minority Indigenous owned (1-49%), No Indigenous ownership]
+        placeholder: Indigenous Ownership
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - data_bindings: []
+      event_bindings: {change: project_scale_dd_change}
+      layout_properties: {width: null}
+      name: project_scale_dd
+      properties:
+        items: [Micro (< $100K), Small ($100K-$1M), Medium ($1M-$5M), Large ($5M-$25M), Very Large ($25M-$100M), Mega (> $100M)]
+        placeholder: Project Scale
+      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    layout_properties: {full_width_row: true}
+    name: filter_panel
+    properties:
+      gap: tiny
+      spacing:
+        margin: [null, null, '0', null]
+    type: FlowPanel
+  - components:
+    - layout_properties: {width: null}
+      name: filter_heading_copy
+      properties:
+        bold: true
+        scale: small
+        spacing:
+          margin: [null, 0.1%, null, null]
+        style: title
+        text: 'Selected: '
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - data_bindings: []
+      layout_properties: {expand: false, width: null}
+      name: filter_chips_panel
+      properties:
+        item_template: capital_explorer.FilterChip
+        margin: ['0', null, '0', null]
+        role: 'horizontal-repeater '
+      type: RepeatingPanel
+    layout_properties: {full_width_row: true}
+    name: flow_panel_1
+    properties: {}
+    type: FlowPanel
+  - layout_properties: {full_width_row: true}
+    name: heading_1
+    properties:
+      font_family: serif
+      spacing:
+        margin: ['', null, null, null]
+      text: Who owns community energy projects?
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  title_slot:
+  - components:
+    - components:
+      - layout_properties: {expand: false, width: 221}
+        name: title_copy
+        properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Ownership Models}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {expand: false, width: 750}
+        name: description_copy
+        properties:
+          font_size: 16
+          scale: large
+          spacing:
+            margin: ['0', null, null, null]
+          style: body
+          text: By default, the filter for project scale automatically omits mega projects due to their skewing of the data.
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {}
+      name: title_panel_copy
+      properties:
+        align: left
+        gap: huge
+        spacing:
+          margin: ['0', null, '0', null]
+        vertical_align: middle
+      type: FlowPanel
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
+  - layout_properties: {}
+    name: filter_timer
+    properties: {}
+    type: Timer
 is_package: true
 layout: {type: 'form:Base'}
