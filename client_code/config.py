@@ -4,7 +4,6 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil import app
 
-
 ##### COLOUR SCHEME
 COLOUR_MAPPING = {
   'Grants': '#005493',
@@ -31,7 +30,6 @@ COLOUR_MAPPING = {
   'Public Private Partnership (P3)': '#2d847b',
   'Public Private Partnership': '#2d847b',
   'Feed-in tariffs/power purchase agreements':'#00504a'
-  
 }
 
 # Gradient palette (from dark teal to dark brown)
@@ -81,3 +79,35 @@ CATEGORY_ORDER = [
   'Equity',
   'Internal capital'
 ]
+
+##### OWNERSHIP COLOR MAPPING
+# Function to automatically assign colors to owner types
+def get_owner_type_colors(owner_types_list, palette='dunsparce'):
+  """
+  Automatically assign colors to a list of owner types.
+  
+  Args:
+    owner_types_list: List of unique owner types
+    palette: 'dunsparce', 'gradient', or list of hex colors
+  
+  Returns:
+    Dictionary mapping owner_type to color
+  """
+  # Choose palette
+  if palette == 'dunsparce':
+    colors = dunsparce_colors
+  elif palette == 'gradient':
+    colors = gradient_palette
+  elif isinstance(palette, list):
+    colors = palette
+  else:
+    colors = dunsparce_colors  # Default
+
+  # Sort for consistency
+  sorted_types = sorted(owner_types_list)
+
+  # Assign colors
+  return {
+    owner_type: colors[i % len(colors)] 
+    for i, owner_type in enumerate(sorted_types)
+  }

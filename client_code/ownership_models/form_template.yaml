@@ -79,7 +79,7 @@ components_by_slot:
       layout_properties: {expand: false, width: null}
       name: filter_chips_panel
       properties:
-        item_template: capital_explorer.FilterChip
+        item_template: ownership_models.FilterChip
         margin: ['0', null, '0', null]
         role: 'horizontal-repeater '
       type: RepeatingPanel
@@ -95,6 +95,14 @@ components_by_slot:
         margin: ['', null, null, null]
       text: Who owns community energy projects?
     type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  - layout_properties: {full_width_row: true}
+    name: ownership_treemap
+    properties: {height: '600'}
+    type: Plot
+  - layout_properties: {}
+    name: scale_pies_plot
+    properties: {}
+    type: Plot
   title_slot:
   - components:
     - components:

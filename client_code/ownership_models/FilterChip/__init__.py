@@ -16,8 +16,8 @@ class FilterChip(FilterChipTemplate):
 
   def chip_label_close_click(self, **event_args):
     """This method is called when the close link is clicked"""
-    filter_type, value = self.item['tag']
+    filter_type, value = self.item["tag"]
     # Get the form from the top of the navigation tree
     form = get_open_form()
-    
+
     form.remove_filter(filter_type, value)
