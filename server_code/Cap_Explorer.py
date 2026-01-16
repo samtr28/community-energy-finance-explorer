@@ -257,6 +257,7 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     'stacked_bar': create_stacked_bar_internal(df_capital_filtered_with_proj, category_order_reversed),
     'bottleneck_chart': create_bottleneck_lollipop_internal(df_raw_filtered),
     'treemap': create_treemap_internal(df_raw_filtered),
+    'scale_pies': create_scale_pies_internal(df_capital_filtered_with_proj),  # NEW CHART
     'indicators': calculate_indicators_internal(df_capital_filtered_with_proj)
   }
 
@@ -1048,3 +1049,92 @@ def calculate_indicators_internal(df):
     results['crowdfunding'] = {'type': 'N/A', 'source': 'N/A'}
 
   return results
+
+def create_scale_pies_internal(df):
+  """
+  Create pie charts showing funding distribution by project scale.
+  One pie chart per scale, showing breakdown by category.
+  """
+  from plotly.subplots import make_subplots
+
+  # Define project scale order (smallest to largest)
+  scale_order = [
+    "Micro (< $100K)", 
+    "Small ($100K-$1M)", 
+    "Medium ($1M-$5M)", 
+    "Large ($5M-$25M)", 
+    "Very Large ($25M-$100M)",
+    "Mega (> $100M)"
+  ]
+
+  # Filter to only scales present in data
+  scales_in_data = [s for s in scale_order if s in df['project_scale'].values]
+
+  if not scales_in_data:
+    fig = go.Figure()
+    fig.update_layout(title='No data available')
+    return fig
+
+  # Use record_id as the ID column
+  id_col = 'record_id'
+
+  # Create subplots - one pie per scale
+  fig = make_subplots(
+    rows=1, 
+    cols=len(scales_in_data),
+    specs=[[{'type': 'domain'}] * len(scales_in_data)],
+    subplot_titles=list(scales_in_data)
+  )
+
+  # Add pie chart for each scale
+  for i, scale in enumerate(scales_in_data):
+    sub = df[df['project_scale'] == scale]
+    grouped = sub.groupby('category', as_index=False)['amount'].sum()
+
+    # Get colors for categories
+    colors = [COLOUR_MAPPING.get(cat, '#808080') for cat in grouped['category']]
+
+    fig.add_trace(
+      go.Pie(
+        labels=grouped['category'], 
+        values=grouped['amount'], 
+        name=scale,
+        marker=dict(colors=colors),
+        texttemplate='%{percent:.1%}',
+        textposition='inside',
+        textfont=dict(family='Arial, sans-serif', size=10, color='white'),
+        sort=False,
+        hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
+        showlegend=(i == 0)  # Only show legend for first pie
+      ),
+      row=1, 
+      col=i+1
+    )
+
+  # Update annotations with project counts
+  for i, scale in enumerate(scales_in_data):
+    n = df.loc[df['project_scale'] == scale, id_col].nunique()
+    fig.layout.annotations[i]['text'] = f"{scale}<br>({n} projects)"
+    fig.layout.annotations[i]['font'] = dict(family='Arial, sans-serif', size=14, color='black')
+    fig.layout.annotations[i]['font'] = dict(family='Arial, sans-serif', size=14, color='black')
+    fig.layout.annotations[i]['y'] = 0.9  # Lower the annotations
+
+  # Update layout
+  fig.update_layout(
+    title={
+      'text': 'Funding distribution by project scale',
+      'font': {'family': 'Arial, sans-serif', 'size': 16, 'color': 'black'},
+      'x': 0.01,
+      'xanchor': 'left',
+      'y': 0.99,
+      'yanchor': 'top'
+    },
+    showlegend=True,
+    legend=dict(orientation="h", y=0.01, x=0.5, xanchor='center'),
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    font=dict(family='Arial, sans-serif', size=12, color='black'),
+    margin=dict(l=0, r=0, t=35, b=0)
+  )
+
+  return fig

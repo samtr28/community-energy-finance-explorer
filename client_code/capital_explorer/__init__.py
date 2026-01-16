@@ -79,6 +79,7 @@ class capital_explorer(capital_explorerTemplate):
     self.box_plot.figure = all_charts['box_plot']
     self.lollipop_chart.figure = all_charts['bottleneck_chart']
     self.bubble_plot.figure = all_charts['treemap']
+    self.scale_pies_plot.figure = all_charts['scale_pies']  # NEW CHART
 
     # Update indicators
     indicators = all_charts['indicators']
