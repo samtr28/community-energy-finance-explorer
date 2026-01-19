@@ -53,3 +53,4 @@ services:
   source: /runtime/services/anvil/files.yml
 startup: {module: capital_explorer, type: form}
 startup_form: null
+uplink_visible: true
