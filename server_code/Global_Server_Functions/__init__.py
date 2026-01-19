@@ -14,7 +14,7 @@ def get_data(project_privacy=False):
   global _DATA_CACHE
   # Load data once
   if _DATA_CACHE is None:
-    _DATA_CACHE = pd.read_pickle(data_files['semi_clean_data.pkl'])
+    _DATA_CACHE = pd.read_pickle(data_files['2row_sample.pkl'])
 
   df = _DATA_CACHE  # start from cached data
 
@@ -23,7 +23,7 @@ def get_data(project_privacy=False):
     col = 'anonymous_status'
     df = df[df[col] != 'anon']
 
-  return df.copy()  # return a copy to avoid modifying cache
+  return df.copy()  
 
 
 ##### TO REMOVE LIST FORMAT FOR PROJECT CARDS AND PRINTING OUT DATA
