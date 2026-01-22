@@ -29,7 +29,8 @@ COLOUR_MAPPING = {
   'Leasing/third-party ownership models': '#825512',
   'Public Private Partnership (P3)': '#2d847b',
   'Public Private Partnership': '#2d847b',
-  'Feed-in tariffs/power purchase agreements':'#00504a'
+  'Feed-in tariffs/power purchase agreements':'#00504a',
+  'Other': '#8e9099'
 }
 
 # Gradient palette (from dark teal to dark brown)
