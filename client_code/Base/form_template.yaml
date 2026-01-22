@@ -156,13 +156,9 @@ components:
     spacing_below: none
   type: ColumnPanel
 - components:
-  - layout_properties: {expand: true, width: null}
-    name: acet_logo
-    properties: {height: '40', source: _/theme/ACET-primary-digital-white-horizontal-transparentbg.png}
-    type: Image
-  - layout_properties: {expand: true, width: null}
+  - layout_properties: {width: 264.983}
     name: iih_logo
-    properties: {height: '35', source: _/theme/VI3Hub_comb_h_rev.png}
+    properties: {display_mode: fill_width, height: 65, source: _/theme/Horizontal-IIH-Acet-Lockup-White.png}
     type: Image
   layout_properties: {slot: footer-slot}
   name: flow_panel_1
@@ -178,6 +174,10 @@ components:
     style: headline
     text: Community Energy Finance Navigator
   type: form:dep_9kcxnwm3upyjd:_Components.Heading
+- layout_properties: {slot: nav-right}
+  name: flow_panel_2
+  properties: {}
+  type: FlowPanel
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate
