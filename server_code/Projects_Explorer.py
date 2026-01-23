@@ -195,10 +195,10 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
   Apply filters to dataframe. Returns filtered copy.
   Uses list filtering for now - will be updated to set filtering later.
   """
-  df = df.copy()
 
   if provinces:
-    df = df[df["province"].isin(provinces)]
+    mask = df["province"].isin(provinces)
+    df.drop(df.index[~mask], inplace=True)
 
   if proj_types:
     df = df[df["project_type"].apply(lambda lst: any(t in lst for t in proj_types))]
