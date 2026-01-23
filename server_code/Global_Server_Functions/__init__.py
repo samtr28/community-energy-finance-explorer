@@ -13,15 +13,17 @@ from sqlalchemy import create_engine
 load_dotenv()
 
 engine = create_engine(os.getenv("SQL_CONNECTION"))
-_DATA_CACHE = None
+CACHED_DATA_FILE_PATH = "data/cached.pkl"
 
 def get_data(project_privacy=False):
-  global _DATA_CACHE
-  # Load data once
-  if _DATA_CACHE is None:
-    _DATA_CACHE = pd.read_sql_table("app_data", con=engine)
+  df = None
 
-  df = _DATA_CACHE  # start from cached data
+  if not os.path.exists(CACHED_DATA_FILE_PATH):
+    df = pd.read_sql_table("app_data", con=engine)
+    df.to_pickle(CACHED_DATA_FILE_PATH)
+
+  else:
+    df = pd.read_pickle(CACHED_DATA_FILE_PATH)
 
   # Apply privacy filter if requested
   if project_privacy:
