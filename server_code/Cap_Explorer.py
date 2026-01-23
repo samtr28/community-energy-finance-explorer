@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import anvil.files
 from anvil.files import data_files
 import anvil.tables as tables
@@ -11,6 +13,13 @@ from .Global_Server_Functions import get_data
 import plotly.graph_objects as go
 import plotly.express as px
 import textwrap
+from sqlalchemy import create_engine, select, or_
+from sqlalchemy.orm import Session
+from .models import Survey
+
+load_dotenv()
+
+engine = create_engine(os.getenv("SQL_CONNECTION"))
 
 # ==================== UTILITY FUNCTIONS ====================
 
@@ -83,6 +92,37 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None, indigenous_o
     df = df[df["project_scale"].isin(project_scale)]
 
   return df
+
+def apply_filters_sql(
+    session,
+    provinces=None,
+    proj_types=None,
+    stages=None,
+    indigenous_ownership=None,
+    project_scale=None
+  ) -> pd.DataFrame:
+
+  stmt = select(Survey)
+
+  if provinces:
+    print(f"provinces: {provinces}")
+    stmt = stmt.where(Survey.province.in_(provinces))
+
+  # if stages:
+  #   stmt = stmt.where(surveys.c.stage.in_(stages))
+
+  # if indigenous_ownership:
+  #   stmt = stmt.where(surveys.c.indigenous_ownership.in_(indigenous_ownership))
+
+  # if project_scale:
+  #   stmt = stmt.where(surveys.c.project_scale.in_(project_scale))
+
+  # if proj_types:
+  #   stmt = stmt.where(
+  #     or_(*[surveys.c.project_type.contains([pt]) for pt in proj_types])
+  #   )
+  print(stmt)
+  return pd.read_sql(stmt, session.bind)
 
 # ==================== DATA PROCESSING ====================
 
@@ -224,24 +264,43 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   Single server call that returns ALL chart figures and indicators at once.
   """
   print("Loading data for all charts...")
+  print(f"Arg provinces: {provinces}")
 
   # Load raw data ONCE
-  df_raw = get_data()
+  # df_raw = get_data()
 
   # Process capital mix data ONCE
-  df_capital_mix = process_capital_mix_data(df_raw)
+  # df_capital_mix = process_capital_mix_data(df_raw)
 
   # Apply filters to raw data (for box plot, bottlenecks, AND treemap)
-  df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages, 
-                                  indigenous_ownership, project_scale)
+  # df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages, 
+  #                                 indigenous_ownership, project_scale)
 
-  # For capital mix: apply ALL filters including project_type
-  df_capital_filtered_with_proj = apply_filters(df_capital_mix, provinces, proj_types, stages,
-                                                indigenous_ownership, project_scale)
+  # # For capital mix: apply ALL filters including project_type
+  # df_capital_filtered_with_proj = apply_filters(df_capital_mix, provinces, proj_types, stages,
+  #                                               indigenous_ownership, project_scale)
 
-  # For Sankey: apply filters EXCEPT project_type
-  df_capital_filtered_no_proj = apply_filters(df_capital_mix, provinces, None, stages,
-                                              indigenous_ownership, project_scale)
+  # # For Sankey: apply filters EXCEPT project_type
+  # df_capital_filtered_no_proj = apply_filters(df_capital_mix, provinces, None, stages,
+  #                                             indigenous_ownership, project_scale)
+
+
+  df_raw_filtered = []
+  df_capital_filtered_with_proj = []
+  df_capital_filtered_no_proj = []
+
+  with Session(engine) as session:
+    # Apply filters to raw data (for box plot, bottlenecks, AND treemap)
+    df_raw_filtered = apply_filters_sql(session, provinces, proj_types, stages,
+                                    indigenous_ownership, project_scale)
+
+    # For capital mix: apply ALL filters including project_type
+    df_capital_filtered_with_proj = process_capital_mix_data(apply_filters_sql(session, provinces, proj_types, stages,
+                                                  indigenous_ownership, project_scale))
+
+    # For Sankey: apply filters EXCEPT project_type
+    df_capital_filtered_no_proj = process_capital_mix_data(apply_filters_sql(session, provinces, None, stages,
+                                                indigenous_ownership, project_scale))
 
   # Calculate category order ONCE
   category_order = get_category_order(df_capital_filtered_with_proj)
