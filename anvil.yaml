@@ -44,6 +44,7 @@ runtime_options:
   server_spec: {base: python310-datascience}
   server_version: python3-sandbox
   version: 3
+  server_persist: true
 services:
 - client_config: {}
   server_config: {}
