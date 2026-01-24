@@ -15,7 +15,7 @@ load_dotenv()
 engine = create_engine(os.getenv("SQL_CONNECTION"))
 _DATA_CACHE = None
 
-def get_data(project_privacy=False):
+def get_data(project_privacy=False, cols=[]):
   global _DATA_CACHE
   # Load data once
   if _DATA_CACHE is None:
@@ -28,7 +28,11 @@ def get_data(project_privacy=False):
     col = 'anonymous_status'
     df = df[df[col] != 'anon']
 
-  return df.copy()  
+  if cols and len(cols) >= 1:
+    df = df.loc[:, cols]
+
+  # Only return specific columns if requested
+  return df
 
 
 ##### TO REMOVE LIST FORMAT FOR PROJECT CARDS AND PRINTING OUT DATA
