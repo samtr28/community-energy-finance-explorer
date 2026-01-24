@@ -55,7 +55,15 @@ OWNERSHIP_COLORS = gradient_palette[::-1]
 
 # ============= DATA LOADING =============
 # Load data ONCE at module level - cached in memory
-DATA = get_data(project_privacy=True)
+DATA = get_data(
+  project_privacy=True,
+  cols=[
+    "record_id", "project_name", "community", "latitude", "longitude",
+    "province", "stage", "project_type", "indigenous_ownership", "project_scale",
+    "data_source", "stage", "total_cost", "all_financing_mechanisms",
+    "owners", "capital_mix"
+  ]
+)
 
 # ============= REMOVED - DON'T BUILD TRACES AT MODULE LEVEL =============
 # BEFORE (SLOW):
