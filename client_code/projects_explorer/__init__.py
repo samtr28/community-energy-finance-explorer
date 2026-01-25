@@ -7,6 +7,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.js
+from .. import Global
 
 
 class projects_explorer(projects_explorerTemplate):
@@ -115,7 +116,7 @@ class projects_explorer(projects_explorerTemplate):
     kwargs["page_size"] = self._page_size
 
     # SINGLE SERVER CALL
-    all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
+    all_data = Global.project_explorer_data
 
     # Update map (always show all filtered points)
     self.project_map.data = [all_data['map_data']]
