@@ -65,6 +65,10 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None, indigenous_o
     Apply filters to dataframe. Returns filtered copy.
     Handles filtering by province, project type, stage, indigenous ownership, and project scale.
     """
+  # *** ADD THIS: Handle already-empty input ***
+  if df.empty:
+    return df
+    
   df = df.copy()
 
   if provinces:
@@ -128,6 +132,15 @@ def process_capital_mix_data(df):
         'all_financing_mechanisms': row.get('all_financing_mechanisms')
       })
   df_long = pd.DataFrame(rows)
+
+  #accoutnt for if there is no data 
+  if df_long.empty:
+    return pd.DataFrame(columns=[
+      'record_id', 'total_cost', 'name', 'source', 'category', 
+      'item_type', 'amount', 'project_type', 'stage', 'province',
+      'project_scale', 'indigenous_ownership', 'all_financing_mechanisms',
+      'time_to_funding'
+    ])
 
   # Step 2: Explode debt info
   debt_rows = []
@@ -204,6 +217,16 @@ def get_category_order(df):
     This is the master ordering used by all charts.
     Internal capital is excluded from this calculation.
     """
+  # *** ADD THIS: Return default order if empty ***
+  if df.empty or 'category' not in df.columns or 'time_to_funding' not in df.columns:
+    return [
+      'Grants & non-repayable contributions',
+      'Crowdfunding',
+      'Community financing',
+      'External equity investments',
+      'Debt financing'
+    ]
+    
   # Drop internal capital
   df_no_internal = df[df['category'] != 'Internal capital']
 
@@ -243,6 +266,29 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   df_capital_filtered_no_proj = apply_filters(df_capital_mix, provinces, None, stages,
                                               indigenous_ownership, project_scale)
 
+  # *** ADD THIS BLOCK: Check for empty data ***
+  if df_capital_filtered_with_proj.empty:
+    print("WARNING: No data after filtering")
+    empty_fig = go.Figure()
+    empty_fig.update_layout(title="No data available for selected filters")
+
+    return {
+      'box_plot': empty_fig,
+      'sankey': empty_fig,
+      'time_chart': empty_fig,
+      'stacked_bar': empty_fig,
+      'bottleneck_chart': empty_fig,
+      'treemap': empty_fig,
+      'scale_pies': empty_fig,
+      'indicators': {
+        'equity': {'type': 'N/A', 'source': 'N/A'},
+        'debt': {'interest': 'N/A', 'repayment': 'N/A', 'type': 'N/A', 'source': 'N/A'},
+        'grants': {'type': 'N/A', 'source': 'N/A'},
+        'community_finance': {'type': 'N/A', 'source': 'N/A'},
+        'crowdfunding': {'type': 'N/A', 'source': 'N/A'}
+      }
+    }
+  
   # Calculate category order ONCE
   category_order = get_category_order(df_capital_filtered_with_proj)
   category_order_reversed = list(reversed(category_order))
@@ -791,10 +837,17 @@ def create_bottleneck_lollipop_internal(df):
 
 def create_treemap_internal(df):
   """
-    Create treemap showing usage of financing mechanisms.
-    Displays mechanisms grouped by category with size based on count.
-    Text wraps with automatic color contrast (white on dark, black on light).
-    """
+  Create treemap showing usage of financing mechanisms.
+  Displays mechanisms grouped by category with size based on count.
+  Text wraps with automatic color contrast (white on dark, black on light).
+  """
+
+  # *** ADD THIS: Check if input is empty ***
+  if df.empty or 'financing_mech' not in df.columns:
+    fig = go.Figure()
+    fig.update_layout(title='No data available for selected filters')
+    return fig
+
   # Process financing_mech data into long format
   rows = []
   for idx, row in df.iterrows():
@@ -813,6 +866,12 @@ def create_treemap_internal(df):
 
   df_long = pd.DataFrame(rows)
 
+  # *** ADD THIS: Return early if no data ***
+  if df_long.empty:
+    fig = go.Figure()
+    fig.update_layout(title='No financing mechanism data available')
+    return fig
+
   # Normalize source values (like in process_capital_mix_data)
   df_long['source'] = df_long['source'].replace({
     'Other': 'Other/Unknown',
@@ -821,9 +880,17 @@ def create_treemap_internal(df):
     'Aggregate Total': 'Other/Unknown',
     "Don't know": 'Other/Unknown',
   })
-  df_long.loc[df_long['source'] == 'Other/Unknown', 'source'] = df_long['source'] + '-' + df_long['category']
+
+  mask = df_long['source'] == 'Other/Unknown'
+  df_long.loc[mask, 'source'] = df_long.loc[mask, 'source'] + '-' + df_long.loc[mask, 'category']
 
   df_grouped = df_long.groupby(['source', 'category']).size().reset_index(name='count')
+
+  # *** ADD THIS: Check grouped data ***
+  if df_grouped.empty:
+    fig = go.Figure()
+    fig.update_layout(title='No financing mechanism data available')
+    return fig
 
   # Build hierarchical structure for go.Treemap
   labels = []
