@@ -43,6 +43,7 @@ runtime_options:
   legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
   server_spec: {base: python310-datascience}
   server_version: python3-sandbox
+  server_persist: true
   version: 3
 services:
 - client_config: {}

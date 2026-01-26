@@ -7,6 +7,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.js
+from .. import Global
 
 
 class projects_explorer(projects_explorerTemplate):
@@ -61,7 +62,7 @@ class projects_explorer(projects_explorerTemplate):
 
     # SINGLE SERVER CALL - gets both map and cards at once
     print("Fetching map and card data...")
-    all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
+    all_data = Global.project_explorer_data
     print("Data received, updating UI...")
 
     # Update map
