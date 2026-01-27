@@ -199,6 +199,7 @@ def process_capital_mix_data(df):
   # Step 6: Normalize source values
   df_long['source'] = df_long['source'].replace({
     'Other': 'Other/Unknown',
+    'Other (please specify)': 'Other/Unknown',
     'Not sure': 'Other/Unknown',
     'Aggregate total': 'Other/Unknown',
     'Aggregate Total': 'Other/Unknown',
@@ -215,7 +216,7 @@ def get_category_order(df):
   """
     Calculate category order based on average time to funding (smallest to largest).
     This is the master ordering used by all charts.
-    Internal capital is excluded from this calculation.
+    Internal capital and Other are excluded from this calculation.
     """
   # *** ADD THIS: Return default order if empty ***
   if df.empty or 'category' not in df.columns or 'time_to_funding' not in df.columns:
@@ -226,16 +227,13 @@ def get_category_order(df):
       'External equity investments',
       'Debt financing'
     ]
-    
-  # Drop internal capital
-  df_no_internal = df[df['category'] != 'Internal capital']
 
+  # Drop internal capital and Other
+  df_no_internal = df[~df['category'].isin(['Internal capital', 'Other'])]
   # Calculate average time to funding by category
   averages = df_no_internal.groupby('category')['time_to_funding'].mean()
-
   # Sort ascending (smallest to largest)
   averages = averages.sort_values(ascending=True)
-
   return averages.index.tolist()
 
 # ==================== MAIN CALLABLE FUNCTION ====================
@@ -582,14 +580,15 @@ def create_sankey_internal(df, proj_types=None):
 def create_stacked_bar_internal(df, category_order):
   """
     Create horizontal stacked bar chart showing funding sources breakdown by category.
-    Excludes Internal capital. Generates color shades for sources within each category.
+    Excludes Internal capital and Other. Generates color shades for sources within each category.
     Shows percentage distribution with labels for segments ≥5%.
     Text color automatically adjusts based on background.
     """
   group_by = 'category'
   stack_by = 'source'
 
-  df = df[df['category'] != 'Internal capital']
+  # Filter out Internal capital and Other
+  df = df[~df['category'].isin(['Internal capital', 'Other'])]
 
   df_grouped = df.groupby([group_by, stack_by])['amount'].sum().reset_index()
 
@@ -879,6 +878,7 @@ def create_treemap_internal(df):
     'Aggregate total': 'Other/Unknown',
     'Aggregate Total': 'Other/Unknown',
     "Don't know": 'Other/Unknown',
+    'N/A': 'Other/Unknown'
   })
 
   mask = df_long['source'] == 'Other/Unknown'
@@ -1172,7 +1172,6 @@ def create_scale_pies_internal(df):
         textfont=dict(family='Arial, sans-serif', size=10, color='white'),
         sort=False,
         hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
-        showlegend=(i == 0)  # Only show legend for first pie
       ),
       row=1, 
       col=i+1

@@ -119,7 +119,7 @@ def create_ownership_treemap_internal(df_owners):
   value_data['percentage'] = (value_data['ownership_value'] / value_data['ownership_value'].sum()) * 100
 
   # Get consistent colors
-  colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette='dunsparce')
+  colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_colors)
 
   # Helper function to create treemap trace
   def make_treemap(data, value_col, visible=True):
@@ -129,7 +129,7 @@ def create_ownership_treemap_internal(df_owners):
       parents=[''] * len(data),
       values=data[value_col],
       textinfo='label+percent parent',
-      textfont=dict(size=12, color='white'),
+      textfont=dict(size=12,),
       customdata=list(zip(data['owner_type'], data['percentage'])),
       hovertemplate='<b>%{customdata[0]}</b><br>%{customdata[1]:.1f}%<extra></extra>',
       visible=visible,
@@ -257,7 +257,7 @@ def create_ownership_scale_pies_internal(df_owners):
         showlegend=(i == 0),  # Only show legend for first pie
         textinfo='percent',
         texttemplate='%{percent:.1%}',
-        textfont=dict(size=10, color='white'),
+        textfont=dict(size=10,),
         hovertemplate='<b>%{label}</b><br>%{value:.1f}%<extra></extra>'
       ),
       row=1, col=i+1
