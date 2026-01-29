@@ -10,51 +10,14 @@ from .. import config
 
 class ownership_models(ownership_modelsTemplate):
   def __init__(self, **properties):
-    print("CLIENT: ========== INITIALIZING ownership_models ==========")
-    try:
-      # Set Form properties and Data Bindings.
-      self.init_components(**properties)
-      print("CLIENT: Components initialized")
-
-      # Check if components exist
-      print(f"CLIENT: Has project_scale_dd? {hasattr(self, 'project_scale_dd')}")
-      print(f"CLIENT: Has ownership_treemap? {hasattr(self, 'ownership_treemap')}")
-      print(f"CLIENT: Has scale_pies_plot? {hasattr(self, 'scale_pies_plot')}")
-      print(f"CLIENT: Has filter_timer? {hasattr(self, 'filter_timer')}")
-
-      # Set default selections for filters
-      if hasattr(self, 'project_scale_dd'):
-        self.project_scale_dd.selected = [
-          "Micro (< $100K)", 
-          "Small ($100K-$1M)", 
-          "Medium ($1M-$5M)", 
-          "Large ($5M-$25M)", 
-          "Very Large ($25M-$100M)",
-        ]
-        print(f"CLIENT: Set project_scale_dd default: {self.project_scale_dd.selected}")
-      else:
-        print("CLIENT ERROR: project_scale_dd not found!")
-
-      print("CLIENT: Initialization complete")
-
-      # LOAD CHARTS IMMEDIATELY AFTER INITIALIZATION
-      print("CLIENT: Loading charts from __init__...")
-      self.apply_filters()
-
-    except Exception as e:
-      print(f"CLIENT ERROR in __init__: {e}")
+    # Set Form properties and Data Bindings.
+    self.init_components(**properties)
+    self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
 
   def schedule_filter_update(self):
     """Schedule a filter update with debouncing - waits 1s after last change"""
-    print("CLIENT: schedule_filter_update called")
-    try:
-      if hasattr(self, 'filter_timer'):
-        self.filter_timer.interval = 1
-        print("CLIENT: Filter timer started (1 second)")
-      else:
-        print("CLIENT ERROR: filter_timer not found!")
-    except Exception as e:
-      print(f"CLIENT ERROR in schedule_filter_update: {e}")
+    # Setting interval to non-zero starts/restarts the timer
+    self.filter_timer.interval = 1
 
   def apply_filters(self):
     """Apply filters and update all charts with ONE server call"""
@@ -228,13 +191,7 @@ class ownership_models(ownership_modelsTemplate):
 
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
-    print("CLIENT: ========== FILTER_TIMER_TICK ==========")
-    try:
-      # Stop the timer so it doesn't repeat
-      if hasattr(self, 'filter_timer'):
-        self.filter_timer.interval = 0
-        print("CLIENT: Filter timer stopped")
-      # Apply the filters
-      self.apply_filters()
-    except Exception as e:
-      print(f"CLIENT ERROR in filter_timer_tick: {e}")
+    # Stop the timer so it doesn't repeat
+    self.filter_timer.interval = 0
+    # Apply the filters
+    self.apply_filters()
