@@ -21,127 +21,89 @@ class ownership_models(ownership_modelsTemplate):
 
   def apply_filters(self):
     """Apply filters and update all charts with ONE server call"""
-    print("CLIENT: ========== APPLY_FILTERS STARTED ==========")
+    # Read current filter selections
+    provinces = self.provinces_dd.selected
+    proj_types = self.proj_types_dd.selected
+    stages = self.stages_dd.selected
+    indigenous_ownership = self.indig_owners_dd.selected
+    project_scale = self.project_scale_dd.selected
 
-    try:
-      # Read current filter selections
-      print("CLIENT: Reading filter selections...")
+    # Build kwargs with only set filters
+    kwargs = {}
+    if provinces:
+      kwargs["provinces"] = provinces
+    if proj_types:
+      kwargs["proj_types"] = proj_types
+    if stages:
+      kwargs["stages"] = stages
+    if indigenous_ownership:
+      kwargs["indigenous_ownership"] = indigenous_ownership
+    if project_scale:
+      kwargs["project_scale"] = project_scale
 
-      provinces = self.provinces_dd.selected if hasattr(self, 'provinces_dd') else []
-      proj_types = self.proj_types_dd.selected if hasattr(self, 'proj_types_dd') else []
-      stages = self.stages_dd.selected if hasattr(self, 'stages_dd') else []
-      indigenous_ownership = self.indig_owners_dd.selected if hasattr(self, 'indig_owners_dd') else []
-      project_scale = self.project_scale_dd.selected if hasattr(self, 'project_scale_dd') else []
+    # UPDATE CHIPS - Build chip data from selections
+    chips = []
 
-      print(f"CLIENT: provinces = {provinces}")
-      print(f"CLIENT: proj_types = {proj_types}")
-      print(f"CLIENT: stages = {stages}")
-      print(f"CLIENT: indigenous_ownership = {indigenous_ownership}")
-      print(f"CLIENT: project_scale = {project_scale}")
+    if provinces:
+      for p in provinces:
+        chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
 
-      # Build kwargs with only set filters
-      kwargs = {}
-      if provinces:
-        kwargs["provinces"] = provinces
-      if proj_types:
-        kwargs["proj_types"] = proj_types
-      if stages:
-        kwargs["stages"] = stages
-      if indigenous_ownership:
-        kwargs["indigenous_ownership"] = indigenous_ownership
-      if project_scale:
-        kwargs["project_scale"] = project_scale
+    if proj_types:
+      for pt in proj_types:
+        chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
 
-      print(f"CLIENT: Filters being applied: {kwargs}")
+    if stages:
+      for s in stages:
+        chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
 
-      # UPDATE CHIPS
-      print("CLIENT: Building filter chips...")
-      chips = []
+    if indigenous_ownership:
+      for io in indigenous_ownership:
+        chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
 
-      if provinces:
-        for p in provinces:
-          chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
+    if project_scale:
+      for ps in project_scale:
+        chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
 
-      if proj_types:
-        for pt in proj_types:
-          chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
+    # Update the repeating panel
+    self.filter_chips_panel.items = chips
 
-      if stages:
-        for s in stages:
-          chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
+    # SINGLE SERVER CALL - gets all charts at once
+    print("Fetching all charts...")
+    all_charts = anvil.server.call('get_all_ownership_charts', **kwargs)
+    print("Charts received, updating UI...")
 
-      if indigenous_ownership:
-        for io in indigenous_ownership:
-          chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
+    #TO DO ADD CHARTS
 
-      if project_scale:
-        for ps in project_scale:
-          chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
+    # Update all plots with the returned figures
 
-      # Update the repeating panel
-      if hasattr(self, 'filter_chips_panel'):
-        self.filter_chips_panel.items = chips
-        print(f"CLIENT: Updated {len(chips)} filter chips")
-      else:
-        print("CLIENT: filter_chips_panel not found (skipping)")
-
-      # SINGLE SERVER CALL - gets all charts at once
-      print("CLIENT: About to call server...")
-      all_charts = anvil.server.call('get_all_ownership_charts', **kwargs)
-      print(f"CLIENT: Server call completed!")
-      print(f"CLIENT: Received chart keys: {list(all_charts.keys()) if all_charts else 'None'}")
-
-      # Update plots with the returned figures
-      if hasattr(self, 'ownership_treemap'):
-        print("CLIENT: Updating ownership_treemap...")
-        self.ownership_treemap.figure = all_charts['ownership_treemap']
-        print("CLIENT: ownership_treemap updated successfully")
-      else:
-        print("CLIENT ERROR: ownership_treemap component not found!")
-
-      if hasattr(self, 'scale_pies_plot'):
-        print("CLIENT: Updating scale_pies_plot...")
-        self.scale_pies_plot.figure = all_charts['scale_pies']
-        print("CLIENT: scale_pies_plot updated successfully")
-      else:
-        print("CLIENT ERROR: scale_pies_plot component not found!")
-
-      print("CLIENT: ========== APPLY_FILTERS COMPLETED ==========")
-
-    except Exception as e:
-      print(f"CLIENT ERROR in apply_filters: {e}")
+    #TO DO 
 
   def remove_filter(self, filter_type, value):
     """Remove a specific filter value and refresh"""
-    print(f"CLIENT: remove_filter called - type: {filter_type}, value: {value}")
-
-    try:
-      # Remove the value from the appropriate dropdown
-      if filter_type == 'provinces':
-        current = list(self.provinces_dd.selected)
-        current.remove(value)
-        self.provinces_dd.selected = current
-      elif filter_type == 'proj_types':
-        current = list(self.proj_types_dd.selected)
-        current.remove(value)
-        self.proj_types_dd.selected = current
-      elif filter_type == 'stages':
-        current = list(self.stages_dd.selected)
-        current.remove(value)
-        self.stages_dd.selected = current
-      elif filter_type == 'indigenous_ownership':
-        current = list(self.indig_owners_dd.selected)
-        current.remove(value)
-        self.indig_owners_dd.selected = current
-      elif filter_type == 'project_scale':
-        current = list(self.project_scale_dd.selected)
-        current.remove(value)
-        self.project_scale_dd.selected = current
+    # Remove the value from the appropriate dropdown
+    if filter_type == 'provinces':
+      current = list(self.provinces_dd.selected)
+      current.remove(value)
+      self.provinces_dd.selected = current
+    elif filter_type == 'proj_types':
+      current = list(self.proj_types_dd.selected)
+      current.remove(value)
+      self.proj_types_dd.selected = current
+    elif filter_type == 'stages':
+      current = list(self.stages_dd.selected)
+      current.remove(value)
+      self.stages_dd.selected = current
+    elif filter_type == 'indigenous_ownership':
+      current = list(self.indig_owners_dd.selected)
+      current.remove(value)
+      self.indig_owners_dd.selected = current
+    elif filter_type == 'project_scale':
+      current = list(self.project_scale_dd.selected)
+      current.remove(value)
+      self.project_scale_dd.selected = current
 
       # Schedule update with debouncing
-      self.schedule_filter_update()
-    except Exception as e:
-      print(f"CLIENT ERROR in remove_filter: {e}")
+    self.schedule_filter_update()
 
   def provinces_dd_change(self, **event_args):
     """This method is called when the selected values change"""

@@ -57,6 +57,28 @@ components_by_slot:
         items: [Micro (< $100K), Small ($100K-$1M), Medium ($1M-$5M), Large ($5M-$25M), Very Large ($25M-$100M), Mega (> $100M)]
         placeholder: Project Scale
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+    - components:
+      - layout_properties: {width: null}
+        name: filter_heading_copy
+        properties:
+          bold: true
+          scale: small
+          spacing:
+            margin: [null, 0.1%, null, null]
+          style: title
+          text: 'Selected: '
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {expand: false, width: null}
+        name: filter_chips_panel
+        properties:
+          item_template: capital_explorer.FilterChip
+          margin: ['0', null, '0', null]
+          role: 'horizontal-repeater '
+        type: RepeatingPanel
+      layout_properties: {}
+      name: flow_panel_1
+      properties: {}
+      type: FlowPanel
     layout_properties: {}
     name: filter_panel
     properties:
