@@ -1,0 +1,15 @@
+components:
+- components:
+  - data_bindings:
+    - {code: 'self.item[''text'']', property: text, writeback: false}
+    event_bindings: {}
+    layout_properties: {grid_position: 'EESSTW,KZPCAN'}
+    name: chip_label
+    properties: {background: 'theme:Primary Container', foreground: 'theme:On Primary Container', spacing_above: none, spacing_below: none, text: ''}
+    type: form:dep_ar2wlcmlppsllr:Chip
+  layout_properties: {grid_position: 'UFBDXP,SLWQFP'}
+  name: column_panel_1
+  properties: {role: null}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

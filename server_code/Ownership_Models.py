@@ -68,14 +68,20 @@ def process_owners_data(df):
       })
 
   df_owners_long = pd.DataFrame(rows)
+# Option 2: Temporarily set options for one print
+  with pd.option_context('display.max_columns', None, 'display.width', None):
+    print(df_owners_long.head(5))
   return df_owners_long
 
-def apply_filters_owners(df, provinces=None, proj_types=None, stages=None, 
+def apply_filters(df, provinces=None, proj_types=None, stages=None, 
                          indigenous_ownership=None, project_scale=None):
   """
   Apply filters to ownership dataframe. Returns filtered copy.
   Handles filtering by province, project type, stage, indigenous ownership, and project scale.
   """
+  if df.empty:
+    return df
+    
   df = df.copy()
 
   if provinces:
@@ -297,18 +303,17 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
   """
   Single server call that returns ALL ownership chart figures at once.
   """
-  print("SERVER: Loading data for ownership charts...")
 
   # Load raw data ONCE
   df_raw = get_data()
-  print(f"SERVER: Raw data loaded - {len(df_raw)} rows")
 
   # Process owners data ONCE
   df_owners = process_owners_data(df_raw)
-  print(f"SERVER: Owners data processed - {len(df_owners)} rows")
 
+  print('data processed')
+  
   # Apply filters to owners data
-  df_owners_filtered = apply_filters_owners(
+  df_owners_filtered = apply_filters(
     df_owners, 
     provinces, 
     proj_types, 
@@ -316,16 +321,24 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     indigenous_ownership, 
     project_scale
   )
-  print(f"SERVER: Filtered owners data - {len(df_owners_filtered)} rows")
 
-  print("SERVER: Generating ownership charts...")
-
+  print('filters_applier')
   # Generate ALL charts
+
+    # Add this block:
+  if df_owners_filtered.empty:
+    print("WARNING: No ownership data after filtering")
+    empty_fig = go.Figure()
+    empty_fig.update_layout(title="No data available for selected filters")
+    return {
+      'ownership_treemap': empty_fig,
+      'scale_pies': empty_fig,
+    }
+    
   results = {
     'ownership_treemap': create_ownership_treemap_internal(df_owners_filtered),
     'scale_pies': create_ownership_scale_pies_internal(df_owners_filtered),
   }
 
-  print("SERVER: All ownership charts generated successfully!")
 
   return results

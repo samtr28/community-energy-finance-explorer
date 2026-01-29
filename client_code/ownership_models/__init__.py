@@ -13,6 +13,7 @@ class ownership_models(ownership_modelsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
+    self.apply_filters() 
 
   def schedule_filter_update(self):
     """Schedule a filter update with debouncing - waits 1s after last change"""
@@ -73,7 +74,8 @@ class ownership_models(ownership_modelsTemplate):
     print("Charts received, updating UI...")
 
     #TO DO ADD CHARTS
-
+    self.ownership_treemap.figure = all_charts['ownership_treemap']
+    self.scale_pies_plot.figure = all_charts['scale_pies']
     # Update all plots with the returned figures
 
     #TO DO 
@@ -132,25 +134,9 @@ class ownership_models(ownership_modelsTemplate):
 
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
-    print("CLIENT: ========== FORM_SHOW CALLED ==========")
-    try:
-      print("CLIENT: Resetting navigation...")
-      if hasattr(self, 'layout'):
-        self.layout.reset_links()
-        if hasattr(self.layout, 'ownership_nav'):
-          self.layout.ownership_nav.role = 'selected'
-          print("CLIENT: Navigation set")
-        else:
-          print("CLIENT WARNING: layout.ownership_nav not found")
-      else:
-        print("CLIENT WARNING: layout not found")
-
-      # Load charts on initial page load
-      print("CLIENT: Loading initial charts from form_show...")
-      self.apply_filters()
-    except Exception as e:
-      print(f"CLIENT ERROR in form_show: {e}")
-
+    self.layout.reset_links()
+    self.ownership_nav.role = 'selected'
+    
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
     # Stop the timer so it doesn't repeat
