@@ -13,12 +13,13 @@ class ownership_models(ownership_modelsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
+    #self.filter_timer.interval = 1
     #self.apply_filters() 
 
   def schedule_filter_update(self):
     """Schedule a filter update with debouncing - waits 1s after last change"""
     # Setting interval to non-zero starts/restarts the timer
-    self.filter_timer.interval = 1
+    self.filter_timer.interval=1
 
   def apply_filters(self):
     """Apply filters and update all charts with ONE server call"""
@@ -44,6 +45,7 @@ class ownership_models(ownership_modelsTemplate):
   
       # UPDATE CHIPS - Build chip data from selections
     chips = []
+    
     if provinces:
       for p in provinces:
         chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
@@ -68,29 +70,10 @@ class ownership_models(ownership_modelsTemplate):
     all_charts = anvil.server.call('get_all_ownership_charts', **kwargs)
     print("Charts received, updating UI...")
   
-    # DEBUG: Check what we received
-    print(f"Received charts: {all_charts.keys()}")
-    print(f"ownership_treemap type: {type(all_charts['ownership_treemap'])}")
-    print(f"scale_pies type: {type(all_charts['scale_pies'])}")
-  
-    # DEBUG: Check if plot components exist
-    print(f"ownership_treemap component exists: {hasattr(self, 'ownership_treemap')}")
-    print(f"scale_pies_plot component exists: {hasattr(self, 'scale_pies_plot')}")
-  
-    # Try updating with error handling
-    try:
-      self.ownership_treemap.figure = all_charts['ownership_treemap']
-      print("✓ ownership_treemap updated")
-    except Exception as e:
-      print(f"✗ Error updating ownership_treemap: {e}")
-  
-    try:
-      self.scale_pies_plot.figure = all_charts['scale_pies']
-      print("✓ scale_pies_plot updated")
-    except Exception as e:
-      print(f"✗ Error updating scale_pies_plot: {e}")
-  
-    print("Update complete!")
+    self.ownership_treemap.figure = all_charts['ownership_treemap']
+    self.scale_pies_plot.figure =all_charts['scale_pies']
+    self.indig_ownership_plot.figure = all_charts['indigenous_pie']
+    self.lollipop_chart.figure = all_charts['lollipop_chart']
 
   def remove_filter(self, filter_type, value):
     """Remove a specific filter value and refresh"""
@@ -121,33 +104,29 @@ class ownership_models(ownership_modelsTemplate):
 
   def provinces_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    print("CLIENT: provinces_dd changed")
     self.schedule_filter_update()
 
   def proj_types_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    print("CLIENT: proj_types_dd changed")
     self.schedule_filter_update()
 
   def stages_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    print("CLIENT: stages_dd changed")
     self.schedule_filter_update()
 
   def indig_owners_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    print("CLIENT: indig_owners_dd changed")
     self.schedule_filter_update()
 
   def project_scale_dd_change(self, **event_args):
     """This method is called when the selected values change"""
-    print("CLIENT: project_scale_dd changed")
     self.schedule_filter_update()
 
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
     self.ownership_nav.role = 'selected'
+    self.apply_filters()
     
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""

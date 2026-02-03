@@ -21,7 +21,9 @@ components_by_slot:
         placeholder: Project Type
         width: 170px
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - event_bindings: {change: provinces_dd_change}
+    - data_bindings:
+      - {code: 'self.item['''']', property: multiple, writeback: false}
+      event_bindings: {change: provinces_dd_change}
       layout_properties: {expand: false, width: null}
       name: provinces_dd
       properties:
@@ -38,7 +40,7 @@ components_by_slot:
         background: ''
         foreground: ''
         items: [Construction, Operation]
-        multiple: false
+        multiple: true
         placeholder: Project Stage
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
     - data_bindings: []
@@ -75,7 +77,7 @@ components_by_slot:
         style: title
         text: 'Selected: '
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {expand: false, width: 648.5}
+    - layout_properties: {expand: true, width: null}
       name: filter_chips_panel
       properties:
         item_template: ownership_models.FilterChip1
@@ -86,26 +88,113 @@ components_by_slot:
     name: flow_panel_1
     properties: {}
     type: FlowPanel
-  - layout_properties: {full_width_row: true}
-    name: heading_1
-    properties:
-      font_family: serif
-      spacing:
-        margin: ['', null, null, null]
-      text: Who owns community energy projects?
-    type: form:dep_9kcxnwm3upyjd:_Components.Heading
-  - layout_properties: {full_width_row: true}
-    name: ownership_treemap
-    properties: {height: '600'}
-    type: Plot
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'FBOOFI,SRCHLZ'}
+      name: heading_1
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Who owns community energy projects?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'XHUPAC,UTPVPF SIONUB,YDYLWX'}
+      name: text_1
+      properties: {text: 'Community energy projects involve different ownership models, each with distinct implications for community control, financing capacity, and local benefits. Cooperatives, municipalities, non-profits, and other ownership types bring unique strengths to developing renewable energy infrastructure. This visualization examines who owns these projects from two angles: the number of projects controlled by each owner type, and the total capital invested across those projects. These perspectives reveal both the breadth of participation and the concentration of financial resources in the sector.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'XHUPAC,UTPVPF BJBGMJ,LRFAGP'}
+      name: heading_2
+      properties: {bold: true, scale: small, style: title, text: By Dollar Amount}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'XHUPAC,UTPVPF IXBHYH,QFJDYO'}
+      name: text_2
+      properties: {text: 'This view shows project ownership weighted by investment amount. A $10 million project counts 10× more than a $1 million project. This reveals who has the largest financial stakes in community energy and which owner types undertake higher-cost projects. Note: this doesn''t account for differences in typical project size across owner types.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'XHUPAC,UTPVPF WCCKNW,RZNRYY'}
+      name: heading_2_copy
+      properties: {bold: true, scale: small, style: title, text: By Project Count}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'XHUPAC,UTPVPF TSPVGW,ARSDYQ'}
+      name: text_2_copy
+      properties: {text: 'This view shows project ownership by number of projects. Each project counts equally, regardless of size or cost. This reveals who owns the most projects and shows the breadth of participation across owner types.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'XHUPAC,BVWRHW'}
+      name: ownership_treemap
+      properties:
+        height: 70vh
+        margin: ['0', null, '0', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'PTOZCX,BHFQQO'}
+      name: heading_1_copy
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Indigenous participation in community energy
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,ITZKFE'}
+      name: indig_ownership_plot
+      properties:
+        height: 45vh
+        margin: ['0', null, '0', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,KHDXVB'}
+      name: text_1_copy
+      properties:
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: heading_1_copy_2
+          properties:
+            scale: large
+            spacing:
+              margin: ['', null, null, null]
+            style: title
+            text: Where do projects face challenges?
+            text_color: ''
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - layout_properties: {slot: card-content-container-slot}
+          name: lollipop_chart
+          properties: {height: 30vh}
+          type: Plot
+        - layout_properties: {slot: card-content-container-slot}
+          name: button_1
+          properties:
+            align: center
+            background_color: theme:On Tertiary Container
+            bold: true
+            font_size: 14
+            icon: mi:question_exchange
+            icon_color: '#0db0ba'
+            icon_size: 25
+            spacing:
+              padding: [null, '16', null, null]
+            text: How can I get help for my project?
+          type: form:dep_9kcxnwm3upyjd:_Components.Button
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_1
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'ZIVNWM,YRYSNC'}
+      name: card_1
+      properties: {background_color: 'theme:Tertiary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    layout_properties: {}
+    name: column_panel_1
+    properties: {col_spacing: large, col_widths: '{"UTPVPF":20,"BVWRHW":40}'}
+    type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: scale_pies_plot
-    properties: {}
+    properties: {height: 45vh}
     type: Plot
-  - event_bindings: {}
+  - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
     name: filter_timer
-    properties: {interval: 0}
+    properties: {interval: 0.5}
     type: Timer
   title_slot:
   - components:
