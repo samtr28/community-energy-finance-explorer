@@ -303,15 +303,25 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
   """
   Single server call that returns ALL ownership chart figures at once.
   """
+  # DEBUG: Print what filters were received
+  print("=== FILTER DEBUG ===")
+  print(f"provinces: {provinces} (type: {type(provinces)})")
+  print(f"proj_types: {proj_types} (type: {type(proj_types)})")
+  print(f"stages: {stages} (type: {type(stages)})")
+  print(f"indigenous_ownership: {indigenous_ownership} (type: {type(indigenous_ownership)})")
+  print(f"project_scale: {project_scale} (type: {type(project_scale)})")
 
   # Load raw data ONCE
   df_raw = get_data()
 
   # Process owners data ONCE
   df_owners = process_owners_data(df_raw)
+  print(f'Data processed: {len(df_owners)} total rows')
 
-  print('data processed')
-  
+  # DEBUG: Show sample of data before filtering
+  print("Sample before filtering:")
+  print(df_owners[['province', 'project_type', 'stage', 'project_scale']].head(3))
+
   # Apply filters to owners data
   df_owners_filtered = apply_filters(
     df_owners, 
@@ -322,8 +332,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     project_scale
   )
 
-  print('filters_applier')
-  # Generate ALL charts
+  print(f'After filtering: {len(df_owners_filtered)} rows')
 
     # Add this block:
   if df_owners_filtered.empty:

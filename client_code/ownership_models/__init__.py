@@ -13,7 +13,7 @@ class ownership_models(ownership_modelsTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
-    self.apply_filters() 
+    #self.apply_filters() 
 
   def schedule_filter_update(self):
     """Schedule a filter update with debouncing - waits 1s after last change"""
@@ -28,7 +28,7 @@ class ownership_models(ownership_modelsTemplate):
     stages = self.stages_dd.selected
     indigenous_ownership = self.indig_owners_dd.selected
     project_scale = self.project_scale_dd.selected
-
+  
     # Build kwargs with only set filters
     kwargs = {}
     if provinces:
@@ -41,44 +41,56 @@ class ownership_models(ownership_modelsTemplate):
       kwargs["indigenous_ownership"] = indigenous_ownership
     if project_scale:
       kwargs["project_scale"] = project_scale
-
-    # UPDATE CHIPS - Build chip data from selections
+  
+      # UPDATE CHIPS - Build chip data from selections
     chips = []
-
     if provinces:
       for p in provinces:
         chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
-
     if proj_types:
       for pt in proj_types:
         chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
-
     if stages:
       for s in stages:
         chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
-
     if indigenous_ownership:
       for io in indigenous_ownership:
         chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
-
     if project_scale:
       for ps in project_scale:
         chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
-
-    # Update the repeating panel
+  
+      # Update the repeating panel
     self.filter_chips_panel.items = chips
-
+  
     # SINGLE SERVER CALL - gets all charts at once
     print("Fetching all charts...")
     all_charts = anvil.server.call('get_all_ownership_charts', **kwargs)
     print("Charts received, updating UI...")
-
-    #TO DO ADD CHARTS
-    self.ownership_treemap.figure = all_charts['ownership_treemap']
-    self.scale_pies_plot.figure = all_charts['scale_pies']
-    # Update all plots with the returned figures
-
-    #TO DO 
+  
+    # DEBUG: Check what we received
+    print(f"Received charts: {all_charts.keys()}")
+    print(f"ownership_treemap type: {type(all_charts['ownership_treemap'])}")
+    print(f"scale_pies type: {type(all_charts['scale_pies'])}")
+  
+    # DEBUG: Check if plot components exist
+    print(f"ownership_treemap component exists: {hasattr(self, 'ownership_treemap')}")
+    print(f"scale_pies_plot component exists: {hasattr(self, 'scale_pies_plot')}")
+  
+    # Try updating with error handling
+    try:
+      self.ownership_treemap.figure = all_charts['ownership_treemap']
+      print("✓ ownership_treemap updated")
+    except Exception as e:
+      print(f"✗ Error updating ownership_treemap: {e}")
+  
+    try:
+      self.scale_pies_plot.figure = all_charts['scale_pies']
+      print("✓ scale_pies_plot updated")
+    except Exception as e:
+      print(f"✗ Error updating scale_pies_plot: {e}")
+  
+    print("Update complete!")
 
   def remove_filter(self, filter_type, value):
     """Remove a specific filter value and refresh"""
