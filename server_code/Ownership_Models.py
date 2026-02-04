@@ -191,7 +191,6 @@ def create_ownership_treemap_internal(df_owners):
 
 def create_ownership_scale_pies_internal(df_owners):
   """Create pie charts showing ownership composition by project scale."""
-
   scale_order = [
     "Micro (< $100K)", 
     "Small ($100K-$1M)", 
@@ -200,26 +199,31 @@ def create_ownership_scale_pies_internal(df_owners):
     "Very Large ($25M-$100M)",
     "Mega (> $100M)"
   ]
-
   scales_in_data = [s for s in scale_order if s in df_owners['project_scale'].values]
-
   if not scales_in_data:
     fig = go.Figure()
     fig.update_layout(title='No data available for selected filters')
     return fig
-
   owner_type_colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_colors)
-
   fig = make_subplots(
     rows=1, 
     cols=len(scales_in_data),
     specs=[[{'type': 'domain'}] * len(scales_in_data)]
   )
-
   for i, scale in enumerate(scales_in_data):
     sub = df_owners[df_owners['project_scale'] == scale]
     grouped = sub.groupby('owner_type', as_index=False)['owner_percent'].sum()
     n = sub['record_id'].nunique()
+
+    # Calculate percentages for threshold
+    total = grouped['owner_percent'].sum()
+    grouped['percentage'] = (grouped['owner_percent'] / total) * 100
+
+    # Only show text if slice is >= 5%
+    threshold = 5
+    grouped['text_display'] = grouped['percentage'].apply(
+      lambda x: f'{x:.1f}%' if x >= threshold else ''
+    )
 
     fig.add_trace(
       go.Pie(
@@ -232,14 +236,13 @@ def create_ownership_scale_pies_internal(df_owners):
         ),
         marker=dict(colors=[owner_type_colors[ot] for ot in grouped['owner_type']]),
         sort=False,
-        textinfo='percent',
-        texttemplate='%{percent:.1%}',
+        textinfo='text',
+        text=grouped['text_display'],
         textfont=dict(size=10, family='Arial, sans-serif'),
-        hovertemplate='<b>%{label}</b><br>%{value:.1f}%<extra></extra>'
+        hovertemplate='<b>%{label}</b><br>%{percent}<extra></extra>'
       ),
       row=1, col=i+1
     )
-
   fig.update_layout(
     title={
       'text': 'Ownership composition by project scale', 
@@ -254,7 +257,6 @@ def create_ownership_scale_pies_internal(df_owners):
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(size=12, color='black', family='Arial, sans-serif')
   )
-
   return fig
 
 def create_indigenous_ownership_stacked_internal(df_owners):
@@ -437,21 +439,17 @@ def create_bottleneck_lollipop_internal(df):
 
 def create_ownership_financing_funnel_internal(df):
   """Create funnel chart showing top 10 ownership-financing combinations."""
-
   if df.empty:
     fig = go.Figure()
     fig.update_layout(title='No data available for selected filters')
     return fig
-
   # Extract owner-finance pairs
   pairs = []
   for _, row in df.iterrows():
     owners = row.get('owners', [])
     financing = row.get('financing_mech', [])
-
     if not owners or not financing:
       continue
-
     # Create all combinations
     for o in owners:
       for f in financing:
@@ -459,38 +457,56 @@ def create_ownership_financing_funnel_internal(df):
           'Owner': o.get('owner_type', 'Unknown'),
           'Finance': f.get('category', 'Unknown')
         })
-
   if not pairs:
     fig = go.Figure()
     fig.update_layout(title='No ownership-financing data available')
     return fig
-
   pairs_df = pd.DataFrame(pairs)
-
   # Count combinations and get top 10
   combo_counts = pairs_df.groupby(['Owner', 'Finance']).size().reset_index(name='Count')
   combo_counts['Label'] = combo_counts['Owner'] + ' → ' + combo_counts['Finance']
   combo_counts = combo_counts.sort_values('Count', ascending=False).head(10)
-
+  # Wrap labels for better readability
+  combo_counts['Label_wrapped'] = combo_counts['Label'].apply(lambda x: wrap_text(x, width=50))
   # Create funnel chart
   fig = go.Figure(go.Funnel(
-    y=combo_counts['Label'],
+    y=combo_counts['Label_wrapped'],
     x=combo_counts['Count'],
+    textposition="inside",
+    textfont=dict(size=12, family='Arial, sans-serif'),
     marker=dict(
       color=gradient_palette[:len(combo_counts)],
-      line=dict(width=2, color='white')
-    )
+      line=dict(width=0)
+    ),
+    customdata=combo_counts['Label'],
+    hovertemplate='<b>%{customdata}</b><br>Count: %{x}<extra></extra>'
   ))
-
+  # Add horizontal lines under each label
+  shapes = []
+  for i in range(len(combo_counts)):
+    shapes.append(
+      dict(
+        type='line',
+        xref='paper',
+        yref='y',
+        x0=-1.5,
+        x1=0,
+        y0=i - 0.45,
+        y1=i - 0.45,
+        line=dict(color='#cccccc', width=1)
+      )
+    )
   fig.update_layout(
     title={'text': 'Top 10 Ownership-Financing Combinations', 'x': 0, 'xanchor': 'left'},
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(family='Arial, sans-serif', size=12, color='black'),
-    margin=dict(t=50, b=30, l=250, r=30)
+    margin=dict(t=50, b=30, l=20, r=30),
+    yaxis=dict(side='left'),
+    shapes=shapes
   )
-
   return fig
+
 
 # ==================== MAIN OWNERSHIP CALLABLE FUNCTION ====================
 

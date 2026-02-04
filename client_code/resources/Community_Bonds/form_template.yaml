@@ -1,0 +1,23 @@
+components_by_slot:
+  content_slot: []
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 150}
+      name: title
+      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Factsheet}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {}
+      name: heading_1
+      properties: {scale: large, style: title, text: Community Bonds}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: tiny
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
+is_package: true
+layout: {type: 'form:Base'}
