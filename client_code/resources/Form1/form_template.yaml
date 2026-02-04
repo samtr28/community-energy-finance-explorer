@@ -1,3 +1,25 @@
-components: []
+components:
+- components:
+  - layout_properties: {grid_position: 'WGQNSV,MZZJTY'}
+    name: heading_2
+    properties: {text: Fact Sheet}
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  - layout_properties: {grid_position: 'WGQNSV,ZBRDOO'}
+    name: image_1
+    properties: {background: '#ffffff', height: 62, source: _/theme/Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.png}
+    type: Image
+  layout_properties: {full_width_row: true, grid_position: 'THJIHJ,GDIQXB', row_background: 'theme:On Primary Container'}
+  name: column_panel_1
+  properties: {col_widths: '{"MZZJTY":55,"ZBRDOO":5}'}
+  type: ColumnPanel
+- components:
+  - layout_properties: {col_xs: 0, row: CMGYVY, width_xs: 10}
+    name: heading_1
+    properties: {background_color: 'theme:Primary', font_family: serif, text: Fact Sheet, text_color: 'theme:On Secondary'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  layout_properties: {full_width_row: true, grid_position: 'ORSVSO,HLTZFB'}
+  name: grid_panel_1
+  properties: {}
+  type: GridPanel
 container: {type: ColumnPanel}
 is_package: true
