@@ -437,7 +437,6 @@ def create_bottleneck_lollipop_internal(df):
 
 def create_ownership_financing_funnel_internal(df):
   """Create funnel chart showing top 10 ownership-financing combinations."""
-
   if df.empty:
     fig = go.Figure()
     fig.update_layout(title='No data available for selected filters')
@@ -448,7 +447,6 @@ def create_ownership_financing_funnel_internal(df):
   for _, row in df.iterrows():
     owners = row.get('owners', [])
     financing = row.get('financing_mech', [])
-
     if not owners or not financing:
       continue
 
@@ -472,22 +470,45 @@ def create_ownership_financing_funnel_internal(df):
   combo_counts['Label'] = combo_counts['Owner'] + ' → ' + combo_counts['Finance']
   combo_counts = combo_counts.sort_values('Count', ascending=False).head(10)
 
+  # Wrap labels for better readability
+  combo_counts['Label_wrapped'] = combo_counts['Label'].apply(lambda x: wrap_text(x, width=50))
+
   # Create funnel chart
   fig = go.Figure(go.Funnel(
-    y=combo_counts['Label'],
+    y=combo_counts['Label_wrapped'],
     x=combo_counts['Count'],
+    textposition="inside",
+    textfont=dict(size=12, family='Arial, sans-serif'),
     marker=dict(
       color=gradient_palette[:len(combo_counts)],
-      line=dict(width=2, color='white')
+      line=dict(width=0)  # Remove bar borders
     )
   ))
+
+  # Add horizontal lines under each label
+  shapes = []
+  for i in range(len(combo_counts)):
+    shapes.append(
+      dict(
+        type='line',
+        xref='paper',
+        yref='y',
+        x0=-1.5,
+        x1=0,  # Adjust this to control line length (0-1, where 1 is full width)
+        y0=i - 0.45,  # Position below each label
+        y1=i - 0.45,
+        line=dict(color='#cccccc', width=1)
+      )
+    )
 
   fig.update_layout(
     title={'text': 'Top 10 Ownership-Financing Combinations', 'x': 0, 'xanchor': 'left'},
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(family='Arial, sans-serif', size=12, color='black'),
-    margin=dict(t=50, b=30, l=250, r=30)
+    margin=dict(t=50, b=30, l=20, r=30),
+    yaxis=dict(side='left'),
+    shapes=shapes  # Add the divider lines
   )
 
   return fig
