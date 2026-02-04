@@ -74,6 +74,7 @@ class ownership_models(ownership_modelsTemplate):
     self.scale_pies_plot.figure =all_charts['scale_pies']
     self.indig_ownership_plot.figure = all_charts['indigenous_pie']
     self.lollipop_chart.figure = all_charts['lollipop_chart']
+    self.funnel_plot = all_charts['funnel_chart']
 
   def remove_filter(self, filter_type, value):
     """Remove a specific filter value and refresh"""

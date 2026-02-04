@@ -123,6 +123,26 @@ components_by_slot:
         height: 70vh
         margin: ['0', null, '0', null]
       type: Plot
+    - layout_properties: {grid_position: 'AFQMYM,FDVABP'}
+      name: heading_1_copy_copy
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: More text
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'DDAZWJ,GARKFV'}
+      name: funnel_plot
+      properties: {height: 261}
+      type: Plot
+    - layout_properties: {grid_position: 'DDAZWJ,BBVIKA'}
+      name: text_1_copy_copy
+      properties:
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'PTOZCX,BHFQQO'}
       name: heading_1_copy
       properties:

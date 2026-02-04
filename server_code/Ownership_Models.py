@@ -435,6 +435,63 @@ def create_bottleneck_lollipop_internal(df):
 
   return fig
 
+def create_ownership_financing_funnel_internal(df):
+  """Create funnel chart showing top 10 ownership-financing combinations."""
+
+  if df.empty:
+    fig = go.Figure()
+    fig.update_layout(title='No data available for selected filters')
+    return fig
+
+  # Extract owner-finance pairs
+  pairs = []
+  for _, row in df.iterrows():
+    owners = row.get('owners', [])
+    financing = row.get('financing_mech', [])
+
+    if not owners or not financing:
+      continue
+
+    # Create all combinations
+    for o in owners:
+      for f in financing:
+        pairs.append({
+          'Owner': o.get('owner_type', 'Unknown'),
+          'Finance': f.get('category', 'Unknown')
+        })
+
+  if not pairs:
+    fig = go.Figure()
+    fig.update_layout(title='No ownership-financing data available')
+    return fig
+
+  pairs_df = pd.DataFrame(pairs)
+
+  # Count combinations and get top 10
+  combo_counts = pairs_df.groupby(['Owner', 'Finance']).size().reset_index(name='Count')
+  combo_counts['Label'] = combo_counts['Owner'] + ' → ' + combo_counts['Finance']
+  combo_counts = combo_counts.sort_values('Count', ascending=False).head(10)
+
+  # Create funnel chart
+  fig = go.Figure(go.Funnel(
+    y=combo_counts['Label'],
+    x=combo_counts['Count'],
+    marker=dict(
+      color=gradient_palette[:len(combo_counts)],
+      line=dict(width=2, color='white')
+    )
+  ))
+
+  fig.update_layout(
+    title={'text': 'Top 10 Ownership-Financing Combinations', 'x': 0, 'xanchor': 'left'},
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    font=dict(family='Arial, sans-serif', size=12, color='black'),
+    margin=dict(t=50, b=30, l=250, r=30)
+  )
+
+  return fig
+
 # ==================== MAIN OWNERSHIP CALLABLE FUNCTION ====================
 
 @anvil.server.callable
@@ -472,14 +529,16 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
       'ownership_treemap': empty_fig,
       'scale_pies': empty_fig,
       'indigenous_pie': empty_fig,
-      'lollipop_chart': empty_fig
+      'lollipop_chart': empty_fig,
+      'funnel_chart': empty_fig
     }
 
   results = {
     'ownership_treemap': create_ownership_treemap_internal(df_owners_filtered),
     'scale_pies': create_ownership_scale_pies_internal(df_owners_filtered),
     'indigenous_pie': create_indigenous_ownership_stacked_internal(df_owners_filtered),
-    'lollipop_chart': create_bottleneck_lollipop_internal(df_raw_filtered)
+    'lollipop_chart': create_bottleneck_lollipop_internal(df_raw_filtered),
+    'funnel_chart': create_ownership_financing_funnel_internal(df_raw_filtered)
   }
 
   return results
