@@ -70,7 +70,11 @@ components:
       font_size: 17
       format: restricted_html
     type: RichText
-  - layout_properties: {grid_position: 'YALUEC,KTJRJT'}
+  - layout_properties: {grid_position: 'YALUEC,KTJRJT TKGDFC,RDDHGC'}
+    name: data_row_panel_1
+    properties: {}
+    type: DataRowPanel
+  - layout_properties: {grid_position: 'YALUEC,KTJRJT DUIUGZ,IYNYDO'}
     name: image_2
     properties: {height: 50vh, source: _/theme/community_bonds.png}
     type: Image
