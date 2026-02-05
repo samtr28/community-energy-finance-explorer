@@ -33,30 +33,44 @@ components:
       type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
     layout_properties: {grid_position: 'PGPKAJ,GYQTHZ'}
     name: card_2
-    properties: {appearance: elevated, background_color: '#0db0ba'}
+    properties: {appearance: elevated, background_color: 'theme:On Primary Container'}
     type: form:dep_9kcxnwm3upyjd:_Components.Card
   - layout_properties: {grid_position: 'PGPKAJ,YLASJQ'}
     name: image_1
     properties: {display_mode: shrink_to_fit, height: 151, source: _/theme/Horizontal-IIH-Logomark-Full Colour-University-of-Victoria.png}
     type: Image
-  layout_properties: {full_width_row: true, grid_position: 'TCLGAF,SGERQG', row_background: '#0db0'}
+  layout_properties: {full_width_row: true, grid_position: 'TCLGAF,SGERQG', row_background: ''}
   name: column_panel_1
-  properties: {background: 'theme:On Secondary', col_widths: '{"GYQTHZ":55,"YLASJQ":20}'}
+  properties: {background: '#ffffff', col_widths: '{"GYQTHZ":55,"YLASJQ":20}'}
   type: ColumnPanel
 - components:
   - layout_properties: {grid_position: 'LZGHUD,JZRCOA'}
     name: heading_1
-    properties: {font_family: serif, scale: large, style: title, text: 'What are community bonds?'}
+    properties: {font_family: serif, scale: medium, style: headline, text: 'What are community bonds?'}
     type: form:dep_9kcxnwm3upyjd:_Components.Heading
-  - layout_properties: {grid_position: 'KTQGLC,YYTVNR'}
-    name: text_1
+  - components: []
+    layout_properties: {grid_position: 'XHOOAV,XFZLDD'}
+    name: rich_text_1
     properties:
-      scale: large
-      text: "Community Bonds are a form of debt financing: they work much like a loan. A nonprofit, cooperative, charity, or Indigenous-led organization (the bond issuer) borrows money from community members (the lenders, also referred to as bondholders). It promises to repay them with interest over a specified period. \n\nThey are exempt, private-market securities (not traded on exchanges), usually structured like promissory notes with fixed principal, term, and interest, while also delivering social, cultural, and environmental value.\n"
-    type: form:dep_9kcxnwm3upyjd:_Components.Text
+      content: "Community Bonds are a form of <b>debt financing</b>: they work much like a loan. A nonprofit, cooperative, charity, or Indigenous-led organization (the bond issuer) borrows money from community members (the lenders, also referred to as bondholders). It promises to repay them with interest over a specified period. \n<br><br>\nThey are <b>exempt, private-market securities </b>(not traded on exchanges), usually structured like promissory notes with fixed principal, term, and interest, while also delivering social, cultural, and environmental value."
+      font_size: 17
+      format: restricted_html
+    type: RichText
+  - components:
+    - name: message_pill_1
+      properties: {level: warning, message: 'Like all investments, community bonds carry risk, and repayment depends on project success.'}
+      type: form:dep_ar2wlcmlppsllr:MessagePill
+    layout_properties: {grid_position: 'YALUEC,KFSITJ'}
+    name: rich_text_1_copy
+    properties: {content: 'More than a financial tool, community bonds let everyday people invest directly in local projects — from solar farms to arts centers to affordable housing. The result is a <b>win-win:</b> organizations access affordable capital for mission-driven work, while investors earn a return and contribute to strengthening their community.', font_size: 17, format: restricted_html}
+    type: RichText
+  - layout_properties: {grid_position: 'YALUEC,KTJRJT'}
+    name: image_2
+    properties: {height: 50vh, source: _/theme/community_bonds.png}
+    type: Image
   layout_properties: {grid_position: 'GEWGMQ,JTDIWW'}
   name: column_panel_2
-  properties: {}
+  properties: {col_widths: '{"XFZLDD":60,"KFSITJ":20,"KTJRJT":40}'}
   type: ColumnPanel
 container:
   properties: {background: 'theme:On Primary'}
