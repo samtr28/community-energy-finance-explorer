@@ -57,20 +57,93 @@ components:
       format: restricted_html
     type: RichText
   - components:
-    - name: message_pill_1
+    - layout_properties: {width: null}
+      name: message_pill_1
       properties: {level: warning, message: 'Like all investments, community bonds carry risk, and repayment depends on project success.'}
       type: form:dep_ar2wlcmlppsllr:MessagePill
     layout_properties: {grid_position: 'YALUEC,KFSITJ'}
     name: rich_text_1_copy
-    properties: {content: 'More than a financial tool, community bonds let everyday people invest directly in local projects — from solar farms to arts centers to affordable housing. The result is a <b>win-win:</b> organizations access affordable capital for mission-driven work, while investors earn a return and contribute to strengthening their community.', font_size: 17, format: restricted_html}
+    properties:
+      content: |-
+        More than a financial tool, community bonds let everyday people invest directly in local projects — from solar farms to arts centers to affordable housing. The result is a <b>win-win:</b> organizations access affordable capital for mission-driven work, while investors earn a return and contribute to strengthening their community.
+        <br><br><br><br>
+      font_size: 17
+      format: restricted_html
     type: RichText
   - layout_properties: {grid_position: 'YALUEC,KTJRJT'}
     name: image_2
     properties: {height: 50vh, source: _/theme/community_bonds.png}
     type: Image
+  - layout_properties: {grid_position: 'GOXCBB,RNQYXI'}
+    name: heading_1_copy
+    properties: {font_family: serif, scale: medium, style: headline, text: 'What can community bonds fund?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  - components: []
+    layout_properties: {grid_position: 'NSGPJG,RREJYD'}
+    name: rich_text_1_copy_2
+    properties:
+      content: |
+        Community bonds are best suited for projects that have clear social or environmental value and generate steady revenue to repay investors over time. They are best <b>suited to asset-backed projects </b> (infrastructure, equipment, real estate) that generate reliable income to service debt and repay investors. Examples include:
+        <br><br>
+        <ul>
+        <li><b>Renewable energy</b> – solar cooperatives, community wind farms, district energy projects</li>
+        <li><b>Affordable housing</b> – land trust housing development or co-op housing retrofits </li>
+        <li><b>Community infrastructure</b> – innovation hubs, health clinics, art spaces</li>
+        <li><b>Local food systems</b> – urban farms, food co-ops </li>
+        <li><b>Education & culture</b> – learning centers, performance venues, museums</li>
+        </ul>
+        If the project brings the community together, delivers social and/or environmental value, and pays for itself over time, it’s likely a good fit.
+      font_size: 17
+      format: restricted_html
+    type: RichText
+  - layout_properties: {grid_position: 'JKBZJR,FNOIMP'}
+    name: heading_1_copy_3
+    properties: {font_family: serif, scale: medium, style: headline, text: 'Who provides the money?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  - components: []
+    layout_properties: {grid_position: 'WTETWB,QNRBRQ'}
+    name: rich_text_1_copy_2_copy
+    properties:
+      content: |-
+        The beauty of community bonds is that they tap into a robust funding base beyond traditional financial institutions. This includes:
+        <br><br>
+        <ul>
+          <li>Local citizens who want to invest in positive changes in their own communities</li>
+          <li>Community foundations, family foundations, and other impact investors</li>
+          <li>Values-aligned institutions (churches, unions, social enterprises)</li>
+        </ul>
+        Investment amounts range from $1,000 to $100,000, with typical returns of 2-6% interest over a 3–7-year period. Unlike stocks, community bonds are not traded on an exchange; they are acquired directly from the issuing organization through a tailored offering.
+      font_size: 17
+      format: restricted_html
+    type: RichText
+  - layout_properties: {grid_position: 'YCNBYD,YZTMXT'}
+    name: heading_1_copy_3_copy
+    properties: {font_family: serif, scale: medium, style: headline, text: 'Who can issue them?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  - layout_properties: {grid_position: 'DFQHOP,ONRBRV'}
+    name: rich_text_1_copy_2_copy_copy
+    properties:
+      content: |-
+        Organizations must be:
+        <br><br>
+
+        <ul>
+          <li>Nonprofits, registered charities, cooperatives, or Indigenous-led entities</li>
+          <li>Able to manage investor relationships, legal disclosures, and reporting</li>
+          <li>Committed to transparency, accountability, and mission alignment</li>
+        </ul>
+
+        They don't need to be large organizations - but they do need to be trustworthy, well-organized and transparent about how the proceeds from the bond issue are used.
+      font_size: 17
+      format: restricted_html
+    type: RichText
+  - layout_properties: {grid_position: 'AGJZPN,DEPAID'}
+    name: heading_1_copy_3_copy_copy
+    properties: {font_family: serif, scale: medium, style: headline, text: Benefits and challenges of community bonds}
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
   layout_properties: {grid_position: 'GEWGMQ,JTDIWW'}
   name: column_panel_2
-  properties: {col_widths: '{"XFZLDD":60,"KFSITJ":20,"KTJRJT":40}'}
+  properties: {col_widths: '{"XFZLDD":60,"KFSITJ":25,"KTJRJT":35}'}
   type: ColumnPanel
 container:
   properties: {background: 'theme:On Primary'}
