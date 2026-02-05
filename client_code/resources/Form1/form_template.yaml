@@ -1,25 +1,64 @@
 components:
 - components:
-  - layout_properties: {grid_position: 'WGQNSV,MZZJTY'}
-    name: heading_2
-    properties: {text: Fact Sheet}
-    type: form:dep_9kcxnwm3upyjd:_Components.Heading
-  - layout_properties: {grid_position: 'WGQNSV,ZBRDOO'}
+  - components:
+    - components:
+      - components:
+        - layout_properties: {}
+          name: heading_1_copy_copy
+          properties:
+            font_family: serif
+            icon: ''
+            scale: small
+            spacing:
+              margin: [null, null, '-10', null]
+            style: headline
+            text: 'Factsheet:'
+            text_color: theme:On Primary
+            underline: false
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        layout_properties: {slot: card-content-container-slot}
+        name: flow_panel_1
+        properties:
+          spacing:
+            margin: ['0', null, '-10', null]
+        type: FlowPanel
+      - data_bindings: []
+        layout_properties: {slot: card-content-container-slot}
+        name: heading_1_copy_2
+        properties: {bold: true, font_family: '', icon: '', scale: medium, style: display, text: Community Bonds, text_color: 'theme:On Primary', underline: false}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      layout_properties: {slot: card-content-slot}
+      name: card_content_container_2
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+    layout_properties: {grid_position: 'PGPKAJ,GYQTHZ'}
+    name: card_2
+    properties: {appearance: elevated, background_color: '#0db0ba'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Card
+  - layout_properties: {grid_position: 'PGPKAJ,YLASJQ'}
     name: image_1
-    properties: {background: '#ffffff', height: 62, source: _/theme/Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.png}
+    properties: {display_mode: shrink_to_fit, height: 151, source: _/theme/Horizontal-IIH-Logomark-Full Colour-University-of-Victoria.png}
     type: Image
-  layout_properties: {full_width_row: true, grid_position: 'THJIHJ,GDIQXB', row_background: 'theme:On Primary Container'}
+  layout_properties: {full_width_row: true, grid_position: 'TCLGAF,SGERQG', row_background: '#0db0'}
   name: column_panel_1
-  properties: {col_widths: '{"MZZJTY":55,"ZBRDOO":5}'}
+  properties: {background: 'theme:On Secondary', col_widths: '{"GYQTHZ":55,"YLASJQ":20}'}
   type: ColumnPanel
 - components:
-  - layout_properties: {col_xs: 0, row: CMGYVY, width_xs: 10}
+  - layout_properties: {grid_position: 'LZGHUD,JZRCOA'}
     name: heading_1
-    properties: {background_color: 'theme:Primary', font_family: serif, text: Fact Sheet, text_color: 'theme:On Secondary'}
+    properties: {font_family: serif, scale: large, style: title, text: 'What are community bonds?'}
     type: form:dep_9kcxnwm3upyjd:_Components.Heading
-  layout_properties: {full_width_row: true, grid_position: 'ORSVSO,HLTZFB'}
-  name: grid_panel_1
+  - layout_properties: {grid_position: 'KTQGLC,YYTVNR'}
+    name: text_1
+    properties:
+      scale: large
+      text: "Community Bonds are a form of debt financing: they work much like a loan. A nonprofit, cooperative, charity, or Indigenous-led organization (the bond issuer) borrows money from community members (the lenders, also referred to as bondholders). It promises to repay them with interest over a specified period. \n\nThey are exempt, private-market securities (not traded on exchanges), usually structured like promissory notes with fixed principal, term, and interest, while also delivering social, cultural, and environmental value.\n"
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  layout_properties: {grid_position: 'GEWGMQ,JTDIWW'}
+  name: column_panel_2
   properties: {}
-  type: GridPanel
-container: {type: ColumnPanel}
+  type: ColumnPanel
+container:
+  properties: {background: 'theme:On Primary'}
+  type: ColumnPanel
 is_package: true
