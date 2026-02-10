@@ -13,6 +13,9 @@ db_schema:
     - admin_ui: {order: 2, width: 200}
       name: file_version
       type: string
+    - admin_ui: {order: 3, width: 200}
+      name: thumbnail
+      type: media
     server: full
     title: Files
 dependencies:
@@ -51,5 +54,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/files.yml
-startup: {module: outcomes_impacts, type: form}
+startup: {module: resources, type: form}
 startup_form: null

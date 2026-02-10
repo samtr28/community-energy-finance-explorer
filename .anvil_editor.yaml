@@ -6,7 +6,6 @@ unique_ids:
     IIH-Logo-Full-Colour.png: '1769112913235107641138577.76625'
     Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.jpg: '1770245821155623140851643.5996'
     Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.png: '1770245844165411634824895.68805'
-    community_bonds.png: '1770249976384172014727513.32626'
     standard-page.html: AMRQPGN4FKJZSMF6IUKABS4PVWYQMRPN
     theme.css: RYJFBYC54SIFDOZOH4XE3WTHBNC2BN6R
   forms:
@@ -22,6 +21,7 @@ unique_ids:
     projects_explorer: '1759257423731616493782431.313'
     projects_explorer.Project_Card: '1760505559619997561065063.1948'
     resources: '1759257439766755211398664.8079'
+    resources.ItemTemplate1: '1770693753823465543389368.22925'
   modules:
     config: '1761843729959440190662753.931'
   scripts: {}
@@ -31,3 +31,4 @@ unique_ids:
     Overview: '176134232373339473832137.29949'
     Ownership_Models: '1768592415922178364122100.5825'
     Projects_Explorer: '1759272839118413361284404.6838'
+    Resources: '1770693526808679987236465.27'
