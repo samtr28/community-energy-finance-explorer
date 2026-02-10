@@ -1,11 +1,11 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {grid_position: 'CGSDQT,DGVMEY'}
+    - layout_properties: {full_width_row: true, grid_position: 'CABLDB,GDUQUY'}
       name: repeating_panel_1
-      properties: {item_template: resources.ItemTemplate1}
+      properties: {item_template: resources.ItemTemplate1, role: 3-cols}
       type: RepeatingPanel
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {}
     type: ColumnPanel
@@ -23,7 +23,7 @@ components_by_slot:
         spacing:
           margin: ['0', null, null, null]
         style: body
-        text: We have compiled a selection of resources to help you better understand community energy financing.
+        text: Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: title_panel_copy

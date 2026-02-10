@@ -339,3 +339,5 @@ roles:
   name: 'horizontal-repeater '
 - components: [RepeatingPanel]
   name: twod-repeater
+- components: [RepeatingPanel]
+  name: 3-cols
