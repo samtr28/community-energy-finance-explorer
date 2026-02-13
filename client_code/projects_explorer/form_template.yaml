@@ -81,6 +81,11 @@ components_by_slot:
         margin: ['0', null, '0', null]
         role: vertical-repeater
       type: RepeatingPanel
+    - event_bindings: {}
+      layout_properties: {grid_position: 'CWYAPV,ZNMRWP XJXCLI,LDYOEL'}
+      name: load_more_button
+      properties: {text: Load More}
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     layout_properties: {full_width_row: true}
     name: column_panel_2
     properties:

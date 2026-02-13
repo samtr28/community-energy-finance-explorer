@@ -252,11 +252,13 @@ DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
 # ============= CALLABLE FUNCTION =============
 @anvil.server.callable
 def get_all_map_and_cards(provinces=None, proj_types=None, stages=None, 
-                          indigenous_ownership=None, project_scale=None):
+                          indigenous_ownership=None, project_scale=None,
+                          page=1, page_size=50):
   """
-  Single server call that returns BOTH map data and project cards at once.
+  Single server call that returns BOTH map data and project cards.
+  Map shows ALL filtered points. Cards are paginated.
   """
-  print("Loading map and card data...")
+  print(f"Loading page {page} with page_size {page_size}...")
 
   # Select columns needed for map
   map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
@@ -275,14 +277,28 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
                                     indigenous_ownership, project_scale)
 
-  print("Generating map and card data...")
+  # Generate map data (ALL points)
+  map_data = get_map_data_internal(df_map_filtered)
 
-  # Generate both outputs
+  # Calculate pagination
+  total_count = len(df_cards_filtered)
+  start_idx = (page - 1) * page_size
+  end_idx = min(start_idx + page_size, total_count)
+
+  # Get cards for this page only
+  df_cards_page = df_cards_filtered.iloc[start_idx:end_idx]
+
   results = {
-    'map_data': get_map_data_internal(df_map_filtered),
-    'project_cards': get_project_card_data_internal(df_cards_filtered)
+    'map_data': map_data,
+    'project_cards': get_project_card_data_internal(df_cards_page),
+    'total_count': total_count,
+    'page': page,
+    'page_size': page_size,
+    'has_more': end_idx < total_count,
+    'start_idx': start_idx,  # Important for map-to-card mapping
+    'end_idx': end_idx
   }
 
-  print("Map and card data generated successfully!")
+  print(f"Returning {len(df_cards_page)} cards (indices {start_idx}-{end_idx} of {total_count})")
 
   return results
