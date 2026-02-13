@@ -12,12 +12,26 @@ class Project_Card(Project_CardTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    # Any code you write here will run before the form opens.
+    self._charts_loaded = False
+
+    # Set pill styling (this is fast)
     if self.item["data_source"]=="Survey response":
       self.data_source_pill.level="info"
     else: 
       self.data_source_pill.level="warning"
-      
+
+    # Don't load charts yet - wait for card to be visible
+    self.add_event_handler('x-anvil-page-added', self.on_page_added)
+
+  def on_page_added(self, **event_args):
+    """Load charts when card is actually added to the page"""
+    if not self._charts_loaded:
+      self._load_charts()
+      self._charts_loaded = True
+
+  def _load_charts(self):
+    """Actually render the Plotly charts"""
+    # OWNERSHIP PLOT
     self.ownership_plot.layout.barmode="stack"
     self.ownership_plot.layout.margin = dict(l=5, r=5, t=30, b=5)
     self.ownership_plot.layout.showlegend = False
@@ -31,22 +45,17 @@ class Project_Card(Project_CardTemplate):
       'xanchor': 'left'
     }
 
-    # 3) Apply your trace-wide updates (equivalent to fig.update_traces)
     for tr in self.ownership_plot.data:
       tr.texttemplate = "%{customdata[0]}: %{x:.0f}%"
       tr.textposition = "inside"
       tr["hovertemplate"] = "<b>%{customdata[0]}</b><br>Type: %{customdata[1]}<br>%: %{x:.1f}<extra></extra>"
 
-
-  # 1) Set layout properties
-# Adjust margin based on number of categories
+    # CAPITAL MIX PLOT
     num_categories = len(set(tr.name for tr in self.capital_mix_plot.data))
-    bottom_margin = 0 + (55 * (num_categories // 5))  # Add space for wrapping
-    
+    bottom_margin = 0 + (55 * (num_categories // 5))
+
     self.capital_mix_plot.layout.margin = dict(l=5, r=5, t=35, b=bottom_margin)
-    
     self.capital_mix_plot.layout.barmode = "stack"
-    #self.capital_mix_plot.layout.margin = dict(l=5, r=5, t=25, b=15)
     self.capital_mix_plot.layout.legend = dict(
       orientation="h", 
       yanchor="bottom", 
@@ -58,18 +67,14 @@ class Project_Card(Project_CardTemplate):
     )
     self.capital_mix_plot.layout.xaxis = dict(ticksuffix="%", visible=False, range=[0, 100])
     self.capital_mix_plot.layout.yaxis = dict(visible=False)
-
     self.capital_mix_plot.layout.title = {
       'text': 'Capital Mix',
       'font': {'family': 'Noto Sans', 'size': 16, 'color': 'black'},
       'x': 0.01,
       'xanchor': 'left'
     }
-    
-    # 2) Hide the modebar
     self.capital_mix_plot.config = {"displayModeBar": False}
-    
-    # 3) Apply trace-wide updates
+
     for tr in self.capital_mix_plot.data:
       tr.texttemplate = "%{x:.0f}%"
       tr.textposition = "inside"
@@ -82,12 +87,13 @@ class Project_Card(Project_CardTemplate):
         "Amount: $%{customdata[4]:,.0f}"
         "<extra></extra>"
       )
-    # 4) Check for warnings and add annotations
+
+    # Check for warnings and add annotations
     has_unknown = any(tr.name == "Other" and any("Unknown" in str(cd[2]) for cd in tr.customdata) 
                       for tr in self.capital_mix_plot.data)
-    
+
     total_percent = sum(tr.x[0] for tr in self.capital_mix_plot.data if tr.x)
-    
+
     if has_unknown:
       self.capital_mix_plot.layout.annotations = [
         dict(
