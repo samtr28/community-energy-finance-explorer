@@ -20,11 +20,11 @@ unique_ids:
     ownership_models.FilterChip1: '1769716863449633448602488.6361'
     projects_explorer: '1759257423731616493782431.313'
     projects_explorer.Project_Card: '1760505559619997561065063.1948'
-    projects_explorer_copy: '1771007502830579547779040.5288'
     resources: '1759257439766755211398664.8079'
     resources.ItemTemplate1: '1770693753823465543389368.22925'
   modules:
     config: '1761843729959440190662753.931'
+    projects_explorer.AutoScroll: '1771010652729499204060393.8071'
   scripts: {}
   server_modules:
     Cap_Explorer: '1763095019811400443194487.3749'

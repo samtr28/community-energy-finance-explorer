@@ -286,3 +286,78 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   print("Map and card data generated successfully!")
 
   return results
+
+# ============= NEW FUNCTIONS FOR LAZY LOADING =============
+
+@anvil.server.callable
+def get_all_cards_minimal(provinces=None, proj_types=None, stages=None, 
+                          indigenous_ownership=None, project_scale=None):
+  """
+  Returns ALL cards but WITHOUT any traces built.
+  Traces will be loaded on-demand by client.
+  """
+  print("Loading all cards (no traces)...")
+
+  # Select columns needed for map
+  map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
+              "province", "stage", "project_type", "indigenous_ownership", "project_scale"]
+  df_map = DATA.loc[:, map_cols].copy()
+
+  # Select columns needed for cards (without traces)
+  card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
+               "province", "total_cost", "project_scale", "all_financing_mechanisms", 
+               "owners", "indigenous_ownership", "capital_mix"]
+  df_cards = DATA.loc[:, card_cols].copy()
+
+  # Apply filters
+  df_map_filtered = apply_filters(df_map, provinces, proj_types, stages, 
+                                  indigenous_ownership, project_scale)
+  df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
+                                    indigenous_ownership, project_scale)
+
+  # Don't build any traces - set to empty lists
+  df_cards_filtered["ownership_traces"] = [[] for _ in range(len(df_cards_filtered))]
+  df_cards_filtered["capital_mix_traces"] = [[] for _ in range(len(df_cards_filtered))]
+
+  results = {
+    'map_data': get_map_data_internal(df_map_filtered),
+    'project_cards': get_project_card_data_internal(df_cards_filtered),
+    'total_count': len(df_cards_filtered)
+  }
+
+  print(f"Returning {len(df_cards_filtered)} cards (no traces)")
+  return results
+
+
+@anvil.server.callable
+def build_traces_batch(start_idx, batch_size, provinces=None, proj_types=None, 
+                       stages=None, indigenous_ownership=None, project_scale=None):
+  """
+  Build traces for a specific batch of cards by index.
+  Returns list of dicts with record_id, ownership_traces, capital_mix_traces.
+  """
+  print(f"Building traces for batch: {start_idx} to {start_idx + batch_size}")
+
+  # Get filtered data
+  card_cols = ["record_id", "owners", "capital_mix"]
+  df = DATA.loc[:, card_cols].copy()
+
+  df_filtered = apply_filters(df, provinces, proj_types, stages,
+                              indigenous_ownership, project_scale)
+
+  # Get the specific batch
+  df_batch = df_filtered.iloc[start_idx:start_idx + batch_size]
+
+  results = []
+  for _, row in df_batch.iterrows():
+    ownership_traces = build_ownership_bar(row["owners"], OWNERSHIP_COLORS)
+    capital_mix_traces = build_capital_mix_traces(row["capital_mix"], CATEGORY_PALETTES)
+
+    results.append({
+      'record_id': row['record_id'],
+      'ownership_traces': ownership_traces,
+      'capital_mix_traces': capital_mix_traces
+    })
+
+  print(f"Built {len(results)} trace sets")
+  return results
