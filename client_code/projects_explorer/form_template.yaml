@@ -74,18 +74,47 @@ components_by_slot:
         spacing_below: none
         visible: true
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
+    - layout_properties: {full_width_row: true, grid_position: 'IDXYRC,QCGQZJ CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
       name: project_cards
       properties:
         item_template: projects_explorer.Project_Card
         margin: ['0', null, '0', null]
         role: vertical-repeater
       type: RepeatingPanel
-    - event_bindings: {}
-      layout_properties: {grid_position: 'CWYAPV,ZNMRWP XJXCLI,LDYOEL'}
-      name: load_more_button
-      properties: {text: Load More}
-      type: form:dep_9kcxnwm3upyjd:_Components.Button
+    - layout_properties: {grid_position: 'CWYAPV,ZNMRWP GXGWXO,AFIWLE'}
+      name: page_info_label
+      properties: {align: center, font_size: 12, text: ''}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - event_bindings: {}
+        layout_properties: {width: null}
+        name: first_page_btn
+        properties: {background_color: '', icon: 'mi:keyboard_double_arrow_left', text: First}
+        type: form:dep_9kcxnwm3upyjd:_Components.Button
+      - event_bindings: {}
+        layout_properties: {}
+        name: prev_page_btn
+        properties: {background_color: '', icon: 'mi:arrow_back_ios_new', icon_size: 15, text: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Button
+      - layout_properties: {}
+        name: current_page_label
+        properties: {align: center}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - data_bindings: []
+        event_bindings: {}
+        layout_properties: {}
+        name: next_page_btn
+        properties: {icon: 'mi:keyboard_arrow_right', text: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Button
+      - event_bindings: {}
+        layout_properties: {}
+        name: last_page_btn
+        properties: {icon: 'mi:keyboard_double_arrow_right', text: Last}
+        type: form:dep_9kcxnwm3upyjd:_Components.Button
+      layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MPEPZQ,JMFNVF'}
+      name: pagination_container
+      properties: {}
+      type: FlowPanel
     layout_properties: {full_width_row: true}
     name: column_panel_2
     properties:
