@@ -74,13 +74,18 @@ components_by_slot:
         spacing_below: none
         visible: true
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
+    - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MFHLHT,NWQOBB IAUMPS,RHFBRI'}
       name: project_cards
       properties:
         item_template: projects_explorer.Project_Card
         margin: ['0', null, '0', null]
         role: vertical-repeater
       type: RepeatingPanel
+    - event_bindings: {}
+      layout_properties: {grid_position: 'CWYAPV,ZNMRWP UHHOYW,ZAYYNZ'}
+      name: load_more_button
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     layout_properties: {full_width_row: true}
     name: column_panel_2
     properties:

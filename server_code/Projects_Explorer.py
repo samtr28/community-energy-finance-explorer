@@ -238,23 +238,136 @@ def get_project_card_data_internal(df):
 
   return df.to_dict(orient="records")
 
+def build_ownership_figure(owners, ownership_colors):
+  """
+  Build a COMPLETE ownership figure ready to render.
+  Returns a figure dictionary that client can directly assign.
+  """
+  # Build the bar traces (reuse existing function)
+  bars = build_ownership_bar(owners, ownership_colors)
 
-# ============= PREPROCESS DATA =============
-# Add traces to DATA using lambda to pass colors/palettes
-DATA["ownership_traces"] = DATA["owners"].apply(
-  lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
-)
-DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
-  lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
-)
+  if not bars:
+    return None
+
+  # Create figure with all traces
+  fig = go.Figure(data=bars)
+
+  # Apply ALL layout configuration on server
+  fig.update_layout(
+    barmode="stack",
+    margin=dict(l=5, r=5, t=30, b=5),
+    showlegend=False,
+    xaxis=dict(ticksuffix="%", visible=False, range=[0, 100]),
+    yaxis=dict(visible=False),
+    title={
+      'text': 'Ownership Distribution',
+      'font': {'family': 'Noto Sans', 'size': 16, 'color': 'black'},
+      'x': 0.01,
+      'xanchor': 'left'
+    },
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)'
+  )
+
+  # Apply trace-level styling
+  fig.update_traces(
+    texttemplate="%{customdata[0]}: %{x:.0f}%",
+    textposition="inside",
+    hovertemplate="<b>%{customdata[0]}</b><br>Type: %{customdata[1]}<br>%: %{x:.1f}<extra></extra>"
+  )
+
+  # Return as dictionary (JSON-serializable)
+  return fig.to_dict()
 
 
-# ============= CALLABLE FUNCTION =============
+def build_capital_mix_figure(capital_mix, category_palettes):
+  """
+  Build a COMPLETE capital mix figure ready to render.
+  Returns a figure dictionary that client can directly assign.
+  """
+  # Build the bar traces (reuse existing function)
+  traces = build_capital_mix_traces(capital_mix, category_palettes)
+
+  if not traces:
+    return None
+
+  # Create figure with all traces
+  fig = go.Figure(data=traces)
+
+  # Calculate dynamic margin based on number of categories
+  num_categories = len(set(tr.name for tr in traces))
+  bottom_margin = 0 + (55 * (num_categories // 5))
+
+  # Apply ALL layout configuration on server
+  fig.update_layout(
+    barmode="stack",
+    margin=dict(l=5, r=5, t=35, b=bottom_margin),
+    legend=dict(
+      orientation="h",
+      yanchor="bottom",
+      y=-1,
+      xanchor="right",
+      x=1,
+      bgcolor="rgba(0,0,0,0)",
+      font=dict(size=10)
+    ),
+    xaxis=dict(ticksuffix="%", visible=False, range=[0, 100]),
+    yaxis=dict(visible=False),
+    title={
+      'text': 'Capital Mix',
+      'font': {'family': 'Noto Sans', 'size': 16, 'color': 'black'},
+      'x': 0.01,
+      'xanchor': 'left'
+    },
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)'
+  )
+
+  # Check for warnings and add annotations
+  has_unknown = False
+  for tr in traces:
+    if hasattr(tr, 'name') and tr.name == "Unknown":
+      has_unknown = True
+      break
+    if hasattr(tr, 'customdata') and tr.customdata:
+      for cd in tr.customdata:
+        if cd and len(cd) > 2 and "Unknown" in str(cd[2]):
+          has_unknown = True
+          break
+
+  total_percent = sum(tr.x[0] for tr in traces if hasattr(tr, 'x') and tr.x)
+
+  if has_unknown:
+    fig.add_annotation(
+      text="⚠️ Unknown capital added to reach 100%",
+      xref="paper", yref="paper",
+      x=0.5, y=1.2,
+      showarrow=False,
+      font=dict(size=12, color="orange"),
+      xanchor="center"
+    )
+  elif total_percent > 105:
+    fig.add_annotation(
+      text=f"⚠️ Over-accounted (total: {total_percent:.0f}%)",
+      xref="paper", yref="paper",
+      x=0.5, y=1.2,
+      showarrow=False,
+      font=dict(size=12, color="red"),
+      xanchor="center"
+    )
+
+  # Return as dictionary (JSON-serializable)
+  return fig.to_dict()
+
+
+
 @anvil.server.callable
 def get_all_map_and_cards(provinces=None, proj_types=None, stages=None, 
-                          indigenous_ownership=None, project_scale=None):
+                          indigenous_ownership=None, project_scale=None,
+                          prebuild_limit=15):
   """
-  Single server call that returns BOTH map data and project cards at once.
+  Returns ALL filtered cards, but only builds figures for the first few.
+  Rest of the cards will build figures on-demand.
   """
   print("Loading map and card data...")
 
@@ -266,7 +379,7 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   # Select columns needed for cards
   card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
                "province", "total_cost", "project_scale", "all_financing_mechanisms", 
-               "owners", "indigenous_ownership", "ownership_traces", "capital_mix_traces"]
+               "owners", "indigenous_ownership", "capital_mix"]
   df_cards = DATA.loc[:, card_cols].copy()
 
   # Apply filters to BOTH dataframes
@@ -275,14 +388,78 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
                                     indigenous_ownership, project_scale)
 
+  total_projects = len(df_cards_filtered)
+  print(f"Filtered to {total_projects} projects")
+
+  # Split into two groups: prebuild and lazy-build
+  df_prebuild = df_cards_filtered.head(prebuild_limit)
+  df_lazy = df_cards_filtered.iloc[prebuild_limit:]
+
+  print(f"Pre-building figures for first {len(df_prebuild)} cards...")
+
+  # Build figures for first batch only
+  df_prebuild["ownership_figure"] = df_prebuild["owners"].apply(
+    lambda x: build_ownership_figure(x, OWNERSHIP_COLORS)
+  )
+  df_prebuild["capital_mix_figure"] = df_prebuild["capital_mix"].apply(
+    lambda x: build_capital_mix_figure(x, CATEGORY_PALETTES)
+  )
+
+  # For lazy cards, set figures to None explicitly
+  df_lazy["ownership_figure"] = None
+  df_lazy["capital_mix_figure"] = None
+
+  # Combine back together
+  df_all_cards = pd.concat([df_prebuild, df_lazy], ignore_index=True)
+
   print("Generating map and card data...")
 
-  # Generate both outputs
   results = {
     'map_data': get_map_data_internal(df_map_filtered),
-    'project_cards': get_project_card_data_internal(df_cards_filtered)
+    'project_cards': get_project_card_data_internal(df_all_cards),
+    'total_count': total_projects,
+    'prebuilt_count': len(df_prebuild)
   }
 
-  print("Map and card data generated successfully!")
+  print(f"Returning ALL {total_projects} cards ({len(df_prebuild)} with pre-built figures)!")
 
   return results
+
+
+@anvil.server.callable
+def build_card_figures(record_id, provinces=None, proj_types=None, stages=None,
+                       indigenous_ownership=None, project_scale=None):
+  """
+  Build figures for a single card on-demand.
+  Returns dict with ownership_figure and capital_mix_figure.
+  """
+  print(f"Building figures for card {record_id}...")
+
+  # Get the card data
+  card_cols = ["record_id", "owners", "capital_mix"]
+  df = DATA.loc[:, card_cols].copy()
+
+  # Apply same filters to ensure we get the right card
+  df_filtered = apply_filters(df, provinces, proj_types, stages,
+                              indigenous_ownership, project_scale)
+
+  # Find the specific card
+  card_data = df_filtered[df_filtered["record_id"] == record_id]
+
+  if card_data.empty:
+    print(f"Card {record_id} not found!")
+    return None
+
+  # Get the first (should be only) match
+  card = card_data.iloc[0]
+
+  # Build both figures
+  ownership_fig = build_ownership_figure(card["owners"], OWNERSHIP_COLORS)
+  capital_mix_fig = build_capital_mix_figure(card["capital_mix"], CATEGORY_PALETTES)
+
+  print(f"Figures built for card {record_id}")
+
+  return {
+    'ownership_figure': ownership_fig,
+    'capital_mix_figure': capital_mix_fig
+  }
