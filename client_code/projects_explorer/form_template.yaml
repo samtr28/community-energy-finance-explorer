@@ -63,6 +63,10 @@ components_by_slot:
         spacing:
           margin: [null, null, 1.5%, null]
       type: FlowPanel
+    - layout_properties: {grid_position: 'ZYEWNT,FREZIY'}
+      name: background_load_timer
+      properties: {}
+      type: Timer
     - data_bindings: []
       event_bindings: {click: project_map_click}
       layout_properties: {full_width_row: true, grid_position: 'CWYAPV,WSRNCB'}
@@ -74,18 +78,15 @@ components_by_slot:
         spacing_below: none
         visible: true
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
+    - layout_properties: {grid_position: 'CWYAPV,QQQTLX'}
       name: project_cards
-      properties:
-        item_template: projects_explorer.Project_Card
-        margin: ['0', null, '0', null]
-        role: vertical-repeater
-      type: RepeatingPanel
+      properties: {}
+      type: LinearPanel
     layout_properties: {full_width_row: true}
     name: column_panel_2
     properties:
       col_spacing: small
-      col_widths: '{"WSRNCB":35,"ZNMRWP":25}'
+      col_widths: '{"WSRNCB":35}'
       role: null
       spacing:
         margin: ['0', null, '0', null]

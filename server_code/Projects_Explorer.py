@@ -286,3 +286,65 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   print("Map and card data generated successfully!")
 
   return results
+
+# ============= NEW PAGINATED FUNCTIONS =============
+
+@anvil.server.callable
+def get_map_data_only(provinces=None, proj_types=None, stages=None, 
+                      indigenous_ownership=None, project_scale=None):
+  """
+  Returns ONLY map data (coordinates for all points).
+  No card data - that comes from paginated calls.
+  """
+  print("Loading map data only...")
+
+  map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
+              "province", "stage", "project_type", "indigenous_ownership", "project_scale"]
+  df_map = DATA.loc[:, map_cols].copy()
+
+  # Apply filters
+  df_map_filtered = apply_filters(df_map, provinces, proj_types, stages, 
+                                  indigenous_ownership, project_scale)
+
+  return {
+    'map_data': get_map_data_internal(df_map_filtered),
+    'total_count': len(df_map_filtered)
+  }
+
+
+@anvil.server.callable
+def get_card_batch(from_row=0, n_rows=20, provinces=None, proj_types=None, 
+                   stages=None, indigenous_ownership=None, project_scale=None):
+  """
+  Returns a batch of cards WITH traces already built.
+  This is paginated - only returns the requested slice.
+  """
+  print(f"Loading cards {from_row} to {from_row + n_rows}...")
+
+  # Select columns needed for cards
+  card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
+               "province", "total_cost", "project_scale", "all_financing_mechanisms", 
+               "owners", "indigenous_ownership", "capital_mix"]
+  df_cards = DATA.loc[:, card_cols].copy()
+
+  # Apply filters
+  df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
+                                    indigenous_ownership, project_scale)
+
+  # Get only the requested batch
+  df_batch = df_cards_filtered.iloc[from_row:from_row + n_rows]
+
+  # Build traces for this batch only
+  df_batch["ownership_traces"] = df_batch["owners"].apply(
+    lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
+  )
+  df_batch["capital_mix_traces"] = df_batch["capital_mix"].apply(
+    lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
+  )
+
+  # Return formatted cards
+  cards = get_project_card_data_internal(df_batch)
+
+  print(f"Returning {len(cards)} cards with traces")
+
+  return cards
