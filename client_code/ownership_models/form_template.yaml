@@ -120,7 +120,7 @@ components_by_slot:
     - layout_properties: {grid_position: 'XHUPAC,BVWRHW'}
       name: ownership_treemap
       properties:
-        height: 70vh
+        height: 60vh
         margin: ['0', null, '0', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'AFQMYM,FDVABP'}
