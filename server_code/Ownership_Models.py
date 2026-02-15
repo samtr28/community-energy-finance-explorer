@@ -175,7 +175,7 @@ def create_ownership_treemap_internal(df_owners):
       ],
       pad={'r': 10, 't': 10},
       showactive=True,
-      x=0.01, y=1.07,
+      x=0.5, y=1.07,
       xanchor='left', yanchor='top',
       bgcolor='rgba(255, 255, 255, 0.8)',
       bordercolor='gray',
@@ -184,7 +184,7 @@ def create_ownership_treemap_internal(df_owners):
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(family='Arial, sans-serif', size=12, color='black'),
-    margin=dict(t=90, b=55, l=0, r=0)
+    margin=dict(t=0, b=0, l=0, r=0)
   )
 
   return fig

@@ -127,7 +127,8 @@ class ownership_models(ownership_modelsTemplate):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
     self.ownership_nav.role = 'selected'
-    self.apply_filters()
+    
+    #self.apply_filters()
     
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
