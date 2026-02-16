@@ -270,4 +270,6 @@ components_by_slot:
       vertical_align: middle
     type: FlowPanel
 is_package: true
-layout: {type: 'form:Base'}
+layout:
+  form_event_bindings: {}
+  type: form:Base

@@ -29,6 +29,11 @@ class ownership_models(ownership_modelsTemplate):
     stages = self.stages_dd.selected
     indigenous_ownership = self.indig_owners_dd.selected
     project_scale = self.project_scale_dd.selected
+
+    # DEBUG: Print what we're sending to the server
+    print("=== CLIENT SIDE FILTERS ===")
+    print(f"Indigenous ownership selected: {indigenous_ownership}")
+    print(f"Type: {type(indigenous_ownership)}")
   
     # Build kwargs with only set filters
     kwargs = {}
@@ -123,10 +128,11 @@ class ownership_models(ownership_modelsTemplate):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
 
+  @handle("", "show")
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
-    self.ownership_nav.role = 'selected'
+    self.layout.ownership_nav.role = 'selected'
     
     #self.apply_filters()
     

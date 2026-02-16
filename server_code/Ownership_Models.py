@@ -516,9 +516,17 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
   """
   Single server call that returns ALL ownership chart figures at once.
   """
+
+  # DEBUG: Print what the server received
+  print("=== SERVER SIDE FILTERS ===")
+  print(f"Indigenous ownership received: {indigenous_ownership}")
+  print(f"Type: {type(indigenous_ownership)}")
+  
   # Load raw data ONCE
   df_raw = get_data()
-
+  
+  print(f"Total records before filtering: {len(df_raw)}")
+  
   # Apply filters to raw data (for box plot, bottlenecks, AND treemap)
   df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages, 
                                   indigenous_ownership, project_scale)
