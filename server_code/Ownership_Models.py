@@ -516,27 +516,18 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
   """
   Single server call that returns ALL ownership chart figures at once.
   """
-
-  # DEBUG: Print what the server received
-  print("=== SERVER SIDE FILTERS ===")
-  print(f"Indigenous ownership received: {indigenous_ownership}")
-  print(f"Type: {type(indigenous_ownership)}")
-  
-  # Load raw data ONCE
+  # Loa raw data ONCE
   df_raw = get_data()
   
-  print(f"Total records before filtering: {len(df_raw)}")
   
   # Apply filters to raw data (for box plot, bottlenecks, AND treemap)
   df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages, 
                                   indigenous_ownership, project_scale)
 
-  print(f"Total records AFTER filtering: {len(df_raw_filtered)}")
 
   # Process owners data ONCE
   df_owners = process_owners_data(df_raw)
 
-  print(f"Owner records before filtering: {len(df_owners)}")
 
   # Apply filters to owners data
   df_owners_filtered = apply_filters(
@@ -547,13 +538,9 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     indigenous_ownership, 
     project_scale
   )
-  print(f"Owner records AFTER filtering: {len(df_owners_filtered)}")
-  if not df_owners_filtered.empty:
-    print(f"Unique indigenous_ownership values in filtered data: {df_owners_filtered['indigenous_ownership'].unique()}")
 
   # Add this block:
   if df_owners_filtered.empty:
-    print("WARNING: No ownership data after filtering")
     empty_fig = go.Figure()
     empty_fig.update_layout(title="No data available for selected filters")
     return {

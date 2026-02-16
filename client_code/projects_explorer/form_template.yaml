@@ -9,7 +9,7 @@ components_by_slot:
     - components:
       - layout_properties: {}
         name: filter_heading
-        properties: {scale: small, style: title, text: 'Filter:'}
+        properties: {bold: true, scale: small, style: title, text: 'Filter by:'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - event_bindings: {change: proj_types_dd_change}
         layout_properties: {}
@@ -59,9 +59,31 @@ components_by_slot:
       layout_properties: {full_width_row: true, grid_position: 'GTRFWU,CNHVPB'}
       name: filter_panel
       properties:
-        gap: tiny
+        gap: small
         spacing:
-          margin: [null, null, 1.5%, null]
+          margin: [null, null, 1.5%, '1']
+      type: FlowPanel
+    - components:
+      - layout_properties: {width: null}
+        name: filter_heading_copy
+        properties:
+          bold: true
+          scale: small
+          spacing:
+            margin: [null, 0.1%, null, null]
+          style: title
+          text: 'Selected: '
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {expand: true, width: null}
+        name: filter_chips_panel
+        properties:
+          item_template: projects_explorer.FilterChip2
+          margin: ['0', null, '0', null]
+          role: 'horizontal-repeater '
+        type: RepeatingPanel
+      layout_properties: {full_width_row: true, grid_position: 'CJLFYO,GXNSBX'}
+      name: flow_panel_1
+      properties: {}
       type: FlowPanel
     - data_bindings: []
       event_bindings: {click: project_map_click}

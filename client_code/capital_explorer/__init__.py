@@ -12,12 +12,24 @@ class capital_explorer(capital_explorerTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
+
+    # Flag to prevent filter triggers during setup
+    self._initializing = True
+    self._filters_loaded = False
+
     self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
 
+    # Done initializing
+    self._initializing = False
+
   def schedule_filter_update(self):
-      """Schedule a filter update with debouncing - waits 1s after last change"""
+    """Schedule a filter update with debouncing - waits 1s after last change"""
+    # Don't schedule updates during initialization
+    if getattr(self, '_initializing', False):
+      return
+
     # Setting interval to non-zero starts/restarts the timer
-      self.filter_timer.interval = 1
+    self.filter_timer.interval = 1
 
   def apply_filters(self):
     """Apply filters and update all charts with ONE server call"""
@@ -43,34 +55,32 @@ class capital_explorer(capital_explorerTemplate):
 
     # UPDATE CHIPS - Build chip data from selections
     chips = []
-    
+
     if provinces:
       for p in provinces:
         chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
-    
+
     if proj_types:
       for pt in proj_types:
         chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
-    
+
     if stages:
       for s in stages:
         chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
-    
+
     if indigenous_ownership:
       for io in indigenous_ownership:
         chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
-    
+
     if project_scale:
       for ps in project_scale:
         chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
-    
+
     # Update the repeating panel
     self.filter_chips_panel.items = chips
 
     # SINGLE SERVER CALL - gets all charts at once
-    print("Fetching all charts...")
     all_charts = anvil.server.call('get_all_capital_charts', **kwargs)
-    print("Charts received, updating UI...")
 
     # Update all plots with the returned figures
     self.funding_time_plot.figure = all_charts['time_chart']
@@ -79,7 +89,7 @@ class capital_explorer(capital_explorerTemplate):
     self.box_plot.figure = all_charts['box_plot']
     self.lollipop_chart.figure = all_charts['bottleneck_chart']
     self.bubble_plot.figure = all_charts['treemap']
-    self.scale_pies_plot.figure = all_charts['scale_pies']  # NEW CHART
+    self.scale_pies_plot.figure = all_charts['scale_pies']
 
     # Update indicators
     indicators = all_charts['indicators']
@@ -106,7 +116,6 @@ class capital_explorer(capital_explorerTemplate):
     # self.crowdfund_type.text = indicators['crowdfunding']['type']
     # self.crowdfund_source.text = indicators['crowdfunding']['source']
 
-    print("All charts updated!")
 
   def remove_filter(self, filter_type, value):
     """Remove a specific filter value and refresh"""
@@ -131,26 +140,26 @@ class capital_explorer(capital_explorerTemplate):
       current = list(self.project_scale_dd.selected)
       current.remove(value)
       self.project_scale_dd.selected = current
-  
-      # Schedule update with debouncing
+
+    # Schedule update with debouncing
     self.schedule_filter_update()
 
   def provinces_dd_change(self, **event_args):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
-  
+
   def proj_types_dd_change(self, **event_args):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
-  
+
   def stages_dd_change(self, **event_args):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
-  
+
   def indig_owners_dd_change(self, **event_args):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
-  
+
   def project_scale_dd_change(self, **event_args):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
@@ -159,7 +168,12 @@ class capital_explorer(capital_explorerTemplate):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
     self.layout.capital_nav.role = 'selected'
-    
+
+    # Only load data once on first show
+    if not self._filters_loaded:
+      self._filters_loaded = True
+      self.apply_filters()
+
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
     # Stop the timer so it doesn't repeat

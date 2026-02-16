@@ -12,14 +12,23 @@ class ownership_models(ownership_modelsTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
+
+    # Flag to prevent filter triggers during setup
+    self._initializing = True
+    self._filters_loaded = False  # ← Add this flag
+
     self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
-    #self.filter_timer.interval = 1
-    #self.apply_filters() 
+
+    # Done initializing
+    self._initializing = False
 
   def schedule_filter_update(self):
     """Schedule a filter update with debouncing - waits 1s after last change"""
-    # Setting interval to non-zero starts/restarts the timer
-    self.filter_timer.interval=1
+    # Don't schedule updates during initialization
+    if getattr(self, '_initializing', False):
+      return
+  
+    self.filter_timer.interval = 1
 
   def apply_filters(self):
     """Apply filters and update all charts with ONE server call"""
@@ -30,10 +39,6 @@ class ownership_models(ownership_modelsTemplate):
     indigenous_ownership = self.indig_owners_dd.selected
     project_scale = self.project_scale_dd.selected
 
-    # DEBUG: Print what we're sending to the server
-    print("=== CLIENT SIDE FILTERS ===")
-    print(f"Indigenous ownership selected: {indigenous_ownership}")
-    print(f"Type: {type(indigenous_ownership)}")
   
     # Build kwargs with only set filters
     kwargs = {}
@@ -70,10 +75,7 @@ class ownership_models(ownership_modelsTemplate):
       # Update the repeating panel
     self.filter_chips_panel.items = chips
   
-    # SINGLE SERVER CALL - gets all charts at once
-    print("Fetching all charts...")
     all_charts = anvil.server.call('get_all_ownership_charts', **kwargs)
-    print("Charts received, updating UI...")
   
     self.ownership_treemap.figure = all_charts['ownership_treemap']
     self.scale_pies_plot.figure =all_charts['scale_pies']
@@ -133,9 +135,13 @@ class ownership_models(ownership_modelsTemplate):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
     self.layout.ownership_nav.role = 'selected'
-    
-    #self.apply_filters()
-    
+
+    # Only load data once on first show
+    if not self._filters_loaded:
+      self._filters_loaded = True
+      self.apply_filters()
+
+        
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
     # Stop the timer so it doesn't repeat

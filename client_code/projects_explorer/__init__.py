@@ -84,14 +84,38 @@ class projects_explorer(projects_explorerTemplate):
     if project_scale:
       kwargs["project_scale"] = project_scale
 
+    # UPDATE CHIPS - Build chip data from selections
+    chips = []
+    
+    if provinces:
+      for p in provinces:
+        chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
+    
+    if proj_types:
+      for pt in proj_types:
+        chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
+    
+    if stages:
+      for s in stages:
+        chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
+    
+    if indigenous_ownership:
+      for io in indigenous_ownership:
+        chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
+    
+    if project_scale:
+      for ps in project_scale:
+        chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
+    
+    # Update the repeating panel
+    self.filter_chips_panel.items = chips
+
     # Add pagination parameters
     kwargs["page"] = self._current_page
     kwargs["page_size"] = self._page_size
 
     # SINGLE SERVER CALL
-    print(f"Fetching page {self._current_page}...")
     all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
-    print("Data received, updating UI...")
 
     # Update map (always show all filtered points)
     self.project_map.data = [all_data['map_data']]
@@ -106,7 +130,32 @@ class projects_explorer(projects_explorerTemplate):
     # Update pagination UI
     self._update_pagination_ui()
 
-    print(f"Loaded page {self._current_page} of {self._total_pages} ({len(self.project_cards.items)} cards)")
+  def remove_filter(self, filter_type, value):
+    """Remove a specific filter value and refresh"""
+    # Remove the value from the appropriate dropdown
+    if filter_type == 'provinces':
+      current = list(self.provinces_dd.selected)
+      current.remove(value)
+      self.provinces_dd.selected = current
+    elif filter_type == 'proj_types':
+      current = list(self.proj_types_dd.selected)
+      current.remove(value)
+      self.proj_types_dd.selected = current
+    elif filter_type == 'stages':
+      current = list(self.stages_dd.selected)
+      current.remove(value)
+      self.stages_dd.selected = current
+    elif filter_type == 'indigenous_ownership':
+      current = list(self.indig_owners_dd.selected)
+      current.remove(value)
+      self.indig_owners_dd.selected = current
+    elif filter_type == 'project_scale':
+      current = list(self.project_scale_dd.selected)
+      current.remove(value)
+      self.project_scale_dd.selected = current
+  
+    # Schedule update with debouncing
+    self.schedule_filter_update()
 
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
@@ -190,7 +239,6 @@ class projects_explorer(projects_explorerTemplate):
 
     # If not on the right page, load it
     if target_page != self._current_page:
-      print(f"Jumping to page {target_page} to show card {idx}")
       self.apply_filters(page=target_page)
 
     # Calculate card index within the current page
@@ -237,7 +285,6 @@ class projects_explorer(projects_explorerTemplate):
       return
 
     idx = points[0]["point_number"]
-    print(f"Map clicked: point {idx}")
 
     # Toggle: if clicking same point, unselect
     if self._selected_idx == idx:

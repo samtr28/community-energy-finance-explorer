@@ -259,7 +259,6 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   Map shows ALL filtered points. Cards are paginated.
   OPTIMIZED: Only builds traces for current page.
   """
-  print(f"Loading page {page} with page_size {page_size}...")
 
   # Select columns needed for map
   map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
@@ -291,7 +290,6 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
 
   # ============= KEY OPTIMIZATION =============
   # Build traces ONLY for the cards on this page (e.g., 15 cards instead of 521)
-  print(f"Building traces for {len(df_cards_page)} cards...")
   df_cards_page["ownership_traces"] = df_cards_page["owners"].apply(
     lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
   )
@@ -310,7 +308,5 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     'start_idx': start_idx,
     'end_idx': end_idx
   }
-
-  print(f"Returning {len(df_cards_page)} cards (indices {start_idx}-{end_idx} of {total_count})")
 
   return results
