@@ -531,8 +531,12 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
   df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages, 
                                   indigenous_ownership, project_scale)
 
+  print(f"Total records AFTER filtering: {len(df_raw_filtered)}")
+
   # Process owners data ONCE
   df_owners = process_owners_data(df_raw)
+
+  print(f"Owner records before filtering: {len(df_owners)}")
 
   # Apply filters to owners data
   df_owners_filtered = apply_filters(
@@ -543,6 +547,9 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     indigenous_ownership, 
     project_scale
   )
+  print(f"Owner records AFTER filtering: {len(df_owners_filtered)}")
+  if not df_owners_filtered.empty:
+    print(f"Unique indigenous_ownership values in filtered data: {df_owners_filtered['indigenous_ownership'].unique()}")
 
   # Add this block:
   if df_owners_filtered.empty:
