@@ -84,6 +84,7 @@ class outcomes_impacts(outcomes_impactsTemplate):
     self.jobs_plot.figure = all_charts['jobs_chart']
     self.ghg_methodology_plot.figure = all_charts['ghg_methodology']
     self.ghg_timeline_plot.figure = all_charts['ghg_timeline']
+    self.breakdown_pie_plot.figure = all_charts['breakdown_pie']
 
     print("All charts updated!")
 
@@ -134,6 +135,7 @@ class outcomes_impacts(outcomes_impactsTemplate):
     """This method is called when the selected values change"""
     self.schedule_filter_update()
 
+  @handle("", "show")
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
@@ -144,6 +146,7 @@ class outcomes_impacts(outcomes_impactsTemplate):
       self._filters_loaded = True
       self.apply_filters()
 
+  @handle("filter_timer", "tick")
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
     # Stop the timer so it doesn't repeat

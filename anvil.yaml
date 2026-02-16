@@ -54,5 +54,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/files.yml
-startup: {module: projects_explorer, type: form}
+startup: {module: outcomes_impacts, type: form}
 startup_form: null

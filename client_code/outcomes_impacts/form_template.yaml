@@ -50,7 +50,7 @@ components_by_slot:
         items: [Micro (< $100K), Small ($100K-$1M), Medium ($1M-$5M), Large ($5M-$25M), Very Large ($25M-$100M), Mega (> $100M)]
         placeholder: Project Scale
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: filter_panel
     properties:
       gap: small
@@ -58,30 +58,83 @@ components_by_slot:
         margin: [null, null, 1.5%, '1']
     type: FlowPanel
   - components:
-    - layout_properties: {grid_position: 'OGKLAN,ORHEUR NETXRE,KDYXTR'}
-      name: indigenous_agreements_plot
+    - layout_properties: {width: null}
+      name: filter_heading_copy
+      properties:
+        bold: true
+        scale: small
+        spacing:
+          margin: [null, 0.1%, null, null]
+        style: title
+        text: 'Selected: '
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {expand: true, width: null}
+      name: filter_chips_panel
+      properties:
+        item_template: ownership_models.FilterChip1
+        margin: ['0', null, '0', null]
+        role: 'horizontal-repeater '
+      type: RepeatingPanel
+    layout_properties: {full_width_row: true}
+    name: flow_panel_1
+    properties: {}
+    type: FlowPanel
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'OAYPGT,MYDOTM'}
+      name: ghg_timeline_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'ZRRSJU,KDHCPJ'}
+      name: breakdown_pie_plot
       properties: {}
       type: Plot
-    - layout_properties: {grid_position: 'OGKLAN,ORHEUR QRFIDQ,BIMIHK'}
-      name: ghg_methodology_plot_2
-      properties: {}
-      type: Plot
-    - layout_properties: {grid_position: 'OGKLAN,EMFSDC OQVZAK,OTLADW'}
-      name: jobs_plot
-      properties: {}
-      type: Plot
-    - layout_properties: {grid_position: 'OGKLAN,EMFSDC QSBLNB,SVPZCC'}
+    - layout_properties: {full_width_row: true, grid_position: 'ZRRSJU,URTMYV'}
       name: ghg_methodology_plot
       properties: {}
       type: Plot
-    layout_properties: {}
+    - layout_properties: {full_width_row: true, grid_position: 'OGKLAN,ORHEUR'}
+      name: indigenous_agreements_plot
+      properties: {}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'OGKLAN,EMFSDC'}
+      name: jobs_plot
+      properties: {}
+      type: Plot
+    layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {}
+    properties: {col_widths: '{"KDHCPJ":30,"URTMYV":30}'}
     type: ColumnPanel
-  - layout_properties: {}
+  - event_bindings: {}
+    layout_properties: {}
     name: filter_timer
     properties: {interval: 0}
     type: Timer
-  title_slot: []
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 210}
+      name: title
+      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Outcomes & Impacts}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {expand: false, width: 504}
+      name: description
+      properties:
+        font_size: 16
+        scale: large
+        spacing:
+          margin: ['0', null, null, null]
+        style: body
+        text: By default, the filter for project scale automatically omits mega projects due to their skewing of the data.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
 is_package: true
-layout: {type: 'form:Base'}
+layout:
+  form_event_bindings: {}
+  type: form:Base
