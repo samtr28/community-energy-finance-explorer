@@ -277,9 +277,9 @@ def create_indigenous_ownership_stacked_internal(df_owners):
   order = [
     'Not sure',
     'No Indigenous ownership',
-    'Minority Indigenous owned (1–49%)',
+    'Minority Indigenous owned (1-49%)',
     'Half Indigenous owned (50%)',
-    'Majority Indigenous owned (51–99%)',
+    'Majority Indigenous owned (51-99%)',
     'Wholly Indigenous owned (100%)'
   ]
   ownership_counts['Category'] = pd.Categorical(ownership_counts['Category'], categories=order, ordered=True)
