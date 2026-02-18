@@ -123,7 +123,7 @@ def create_ownership_treemap_internal(df_owners):
   value_data['percentage'] = (value_data['ownership_value'] / value_data['ownership_value'].sum()) * 100
 
   # Get consistent colors
-  colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_colors)
+  colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_palette)
 
   # Helper function to create treemap trace
   def make_treemap(data, value_col, visible=True):
