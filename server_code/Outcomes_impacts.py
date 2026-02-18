@@ -340,7 +340,8 @@ def create_2026_breakdown_pie(df):
       values=current_by_type['ghg_reduction'],
       hole=0.4,
       marker=dict(colors=dunsparce_colors[:len(current_by_type)]),
-      hovertemplate='<b>%{label}</b><br>%{value:,.0f} tonnes CO2e/year<br>%{percent}<extra></extra>'
+      hovertemplate='<b>%{label}</b><br>%{value:,.0f} tonnes CO2e/year<br>%{percent}<extra></extra>', 
+      showlegend=False
     )
   ])
 
@@ -349,8 +350,7 @@ def create_2026_breakdown_pie(df):
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     margin=dict(t=50, b=0, l=0, r=0),
-    height=500,
-    font=dict(family='Arial, sans-serif', size=12, color='black')
+    font=dict(family='Arial, sans-serif', size=12, color='black'),
   )
 
   return fig

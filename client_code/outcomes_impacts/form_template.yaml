@@ -80,14 +80,27 @@ components_by_slot:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'OAYPGT,MYDOTM'}
-      name: ghg_timeline_plot
-      properties: {height: 50vh}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'ZRRSJU,KDHCPJ'}
+    - layout_properties: {full_width_row: true, grid_position: 'ILSJKC,NQZVEB'}
+      name: heading_1
+      properties: {text: 'How are our surveyed projects reducing emissions for their communities?'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,SCUIXQ ZGCYKI,EFHSKF'}
+      name: text_1
+      properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,SCUIXQ URQUOJ,JPEZHV'}
       name: breakdown_pie_plot
-      properties: {}
+      properties: {height: 185}
       type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,AHIHIM'}
+      name: ghg_timeline_plot
+      properties: {height: 55vh}
+      type: Plot
+    layout_properties: {}
+    name: column_panel_3
+    properties: {}
+    type: ColumnPanel
+  - components:
     - layout_properties: {full_width_row: true, grid_position: 'ZRRSJU,URTMYV'}
       name: ghg_methodology_plot
       properties: {}
@@ -102,7 +115,7 @@ components_by_slot:
       type: Plot
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_widths: '{"KDHCPJ":30,"URTMYV":30}'}
+    properties: {col_widths: '{"URTMYV":30}'}
     type: ColumnPanel
   - event_bindings: {}
     layout_properties: {}
