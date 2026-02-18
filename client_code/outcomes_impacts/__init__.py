@@ -84,7 +84,7 @@ class outcomes_impacts(outcomes_impactsTemplate):
     self.jobs_plot.figure = all_charts['jobs_chart']
     self.ghg_methodology_plot.figure = all_charts['ghg_methodology']
     self.ghg_timeline_plot.figure = all_charts['ghg_timeline']
-    self.breakdown_pie_plot.figure = all_charts['breakdown_pie']
+
 
     print("All charts updated!")
 

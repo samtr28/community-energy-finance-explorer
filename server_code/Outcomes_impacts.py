@@ -34,7 +34,6 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
       'jobs_chart': empty_fig,
       'ghg_methodology': empty_fig,
       'ghg_timeline': empty_fig,
-      'breakdown_pie': empty_fig
     }
 
     # ========== CHART 1: Indigenous Agreements Donut ==========
@@ -177,23 +176,19 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
     methodology_fig.update_layout(title="No GHG methodology data")
 
     # ========== CHART 4: GHG Timeline (2 stacked charts) ==========
-  ghg_timeline_fig = create_ghg_timeline_chart(df_filtered)
+  ghg_timeline_fig = create_ghg_charts(df_filtered)
 
-  # ========== CHART 5: 2026 Breakdown Donut ==========
-  breakdown_pie_fig = create_2026_breakdown_pie(df_filtered)
 
   return {
     'indigenous_agreements': indigenous_fig,
     'jobs_chart': jobs_fig,
     'ghg_methodology': methodology_fig,
     'ghg_timeline': ghg_timeline_fig,
-    'breakdown_pie': breakdown_pie_fig
   }
 
 
-def create_ghg_timeline_chart(df):
-  """Create the GHG emissions reduction timeline chart - 2 subplots only"""
-  # Filter projects with GHG data
+def create_ghg_charts(df):
+  """Create GHG timeline (2 subplots) + 2026 project type horizontal stacked bar (1 subplot)"""
   ghg_time = df[['completion_date', 'ghg_reduction']].dropna()
 
   if ghg_time.empty:
@@ -202,20 +197,18 @@ def create_ghg_timeline_chart(df):
     return empty_fig
 
   ghg_time['year'] = pd.to_datetime(ghg_time['completion_date']).dt.year
-
-  # Create year range
   min_year = ghg_time['year'].min()
   max_year = max(ghg_time['year'].max(), 2030)
   years = range(min_year, max_year + 1)
 
-  # Calculate annual impact
+  # Annual cumulative capacity
   annual_impact = []
   for year in years:
     total = ghg_time[ghg_time['year'] <= year]['ghg_reduction'].sum()
     annual_impact.append({'year': year, 'annual_reduction': total})
   impact_df = pd.DataFrame(annual_impact)
 
-  # Calculate cumulative lifetime
+  # Cumulative lifetime reductions
   cumulative_lifetime = []
   for year in years:
     total = 0
@@ -226,20 +219,40 @@ def create_ghg_timeline_chart(df):
     cumulative_lifetime.append({'year': year, 'cumulative_reduction': total})
   lifetime_df = pd.DataFrame(cumulative_lifetime)
 
-  # Get project data by year
-  project_years = ghg_time.groupby('year').agg({
-    'ghg_reduction': 'sum',
-    'year': 'count'
-  }).rename(columns={'year': 'count'})
-
-  # Create figure with 2 subplots
-  fig = make_subplots(
-    rows=2, cols=1,
-    subplot_titles=('Annual Reduction Capacity', 'Cumulative Lifetime Reductions'),
-    vertical_spacing=0.15
+  # Project annotations
+  project_years = ghg_time.groupby('year').agg(
+    ghg_reduction=('ghg_reduction', 'sum'),
+    count=('ghg_reduction', 'count')
   )
 
-  # Chart 1: Annual capacity
+  # ========== Stacked bar data by project type ==========
+  ghg_by_type = []
+  for idx, row in df.iterrows():
+    if pd.notna(row['ghg_reduction']) and pd.notna(row['completion_date']):
+      year = pd.to_datetime(row['completion_date']).year
+      proj_types = row.get('project_type', [])
+      if isinstance(proj_types, list) and len(proj_types) > 0:
+        reduction_per_type = row['ghg_reduction'] / len(proj_types)
+        for proj_type in proj_types:
+          ghg_by_type.append({
+            'year': year,
+            'project_type': proj_type,
+            'ghg_reduction': reduction_per_type
+          })
+
+    # Create figure with 3 subplots
+  fig = make_subplots(
+    rows=3, cols=1,
+    subplot_titles=(
+      'Annual Reduction Capacity',
+      'Cumulative Lifetime Reductions',
+      '2026 Annual Reduction Capacity by Project Type'
+    ),
+    vertical_spacing=0.1,
+    row_heights=[0.35, 0.35, 0.3]
+  )
+
+  # ── Chart 1: Annual capacity ──
   fig.add_trace(
     go.Scatter(
       x=impact_df['year'],
@@ -252,7 +265,7 @@ def create_ghg_timeline_chart(df):
     row=1, col=1
   )
 
-  # Chart 2: Cumulative lifetime
+  # ── Chart 2: Cumulative lifetime ──
   fig.add_trace(
     go.Scatter(
       x=lifetime_df['year'],
@@ -265,7 +278,7 @@ def create_ghg_timeline_chart(df):
     row=2, col=1
   )
 
-  # Add annotations
+  # Annotations on chart 1
   for year, row in project_years.iterrows():
     if year >= 2015:
       year_total = impact_df[impact_df['year'] == year]['annual_reduction'].values[0]
@@ -284,76 +297,52 @@ def create_ghg_timeline_chart(df):
         row=1, col=1
       )
 
-    # Add "Today" line
-  fig.add_vline(x=2026, line_dash="dash", line_color="gray", row=1, col=1)
-  fig.add_vline(x=2026, line_dash="dash", line_color="gray", row=2, col=1)
+    # ── Chart 3: 2026 horizontal stacked bar by project type (% of total) ──
+  if ghg_by_type:
+    type_df = pd.DataFrame(ghg_by_type)
+    current_by_type = type_df[type_df['year'] <= 2026].groupby('project_type')['ghg_reduction'].sum().reset_index()
+    current_by_type = current_by_type.sort_values('ghg_reduction', ascending=False).reset_index(drop=True)
 
-  # Set axes
-  fig.update_xaxes(title_text="Year", range=[2015, max_year], dtick=1)
+    total = current_by_type['ghg_reduction'].sum()
+    current_by_type['pct'] = current_by_type['ghg_reduction'] / total * 100
 
+    for i, type_row in current_by_type.iterrows():
+      fig.add_trace(
+        go.Bar(
+          x=[type_row['pct']],
+          y=['2026'],
+          orientation='h',
+          name=type_row['project_type'],
+          showlegend=False,
+          marker_color=dunsparce_colors[i % len(dunsparce_colors)],
+          hovertemplate=f'<b>{type_row["project_type"]}</b><br>{type_row["pct"]:.1f}%<br>{type_row["ghg_reduction"]:,.0f} tonnes CO2e/year<extra></extra>'
+        ),
+        row=3, col=1
+      )
+
+    # Today lines on charts 1 and 2 only
+  for r in [1, 2]:
+    fig.add_vline(x=2026, line_dash="dash", line_color="gray", row=r, col=1)
+
+  fig.update_xaxes(title_text="", range=[2015, max_year], dtick=1, row=1, col=1)
+  fig.update_xaxes(title_text="", range=[2015, max_year], dtick=1, row=2, col=1)
+  fig.update_xaxes(title_text="% of Total", range=[0, 100], row=3, col=1)
   fig.update_yaxes(title_text="Tonnes CO2e/year", row=1, col=1)
   fig.update_yaxes(title_text="Total Tonnes CO2e", row=2, col=1)
+  fig.update_yaxes(showticklabels=False, row=3, col=1)
 
   fig.update_layout(
+    barmode='stack',
     title_text=f'GHG Emissions Reductions (n={len(ghg_time)} projects)',
-    height=700,
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
-    margin=dict(t=50, b=50, l=50, r=50),
-    font=dict(family='Arial, sans-serif', size=12, color='black')
-  )
-
-  return fig
-
-
-def create_2026_breakdown_pie(df):
-  """Create donut chart showing 2026 annual reduction by project type"""
-  # Calculate 2026 breakdown by type
-  ghg_by_type = []
-  for idx, row in df.iterrows():
-    if pd.notna(row['ghg_reduction']) and pd.notna(row['completion_date']):
-      year = pd.to_datetime(row['completion_date']).year
-      proj_types = row.get('project_type', [])
-
-      if isinstance(proj_types, list) and len(proj_types) > 0:
-        reduction_per_type = row['ghg_reduction'] / len(proj_types)
-        for proj_type in proj_types:
-          ghg_by_type.append({
-            'year': year,
-            'project_type': proj_type,
-            'ghg_reduction': reduction_per_type
-          })
-
-  if not ghg_by_type:
-    empty_fig = go.Figure()
-    empty_fig.update_layout(title="No project type data available")
-    return empty_fig
-
-  ghg_type_df = pd.DataFrame(ghg_by_type)
-  current_by_type = ghg_type_df[ghg_type_df['year'] <= 2026].groupby('project_type')['ghg_reduction'].sum().reset_index()
-  current_by_type = current_by_type.sort_values('ghg_reduction', ascending=False)
-
-  # Create donut chart with color palette
-  fig = go.Figure(data=[
-    go.Pie(
-      labels=current_by_type['project_type'],
-      values=current_by_type['ghg_reduction'],
-      hole=0.4,
-      marker=dict(colors=dunsparce_colors[:len(current_by_type)]),
-      hovertemplate='<b>%{label}</b><br>%{value:,.0f} tonnes CO2e/year<br>%{percent}<extra></extra>', 
-      showlegend=False
-    )
-  ])
-
-  fig.update_layout(
-    title='2026 Annual Reduction Capacity by Project Type',
-    plot_bgcolor='rgba(0, 0, 0, 0)',
-    paper_bgcolor='rgba(0, 0, 0, 0)',
-    margin=dict(t=50, b=0, l=0, r=0),
+    margin=dict(t=0, b=0, l=0, r=0),
     font=dict(family='Arial, sans-serif', size=12, color='black'),
   )
 
   return fig
+
+
 
 def apply_filters(df, provinces=None, proj_types=None, stages=None, 
                   indigenous_ownership=None, project_scale=None):
