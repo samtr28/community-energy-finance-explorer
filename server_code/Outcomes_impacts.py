@@ -13,178 +13,161 @@ import plotly.express as px
 import textwrap
 from plotly.subplots import make_subplots
 
-@anvil.server.callable
-def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
-                            indigenous_ownership=None, project_scale=None):
-  """
-    Single server call that returns ALL outcomes/impacts chart figures at once.
-    """
-  # Load raw data
-  df = get_data()
 
-  # Apply filters
-  df_filtered = apply_filters(df, provinces, proj_types, stages, 
-                              indigenous_ownership, project_scale)
-
-  if df_filtered.empty:
-    empty_fig = go.Figure()
-    empty_fig.update_layout(title="No data available for selected filters")
-    return {
-      'indigenous_agreements': empty_fig,
-      'jobs_chart': empty_fig,
-      'ghg_methodology': empty_fig,
-      'ghg_timeline': empty_fig,
-    }
-
-    # ========== CHART 1: Indigenous Agreements Donut ==========
+def create_indigenous_agreements_chart(df):
+  """Create donut chart showing distribution of indigenous agreement types"""
   agreements_list = []
-  for agreement in df_filtered['indigenous_agreements']:
+  for agreement in df['indigenous_agreements']:
     if isinstance(agreement, list):
       for a in agreement:
         agreements_list.append(a)
 
-  if agreements_list:
-    agreements_counts = pd.Series(agreements_list).value_counts()
-    indigenous_fig = go.Figure(data=[
-      go.Pie(
-        labels=agreements_counts.index, 
-        values=agreements_counts.values,
-        hole=0.4,
-        marker=dict(colors=dunsparce_colors[:len(agreements_counts)])
-      )
-    ])
-    indigenous_fig.update_layout(
-      title='Distribution of Indigenous Agreement Types',
-      plot_bgcolor='rgba(0, 0, 0, 0)',
-      paper_bgcolor='rgba(0, 0, 0, 0)',
-      margin=dict(t=50, b=0, l=0, r=0)
-    )
-  else:
-    indigenous_fig = go.Figure()
-    indigenous_fig.update_layout(title="No indigenous agreements data")
+  if not agreements_list:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text="No indigenous agreements data", font=dict(family='Arial, sans-serif', size=16, color='black')))
+    return fig
 
-    # ========== CHART 2: Jobs by Phase ==========
+  agreements_counts = pd.Series(agreements_list).value_counts()
+  fig = go.Figure(data=[
+    go.Pie(
+      labels=agreements_counts.index,
+      values=agreements_counts.values,
+      hole=0.4,
+      showlegend=False,
+      marker=dict(colors=dunsparce_colors[:len(agreements_counts)])
+    )
+  ])
+  fig.update_layout(
+    title=dict(text='Project Agreements with Indigenous Communities', font=dict(family='Arial, sans-serif', size=16, color='black')),
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    margin=dict(t=50, b=0, l=0, r=0)
+  )
+  return fig
+
+
+def create_jobs_chart(df):
+  """Create grouped bar chart showing jobs by phase"""
   jobs_list = []
-  for job_entries in df_filtered['jobs']:
+  for job_entries in df['jobs']:
     if isinstance(job_entries, list):
       for entry in job_entries:
         jobs_list.append(entry)
 
-  if jobs_list:
-    jobs_df = pd.DataFrame(jobs_list)
-    grouped = jobs_df.groupby('phase')[['full_time', 'part_time']].sum().fillna(0)
-    reporting_counts = jobs_df.groupby('phase').agg({
-      'full_time': lambda x: x.notna().sum(),
-      'part_time': lambda x: x.notna().sum()
-    })
-    total_projects = len(df_filtered)
+  if not jobs_list:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text="No jobs data", font=dict(family='Arial, sans-serif', size=16, color='black')))
+    return fig
 
-    jobs_fig = go.Figure(data=[
-      go.Bar(name='Full-time', x=grouped.index, y=grouped['full_time'], marker_color=dunsparce_colors[0]),
-      go.Bar(name='Part-time', x=grouped.index, y=grouped['part_time'], marker_color=dunsparce_colors[1])
-    ])
+  jobs_df = pd.DataFrame(jobs_list)
+  grouped = jobs_df.groupby('phase')[['full_time', 'part_time']].sum().fillna(0)
+  reporting_counts = jobs_df.groupby('phase').agg({
+    'full_time': lambda x: x.notna().sum(),
+    'part_time': lambda x: x.notna().sum()
+  })
+  total_projects = len(df)
 
-    bar_width = 0.4
-    for i, phase in enumerate(grouped.index):
-      jobs_fig.add_annotation(
-        x=i - bar_width/2,
-        y=grouped.loc[phase, 'full_time'],
-        text=f"{reporting_counts.loc[phase, 'full_time']} projects<br>{grouped.loc[phase, 'full_time']:.0f} jobs",
-        showarrow=False,
-        font=dict(size=12, color='gray'),
-        yshift=20
-      )
-      jobs_fig.add_annotation(
-        x=i + bar_width/2,
-        y=grouped.loc[phase, 'part_time'],
-        text=f"{reporting_counts.loc[phase, 'part_time']} projects<br>{grouped.loc[phase, 'part_time']:.0f} jobs",
-        showarrow=False,
-        font=dict(size=12, color='gray'),
-        yshift=20
-      )
+  fig = go.Figure(data=[
+    go.Bar(name='Full-time', x=grouped.index, y=grouped['full_time'], marker_color=dunsparce_colors[0]),
+    go.Bar(name='Part-time', x=grouped.index, y=grouped['part_time'], marker_color=dunsparce_colors[1])
+  ])
 
-    jobs_fig.update_layout(
-      barmode='group',
-      title=f'Jobs by Phase: Full-time vs Part-time (Total Projects: {total_projects})',
-      xaxis_title='',
-      yaxis_title='',
-      showlegend=True,
-      legend=dict(orientation="h", yanchor="top", y=-0.1, xanchor="center", x=0.5),
-      plot_bgcolor='rgba(0, 0, 0, 0)',
-      paper_bgcolor='rgba(0, 0, 0, 0)',
-      margin=dict(t=50, b=50, l=50, r=50)
+  bar_width = 0.4
+  for i, phase in enumerate(grouped.index):
+    fig.add_annotation(
+      x=i - bar_width/2,
+      y=grouped.loc[phase, 'full_time'],
+      text=f"{reporting_counts.loc[phase, 'full_time']} projects<br>{grouped.loc[phase, 'full_time']:.0f} jobs",
+      showarrow=False,
+      font=dict(size=12, color='gray'),
+      yshift=20
     )
-  else:
-    jobs_fig = go.Figure()
-    jobs_fig.update_layout(title="No jobs data")
+    fig.add_annotation(
+      x=i + bar_width/2,
+      y=grouped.loc[phase, 'part_time'],
+      text=f"{reporting_counts.loc[phase, 'part_time']} projects<br>{grouped.loc[phase, 'part_time']:.0f} jobs",
+      showarrow=False,
+      font=dict(size=12, color='gray'),
+      yshift=20
+    )
 
-    # ========== CHART 3: GHG Methodology Treemaps ==========
+  fig.update_layout(
+    barmode='group',
+    title=dict(text=f'Jobs by Phase: Full-time vs Part-time (Total Projects: {total_projects})', font=dict(family='Arial, sans-serif', size=16, color='black')),
+    xaxis_title='',
+    yaxis_title='',
+    showlegend=True,
+    legend=dict(orientation="h", yanchor="top", y=-0.1, xanchor="center", x=0.5),
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    margin=dict(t=50, b=0, l=0, r=0),
+    font=dict(family='Arial, sans-serif', size=12, color='black')
+  )
+  return fig
+
+
+def create_ghg_methodology_chart(df):
+  """Create treemap charts showing GHG reduction tools and who calculated reductions"""
   tools_list = []
-  for tool_entries in df_filtered['ghg_tools']:
+  for tool_entries in df['ghg_tools']:
     if isinstance(tool_entries, list):
       for tool in tool_entries:
         tools_list.append(tool)
 
-  who_counts = df_filtered['ghg_who'].value_counts()
+  who_counts = df['ghg_who'].value_counts()
 
-  if tools_list or not who_counts.empty:
-    tools_counts = pd.Series(tools_list).value_counts() if tools_list else pd.Series()
+  if not tools_list and who_counts.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text="No GHG methodology data", font=dict(family='Arial, sans-serif', size=16, color='black')))
+    return fig
 
-    methodology_fig = make_subplots(
-      rows=1, cols=2,
-      specs=[[{'type':'treemap'}, {'type':'treemap'}]],
-      subplot_titles=('GHG Reduction Tools', 'Who Calculated GHG Reductions')
+  tools_counts = pd.Series(tools_list).value_counts() if tools_list else pd.Series()
+
+  fig = make_subplots(
+    rows=1, cols=2,
+    specs=[[{'type': 'treemap'}, {'type': 'treemap'}]],
+    subplot_titles=('GHG Reduction Tools', 'Who Calculated GHG Reductions'),
+    horizontal_spacing=0.02
+  )
+
+  for annotation in fig['layout']['annotations']:
+    annotation['font'] = dict(family='Arial, sans-serif', size=12, color='black')
+
+  if not tools_counts.empty:
+    tools_colors = [gradient_palette[i % len(gradient_palette)] for i in range(len(tools_counts))]
+    fig.add_trace(
+      go.Treemap(
+        labels=tools_counts.index,
+        parents=[''] * len(tools_counts),
+        values=tools_counts.values,
+        textinfo='label+value',
+        marker=dict(colors=tools_colors, line=dict(width=2, color='white'))
+      ),
+      row=1, col=1
     )
 
-    if not tools_counts.empty:
-      # Create color list for tools
-      tools_colors = [dunsparce_colors[i % len(dunsparce_colors)] for i in range(len(tools_counts))]
-      methodology_fig.add_trace(
-        go.Treemap(
-          labels=tools_counts.index,
-          parents=[''] * len(tools_counts),
-          values=tools_counts.values,
-          textinfo='label+value',
-          marker=dict(colors=tools_colors, line=dict(width=2, color='white'))
-        ),
-        row=1, col=1
-      )
-
-    if not who_counts.empty:
-      # Create color list for who
-      who_colors = [dunsparce_colors[i % len(dunsparce_colors)] for i in range(len(who_counts))]
-      methodology_fig.add_trace(
-        go.Treemap(
-          labels=who_counts.index,
-          parents=[''] * len(who_counts),
-          values=who_counts.values,
-          textinfo='label+value',
-          marker=dict(colors=who_colors, line=dict(width=2, color='white'))
-        ),
-        row=1, col=2
-      )
-
-    methodology_fig.update_layout(
-      title_text='GHG Reduction Methodology',
-      height=500,
-      plot_bgcolor='rgba(0, 0, 0, 0)',
-      paper_bgcolor='rgba(0, 0, 0, 0)',
-      margin=dict(t=50, b=0, l=0, r=0)
+  if not who_counts.empty:
+    who_colors = [gradient_palette[i % len(gradient_palette)] for i in range(len(who_counts))]
+    fig.add_trace(
+      go.Treemap(
+        labels=who_counts.index,
+        parents=[''] * len(who_counts),
+        values=who_counts.values,
+        textinfo='label+value',
+        marker=dict(colors=who_colors, line=dict(width=2, color='white'))
+      ),
+      row=1, col=2
     )
-  else:
-    methodology_fig = go.Figure()
-    methodology_fig.update_layout(title="No GHG methodology data")
 
-    # ========== CHART 4: GHG Timeline (2 stacked charts) ==========
-  ghg_timeline_fig = create_ghg_charts(df_filtered)
-
-
-  return {
-    'indigenous_agreements': indigenous_fig,
-    'jobs_chart': jobs_fig,
-    'ghg_methodology': methodology_fig,
-    'ghg_timeline': ghg_timeline_fig,
-  }
+  fig.update_layout(
+    title=dict(text='GHG Reduction Methodology', font=dict(family='Arial, sans-serif', size=16, color='black')),
+    height=500,
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    margin=dict(t=50, b=0, l=0, r=0),
+    font=dict(family='Arial, sans-serif', size=12, color='black')
+  )
+  return fig
 
 
 def create_ghg_charts(df):
@@ -201,14 +184,12 @@ def create_ghg_charts(df):
   max_year = max(ghg_time['year'].max(), 2030)
   years = range(min_year, max_year + 1)
 
-  # Annual cumulative capacity
   annual_impact = []
   for year in years:
     total = ghg_time[ghg_time['year'] <= year]['ghg_reduction'].sum()
     annual_impact.append({'year': year, 'annual_reduction': total})
   impact_df = pd.DataFrame(annual_impact)
 
-  # Cumulative lifetime reductions
   cumulative_lifetime = []
   for year in years:
     total = 0
@@ -219,13 +200,11 @@ def create_ghg_charts(df):
     cumulative_lifetime.append({'year': year, 'cumulative_reduction': total})
   lifetime_df = pd.DataFrame(cumulative_lifetime)
 
-  # Project annotations
   project_years = ghg_time.groupby('year').agg(
     ghg_reduction=('ghg_reduction', 'sum'),
     count=('ghg_reduction', 'count')
   )
 
-  # ========== Stacked bar data by project type ==========
   ghg_by_type = []
   for idx, row in df.iterrows():
     if pd.notna(row['ghg_reduction']) and pd.notna(row['completion_date']):
@@ -240,7 +219,6 @@ def create_ghg_charts(df):
             'ghg_reduction': reduction_per_type
           })
 
-    # Create figure with 3 subplots
   fig = make_subplots(
     rows=3, cols=1,
     subplot_titles=(
@@ -248,11 +226,13 @@ def create_ghg_charts(df):
       'Cumulative Lifetime Reductions',
       '2026 Annual Reduction Capacity by Project Type'
     ),
-    vertical_spacing=0.1,
-    row_heights=[0.35, 0.35, 0.3]
+    vertical_spacing=0.15,
+    row_heights=[0.4, 0.4, 0.2]
   )
 
-  # ── Chart 1: Annual capacity ──
+  for annotation in fig['layout']['annotations']:
+    annotation['font'] = dict(family='Arial, sans-serif', size=12, color='black')
+
   fig.add_trace(
     go.Scatter(
       x=impact_df['year'],
@@ -265,7 +245,6 @@ def create_ghg_charts(df):
     row=1, col=1
   )
 
-  # ── Chart 2: Cumulative lifetime ──
   fig.add_trace(
     go.Scatter(
       x=lifetime_df['year'],
@@ -278,7 +257,6 @@ def create_ghg_charts(df):
     row=2, col=1
   )
 
-  # Annotations on chart 1
   for year, row in project_years.iterrows():
     if year >= 2015:
       year_total = impact_df[impact_df['year'] == year]['annual_reduction'].values[0]
@@ -297,7 +275,6 @@ def create_ghg_charts(df):
         row=1, col=1
       )
 
-    # ── Chart 3: 2026 horizontal stacked bar by project type (% of total) ──
   if ghg_by_type:
     type_df = pd.DataFrame(ghg_by_type)
     current_by_type = type_df[type_df['year'] <= 2026].groupby('project_type')['ghg_reduction'].sum().reset_index()
@@ -314,42 +291,39 @@ def create_ghg_charts(df):
           orientation='h',
           name=type_row['project_type'],
           showlegend=False,
+          text=[type_row['project_type']],
+          textposition='inside',
+          insidetextanchor='middle',
+          constraintext='inside',
           marker_color=dunsparce_colors[i % len(dunsparce_colors)],
           hovertemplate=f'<b>{type_row["project_type"]}</b><br>{type_row["pct"]:.1f}%<br>{type_row["ghg_reduction"]:,.0f} tonnes CO2e/year<extra></extra>'
         ),
         row=3, col=1
       )
 
-    # Today lines on charts 1 and 2 only
   for r in [1, 2]:
     fig.add_vline(x=2026, line_dash="dash", line_color="gray", row=r, col=1)
 
   fig.update_xaxes(title_text="", range=[2015, max_year], dtick=1, row=1, col=1)
   fig.update_xaxes(title_text="", range=[2015, max_year], dtick=1, row=2, col=1)
-  fig.update_xaxes(title_text="% of Total", range=[0, 100], row=3, col=1)
+  fig.update_xaxes(title_text="", range=[0, 100], ticksuffix="%", row=3, col=1)
   fig.update_yaxes(title_text="Tonnes CO2e/year", row=1, col=1)
   fig.update_yaxes(title_text="Total Tonnes CO2e", row=2, col=1)
   fig.update_yaxes(showticklabels=False, row=3, col=1)
 
   fig.update_layout(
     barmode='stack',
-    title_text=f'GHG Emissions Reductions (n={len(ghg_time)} projects)',
+    title=dict(text=f'GHG Emissions Reductions (n={len(ghg_time)} projects)', font=dict(family='Arial, sans-serif', size=16, color='black')),
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
-    margin=dict(t=0, b=0, l=0, r=0),
+    margin=dict(t=50, b=0, l=0, r=0),
     font=dict(family='Arial, sans-serif', size=12, color='black'),
   )
-
   return fig
 
 
-
-def apply_filters(df, provinces=None, proj_types=None, stages=None, 
+def apply_filters(df, provinces=None, proj_types=None, stages=None,
                   indigenous_ownership=None, project_scale=None):
-  """
-    Apply filters to dataframe. Returns filtered copy.
-    Handles filtering by province, project type, stage, indigenous ownership, and project scale.
-    """
   if df.empty:
     return df
 
@@ -359,7 +333,6 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
     df = df[df["province"].isin(provinces)]
 
   if proj_types:
-    # Handle project_type as list column
     df = df[df["project_type"].apply(lambda x: any(t in x for t in proj_types) if isinstance(x, list) else False)]
 
   if stages:
@@ -372,3 +345,29 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
     df = df[df["project_scale"].isin(project_scale)]
 
   return df
+
+
+@anvil.server.callable
+def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
+                            indigenous_ownership=None, project_scale=None):
+  """Single server call that returns ALL outcomes/impacts chart figures at once."""
+  df = get_data()
+  df_filtered = apply_filters(df, provinces, proj_types, stages,
+                              indigenous_ownership, project_scale)
+
+  if df_filtered.empty:
+    empty_fig = go.Figure()
+    empty_fig.update_layout(title="No data available for selected filters")
+    return {
+      'indigenous_agreements': empty_fig,
+      'jobs_chart': empty_fig,
+      'ghg_methodology': empty_fig,
+      'ghg_timeline': empty_fig,
+    }
+
+  return {
+    'indigenous_agreements': create_indigenous_agreements_chart(df_filtered),
+    'jobs_chart': create_jobs_chart(df_filtered),
+    'ghg_methodology': create_ghg_methodology_chart(df_filtered),
+    'ghg_timeline': create_ghg_charts(df_filtered),
+  }

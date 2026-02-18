@@ -80,62 +80,66 @@ components_by_slot:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'ILSJKC,NQZVEB'}
+    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,SCUIXQ TWPEVJ,VTEPAA'}
       name: heading_1
       properties: {text: 'How are our surveyed projects reducing emissions for their communities?'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,SCUIXQ PJFFKG,QGWLRW'}
+    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,SCUIXQ ALJHOW,HXBNVT'}
       name: text_1
       properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'SZAQVV,SCUIXQ XYZXJL,MCXTLR'}
-      name: heading_2
-      properties: {text: 'How are emissions reductions calculated?'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'SZAQVV,SCUIXQ ZGRZTI,AHXTPQ'}
-      name: ghg_methodology_plot
-      properties: {height: 35vh}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,AHIHIM MYLLZL,BXQCKX'}
+    - layout_properties: {full_width_row: true, grid_position: 'SZAQVV,AHIHIM'}
       name: ghg_timeline_plot
       properties: {height: 55vh}
       type: Plot
-    layout_properties: {}
-    name: column_panel_3
-    properties: {col_widths: '{"SCUIXQ":25,"AHIHIM":35}'}
-    type: ColumnPanel
-  - components:
-    - layout_properties: {full_width_row: true, grid_position: 'ZRRSJU,KOJOMU'}
+    - layout_properties: {full_width_row: true, grid_position: 'MSZGTZ,AAVNMB QJZYGI,NUMYOJ'}
+      name: heading_2
+      properties: {text: 'How are emissions reductions calculated?'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'MSZGTZ,AAVNMB QFMVQL,WQHUUR'}
       name: text_2
       properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'OTIGLB,BDMRMA'}
+    - layout_properties: {full_width_row: true, grid_position: 'MSZGTZ,YDCJHO'}
+      name: ghg_methodology_plot
+      properties: {height: 35vh}
+      type: Plot
+    layout_properties: {}
+    name: column_panel_3
+    properties: {col_widths: '{"SCUIXQ":25,"AHIHIM":35,"AAVNMB":25,"YDCJHO":35}'}
+    type: ColumnPanel
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'IJWMIV,YBFVDR'}
       name: heading_4
       properties: {text: 'Are jobs being created?'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'FMXWTS,HGGIGF'}
+    - layout_properties: {full_width_row: true, grid_position: 'AWHXCC,WVVDMY'}
       name: jobs_plot
-      properties: {}
+      properties: {height: 40vh}
       type: Plot
-    - layout_properties: {grid_position: 'FMXWTS,KHNXDB'}
+    - layout_properties: {full_width_row: true, grid_position: 'AWHXCC,ZLSAKR'}
       name: text_3
-      properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
+      properties: {align: left, text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'CXPGFS,ZDLJOX'}
+    - layout_properties: {full_width_row: true, grid_position: 'ISEBQT,BEBUTF'}
       name: heading_3
       properties: {text: 'Do projects have agreements with Indigenous communities?'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'OGKLAN,ORHEUR'}
-      name: indigenous_agreements_plot
-      properties: {}
-      type: Plot
-    - layout_properties: {grid_position: 'OGKLAN,DAYXIH'}
+    - layout_properties: {full_width_row: true, grid_position: 'FHMDPB,DRAWCV'}
       name: text_4
       properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,  similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'FHMDPB,YERVJB'}
+      name: indigenous_agreements_plot
+      properties: {height: 40vh}
+      type: Plot
+    - layout_properties: {grid_position: 'FHMDPB,RVMPQD'}
+      name: spacer_1
+      properties: {}
+      type: Spacer
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_widths: '{"KOJOMU":25,"HGGIGF":40,"KHNXDB":20}'}
+    properties: {col_widths: '{"WVVDMY":25,"ZLSAKR":35,"DRAWCV":25,"YERVJB":30,"RVMPQD":5}'}
     type: ColumnPanel
   - event_bindings: {}
     layout_properties: {}
