@@ -22,9 +22,6 @@ dependencies:
 - dep_id: dep_9kcxnwm3upyjd
   resolution_hints: {app_id: 4UK6WHQ6UX7AKELK, name: Material 3 Theme, package_name: m3}
   version: {version_tag: v1.2.6}
-- dep_id: dep_l2jshl74w4hl
-  resolution_hints: {app_id: ZHR7M4WMRTC43K4Z, name: IFrame Components, package_name: IFrame}
-  version: {branch: master}
 - dep_id: dep_ar2wlcmlppsllr
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.5.0}

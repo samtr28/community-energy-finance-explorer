@@ -7,12 +7,10 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-
 class overview(overviewTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
     
     total_cost, row_count = anvil.server.call('get_summary_data')
     self.project_number.text = f"{row_count}"
