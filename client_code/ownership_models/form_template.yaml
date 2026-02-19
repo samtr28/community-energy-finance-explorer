@@ -271,5 +271,5 @@ components_by_slot:
     type: FlowPanel
 is_package: true
 layout:
-  form_event_bindings: {}
+  form_event_bindings: {show: form_show}
   type: form:Base

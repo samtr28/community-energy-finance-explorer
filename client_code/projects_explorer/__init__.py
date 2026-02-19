@@ -185,25 +185,21 @@ class projects_explorer(projects_explorerTemplate):
     self.next_page_btn.enabled = self._current_page < self._total_pages
     self.last_page_btn.enabled = self._current_page < self._total_pages
 
-  @handle("first_page_btn", "click")
   def first_page_btn_click(self, **event_args):
     """Go to first page"""
     if self._current_page != 1:
       self.apply_filters(page=1)
 
-  @handle("prev_page_btn", "click")
   def prev_page_btn_click(self, **event_args):
     """Go to previous page"""
     if self._current_page > 1:
       self.apply_filters(page=self._current_page - 1)
 
-  @handle("next_page_btn", "click")
   def next_page_btn_click(self, **event_args):
     """Go to next page"""
     if self._current_page < self._total_pages:
       self.apply_filters(page=self._current_page + 1)
 
-  @handle("last_page_btn", "click")
   def last_page_btn_click(self, **event_args):
     """Go to last page"""
     if self._current_page != self._total_pages:

@@ -141,7 +141,7 @@ components_by_slot:
     name: column_panel_1
     properties: {col_widths: '{"WVVDMY":25,"ZLSAKR":35,"DRAWCV":25,"YERVJB":30,"RVMPQD":5}'}
     type: ColumnPanel
-  - event_bindings: {}
+  - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
     name: filter_timer
     properties: {interval: 0}
@@ -173,5 +173,5 @@ components_by_slot:
     type: FlowPanel
 is_package: true
 layout:
-  form_event_bindings: {}
+  form_event_bindings: {show: form_show}
   type: form:Base

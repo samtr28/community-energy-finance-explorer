@@ -108,12 +108,12 @@ components_by_slot:
       properties: {align: center, font_size: 12, text: ''}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - components:
-      - event_bindings: {}
+      - event_bindings: {click: first_page_btn_click}
         layout_properties: {width: null}
         name: first_page_btn
         properties: {background_color: '', icon: 'mi:keyboard_double_arrow_left', text: First}
         type: form:dep_9kcxnwm3upyjd:_Components.Button
-      - event_bindings: {}
+      - event_bindings: {click: prev_page_btn_click}
         layout_properties: {}
         name: prev_page_btn
         properties: {background_color: '', icon: 'mi:arrow_back_ios_new', icon_size: 15, text: ''}
@@ -123,12 +123,12 @@ components_by_slot:
         properties: {align: center}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - data_bindings: []
-        event_bindings: {}
+        event_bindings: {click: next_page_btn_click}
         layout_properties: {}
         name: next_page_btn
         properties: {icon: 'mi:keyboard_arrow_right', text: ''}
         type: form:dep_9kcxnwm3upyjd:_Components.Button
-      - event_bindings: {}
+      - event_bindings: {click: last_page_btn_click}
         layout_properties: {}
         name: last_page_btn
         properties: {icon: 'mi:keyboard_double_arrow_right', text: Last}

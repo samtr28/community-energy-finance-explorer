@@ -14,7 +14,6 @@ class FilterChip1(FilterChip1Template):
 
     # Any code you write here will run before the form opens.
 
-  @handle("chip_label", "close_click")
   def chip_label_close_click(self, **event_args):
     """This method is called when the close link is clicked"""
     filter_type, value = self.item["tag"]
