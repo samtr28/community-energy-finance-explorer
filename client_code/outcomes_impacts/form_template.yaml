@@ -53,7 +53,7 @@ components_by_slot:
     layout_properties: {full_width_row: true}
     name: filter_panel
     properties:
-      gap: small
+      gap: tiny
       spacing:
         margin: [null, null, 1.5%, '1']
     type: FlowPanel

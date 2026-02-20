@@ -59,7 +59,7 @@ components_by_slot:
       layout_properties: {full_width_row: true, grid_position: 'GTRFWU,CNHVPB'}
       name: filter_panel
       properties:
-        gap: small
+        gap: tiny
         spacing:
           margin: [null, null, 1.5%, '1']
       type: FlowPanel
@@ -111,7 +111,7 @@ components_by_slot:
       - event_bindings: {click: first_page_btn_click}
         layout_properties: {width: null}
         name: first_page_btn
-        properties: {background_color: '', icon: 'mi:keyboard_double_arrow_left', text: First}
+        properties: {background_color: '', icon: 'mi:keyboard_double_arrow_left', text: ''}
         type: form:dep_9kcxnwm3upyjd:_Components.Button
       - event_bindings: {click: prev_page_btn_click}
         layout_properties: {}
@@ -131,7 +131,7 @@ components_by_slot:
       - event_bindings: {click: last_page_btn_click}
         layout_properties: {}
         name: last_page_btn
-        properties: {icon: 'mi:keyboard_double_arrow_right', text: Last}
+        properties: {icon: 'mi:keyboard_double_arrow_right', text: ''}
         type: form:dep_9kcxnwm3upyjd:_Components.Button
       layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MPEPZQ,JMFNVF'}
       name: pagination_container
