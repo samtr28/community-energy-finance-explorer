@@ -12,9 +12,12 @@ components_by_slot:
         text: Tracking Community Energy Financing in Canada
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ'}
-      name: main_text
-      properties: {text: '"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+      name: rich_text_1
+      properties:
+        content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. \n<br><br><b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term. <br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. \n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i>visible, comparable, and learnable</i>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
+        font_size: 18
+        format: restricted_html
+      type: RichText
     - layout_properties: {grid_position: 'IZDOGX,ANKGAX'}
       name: spacer_2
       properties: {height: -0.41668701171875}
@@ -31,13 +34,20 @@ components_by_slot:
                 margin: [null, null, '0', null]
                 padding: [null, null, '', null]
               style: headline
-              text: Our Progress
+              text: Our Progress so Far
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'OPAFPV,ELMZIN'}
+          - layout_properties: {grid_position: 'NWMOVG,GLIBBX'}
+            name: rich_text_2
+            properties:
+              content: "<b>This is a pilot </b> (Beta version). We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
+              font_size: 18
+              format: restricted_html
+            type: RichText
+          - layout_properties: {grid_position: 'BYFSFV,OBSBKT'}
             name: project_number
             properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'OPAFPV,ZIWQPE'}
+          - layout_properties: {grid_position: 'LQSDUV,MQHUAZ'}
             name: project_number_caption
             properties:
               align: center
@@ -52,7 +62,7 @@ components_by_slot:
             name: total_funding_number
             properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'AFFSVA,DCAFDG'}
+          - layout_properties: {grid_position: 'LFTCJV,WHBRLA'}
             name: total_funding_caption
             properties:
               align: center
@@ -63,6 +73,20 @@ components_by_slot:
               text: in funding accounted
               text_color: theme:On Tertiary Container
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
+            name: survey_link
+            properties:
+              align: center
+              background_color: ''
+              bold: true
+              border: '25'
+              font_size: 25
+              icon: mi:10mp
+              spacing:
+                margin: [null, null, null, null]
+              text: Add your project
+              underline: false
+            type: form:dep_9kcxnwm3upyjd:_Components.Link
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2
           properties: {}
@@ -77,7 +101,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {}
+    properties: {col_widths: '{"DCBHVQ":40,"ANKGAX":20}'}
     type: ColumnPanel
   slot_1: []
   slot_2: []
@@ -95,7 +119,7 @@ components_by_slot:
         spacing:
           margin: ['0', null, null, null]
         style: body
-        text: Description of Page
+        text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: title_panel
