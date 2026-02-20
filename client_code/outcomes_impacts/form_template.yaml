@@ -1,7 +1,7 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {}
+    - layout_properties: {width: 35.1}
       name: filter_heading
       properties: {bold: true, scale: small, style: title, text: 'Filter by:'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
@@ -55,7 +55,7 @@ components_by_slot:
     properties:
       gap: tiny
       spacing:
-        margin: [null, null, 1.5%, '1']
+        margin: [null, null, 1.5%, '0']
     type: FlowPanel
   - components:
     - layout_properties: {width: null}
