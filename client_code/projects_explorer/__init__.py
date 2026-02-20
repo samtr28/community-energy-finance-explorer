@@ -116,7 +116,7 @@ class projects_explorer(projects_explorerTemplate):
     kwargs["page_size"] = self._page_size
 
     # SINGLE SERVER CALL
-    all_data = Global.project_explorer_data
+    all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
 
     # Update map (always show all filtered points)
     self.project_map.data = [all_data['map_data']]
