@@ -11,13 +11,23 @@ components_by_slot:
         style: headline
         text: Tracking Community Energy Financing in Canada
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ'}
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ BCBQKH,WXDCPV'}
       name: rich_text_1
       properties:
-        content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. \n<br><br><b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term. <br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. \n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i>visible, comparable, and learnable</i>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
+        content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. \n<br><br><b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term. <br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. \n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
         font_size: 18
         format: restricted_html
       type: RichText
+    - layout_properties: {grid_position: 'IZDOGX,DCBHVQ IIRBFB,CMIBBE'}
+      name: description
+      properties:
+        font_size: 16
+        scale: large
+        spacing:
+          margin: ['0', null, null, null]
+        style: body
+        text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'IZDOGX,ANKGAX'}
       name: spacer_2
       properties: {height: -0.41668701171875}
@@ -36,7 +46,8 @@ components_by_slot:
               style: headline
               text: Our Progress so Far
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'NWMOVG,GLIBBX'}
+          - components: []
+            layout_properties: {grid_position: 'NWMOVG,GLIBBX'}
             name: rich_text_2
             properties:
               content: "<b>This is a pilot </b> (Beta version). We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
@@ -82,16 +93,14 @@ components_by_slot:
               border: ''
               font_size: 25
               icon: mi:forum
+              role: button-link
               spacing:
                 margin: [null, null, null, null]
+                padding: ['4', '16', '4', '16']
               text: Add your project
               text_color: theme:Tertiary Container
               underline: false
             type: form:dep_9kcxnwm3upyjd:_Components.Link
-          - layout_properties: {grid_position: 'NPMBBY,XHICCH'}
-            name: outlined_button_1
-            properties: {background: 'theme:On Tertiary Container', foreground: 'theme:On Primary', role: outlined-button, text: Add your project}
-            type: Button
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2
           properties: {}
@@ -116,16 +125,6 @@ components_by_slot:
       name: title
       properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Overview}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {expand: false, width: 750}
-      name: description
-      properties:
-        font_size: 16
-        scale: large
-        spacing:
-          margin: ['0', null, null, null]
-        style: body
-        text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: title_panel
     properties:
@@ -135,5 +134,9 @@ components_by_slot:
         margin: ['0', null, '0', null]
       vertical_align: middle
     type: FlowPanel
+  - layout_properties: {}
+    name: link_1
+    properties: {role: null}
+    type: form:dep_9kcxnwm3upyjd:_Components.Link
 is_package: true
 layout: {type: 'form:Base'}

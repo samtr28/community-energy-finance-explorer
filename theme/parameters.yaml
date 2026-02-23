@@ -341,3 +341,6 @@ roles:
   name: twod-repeater
 - components: [RepeatingPanel]
   name: 3-cols
+- components: [Link]
+  display_in_toolbox: false
+  name: button-link

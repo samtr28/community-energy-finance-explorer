@@ -1248,3 +1248,8 @@ footer a, .footer .anvil-component {
   grid-template-columns: repeat(3, 1fr);
   column-gap: 3%; /*adjust as needed*/
 }
+
+
+.anvil-role-button-link.anvil-m3-link {
+  border-radius: 100px;
+}
