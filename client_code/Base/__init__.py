@@ -10,6 +10,7 @@ from anvil.tables import app_tables
 from anvil.js.window import jQuery
 from anvil.js import get_dom_node
 
+set_default_error_handling(print)
 
 class Base(BaseTemplate):
   def __init__(self, **properties):
