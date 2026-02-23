@@ -1,27 +1,68 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'RONIZI,IIQEPB'}
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ YIRRYK,OCWUOG'}
       name: main_heading
       properties:
-        scale: small
+        font_family: ser
+        scale: medium
         spacing:
           margin: [null, null, '0', null]
           padding: [null, null, '', null]
         style: headline
         text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ'}
+    - components:
+      - components: []
+        event_bindings: {click: owner_btn_click}
+        layout_properties: {slot: slot1}
+        name: owner_btn
+        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Ownership models data, text_color: '#0db0ba'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Link
+      - event_bindings: {click: outcome_button_click}
+        layout_properties: {slot: slot2}
+        name: outcomes_btn
+        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: See project outcomes and impacts, text_color: '#0db0ba'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Link
+      - event_bindings: {click: cap_btn_click}
+        layout_properties: {slot: slot}
+        name: capital_btn
+        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Capital explorer, text_color: '#0db0ba'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Link
+      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XNPYLO,ZMOTXZ'}
       name: rich_text_1
       properties:
-        content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. \n<br><br><b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term. <br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. \n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
-        font_size: 18
+        content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. <br>{slot}\n<br><br>\n\n<b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term.<br> {slot1}\n\n<br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. <br>{slot2}\n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
+        font_size: 16
         format: restricted_html
       type: RichText
-    - layout_properties: {grid_position: 'IZDOGX,ANKGAX'}
-      name: spacer_2
-      properties: {height: -0.41668701171875}
-      type: Spacer
+    - layout_properties: {grid_position: 'IZDOGX,DCBHVQ HHLFSA,WMDNSO'}
+      name: main_heading_2
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: headline
+        text: Why this matters
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - components: []
+      layout_properties: {grid_position: 'IZDOGX,DCBHVQ ZIRBZV,CESHQE'}
+      name: rich_text_3
+      properties:
+        content: |
+          Community clean energy projects often require creative financing and strong local leadership, but those lessons are not always shared in a way others can reuse. When financing, ownership, and outcomes are hard to access:
+          <ul>
+          <li>communities spend extra time reinventing solutions
+          <li>promising projects stall early
+          <li>capital providers cannot see patterns clearly
+          <li>researchers and policymakers lack evidence on what supports success and community benefit
+          </ul>
+          The Navigator helps make this knowledge visible, comparable, and usable.
+        font_size: 16
+        format: restricted_html
+      type: RichText
     - components:
       - components:
         - components:
@@ -40,30 +81,43 @@ components_by_slot:
             layout_properties: {grid_position: 'NWMOVG,GLIBBX'}
             name: rich_text_2
             properties:
-              content: "<b>This is a pilot </b> (Beta version). We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
-              font_size: 18
+              content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
+              font_size: 16
               format: restricted_html
             type: RichText
-          - layout_properties: {grid_position: 'BYFSFV,OBSBKT'}
-            name: project_number
-            properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
-            type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'LQSDUV,MQHUAZ'}
-            name: project_number_caption
+          - layout_properties: {grid_position: 'AUBLCE,LFCGNA'}
+            name: rich_text_5
+            properties: {content: '{stat2}'}
+            type: RichText
+          - components:
+            - layout_properties: {slot: stat1}
+              name: project_number
+              properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
+              type: form:dep_9kcxnwm3upyjd:_Components.Heading
+            - layout_properties: {slot: desc1}
+              name: project_number_caption
+              properties:
+                align: center
+                scale: medium
+                spacing:
+                  margin: ['-20', null, null, null]
+                style: title
+                text: projects surveyed
+                text_color: theme:On Tertiary
+              type: form:dep_9kcxnwm3upyjd:_Components.Heading
+            layout_properties: {grid_position: 'AUBLCE,CDYKHH'}
+            name: rich_text_4
             properties:
               align: center
-              scale: medium
-              spacing:
-                margin: ['-20', null, null, null]
-              style: title
-              text: projects surveyed
-              text_color: theme:On Tertiary
-            type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'AFFSVA,PAMQNR'}
+              content: |
+                {stat1}<br>{desc1}
+              format: restricted_html
+            type: RichText
+          - layout_properties: {grid_position: 'AFFSVA,WCHDRO'}
             name: total_funding_number
             properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {grid_position: 'LFTCJV,WHBRLA'}
+          - layout_properties: {grid_position: 'AFFSVA,QXFZXC'}
             name: total_funding_caption
             properties:
               align: center
@@ -85,11 +139,12 @@ components_by_slot:
               icon: mi:forum
               role: button-link
               spacing:
-                margin: [null, null, null, null]
+                margin: ['16', null, null, null]
                 padding: ['4', '16', '4', '16']
               text: Add your project
               text_color: theme:Tertiary Container
               underline: false
+              url: https://redcap.link/comm_energy
             type: form:dep_9kcxnwm3upyjd:_Components.Link
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2
@@ -99,13 +154,72 @@ components_by_slot:
         name: card_content_container_1
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX XSQWXY,FYVTVR'}
+      layout_properties: {grid_position: 'IZDOGX,ANKGAX DEJWBX,UCHPXK'}
       name: card_1
+      properties: {background_color: 'theme:Tertiary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {grid_position: 'IZDOGX,ANKGAX CNVQQG,OEQQLZ'}
+      name: spacer_2
+      properties: {height: -0.41668701171875}
+      type: Spacer
+    - components:
+      - components:
+        - components:
+          - layout_properties: {grid_position: 'DFHHLZ,GUTHPQ'}
+            name: card_header_2
+            properties:
+              font_family: serif
+              scale: medium
+              spacing:
+                margin: [null, null, '0', null]
+                padding: [null, null, '', null]
+              style: headline
+              text: Our Progress so Far
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {grid_position: 'LFTCJV,WHBRLA'}
+            name: total_funding_caption_2
+            properties:
+              align: center
+              scale: medium
+              spacing:
+                margin: ['-20', null, null, null]
+              style: title
+              text: in funding accounted
+              text_color: theme:On Tertiary Container
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
+            name: survey_link_2
+            properties:
+              align: center
+              background_color: theme:On Tertiary Container
+              bold: true
+              border: ''
+              font_size: 25
+              icon: mi:forum
+              role: button-link
+              spacing:
+                margin: ['16', null, null, null]
+                padding: ['4', '16', '4', '16']
+              text: Add your project
+              text_color: theme:Tertiary Container
+              underline: false
+              url: https://redcap.link/comm_energy
+            type: form:dep_9kcxnwm3upyjd:_Components.Link
+          layout_properties: {slot: card-content-container-slot}
+          name: column_panel_3
+          properties: {}
+          type: ColumnPanel
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_2
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'IZDOGX,ANKGAX XSQWXY,WPONMV'}
+      name: card_2
       properties: {background_color: 'theme:Tertiary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_widths: '{"DCBHVQ":40,"ANKGAX":20}'}
+    properties: {col_widths: '{"DCBHVQ":35,"ANKGAX":25}'}
     type: ColumnPanel
   slot_1: []
   slot_2: []
@@ -113,7 +227,7 @@ components_by_slot:
   - components:
     - layout_properties: {expand: false, width: 150}
       name: title
-      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Overview}
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Overview}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel
