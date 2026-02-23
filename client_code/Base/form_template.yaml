@@ -125,12 +125,12 @@ components:
     layout_properties: {full_width_row: true, grid_position: 'AWPLZN,TOHVIA', row_background: ''}
     name: title_panel
     properties:
-      background: '#0db0ba'
+      background: theme:Secondary
       foreground: theme:On Secondary
       role: null
       spacing:
         margin: ['0', '0', '0', '0']
-        padding: ['0', '0', '0', '0']
+        padding: ['0', '0', '0', 4%]
       spacing_above: none
       spacing_below: none
     type: LinearPanel
@@ -166,15 +166,21 @@ components:
     style: headline
     text: Community Energy Finance Navigator
   type: form:dep_9kcxnwm3upyjd:_Components.Heading
-- layout_properties: {slot: nav-right}
+- components:
+  - layout_properties: {width: 214}
+    name: iih_logo
+    properties:
+      display_mode: fill_width
+      height: ''
+      margin: [4%, null, null, null]
+      source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
+      vertical_align: bottom
+    type: Image
+  layout_properties: {slot: nav-right}
   name: flow_panel_2
   properties: {}
   type: FlowPanel
-- components:
-  - layout_properties: {col_xs: 0, row: BZJIZO, width_xs: 2}
-    name: iih_logo
-    properties: {display_mode: fill_width, height: -8, source: _/theme/Horizontal-IIH-Acet-Lockup-White.png}
-    type: Image
+- components: []
   layout_properties: {slot: footer-slot}
   name: grid_panel_1
   properties:

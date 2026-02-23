@@ -36,6 +36,10 @@ components_by_slot:
         font_size: 16
         format: restricted_html
       type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ HHLQPH,RPNIYY'}
+      name: divider_2
+      properties: {color: 'theme:On Primary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ HHLFSA,WMDNSO'}
       name: main_heading_2
       properties:
@@ -47,55 +51,8 @@ components_by_slot:
         style: headline
         text: Why this matters
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components:
-      - layout_properties: {}
-        name: main_heading_3
-        properties:
-          font_family: ser
-          scale: medium
-          spacing:
-            margin: [null, null, '0', null]
-            padding: [null, null, '', null]
-          style: headline
-          text: Who is this for?
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - components:
-        - layout_properties: {grid_position: 'RVTIBR,GEFAYA'}
-          name: heading_1
-          properties: {bold: true, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams}
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - layout_properties: {grid_position: 'PDXQAF,RKAMSD'}
-          name: text_1
-          properties: {scale: large, text: 'Learn from peer examples, find projects like yours, and see how others combined funding sources, chose ownership models, and delivered outcomes that aligned with community goals.'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Text
-        - layout_properties: {grid_position: 'OYSRNR,UZXZJG'}
-          name: heading_2
-          properties: {bold: true, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - layout_properties: {grid_position: 'UZPKAI,HKWTVH'}
-          name: text_2
-          properties: {scale: large, text: 'Learn from peer examples, find projects like yours, and see how others combined funding sources, chose ownership models, and delivered outcomes that aligned with community goals.'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Text
-        - layout_properties: {grid_position: 'QQXLEO,LASFNC'}
-          name: heading_3
-          properties: {bold: true, icon: 'mi:school', scale: medium, style: title, text: Researchers and students}
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - layout_properties: {grid_position: 'WUZEJQ,PSZWHB'}
-          name: text_3
-          properties: {scale: large, text: 'Use structured, filterable project-level information to study how finance, ownership, and context shape outcomes and clean energy deployment.'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Text
-        - layout_properties: {grid_position: 'QYPBFN,VSFCJF'}
-          name: heading_4
-          properties: {bold: true, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks}
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - layout_properties: {grid_position: 'DKZDBM,MDYWWN'}
-          name: text_4
-          properties: {scale: large, text: 'Support your members with evidence, examples, and visibility, and help grow a shared national picture of community-led clean energy finance, ownership, and impact.'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Text
-        name: column_panel_5
-        properties: {}
-        type: ColumnPanel
-      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ ZIRBZV,CESHQE'}
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XZWAEU,BHRKXU'}
       name: rich_text_3
       properties:
         content: |
@@ -110,6 +67,58 @@ components_by_slot:
         font_size: 16
         format: restricted_html
       type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ MQFBYC,RDTKCI'}
+      name: divider_1
+      properties: {color: 'theme:On Primary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - components:
+      - layout_properties: {grid_position: 'GIAKYW,ZDEIQT'}
+        name: main_heading_3
+        properties:
+          font_family: ser
+          scale: medium
+          spacing:
+            margin: [null, null, '0', null]
+            padding: [null, null, '', null]
+          style: headline
+          text: Who is this for?
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'RVTIBR,GEFAYA'}
+        name: heading_1
+        properties: {bold: true, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'PDXQAF,RKAMSD'}
+        name: text_1
+        properties: {scale: large, text: 'Learn from peer examples, find projects like yours, and see how others combined funding sources, chose ownership models, and delivered outcomes that aligned with community goals.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'OYSRNR,UZXZJG'}
+        name: heading_2
+        properties: {bold: true, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'UZPKAI,HKWTVH'}
+        name: text_2
+        properties: {scale: large, text: 'Learn from peer examples, find projects like yours, and see how others combined funding sources, chose ownership models, and delivered outcomes that aligned with community goals.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'QQXLEO,LASFNC'}
+        name: heading_3
+        properties: {bold: true, icon: 'mi:school', scale: medium, style: title, text: Researchers and students}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'WUZEJQ,PSZWHB'}
+        name: text_3
+        properties: {scale: large, text: 'Use structured, filterable project-level information to study how finance, ownership, and context shape outcomes and clean energy deployment.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'QYPBFN,VSFCJF'}
+        name: heading_4
+        properties: {bold: true, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'DKZDBM,MDYWWN'}
+        name: text_4
+        properties: {scale: large, text: 'Support your members with evidence, examples, and visibility, and help grow a shared national picture of community-led clean energy finance, ownership, and impact.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ AZSRNO,SOTJWZ'}
+      name: column_panel_5
+      properties: {}
+      type: ColumnPanel
     - components:
       - components:
         - components:
@@ -117,7 +126,7 @@ components_by_slot:
             name: card_header
             properties:
               font_family: serif
-              scale: medium
+              scale: small
               spacing:
                 margin: [null, null, '0', null]
                 padding: [null, null, '', null]
@@ -195,7 +204,7 @@ components_by_slot:
             name: card_header_2
             properties:
               font_family: serif
-              scale: medium
+              scale: small
               spacing:
                 margin: [null, null, '0', null]
                 padding: [null, null, '', null]
@@ -253,7 +262,7 @@ components_by_slot:
             name: card_header_3
             properties:
               font_family: serif
-              scale: medium
+              scale: small
               spacing:
                 margin: [null, null, '0', null]
                 padding: [null, null, '', null]
@@ -294,6 +303,20 @@ components_by_slot:
       name: card_3
       properties: {background_color: 'theme:Primary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {grid_position: 'IZDOGX,ANKGAX UXUDWH,HBJUHE'}
+      name: heading_5
+      properties: {bold: true, font_family: ser, italic: true, scale: large, style: title, text: Trust & Transparency}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'IZDOGX,ANKGAX JEVZBK,SEOBKF'}
+      name: text_5
+      properties:
+        italic: true
+        scale: large
+        text: |-
+          We aim to make the data useful without exposing sensitive information. We collect standardized, survey-based project information and present it through aggregated dashboards and project profiles. We only project names for those who consent to a non-anonymous use of the data (as per UVic Ethics #   add uvic ethics).  Where data is incomplete, it is shown transparently and updated as new projects participate.
+
+          If your project appears in the Project Explorer, you can submit an update at any time to reflect changes to your capital stack, ownership model, or outcomes, or fix any inaccuracies.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {col_spacing: huge, col_widths: '{"DCBHVQ":35,"ANKGAX":25}'}
