@@ -244,7 +244,6 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   """
   Single server call that returns ALL chart figures and indicators at once.
   """
-  print("Loading data for all charts...")
 
   # Load raw data ONCE
   df_raw = get_data()
@@ -266,7 +265,6 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
 
   # *** ADD THIS BLOCK: Check for empty data ***
   if df_capital_filtered_with_proj.empty:
-    print("WARNING: No data after filtering")
     empty_fig = go.Figure()
     empty_fig.update_layout(title="No data available for selected filters")
 
@@ -291,7 +289,6 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   category_order = get_category_order(df_capital_filtered_with_proj)
   category_order_reversed = list(reversed(category_order))
 
-  print("Generating all charts...")
 
   # Generate ALL charts
   results = {
@@ -305,7 +302,6 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     'indicators': calculate_indicators_internal(df_capital_filtered_with_proj)
   }
 
-  print("All charts generated successfully!")
 
   return results
 

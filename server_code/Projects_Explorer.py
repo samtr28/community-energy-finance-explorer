@@ -57,6 +57,16 @@ OWNERSHIP_COLORS = gradient_palette[::-1]
 # Load data ONCE at module level - cached in memory
 DATA = get_data(project_privacy=True)
 
+# ============= REMOVED - DON'T BUILD TRACES AT MODULE LEVEL =============
+# BEFORE (SLOW):
+# DATA["ownership_traces"] = DATA["owners"].apply(
+#   lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
+# )
+# DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
+#   lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
+# )
+# ============= TRACES NOW BUILT ON-DEMAND PER PAGE =============
+
 # ============= HELPER FUNCTIONS =============
 def build_ownership_bar(owners, ownership_colors):
   """Build bar traces for ownership data. Returns list of go.Bar traces."""
@@ -239,34 +249,26 @@ def get_project_card_data_internal(df):
   return df.to_dict(orient="records")
 
 
-# ============= PREPROCESS DATA =============
-# Add traces to DATA using lambda to pass colors/palettes
-DATA["ownership_traces"] = DATA["owners"].apply(
-  lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
-)
-DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
-  lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
-)
-
-
 # ============= CALLABLE FUNCTION =============
 @anvil.server.callable
 def get_all_map_and_cards(provinces=None, proj_types=None, stages=None, 
-                          indigenous_ownership=None, project_scale=None):
+                          indigenous_ownership=None, project_scale=None,
+                          page=1, page_size=50):
   """
-  Single server call that returns BOTH map data and project cards at once.
+  Single server call that returns BOTH map data and project cards.
+  Map shows ALL filtered points. Cards are paginated.
+  OPTIMIZED: Only builds traces for current page.
   """
-  print("Loading map and card data...")
 
   # Select columns needed for map
   map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
               "province", "stage", "project_type", "indigenous_ownership", "project_scale"]
   df_map = DATA.loc[:, map_cols].copy()
 
-  # Select columns needed for cards
+  # Select columns needed for cards - NOTE: NO TRACES IN INITIAL COLUMNS
   card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
                "province", "total_cost", "project_scale", "all_financing_mechanisms", 
-               "owners", "indigenous_ownership", "ownership_traces", "capital_mix_traces"]
+               "owners", "indigenous_ownership", "capital_mix"]  # Raw data only
   df_cards = DATA.loc[:, card_cols].copy()
 
   # Apply filters to BOTH dataframes
@@ -275,14 +277,36 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
                                     indigenous_ownership, project_scale)
 
-  print("Generating map and card data...")
+  # Generate map data (ALL points)
+  map_data = get_map_data_internal(df_map_filtered)
 
-  # Generate both outputs
+  # Calculate pagination
+  total_count = len(df_cards_filtered)
+  start_idx = (page - 1) * page_size
+  end_idx = min(start_idx + page_size, total_count)
+
+  # Get cards for this page only
+  df_cards_page = df_cards_filtered.iloc[start_idx:end_idx].copy()
+
+  # ============= KEY OPTIMIZATION =============
+  # Build traces ONLY for the cards on this page (e.g., 15 cards instead of 521)
+  df_cards_page["ownership_traces"] = df_cards_page["owners"].apply(
+    lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
+  )
+  df_cards_page["capital_mix_traces"] = df_cards_page["capital_mix"].apply(
+    lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
+  )
+  # ============================================
+
   results = {
-    'map_data': get_map_data_internal(df_map_filtered),
-    'project_cards': get_project_card_data_internal(df_cards_filtered)
+    'map_data': map_data,
+    'project_cards': get_project_card_data_internal(df_cards_page),
+    'total_count': total_count,
+    'page': page,
+    'page_size': page_size,
+    'has_more': end_idx < total_count,
+    'start_idx': start_idx,
+    'end_idx': end_idx
   }
-
-  print("Map and card data generated successfully!")
 
   return results

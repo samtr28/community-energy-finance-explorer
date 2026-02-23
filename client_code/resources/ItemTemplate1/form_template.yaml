@@ -1,0 +1,36 @@
+components:
+- components:
+  - components:
+    - components:
+      - data_bindings:
+        - {code: 'self.item[''name'']', property: text, writeback: false}
+        layout_properties: {full_width_row: true, grid_position: 'XRIKUN,DKOEOU ZOYNRR,NSDAKX'}
+        name: label_filename
+        properties: {scale: large, style: title, text: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - data_bindings:
+        - {code: 'self.item[''media'']', property: url, writeback: false}
+        layout_properties: {full_width_row: true, grid_position: 'XRIKUN,DKOEOU NDIQUS,NFXBVL'}
+        name: link_download
+        properties: {text: Download}
+        type: form:dep_9kcxnwm3upyjd:_Components.Link
+      - data_bindings:
+        - {code: 'self.item[''thumbnail'']', property: source, writeback: false}
+        layout_properties: {full_width_row: true, grid_position: 'XRIKUN,AEXGNY'}
+        name: image_1
+        properties: {display_mode: shrink_to_fit, height: 15vh, vertical_align: top}
+        type: Image
+      layout_properties: {slot: card-content-container-slot}
+      name: column_panel_1
+      properties: {col_widths: '{"DKOEOU":40,"AEXGNY":20}'}
+      type: ColumnPanel
+    layout_properties: {slot: card-content-slot}
+    name: card_content_container_1
+    properties: {}
+    type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+  layout_properties: {full_width_row: true, grid_position: 'UJLGOU,RQXZRT'}
+  name: card_1
+  properties: {appearance: filled, background_color: 'theme:Primary Container'}
+  type: form:dep_9kcxnwm3upyjd:_Components.Card
+container: {type: ColumnPanel}
+is_package: true

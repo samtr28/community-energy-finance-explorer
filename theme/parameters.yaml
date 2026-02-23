@@ -339,3 +339,6 @@ roles:
   name: 'horizontal-repeater '
 - components: [RepeatingPanel]
   name: twod-repeater
+- components: [RepeatingPanel]
+  name: 3-cols
+- {components: null, display_in_toolbox: false, name: button-link}

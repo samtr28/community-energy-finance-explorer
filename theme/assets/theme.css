@@ -1242,3 +1242,14 @@ footer a, .footer .anvil-component {
 .anvil-role-twod-repeater>div {
   overflow-x: auto;
 }
+
+.anvil-role-3-cols > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 3%; /*adjust as needed*/
+}
+
+
+.anvil-role-button-link.anvil-m3-link {
+  border-radius: 100px;
+}

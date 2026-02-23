@@ -1,5 +1,40 @@
 components_by_slot:
-  content_slot: []
-  title_slot: []
+  content_slot:
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'CABLDB,GDUQUY'}
+      name: repeating_panel_1
+      properties: {item_template: resources.ItemTemplate1, role: 3-cols}
+      type: RepeatingPanel
+    layout_properties: {full_width_row: true}
+    name: column_panel_1
+    properties: {}
+    type: ColumnPanel
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 221}
+      name: title_copy
+      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Resources}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {expand: false, width: 750}
+      name: description_copy
+      properties:
+        font_size: 16
+        scale: large
+        spacing:
+          margin: ['0', null, null, null]
+        style: body
+        text: Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {}
+    name: title_panel_copy
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
 is_package: true
-layout: {type: 'form:Base'}
+layout:
+  form_event_bindings: {show: form_show}
+  type: form:Base

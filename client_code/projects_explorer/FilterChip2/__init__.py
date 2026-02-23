@@ -1,4 +1,4 @@
-from ._anvil_designer import FilterChip1Template
+from ._anvil_designer import FilterChip2Template
 from anvil import *
 import anvil.server
 import m3.components as m3
@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
-class FilterChip1(FilterChip1Template):
+class FilterChip2(FilterChip2Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)

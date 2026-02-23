@@ -7,12 +7,10 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 
-
 class overview(overviewTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
     
     total_cost, row_count = anvil.server.call('get_summary_data')
     self.project_number.text = f"{row_count}"
@@ -26,5 +24,22 @@ class overview(overviewTemplate):
     self.layout.reset_links()
     self.layout.overview_nav.role = 'selected'
     pass
-  
+
+  def owner_btn_click(self, **event_args):
+    """This method is called clicked"""
+    open_form('ownership_models')
+    pass
+
+  def outcome_btn_click(self, **event_args):
+    """This method is called clicked"""
+    open_form('outcomes_impacts')
+    pass
+
+  def cap_btn_click(self, **event_args):
+    """This method is called clicked"""
+    open_form('capital_explorer')
+    pass
+
+
+
 

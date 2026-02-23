@@ -175,7 +175,7 @@ def create_ownership_treemap_internal(df_owners):
       ],
       pad={'r': 10, 't': 10},
       showactive=True,
-      x=0.01, y=1.07,
+      x=0.5, y=1.07,
       xanchor='left', yanchor='top',
       bgcolor='rgba(255, 255, 255, 0.8)',
       bordercolor='gray',
@@ -184,14 +184,13 @@ def create_ownership_treemap_internal(df_owners):
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(family='Arial, sans-serif', size=12, color='black'),
-    margin=dict(t=90, b=55, l=0, r=0)
+    margin=dict(t=0, b=0, l=0, r=0)
   )
 
   return fig
 
 def create_ownership_scale_pies_internal(df_owners):
   """Create pie charts showing ownership composition by project scale."""
-
   scale_order = [
     "Micro (< $100K)", 
     "Small ($100K-$1M)", 
@@ -200,26 +199,31 @@ def create_ownership_scale_pies_internal(df_owners):
     "Very Large ($25M-$100M)",
     "Mega (> $100M)"
   ]
-
   scales_in_data = [s for s in scale_order if s in df_owners['project_scale'].values]
-
   if not scales_in_data:
     fig = go.Figure()
     fig.update_layout(title='No data available for selected filters')
     return fig
-
   owner_type_colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_colors)
-
   fig = make_subplots(
     rows=1, 
     cols=len(scales_in_data),
     specs=[[{'type': 'domain'}] * len(scales_in_data)]
   )
-
   for i, scale in enumerate(scales_in_data):
     sub = df_owners[df_owners['project_scale'] == scale]
     grouped = sub.groupby('owner_type', as_index=False)['owner_percent'].sum()
     n = sub['record_id'].nunique()
+
+    # Calculate percentages for threshold
+    total = grouped['owner_percent'].sum()
+    grouped['percentage'] = (grouped['owner_percent'] / total) * 100
+
+    # Only show text if slice is >= 5%
+    threshold = 5
+    grouped['text_display'] = grouped['percentage'].apply(
+      lambda x: f'{x:.1f}%' if x >= threshold else ''
+    )
 
     fig.add_trace(
       go.Pie(
@@ -232,14 +236,13 @@ def create_ownership_scale_pies_internal(df_owners):
         ),
         marker=dict(colors=[owner_type_colors[ot] for ot in grouped['owner_type']]),
         sort=False,
-        textinfo='percent',
-        texttemplate='%{percent:.1%}',
+        textinfo='text',
+        text=grouped['text_display'],
         textfont=dict(size=10, family='Arial, sans-serif'),
-        hovertemplate='<b>%{label}</b><br>%{value:.1f}%<extra></extra>'
+        hovertemplate='<b>%{label}</b><br>%{percent}<extra></extra>'
       ),
       row=1, col=i+1
     )
-
   fig.update_layout(
     title={
       'text': 'Ownership composition by project scale', 
@@ -254,7 +257,6 @@ def create_ownership_scale_pies_internal(df_owners):
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(size=12, color='black', family='Arial, sans-serif')
   )
-
   return fig
 
 def create_indigenous_ownership_stacked_internal(df_owners):
@@ -275,9 +277,9 @@ def create_indigenous_ownership_stacked_internal(df_owners):
   order = [
     'Not sure',
     'No Indigenous ownership',
-    'Minority Indigenous owned (1–49%)',
+    'Minority Indigenous owned (1-49%)',
     'Half Indigenous owned (50%)',
-    'Majority Indigenous owned (51–99%)',
+    'Majority Indigenous owned (51-99%)',
     'Wholly Indigenous owned (100%)'
   ]
   ownership_counts['Category'] = pd.Categorical(ownership_counts['Category'], categories=order, ordered=True)
@@ -441,7 +443,6 @@ def create_ownership_financing_funnel_internal(df):
     fig = go.Figure()
     fig.update_layout(title='No data available for selected filters')
     return fig
-
   # Extract owner-finance pairs
   pairs = []
   for _, row in df.iterrows():
@@ -449,7 +450,6 @@ def create_ownership_financing_funnel_internal(df):
     financing = row.get('financing_mech', [])
     if not owners or not financing:
       continue
-
     # Create all combinations
     for o in owners:
       for f in financing:
@@ -457,14 +457,11 @@ def create_ownership_financing_funnel_internal(df):
           'Owner': o.get('owner_type', 'Unknown'),
           'Finance': f.get('category', 'Unknown')
         })
-
   if not pairs:
     fig = go.Figure()
     fig.update_layout(title='No ownership-financing data available')
     return fig
-
   pairs_df = pd.DataFrame(pairs)
-
   # Count combinations and get top 10
   combo_counts = pairs_df.groupby(['Owner', 'Finance']).size().reset_index(name='Count')
   combo_counts['Label'] = combo_counts['Owner'] + ' → ' + combo_counts['Finance']
@@ -473,6 +470,8 @@ def create_ownership_financing_funnel_internal(df):
   # Wrap labels for better readability
   combo_counts['Label_wrapped'] = combo_counts['Label'].apply(lambda x: wrap_text(x, width=50))
 
+  # Wrap labels for better readability
+  combo_counts['Label_wrapped'] = combo_counts['Label'].apply(lambda x: wrap_text(x, width=50))
   # Create funnel chart
   fig = go.Figure(go.Funnel(
     y=combo_counts['Label_wrapped'],
@@ -482,7 +481,9 @@ def create_ownership_financing_funnel_internal(df):
     marker=dict(
       color=gradient_palette[:len(combo_counts)],
       line=dict(width=0)  # Remove bar borders
-    )
+    ),
+    customdata=combo_counts['Label'],
+    hovertemplate='<b>%{customdata}</b><br>Count: %{x}<extra></extra>'
   ))
 
   # Add horizontal lines under each label
@@ -501,6 +502,21 @@ def create_ownership_financing_funnel_internal(df):
       )
     )
 
+  # Add horizontal lines under each label
+  shapes = []
+  for i in range(len(combo_counts)):
+    shapes.append(
+      dict(
+        type='line',
+        xref='paper',
+        yref='y',
+        x0=-1.5,
+        x1=0,
+        y0=i - 0.45,
+        y1=i - 0.45,
+        line=dict(color='#cccccc', width=1)
+      )
+    )
   fig.update_layout(
     title={'text': 'Top 10 Ownership-Financing Combinations', 'x': 0, 'xanchor': 'left'},
     plot_bgcolor='rgba(0, 0, 0, 0)',
@@ -510,8 +526,8 @@ def create_ownership_financing_funnel_internal(df):
     yaxis=dict(side='left'),
     shapes=shapes  # Add the divider lines
   )
-
   return fig
+
 
 # ==================== MAIN OWNERSHIP CALLABLE FUNCTION ====================
 
@@ -521,15 +537,18 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
   """
   Single server call that returns ALL ownership chart figures at once.
   """
-  # Load raw data ONCE
+  # Loa raw data ONCE
   df_raw = get_data()
-
+  
+  
   # Apply filters to raw data (for box plot, bottlenecks, AND treemap)
   df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages, 
                                   indigenous_ownership, project_scale)
 
+
   # Process owners data ONCE
   df_owners = process_owners_data(df_raw)
+
 
   # Apply filters to owners data
   df_owners_filtered = apply_filters(
@@ -543,7 +562,6 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
 
   # Add this block:
   if df_owners_filtered.empty:
-    print("WARNING: No ownership data after filtering")
     empty_fig = go.Figure()
     empty_fig.update_layout(title="No data available for selected filters")
     return {

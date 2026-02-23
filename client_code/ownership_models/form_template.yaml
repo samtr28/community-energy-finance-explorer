@@ -43,16 +43,14 @@ components_by_slot:
         multiple: true
         placeholder: Project Stage
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: indig_owners_dd_change}
+    - event_bindings: {change: indig_owners_dd_change}
       layout_properties: {width: null}
       name: indig_owners_dd
       properties:
         items: [Wholly Indigenous owned (100%), Majority Indigenous owned (51-99%), Half Indigenous owned (50%), Minority Indigenous owned (1-49%), No Indigenous ownership]
         placeholder: Indigenous Ownership
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: project_scale_dd_change}
+    - event_bindings: {change: project_scale_dd_change}
       layout_properties: {width: null}
       name: project_scale_dd
       properties:
@@ -117,10 +115,10 @@ components_by_slot:
       name: text_2_copy
       properties: {text: 'This view shows project ownership by number of projects. Each project counts equally, regardless of size or cost. This reveals who owns the most projects and shows the breadth of participation across owner types.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'XHUPAC,BVWRHW'}
+    - layout_properties: {full_width_row: true, grid_position: 'XHUPAC,BVWRHW'}
       name: ownership_treemap
       properties:
-        height: 70vh
+        height: 60vh
         margin: ['0', null, '0', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'AFQMYM,FDVABP'}
@@ -131,7 +129,7 @@ components_by_slot:
           margin: ['', null, null, null]
         text: Another title
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FRWSFJ NHDACA,FDCNEY'}
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FRWSFJ'}
       name: text_1_copy_copy
       properties:
         text: |-
@@ -139,6 +137,20 @@ components_by_slot:
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'DDAZWJ,CEROQY'}
+      name: funnel_plot
+      properties:
+        height: 50vh
+        margin: ['0', null, '0', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'SHXSIN,GDUOTK'}
+      name: heading_1_copy_copy_copy
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Guidance on Ownership Structures
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -153,7 +165,7 @@ components_by_slot:
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: lollipop_chart
-          properties: {height: 30vh}
+          properties: {height: 20vh}
           type: Plot
         - layout_properties: {slot: card-content-container-slot}
           name: button_1
@@ -173,14 +185,18 @@ components_by_slot:
         name: card_content_container_1
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'DDAZWJ,FRWSFJ USBXVB,CJFFTD'}
+      layout_properties: {full_width_row: true, grid_position: 'UAHZKB,HETGSG'}
       name: card_1
       properties: {background_color: 'theme:Tertiary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - layout_properties: {grid_position: 'DDAZWJ,CEROQY'}
-      name: funnel_plot
-      properties: {height: 50vh}
-      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'UAHZKB,ZUVYPB'}
+      name: text_1_copy_copy_copy
+      properties:
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'PTOZCX,BHFQQO'}
       name: heading_1_copy
       properties:
@@ -189,13 +205,7 @@ components_by_slot:
           margin: ['', null, null, null]
         text: Indigenous participation in community energy
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,ITZKFE'}
-      name: indig_ownership_plot
-      properties:
-        height: 45vh
-        margin: ['0', null, '0', null]
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,KHDXVB'}
+    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,XBRBEG'}
       name: text_1_copy
       properties:
         text: |-
@@ -203,7 +213,13 @@ components_by_slot:
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    layout_properties: {}
+    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,ITZKFE'}
+      name: indig_ownership_plot
+      properties:
+        height: 45vh
+        margin: ['0', null, '0', null]
+      type: Plot
+    layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {col_spacing: large, col_widths: '{"UTPVPF":20,"BVWRHW":40,"ITZKFE":20,"KHDXVB":40,"FRWSFJ":20}'}
     type: ColumnPanel
