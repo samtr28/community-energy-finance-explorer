@@ -1,0 +1,16 @@
+name: Deploy to STRAP
+run-name: Deploy app to STRAP
+on:
+  push:
+    branches:
+      - staging
+jobs:
+  Deploy-to-STRAP:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone deploy repo from ARCsoft's Gitlab
+        run: |
+          git clone https://gitlab.com/uvic-arcsoft/misc/community-energy-finance-explorer.git app
+          cd app
+          make install-update-submodules
+          docker --version
