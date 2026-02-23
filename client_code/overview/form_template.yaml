@@ -9,25 +9,15 @@ components_by_slot:
           margin: [null, null, '0', null]
           padding: [null, null, '', null]
         style: headline
-        text: Tracking Community Energy Financing in Canada
+        text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ BCBQKH,WXDCPV'}
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ'}
       name: rich_text_1
       properties:
         content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. \n<br><br><b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term. <br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. \n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
         font_size: 18
         format: restricted_html
       type: RichText
-    - layout_properties: {grid_position: 'IZDOGX,DCBHVQ IIRBFB,CMIBBE'}
-      name: description
-      properties:
-        font_size: 16
-        scale: large
-        spacing:
-          margin: ['0', null, null, null]
-        style: body
-        text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'IZDOGX,ANKGAX'}
       name: spacer_2
       properties: {height: -0.41668701171875}
@@ -134,9 +124,5 @@ components_by_slot:
         margin: ['0', null, '0', null]
       vertical_align: middle
     type: FlowPanel
-  - layout_properties: {}
-    name: link_1
-    properties: {role: null}
-    type: form:dep_9kcxnwm3upyjd:_Components.Link
 is_package: true
 layout: {type: 'form:Base'}
