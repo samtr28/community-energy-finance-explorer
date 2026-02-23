@@ -125,12 +125,12 @@ components:
     layout_properties: {full_width_row: true, grid_position: 'AWPLZN,TOHVIA', row_background: ''}
     name: title_panel
     properties:
-      background: theme:Secondary
+      background: '#0db0ba'
       foreground: theme:On Secondary
       role: null
       spacing:
         margin: ['0', '0', '0', '0']
-        padding: [0.5%, 2%, 0.5%, 4%]
+        padding: ['0', '0', '0', '0']
       spacing_above: none
       spacing_below: none
     type: LinearPanel
