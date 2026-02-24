@@ -1,5 +1,5 @@
-name: Merge master branch into staging
-run-name: Merge master branch into staging
+name: Rebase staging against master
+run-name: Rebase staging against master
 on:
   push:
     branches:
@@ -24,7 +24,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-      - name: Merge master into staging
+      - name: Rebase staging against master
         run: |
           git fetch origin master
           git rebase origin/master
