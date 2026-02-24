@@ -25,9 +25,9 @@ jobs:
       - name: Merge master into staging
         run: |
           git fetch origin master
-          git branch
-          git diff master..staging
-          git merge origin/master --no-edit
+          git checkout master
+          git log --oneline
+          git log --oneline staging
 
       - name: Push changes
         run: git push origin staging
