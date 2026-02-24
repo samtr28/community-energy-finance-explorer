@@ -26,8 +26,11 @@ jobs:
         run: |
           git fetch origin master
           git checkout master
+          echo "Log master branch:"
           git log --oneline
-          git log --oneline staging
+          git checkout staging
+          echo "Log staging branch:"
+          git log --oneline
 
       - name: Push changes
         run: git push origin staging
