@@ -14,7 +14,7 @@ def get_data(project_privacy=False):
   global _DATA_CACHE
   # Load data once
   if _DATA_CACHE is None:
-    _DATA_CACHE = pd.read_pickle(data_files['synthetic_data_less.pkl'])
+    _DATA_CACHE = pd.read_pickle(data_files['data_feb18.pkl'])
 
   df = _DATA_CACHE  # start from cached data
 
