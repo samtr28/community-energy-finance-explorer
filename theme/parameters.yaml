@@ -1,6 +1,6 @@
 color_scheme:
   colors:
-  - {color: '#002754', name: Primary}
+  - {color: '#005694', name: Primary}
   - {color: '#d6e3ff', name: Primary Container}
   - {color: '#FFFFFF', name: On Primary}
   - {color: '#0d305d', name: On Primary Container}
