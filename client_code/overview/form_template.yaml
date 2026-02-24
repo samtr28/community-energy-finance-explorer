@@ -17,17 +17,17 @@ components_by_slot:
         event_bindings: {click: owner_btn_click}
         layout_properties: {slot: slot1}
         name: owner_btn
-        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Ownership models data, text_color: '#0db0ba'}
+        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Ownership models data, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Link
       - event_bindings: {click: outcome_btn_click}
         layout_properties: {slot: slot2}
         name: outcomes_btn
-        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: See project outcomes and impacts, text_color: '#0db0ba'}
+        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: See project outcomes and impacts, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Link
       - event_bindings: {click: cap_btn_click}
         layout_properties: {slot: slot}
         name: capital_btn
-        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Capital explorer, text_color: '#0db0ba'}
+        properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Capital explorer, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Link
       layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XNPYLO,ZMOTXZ'}
       name: rich_text_1
@@ -85,7 +85,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {grid_position: 'RVTIBR,GEFAYA'}
         name: heading_1
-        properties: {bold: true, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams}
+        properties: {bold: true, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {grid_position: 'PDXQAF,RKAMSD'}
         name: text_1
@@ -93,7 +93,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {grid_position: 'OYSRNR,UZXZJG'}
         name: heading_2
-        properties: {bold: true, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners'}
+        properties: {bold: true, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {grid_position: 'UZPKAI,HKWTVH'}
         name: text_2
@@ -101,7 +101,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {grid_position: 'QQXLEO,LASFNC'}
         name: heading_3
-        properties: {bold: true, icon: 'mi:school', scale: medium, style: title, text: Researchers and students}
+        properties: {bold: true, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {grid_position: 'WUZEJQ,PSZWHB'}
         name: text_3
@@ -109,7 +109,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {grid_position: 'QYPBFN,VSFCJF'}
         name: heading_4
-        properties: {bold: true, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks}
+        properties: {bold: true, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {grid_position: 'DKZDBM,MDYWWN'}
         name: text_4
@@ -155,7 +155,7 @@ components_by_slot:
                   margin: ['-20', null, null, null]
                 style: title
                 text: projects surveyed
-                text_color: theme:On Tertiary
+                text_color: theme:On Tertiary Container
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             layout_properties: {full_width_row: true, grid_position: 'AUBLCE,BZUZBX'}
             name: rich_text_4
@@ -229,7 +229,7 @@ components_by_slot:
             name: survey_link
             properties:
               align: center
-              background_color: theme:On Secondary Container
+              background_color: theme:Secondary
               bold: true
               border: ''
               font_size: 25
@@ -305,7 +305,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     - layout_properties: {grid_position: 'IZDOGX,ANKGAX UXUDWH,HBJUHE'}
       name: heading_5
-      properties: {bold: true, font_family: ser, italic: true, scale: large, style: title, text: Trust & Transparency}
+      properties: {bold: true, font_family: ser, italic: false, scale: large, style: title, text: Trust & Transparency}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {grid_position: 'IZDOGX,ANKGAX JEVZBK,SEOBKF'}
       name: text_5

@@ -29,6 +29,7 @@ color_scheme:
   - {color: 'rgba(0, 86, 148, 0.05)', name: Primary Overlay 1}
   - {color: 'rgba(0, 86, 148, 0.08)', name: Primary Overlay 2}
   - {color: 'rgba(0, 86, 148, 0.11)', name: Primary Overlay 3}
+  - {color: '#2d847b', name: Accent Text}
   preset_groups:
   - name: Colour Scheme
     options:
