@@ -125,7 +125,7 @@ components:
     layout_properties: {full_width_row: true, grid_position: 'AWPLZN,TOHVIA', row_background: ''}
     name: title_panel
     properties:
-      background: theme:Primary Container
+      background: theme:Secondary
       foreground: theme:On Secondary
       role: null
       spacing:
