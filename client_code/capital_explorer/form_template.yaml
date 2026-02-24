@@ -114,7 +114,7 @@ components_by_slot:
               margin: ['', null, null, null]
             style: title
             text: Where do projects need help?
-            text_color: ''
+            text_color: theme:On Secondary Container
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: lollipop_chart
@@ -124,11 +124,11 @@ components_by_slot:
           name: button_1
           properties:
             align: center
-            background_color: theme:On Secondary Container
+            background_color: theme:Secondary
             bold: true
             font_size: 14
             icon: mi:question_exchange
-            icon_color: theme:Tertiary Container
+            icon_color: theme:On Secondary Container
             icon_size: 25
             spacing:
               padding: [null, '16', null, null]
