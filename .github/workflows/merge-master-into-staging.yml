@@ -1,0 +1,31 @@
+name: Merge master branch into staging
+run-name: Merge master branch into staging
+on:
+  push:
+    branches:
+      - master
+jobs:
+   merge-master-into-staging:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write 
+
+    steps:
+      - name: Checkout staging branch
+        uses: actions/checkout@v5
+        with:
+          ref: staging
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Merge master into staging
+        run: |
+          git fetch origin master
+          git merge origin/master --no-edit
+
+      - name: Push changes
+        run: git push origin staging
