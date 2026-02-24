@@ -13,7 +13,7 @@ jobs:
           git clone https://gitlab.com/uvic-arcsoft/misc/community-energy-finance-explorer.git app
           cd app
           make install-update-submodules
-          cd community-energy-finance-explorer
+          cd community_energy_finance_explorer
           git checkout staging
           cd ..
 
