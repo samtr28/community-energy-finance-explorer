@@ -27,7 +27,7 @@ jobs:
       - name: Merge master into staging
         run: |
           git fetch origin master
-          git merge origin/master --no-edit
+          git rebase master
 
       - name: Push changes
-        run: git push origin staging
+        run: git push origin staging --force
