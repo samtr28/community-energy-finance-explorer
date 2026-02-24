@@ -13,4 +13,15 @@ jobs:
           git clone https://gitlab.com/uvic-arcsoft/misc/community-energy-finance-explorer.git app
           cd app
           make install-update-submodules
-          docker --version
+          cd community-energy-finance-explorer
+          git checkout staging
+          cd ..
+
+      - name: Generate TAG
+        run: |
+          SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-7)
+          DATE=$(date +'%Y%m%d')
+          echo "TAG=${GITHUB_REF_NAME}-${SHORT_SHA}-${DATE}" >> $GITHUB_ENV
+
+      - name: Show TAG
+        run: echo "TAG is $TAG"
