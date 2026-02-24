@@ -17,6 +17,7 @@ jobs:
         with:
           ref: staging
           fetch-depth: 0
+          token: ${{ secrets.MERGE_PAT }}
 
       - name: Configure Git
         run: |
