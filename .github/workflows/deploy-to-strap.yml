@@ -25,8 +25,9 @@ jobs:
 
       - name: Build Docker image
         run: |
-          export DOCKER_BUILDKIT=1
-          echo "IMAGE_NAME=${REGISTRY_HOST}/community-energy/app:${TAG}"
+          DOCKER_BUILDKIT=1
+          IMAGE_NAME=${REGISTRY_HOST}/community-energy/app:${TAG}
+          echo "IMAGE_NAME=${IMAGE_NAME}"
           docker build --platform linux/amd64 -t ${IMAGE_NAME}
 
       - name: Push Docker image
