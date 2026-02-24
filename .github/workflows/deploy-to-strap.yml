@@ -23,5 +23,13 @@ jobs:
           DATE=$(date +'%Y%m%d')
           echo "TAG=${GITHUB_REF_NAME}-${SHORT_SHA}-${DATE}" >> $GITHUB_ENV
 
-      - name: Show TAG
-        run: echo "TAG is $TAG"
+      - name: Build Docker image
+        run: |
+          export DOCKER_BUILDKIT=1
+          echo "IMAGE_NAME=${REGISTRY_HOST}/community-energy/app:${TAG}"
+          docker build --platform linux/amd64 -t ${IMAGE_NAME}
+
+      - name: Push Docker image
+        run: |
+          docker login ${REGISTRY_HOST} -u "${REGISTRY_USER}" -p "${REGISTRY_PASSWORD}"
+          docker push ${IMAGE_NAME}
