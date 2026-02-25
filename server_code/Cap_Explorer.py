@@ -527,6 +527,14 @@ def create_sankey_internal(df, proj_types=None):
   for _ in range(len(agg_i2p)):
     link_colors.append(make_transparent(COLOUR_MAPPING.get('Internal capital', '#808080')))
 
+  # Add tiny invisible incoming link to Internal capital so Plotly places it in the middle column
+  if sources_list and internal_idx is not None:
+    first_source_idx = node_index.get(sources_list[0])
+    sources = list(sources) + [first_source_idx]
+    targets = list(targets) + [internal_idx]
+    values = list(values) + [0.001]
+    link_colors.append('rgba(0,0,0,0)')  # fully transparent, invisible
+
   combined = list(zip(sources, targets, values, link_colors))
   valid = [(s, t, v, c) for s, t, v, c in combined if s is not None and t is not None and (v is not None and v > 0)]
   if not valid:
@@ -541,7 +549,7 @@ def create_sankey_internal(df, proj_types=None):
     arrangement='perpendicular',
     node=dict(
       align='center',
-      thickness=20,
+      thickness=15,
       line=dict(color="white", width=0),
       label=[str(n) for n in all_nodes],
       color=node_colors,
