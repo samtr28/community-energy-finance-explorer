@@ -92,7 +92,7 @@ components_by_slot:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'AZYXBE,FORDYM'}
+    - layout_properties: {grid_position: 'DZDDZR,YDAWWH'}
       name: heading_1
       properties:
         font_family: serif
@@ -146,6 +146,20 @@ components_by_slot:
       name: capital_flow_plot
       properties:
         height: 70vh
+        margin: ['8', null, '8', null]
+      type: Plot
+    - layout_properties: {grid_position: 'CMUXYT,KJAPDR'}
+      name: heading_3
+      properties:
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: How does the project size affect its capital stack?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'ZIBUPH,HCWKZG'}
+      name: scale_pies_plot
+      properties:
+        height: 45vh
         margin: ['8', null, '8', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'LFTYHJ,UVJNTD'}
@@ -272,12 +286,6 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'ZFLEWF,LXTUMR'}
       name: box_plot
-      properties:
-        height: 45vh
-        margin: ['8', null, '8', null]
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'ILXIVX,CLDCAQ'}
-      name: scale_pies_plot
       properties:
         height: 45vh
         margin: ['8', null, '8', null]
