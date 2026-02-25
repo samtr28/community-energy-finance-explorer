@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import anvil.files
 from anvil.files import data_files
 import anvil.tables as tables
@@ -6,15 +8,18 @@ from anvil.tables import app_tables
 import anvil.server
 from collections.abc import Iterable
 import pandas as pd
+from sqlalchemy import create_engine
 
+load_dotenv()
 
+engine = create_engine(os.getenv("SQL_CONNECTION"))
 _DATA_CACHE = None
 
 def get_data(project_privacy=False):
   global _DATA_CACHE
   # Load data once
   if _DATA_CACHE is None:
-    _DATA_CACHE = pd.read_pickle(data_files['synthetic_data.pkl'])
+    _DATA_CACHE = pd.read_sql_table("app_data", con=engine)
 
   df = _DATA_CACHE  # start from cached data
 
