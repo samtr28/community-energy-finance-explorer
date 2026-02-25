@@ -535,6 +535,7 @@ def create_sankey_internal(df, proj_types=None):
     return fig
 
   sources_valid, targets_valid, values_valid, link_colors_valid = zip(*valid)
+  
 
   fig = go.Figure(data=[go.Sankey(
     arrangement='perpendicular',
