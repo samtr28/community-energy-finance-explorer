@@ -235,20 +235,10 @@ components_by_slot:
   title_slot:
   - components:
     - components:
-      - layout_properties: {expand: false, width: 221}
+      - layout_properties: {expand: false, width: 382}
         name: title_copy
-        properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Ownership Models}
+        properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Models}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {expand: false, width: 750}
-        name: description_copy
-        properties:
-          font_size: 16
-          scale: large
-          spacing:
-            margin: ['0', null, null, null]
-          style: body
-          text: By default, the filter for project scale automatically omits mega projects due to their skewing of the data.
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {}
       name: title_panel_copy
       properties:

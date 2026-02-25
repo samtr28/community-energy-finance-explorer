@@ -85,6 +85,16 @@ components_by_slot:
       name: flow_panel_1
       properties: {}
       type: FlowPanel
+    - layout_properties: {grid_position: 'NVUPCC,YZPPBW'}
+      name: description
+      properties:
+        font_size: 16
+        scale: large
+        spacing:
+          margin: ['0', null, null, null]
+        style: body
+        text: Browse real-world community energy projects and see how they were financed. Each project shared their financing journey through our survey to inspire and inform future initiatives.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - data_bindings: []
       event_bindings: {click: project_map_click}
       layout_properties: {full_width_row: true, grid_position: 'CWYAPV,WSRNCB'}
@@ -151,20 +161,10 @@ components_by_slot:
   filter_slot: []
   title_slot:
   - components:
-    - layout_properties: {expand: false, width: 150}
+    - layout_properties: {expand: false, width: 258}
       name: title
-      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Project Explorer}
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Project Explorer}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {expand: false, width: 750}
-      name: description
-      properties:
-        font_size: 16
-        scale: large
-        spacing:
-          margin: ['0', null, null, null]
-        style: body
-        text: Browse real-world community energy projects and see how they were financed. Each project shared their financing journey through our survey to inspire and inform future initiatives.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: title_panel
     properties:

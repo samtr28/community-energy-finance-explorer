@@ -1,5 +1,15 @@
 components_by_slot:
   content_slot:
+  - layout_properties: {full_width_row: true}
+    name: description_copy
+    properties:
+      font_size: 16
+      scale: large
+      spacing:
+        margin: ['0', null, null, null]
+      style: body
+      text: Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
   - components:
     - layout_properties: {full_width_row: true, grid_position: 'CABLDB,GDUQUY'}
       name: repeating_panel_1
@@ -11,20 +21,10 @@ components_by_slot:
     type: ColumnPanel
   title_slot:
   - components:
-    - layout_properties: {expand: false, width: 221}
+    - layout_properties: {expand: false, width: 222.4333}
       name: title_copy
-      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Resources}
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Resources}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {expand: false, width: 750}
-      name: description_copy
-      properties:
-        font_size: 16
-        scale: large
-        spacing:
-          margin: ['0', null, null, null]
-        style: body
-        text: Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: title_panel_copy
     properties:
