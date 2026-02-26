@@ -355,7 +355,7 @@ def create_bottleneck_lollipop_internal(df):
   label_x_position = 0
 
   # Use color from dunsparce palette - index 12
-  lollipop_color = dunsparce_colors[6]
+  lollipop_color = dunsparce_colors[11]
 
 
   # Add lines and annotations for each bottleneck
