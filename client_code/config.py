@@ -21,13 +21,13 @@ dunsparce_colors = [
   '#83d5ca',  # light teal
   '#c63527',  # red
   '#7b38c7',  # purple
+  '#7e570f',  # dark brown
   '#CAEFF1',  # very light teal
   '#002754',  # navy
   '#F9D88B',  # light yellow
-  '#DE7002',  # salmon/orange (right col)
+  '#e99286',  # salmon/orange (right col)
   '#2d847b',  # slate teal
   '#c2ddff',  # light blue
-  '#7e570f',  # dark brown
   '#392000',  # very dark brown
   '#f8f8f8',  # off-white
   '#8e9099',  # grey
