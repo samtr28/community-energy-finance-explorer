@@ -65,7 +65,7 @@ components_by_slot:
         margin: [null, null, '0', null]
     type: FlowPanel
   - components:
-    - layout_properties: {width: null}
+    - layout_properties: {width: 49.1333}
       name: filter_heading_copy
       properties:
         bold: true
@@ -118,7 +118,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'XHUPAC,BVWRHW'}
       name: ownership_treemap
       properties:
-        height: 60vh
+        height: 55vh
         margin: ['0', null, '0', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'AFQMYM,FDVABP'}
@@ -221,7 +221,7 @@ components_by_slot:
       type: Plot
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: large, col_widths: '{"UTPVPF":20,"BVWRHW":40,"ITZKFE":20,"KHDXVB":40,"FRWSFJ":20}'}
+    properties: {col_spacing: large, col_widths: '{"UTPVPF":20,"BVWRHW":40,"ITZKFE":38,"FRWSFJ":20,"CEROQY":40,"HETGSG":40,"ZUVYPB":20,"XBRBEG":20}'}
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: scale_pies_plot
