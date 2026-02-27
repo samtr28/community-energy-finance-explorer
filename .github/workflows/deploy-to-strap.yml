@@ -12,18 +12,15 @@ jobs:
       REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
       REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
     steps:
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-
       - name: Clone deploy repo from ARCsoft's Gitlab
         run: |
           git clone https://gitlab.com/uvic-arcsoft/misc/community-energy-finance-explorer.git app
           cd app
           make install-update-submodules
           cd community_energy_finance_explorer
-          git branch
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git checkout master
           git am staging.patch
           cd ..
 
