@@ -41,16 +41,14 @@ components_by_slot:
         multiple: true
         placeholder: Project Stage
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: indig_owners_dd_change}
+    - event_bindings: {change: indig_owners_dd_change}
       layout_properties: {width: null}
       name: indig_owners_dd
       properties:
         items: [Wholly Indigenous owned (100%), Majority Indigenous owned (51-99%), Half Indigenous owned (50%), Minority Indigenous owned (1-49%), No Indigenous ownership]
         placeholder: Indigenous Ownership
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: project_scale_dd_change}
+    - event_bindings: {change: project_scale_dd_change}
       layout_properties: {width: null}
       name: project_scale_dd
       properties:
@@ -193,23 +191,19 @@ components_by_slot:
           properties: {background_color: '', bold: true, font_family: '', icon: loa, scale: medium, style: title, text: 'Common debt structure:', text_color: 'theme:On Tertiary Container'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components:
-          - data_bindings: []
-            layout_properties: {slot: slot}
+          - layout_properties: {slot: slot}
             name: debt_interest
             properties: {}
             type: form:dep_9kcxnwm3upyjd:_Components.Text
-          - data_bindings: []
-            layout_properties: {slot: slot2}
+          - layout_properties: {slot: slot2}
             name: debt_type
             properties: {}
             type: form:dep_9kcxnwm3upyjd:_Components.Text
-          - data_bindings: []
-            layout_properties: {slot: slot1}
+          - layout_properties: {slot: slot1}
             name: debt_repayment
             properties: {}
             type: form:dep_9kcxnwm3upyjd:_Components.Text
-          - data_bindings: []
-            layout_properties: {slot: slot3}
+          - layout_properties: {slot: slot3}
             name: debt_source
             properties: {}
             type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -247,8 +241,7 @@ components_by_slot:
           name: grants_heading
           properties: {background_color: '', bold: true, font_family: '', icon: loa, scale: medium, style: title, text: Frequent providers of grant funding, text_color: 'theme:On Primary Container'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - components: []
-          layout_properties: {slot: card-content-container-slot}
+        - layout_properties: {slot: card-content-container-slot}
           name: grants_rt
           properties:
             content: |-
@@ -317,7 +310,6 @@ components_by_slot:
       spacing_above: medium
       spacing_below: medium
     type: ColumnPanel
-  slot_3: []
   title_slot:
   - components:
     - layout_properties: {expand: true, width: null}
