@@ -154,7 +154,7 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: How does the project's size affect its capital stack?
+        text: How does a project's size affect its capital stack?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,OYCAXX DJVKPB,AYGGYV'}
       name: text_2
@@ -245,16 +245,21 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: grants_heading
-          properties: {background_color: '', bold: true, font_family: '', icon: loa, scale: medium, style: title, text: 'Frequently used grants:', text_color: 'theme:On Primary Container'}
+          properties: {background_color: '', bold: true, font_family: '', icon: loa, scale: medium, style: title, text: Frequent providers of grant funding, text_color: 'theme:On Primary Container'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components: []
           layout_properties: {slot: card-content-container-slot}
           name: grants_rt
           properties:
-            content: 'Manually go through data and add the grants here '
+            content: |-
+              <ul>
+              <li>Municipal Climate Change Action Centre </li>
+              <li>Natural Resources Canada </li>
+              <li>Bullfrog Power
+              </ul>
             font: ''
             foreground: theme:On Primary Container
-            format: markdown
+            format: restricted_html
             spacing:
               padding: ['2', '6', '2', '6']
           type: RichText
@@ -306,7 +311,7 @@ components_by_slot:
     name: column_panel_1
     properties:
       col_spacing: large
-      col_widths: '{"YDSMDU":20,"WPOENU":40,"OFQLVY":40,"WAMEZI":20,"LXTUMR":50,"PWAGAM":40,"JGWTSW":20,"ZHQPHM":20,"OYCAXX":35,"TWQNLB":25}'
+      col_widths: '{"YDSMDU":20,"WPOENU":40,"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"PWAGAM":40,"JGWTSW":20,"ZHQPHM":25,"OYCAXX":40,"TWQNLB":20,"EGITWV":60}'
       spacing:
         padding: ['0', null, null, null]
       spacing_above: medium
