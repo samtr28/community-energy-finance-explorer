@@ -251,10 +251,13 @@ components_by_slot:
           layout_properties: {slot: card-content-container-slot}
           name: grants_rt
           properties:
-            content: 'Manually go through data and add the grants here '
+            content: |-
+              <ul>
+              <li>Municipal Climate Change Action Centre </li>
+              <li
             font: ''
             foreground: theme:On Primary Container
-            format: markdown
+            format: restricted_html
             spacing:
               padding: ['2', '6', '2', '6']
           type: RichText
