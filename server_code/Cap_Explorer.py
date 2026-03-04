@@ -207,6 +207,19 @@ def process_capital_mix_data(df):
   })
   df_long.loc[df_long['source'] == 'Other/Unknown', 'source'] = df_long['source'] + '-' + df_long['category']
 
+
+  # ============================================================
+  # TEMPORARY FIX: Reclassify CIB debt for project 77
+  # CIB should be "Public infrastructure bank/government-sponsored lender"
+  # not "Bank or traditional financial institution"
+  # TODO: Remove this once survey categories are updated and data is recoded
+  # ============================================================
+  df_long.loc[
+    (df_long['record_id'].isin([77, 106])) & 
+    (df_long['category'] == 'Debt financing'),
+    'source'
+    ] = 'Public infrastructure bank/government-sponsored lender'
+
   # Standardize category names
   df_long['category'] = df_long['category'].apply(standardize_category_name)
 
