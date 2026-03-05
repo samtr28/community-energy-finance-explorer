@@ -155,13 +155,9 @@ components_by_slot:
       name: indigenous_agreements_plot
       properties: {height: 40vh}
       type: Plot
-    - layout_properties: {grid_position: 'FHMDPB,RVMPQD'}
-      name: spacer_1
-      properties: {}
-      type: Spacer
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_widths: '{"WVVDMY":25,"ZLSAKR":35,"DRAWCV":25,"YERVJB":30,"RVMPQD":5}'}
+    properties: {col_widths: '{"WVVDMY":25,"ZLSAKR":35,"DRAWCV":25,"YERVJB":30}'}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}

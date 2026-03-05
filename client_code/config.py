@@ -84,6 +84,31 @@ CATEGORY_ORDER = [
   'Internal capital'
 ]
 
+
+PROJECT_TYPE_COLORS = {
+  'Solar': '#f5aa1c',                      # amber - sun
+  'Wind': '#c2ddff',                       # light blue - sky
+  'Hydro': '#005694',                      # dark blue - water
+  'Geothermal': '#c63527',                 # red - heat/earth core
+  'Biomass': '#76b37f',                    # green - organic matter
+  'Biofuel/Biogas': '#d7da7c',             # yellow-green - organic/gas
+  'Hydrogen': '#83d5ca',                   # light teal - clean/future
+  'Energy storage': '#7b38c7',             # purple - batteries
+  'Building efficiency upgrades': '#2d847b', # slate teal - buildings
+  'Waste to energy': '#7e570f',            # dark brown - waste
+  'Tidal/wave': '#002754',                 # navy - deep ocean
+  'Microgrid': '#0FAFB9',                  # teal - grid/network
+  'Electro-mobility': '#00504a',           # dark teal - electric transport
+}
+
+def get_project_type_color(project_type):
+  """Get color for a project type, with fallback to grey"""
+  return PROJECT_TYPE_COLORS.get(project_type, '#8e9099')
+
+def get_project_type_color(project_type):
+  """Get color for a project type, with fallback to grey"""
+  return PROJECT_TYPE_COLORS.get(project_type, '#8e9099')
+  
 ##### OWNERSHIP COLOR MAPPING
 # Function to automatically assign colors to owner types
 def get_owner_type_colors(owner_types_list, palette='dunsparce'):

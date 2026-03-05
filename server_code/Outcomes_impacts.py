@@ -6,7 +6,7 @@ from anvil.tables import app_tables
 import anvil.server
 import pandas as pd
 import numpy as np
-from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors, get_owner_type_colors
+from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors, get_owner_type_colors, PROJECT_TYPE_COLORS, get_project_type_color
 from .Global_Server_Functions import get_data
 import plotly.graph_objects as go
 import plotly.express as px
@@ -33,7 +33,7 @@ def create_indigenous_agreements_chart(df):
       labels=agreements_counts.index,
       values=agreements_counts.values,
       hole=0.4,
-      showlegend=False,
+      showlegend=True,
       marker=dict(colors=dunsparce_colors[:len(agreements_counts)])
     )
   ])
@@ -405,7 +405,8 @@ def create_key_objectives_by_project_type_chart(df):
   type_order = count_data.groupby('project_type')['count'].sum().sort_values(ascending=False).index.tolist()
 
   # Color mapping
-  type_colors = {t: dunsparce_colors[i % len(dunsparce_colors)] for i, t in enumerate(type_order)}
+  # Color mapping using project type colors
+  type_colors = {t: get_project_type_color(t) for t in type_order}
 
   def normalize_size(values, min_size=12, max_size=45):
     if values.max() == values.min():
