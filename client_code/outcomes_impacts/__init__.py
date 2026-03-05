@@ -84,6 +84,8 @@ class outcomes_impacts(outcomes_impactsTemplate):
     self.jobs_plot.figure = all_charts['jobs_chart']
     self.ghg_methodology_plot.figure = all_charts['ghg_methodology']
     self.ghg_timeline_plot.figure = all_charts['ghg_timeline']
+    self.key_objectives_plot.figure = all_charts['key_objectives']
+    self.key_objectives_lollipop_plot.figure = all_charts['key_objectives_lollipop']
 
 
     print("All charts updated!")

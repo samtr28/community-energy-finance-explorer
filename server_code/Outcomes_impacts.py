@@ -346,6 +346,238 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
 
   return df
 
+def create_key_objectives_by_project_type_chart(df):
+  """Create bubble chart showing key objectives by project type with count/dollar toggle"""
+
+  # Explode both columns
+  df_exploded = df.explode('project_type').explode('key_objectives')
+
+  if df_exploded.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text="No key objectives data available", font=dict(family='Arial, sans-serif', size=16, color='black')))
+    return fig
+
+    # Count combinations
+  count_data = df_exploded.groupby(['project_type', 'key_objectives']).size().reset_index(name='count')
+
+  # Dollar amount combinations
+  dollar_data = df_exploded.groupby(['project_type', 'key_objectives'])['total_cost'].sum().reset_index(name='amount')
+  dollar_data['amount_millions'] = dollar_data['amount'] / 1_000_000
+
+  # Get sort order
+  obj_order = count_data.groupby('key_objectives')['count'].sum().sort_values(ascending=False).index.tolist()
+  type_order = count_data.groupby('project_type')['count'].sum().sort_values(ascending=False).index.tolist()
+
+  # Color mapping using dunsparce_colors
+  type_colors = {t: dunsparce_colors[i % len(dunsparce_colors)] for i, t in enumerate(type_order)}
+
+  # Normalize sizes to a reasonable range
+  def normalize_size(values, min_size=12, max_size=50):
+    if values.max() == values.min():
+      return [30] * len(values)
+    normalized = (values - values.min()) / (values.max() - values.min())
+    return normalized * (max_size - min_size) + min_size
+
+    # Format dollar amounts: K, M, or B
+  def format_amount(x):
+    if x >= 1000:
+      return f'{x/1000:.1f}B'
+    elif x >= 1:
+      return f'{x:.1f}M'
+    else:
+      return f'{x*1000:.0f}K'
+
+  count_sizes = normalize_size(count_data['count'])
+  dollar_sizes = normalize_size(dollar_data['amount_millions'])
+
+  fig = go.Figure()
+
+  # Trace 1: Count view
+  fig.add_trace(go.Scatter(
+    x=count_data['project_type'],
+    y=count_data['key_objectives'],
+    mode='markers+text',
+    marker=dict(
+      size=count_sizes,
+      color=[type_colors[t] for t in count_data['project_type']],
+    ),
+    text=count_data['count'],
+    textposition='middle center',
+    textfont=dict(size=9, color='black', family='Arial, sans-serif'),
+    hovertemplate='<b>%{y}</b><br>Project Type: %{x}<br>Count: %{text}<extra></extra>',
+    visible=True,
+    name='Count'
+  ))
+
+  # Trace 2: Dollar amount view
+  fig.add_trace(go.Scatter(
+    x=dollar_data['project_type'],
+    y=dollar_data['key_objectives'],
+    mode='markers+text',
+    marker=dict(
+      size=dollar_sizes,
+      color=[type_colors[t] for t in dollar_data['project_type']],
+    ),
+    text=dollar_data['amount_millions'].apply(format_amount),
+    textposition='middle center',
+    textfont=dict(size=8, color='black', family='Arial, sans-serif'),
+    hovertemplate='<b>%{y}</b><br>Project Type: %{x}<br>Amount: $%{text}<extra></extra>',
+    visible=False,
+    name='Dollar Amount'
+  ))
+
+  fig.update_layout(
+    title=dict(
+      text='Key Objectives by Project Type',
+      font=dict(family='Arial, sans-serif', size=16, color='black')
+    ),
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    margin=dict(l=0, b=0, t=50, r=0),
+    font=dict(family='Arial, sans-serif', size=12, color='black'),
+    xaxis=dict(
+      title='',
+      tickangle=-45,
+      tickfont=dict(size=11, family='Arial, sans-serif', color='black'),
+      showgrid=False,
+      linecolor='#e0e0e0',
+      categoryorder='array',
+      categoryarray=type_order
+    ),
+    yaxis=dict(
+      title='',
+      tickfont=dict(size=11, family='Arial, sans-serif', color='black'),
+      showgrid=True,
+      gridcolor='#f0f0f0',
+      gridwidth=1,
+      linecolor='#e0e0e0',
+      categoryorder='array',
+      categoryarray=obj_order[::-1]
+    ),
+    showlegend=False,
+    updatemenus=[dict(
+      type='buttons',
+      direction='left',
+      buttons=[
+        dict(label='Count', method='update', args=[{'visible': [True, False]}]),
+        dict(label='Dollars', method='update', args=[{'visible': [False, True]}])
+      ],
+      pad={'r': 10, 't': 10},
+      showactive=True,
+      x=0.5,
+      y=1.08,
+      xanchor='center',
+      yanchor='top',
+      bgcolor='rgba(255, 255, 255, 0.8)',
+      bordercolor='gray',
+      borderwidth=1
+    )]
+  )
+
+  return fig
+
+def create_key_objectives_lollipop_chart(df):
+  """Create lollipop chart showing key objectives frequency"""
+
+  # Count key objectives occurrences
+  obj_counts = df['key_objectives'].explode().value_counts().reset_index()
+  obj_counts.columns = ['objective', 'count']
+
+  if obj_counts.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text="No key objectives data available", font=dict(family='Arial, sans-serif', size=16, color='black')))
+    return fig
+
+    # Sort ascending for horizontal chart (highest at top)
+  obj_counts = obj_counts.sort_values('count', ascending=True)
+  objectives = obj_counts['objective'].tolist()
+  counts = obj_counts['count'].tolist()
+
+  # Use dunsparce color
+  lollipop_color = dunsparce_colors[1]
+
+  # Create figure
+  fig = go.Figure()
+
+  # Add lines and dots for each objective
+  for i, obj in enumerate(objectives):
+    # Horizontal line
+    fig.add_scatter(
+      x=[0, counts[i]], 
+      y=[i, i],
+      mode="lines", 
+      line=dict(color=lollipop_color, width=6), 
+      showlegend=False,
+      hoverinfo='skip'
+    )
+
+    # Label annotation
+    fig.add_annotation(
+      text=obj, 
+      x=0.2,
+      y=i + 0.37, 
+      xanchor="left",
+      yanchor="middle",
+      showarrow=False,
+      font=dict(family='Arial, sans-serif', size=14, color=dunsparce_colors[5])
+    )
+
+    # Count on dot
+    fig.add_annotation(
+      text=f'<b>{counts[i]}</b>',
+      x=counts[i], 
+      y=i, 
+      xanchor="center",
+      yanchor="middle",
+      showarrow=False,
+      font=dict(color='white', family='Arial, sans-serif', size=16)
+    )
+
+    # Add dots
+  fig.add_scatter(
+    x=counts, 
+    y=list(range(len(objectives))), 
+    mode="markers", 
+    marker=dict(size=30, color=lollipop_color),
+    showlegend=False,
+    hovertemplate='<b>%{text}</b><br>Count: %{x}<extra></extra>',
+    text=objectives
+  )
+
+  # Update axes
+  fig.update_xaxes(
+    visible=False,
+    range=[0, max(counts) * 1.15] if counts else [0, 10], 
+    showline=False, 
+    ticks="", 
+    showticklabels=False,
+    showgrid=False
+  )
+
+  fig.update_yaxes(
+    visible=False,
+    ticks="", 
+    showticklabels=False,
+    showgrid=False
+  )
+
+  # Update layout
+  fig.update_layout(
+    plot_bgcolor='rgba(0, 0, 0, 0)',
+    paper_bgcolor='rgba(0, 0, 0, 0)',
+    font=dict(family='Arial, sans-serif', size=12, color='black'),
+    margin=dict(l=0, r=0, t=50, b=0),
+    title=dict(
+      text='Key Objectives',
+      font=dict(family='Arial, sans-serif', size=16, color='black'),
+      x=0.01,
+      xanchor='left',
+      y=0.98,
+      yanchor='top'
+    )
+  )
+
+  return fig
 
 @anvil.server.callable
 def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
@@ -363,6 +595,7 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
       'jobs_chart': empty_fig,
       'ghg_methodology': empty_fig,
       'ghg_timeline': empty_fig,
+      'key_objectives': empty_fig, 
     }
 
   return {
@@ -370,4 +603,6 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
     'jobs_chart': create_jobs_chart(df_filtered),
     'ghg_methodology': create_ghg_methodology_chart(df_filtered),
     'ghg_timeline': create_ghg_charts(df_filtered),
+    'key_objectives': create_key_objectives_by_project_type_chart(df_filtered),
+    'key_objectives_lollipop': create_key_objectives_lollipop_chart(df_filtered)
   }
