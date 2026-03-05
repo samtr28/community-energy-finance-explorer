@@ -349,36 +349,70 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
 def create_key_objectives_by_project_type_chart(df):
   """Create bubble chart showing key objectives by project type with count/dollar toggle"""
 
-  # Explode both columns
+  # Simple wrap function - no imports needed
+  def wrap_label(text, width=40):
+    words = text.split()
+    lines = []
+    current_line = []
+    current_length = 0
+
+    for word in words:
+      if current_length + len(word) + 1 <= width:
+        current_line.append(word)
+        current_length += len(word) + 1
+      else:
+        if current_line:
+          lines.append(' '.join(current_line))
+        current_line = [word]
+        current_length = len(word)
+
+    if current_line:
+      lines.append(' '.join(current_line))
+
+    return '<br>'.join(lines)
+
+    # Explode both columns
   df_exploded = df.explode('project_type').explode('key_objectives')
+
+  # Remove any NaN values
+  df_exploded = df_exploded.dropna(subset=['project_type', 'key_objectives'])
+
+  # Remove "Other" from key objectives
+  df_exploded = df_exploded[df_exploded['key_objectives'] != 'Other']
 
   if df_exploded.empty:
     fig = go.Figure()
     fig.update_layout(title=dict(text="No key objectives data available", font=dict(family='Arial, sans-serif', size=16, color='black')))
     return fig
 
-    # Count combinations
-  count_data = df_exploded.groupby(['project_type', 'key_objectives']).size().reset_index(name='count')
+    # Create wrapped labels mapping
+  unique_objectives = df_exploded['key_objectives'].unique()
+  label_map = {obj: wrap_label(obj, width=40) for obj in unique_objectives}
+
+  # Apply wrapped labels
+  df_exploded['key_objectives_wrapped'] = df_exploded['key_objectives'].map(label_map)
+
+  # Count combinations
+  count_data = df_exploded.groupby(['project_type', 'key_objectives_wrapped']).size().reset_index(name='count')
 
   # Dollar amount combinations
-  dollar_data = df_exploded.groupby(['project_type', 'key_objectives'])['total_cost'].sum().reset_index(name='amount')
+  dollar_data = df_exploded.groupby(['project_type', 'key_objectives_wrapped'])['total_cost'].sum().reset_index(name='amount')
   dollar_data['amount_millions'] = dollar_data['amount'] / 1_000_000
 
   # Get sort order
-  obj_order = count_data.groupby('key_objectives')['count'].sum().sort_values(ascending=False).index.tolist()
+  obj_order_original = df_exploded.groupby('key_objectives')['key_objectives'].count().sort_values(ascending=False).index.tolist()
+  obj_order = [label_map[obj] for obj in obj_order_original]
   type_order = count_data.groupby('project_type')['count'].sum().sort_values(ascending=False).index.tolist()
 
-  # Color mapping using dunsparce_colors
+  # Color mapping
   type_colors = {t: dunsparce_colors[i % len(dunsparce_colors)] for i, t in enumerate(type_order)}
 
-  # Normalize sizes to a reasonable range
-  def normalize_size(values, min_size=12, max_size=50):
+  def normalize_size(values, min_size=12, max_size=45):
     if values.max() == values.min():
       return [30] * len(values)
     normalized = (values - values.min()) / (values.max() - values.min())
     return normalized * (max_size - min_size) + min_size
 
-    # Format dollar amounts: K, M, or B
   def format_amount(x):
     if x >= 1000:
       return f'{x/1000:.1f}B'
@@ -395,7 +429,7 @@ def create_key_objectives_by_project_type_chart(df):
   # Trace 1: Count view
   fig.add_trace(go.Scatter(
     x=count_data['project_type'],
-    y=count_data['key_objectives'],
+    y=count_data['key_objectives_wrapped'],
     mode='markers+text',
     marker=dict(
       size=count_sizes,
@@ -412,7 +446,7 @@ def create_key_objectives_by_project_type_chart(df):
   # Trace 2: Dollar amount view
   fig.add_trace(go.Scatter(
     x=dollar_data['project_type'],
-    y=dollar_data['key_objectives'],
+    y=dollar_data['key_objectives_wrapped'],
     mode='markers+text',
     marker=dict(
       size=dollar_sizes,
@@ -429,7 +463,9 @@ def create_key_objectives_by_project_type_chart(df):
   fig.update_layout(
     title=dict(
       text='Key Objectives by Project Type',
-      font=dict(family='Arial, sans-serif', size=16, color='black')
+      font=dict(family='Arial, sans-serif', size=16, color='black'),
+      x=0,
+      xanchor='left'
     ),
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
@@ -437,12 +473,13 @@ def create_key_objectives_by_project_type_chart(df):
     font=dict(family='Arial, sans-serif', size=12, color='black'),
     xaxis=dict(
       title='',
-      tickangle=-45,
+      tickangle=-20,
       tickfont=dict(size=11, family='Arial, sans-serif', color='black'),
       showgrid=False,
       linecolor='#e0e0e0',
       categoryorder='array',
-      categoryarray=type_order
+      categoryarray=type_order,
+      range=[-0.5, len(type_order) - 0.5]
     ),
     yaxis=dict(
       title='',
@@ -452,7 +489,8 @@ def create_key_objectives_by_project_type_chart(df):
       gridwidth=1,
       linecolor='#e0e0e0',
       categoryorder='array',
-      categoryarray=obj_order[::-1]
+      categoryarray=obj_order[::-1],
+      range=[-0.8, len(obj_order) - 0]
     ),
     showlegend=False,
     updatemenus=[dict(
@@ -462,7 +500,7 @@ def create_key_objectives_by_project_type_chart(df):
         dict(label='Count', method='update', args=[{'visible': [True, False]}]),
         dict(label='Dollars', method='update', args=[{'visible': [False, True]}])
       ],
-      pad={'r': 10, 't': 10},
+      pad={'r': 0, 't': 10},
       showactive=True,
       x=0.5,
       y=1.08,
@@ -566,9 +604,9 @@ def create_key_objectives_lollipop_chart(df):
     plot_bgcolor='rgba(0, 0, 0, 0)',
     paper_bgcolor='rgba(0, 0, 0, 0)',
     font=dict(family='Arial, sans-serif', size=12, color='black'),
-    margin=dict(l=0, r=0, t=50, b=0),
+    margin=dict(l=0, r=0, t=0, b=0),
     title=dict(
-      text='Key Objectives',
+      text='Selected Key Objectives of Community Energy Projects',
       font=dict(family='Arial, sans-serif', size=16, color='black'),
       x=0.01,
       xanchor='left',
