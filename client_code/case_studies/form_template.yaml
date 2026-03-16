@@ -1,6 +1,15 @@
 components_by_slot:
   content_slot: []
   slot_3: []
-  title_slot: []
+  title_slot:
+  - components:
+    - layout_properties: {}
+      name: title
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Case Studies}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    layout_properties: {}
+    name: flow_panel_1
+    properties: {}
+    type: FlowPanel
 is_package: true
 layout: {type: 'form:Base'}

@@ -166,20 +166,10 @@ components_by_slot:
     type: Timer
   title_slot:
   - components:
-    - layout_properties: {expand: false, width: 210}
+    - layout_properties: {}
       name: title
-      properties: {font_family: ser, font_size: 22, icon_size: 0, line_height: '', role: null, scale: large, style: title, text: Outcomes & Impacts}
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Outcomes & Impacts}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {expand: false, width: 504}
-      name: description
-      properties:
-        font_size: 16
-        scale: large
-        spacing:
-          margin: ['0', null, null, null]
-        style: body
-        text: By default, the filter for project scale automatically omits mega projects due to their skewing of the data.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: title_panel
     properties:

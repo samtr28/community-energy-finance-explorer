@@ -234,20 +234,10 @@ components_by_slot:
     type: Timer
   title_slot:
   - components:
-    - components:
-      - layout_properties: {expand: false, width: 382}
-        name: title_copy
-        properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Models}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      layout_properties: {}
-      name: title_panel_copy
-      properties:
-        align: left
-        gap: huge
-        spacing:
-          margin: ['0', null, '0', null]
-        vertical_align: middle
-      type: FlowPanel
+    - layout_properties: {}
+      name: title_copy
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Models}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel
     properties:
