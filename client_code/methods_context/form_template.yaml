@@ -25,14 +25,24 @@ components_by_slot:
         style: headline
         text: An open platform for exploring community energy financing in Canada
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components: []
+    - components:
+      - layout_properties: {}
+        name: rich_text_3
+        properties:
+          content: |2-
+
+            The Navigator is built on data from an ongoing national research project led by the **[Impact Investing Hub](https://impactinvestinghub.ca/)** and **[Accelerating Community Energy Transformation (ACET)](https://www.uvic.ca/acet/index.php)** at the University of Victoria. CET is funded through the Canada First Research Excellence Fund (CFREF)and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with in-depth interviews with practitioners, community members, and project leaders directly involved in community energy development.
+          font: ''
+          font_size: 18
+        type: RichText
       layout_properties: {full_width_row: true, grid_position: 'SRCEZE,XQDFXJ'}
       name: rich_text_2
       properties:
         content: |-
-          The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods.
+          The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods
 
           The Navigator is built on data from an ongoing national research project led by the **[Impact Investing Hub](https://impactinvestinghub.ca/)** and **[Accelerating Community Energy Transformation (ACET)](https://www.uvic.ca/acet/index.php)** at the University of Victoria. CET is funded through the Canada First Research Excellence Fund (CFREF)and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with in-depth interviews with practitioners, community members, and project leaders directly involved in community energy development.
+        font: ''
         font_size: 18
       type: RichText
     - layout_properties: {grid_position: 'SRCEZE,KODIRW'}
@@ -92,7 +102,7 @@ components_by_slot:
         name: card_content_container_2
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'WTQZQD,VQQPUA'}
+      layout_properties: {grid_position: 'KCLVNR,OZCDNX'}
       name: card_2
       properties: {appearance: elevated, background_color: 'theme:Tertiary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
@@ -113,7 +123,7 @@ components_by_slot:
         name: card_content_container_3
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'DEYOZF,TPQJZS'}
+      layout_properties: {grid_position: 'FBMEMM,UYZBKE'}
       name: card_3
       properties: {appearance: elevated, background_color: 'theme:Primary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
@@ -246,7 +256,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_widths: '{"XQDFXJ":40,"KCDPLN":40,"KAPVRW":30,"ZWLOTZ":30}'}
+    properties: {col_widths: '{"XQDFXJ":40,"KCDPLN":40,"KAPVRW":30,"ZWLOTZ":30,"MOEBRL":30}'}
     type: ColumnPanel
   title_slot:
   - components:
