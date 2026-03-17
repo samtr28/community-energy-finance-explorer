@@ -33,8 +33,12 @@ components_by_slot:
           The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods.
 
           The Navigator is built on data from an ongoing national research project led by the **[Impact Investing Hub](https://impactinvestinghub.ca/)** and **[Accelerating Community Energy Transformation (ACET)](https://www.uvic.ca/acet/index.php)** at the University of Victoria. CET is funded through the Canada First Research Excellence Fund (CFREF)and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with in-depth interviews with practitioners, community members, and project leaders directly involved in community energy development.
-        font_size: 16
+        font_size: 18
       type: RichText
+    - layout_properties: {grid_position: 'SRCEZE,KODIRW'}
+      name: image_1
+      properties: {source: _/theme/Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.jpg}
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'SBVRFK,YMBIDU'}
       name: main_heading_2
       properties:
@@ -59,39 +63,18 @@ components_by_slot:
         style: headline
         text: Barriers, gaps, and the need for documentation
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'WTQZQD,KCDPLN'}
-      name: rich_text_3
+    - layout_properties: {grid_position: 'WTQZQD,KCDPLN'}
+      name: text_1
       properties:
-        content: |
+        font_size: 18
+        scale: large
+        text: |-
           Community energy initiatives are widely discussed in the context of Canada's low-carbon transition, particularly in remote, rural, and Indigenous settings where they are often expected to support local economic development and energy autonomy alongside decarbonization goals. Federal investment in this space has been substantial - Natural Resources Canada's Clean Energy for Rural and Remote Communities (CERRC) program has supported 111 projects nationally - yet many communities continue to face significant barriers to accessing capital for renewable energy development.
 
           These barriers are not unique to Canada, but they are poorly documented in the Canadian context. Unlike the UK and EU -where systematic, project-level data on community energy financing has been used to support evidence-based policy and dedicated financing programs - Canada lacks a comparable shared record of how projects are structured, what instruments are used, and which approaches have proved viable. This project is an effort to begin building that evidence base.
 
           The Navigator was developed in response to three persistent obstacles in community energy financing:
-        font_size: 16
-      type: RichText
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: rich_text_5
-          properties:
-            content: |-
-              <h5>DATA GAP</h5>
-              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">No Shared Evidence Base</h4>
-              <p>Canada lacks the systematic, project-level data on community energy that jurisdictions like the UK and EU have used to build evidence-based policy and sector support. This gap leaves communities, investors, and policymakers without the evidence base needed to make informed decisions.</p>
-            font_size: 16
-            foreground: theme:On Primary Container
-            format: restricted_html
-          type: RichText
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_3
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'DEYOZF,TPQJZS'}
-      name: card_3
-      properties: {appearance: elevated, background_color: 'theme:Primary Container'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -109,9 +92,30 @@ components_by_slot:
         name: card_content_container_2
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'DEYOZF,KLTRUX'}
+      layout_properties: {full_width_row: true, grid_position: 'WTQZQD,VQQPUA'}
       name: card_2
       properties: {appearance: elevated, background_color: 'theme:Tertiary Container'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_5
+          properties:
+            content: |-
+              <h5>DATA GAP</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">No Shared Evidence Base</h4>
+              <p>Canada lacks the systematic, project-level data on community energy that jurisdictions like the UK and EU have used to build evidence-based policy and sector support. This gap leaves communities, investors, and policymakers without the evidence base needed to make informed decisions.</p>
+            font_size: 16
+            foreground: theme:On Primary Container
+            format: restricted_html
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_3
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'DEYOZF,TPQJZS'}
+      name: card_3
+      properties: {appearance: elevated, background_color: 'theme:Primary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     - components:
       - components:
@@ -130,11 +134,11 @@ components_by_slot:
         name: card_content_container_1
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'DEYOZF,MOEBRL'}
+      layout_properties: {full_width_row: true, grid_position: 'DEYOZF,MOEBRL'}
       name: card_1
       properties: {appearance: elevated, background_color: 'theme:Secondary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - layout_properties: {grid_position: 'MDICJT,DROZZD'}
+    - layout_properties: {full_width_row: true, grid_position: 'MDICJT,DROZZD'}
       name: main_heading_3
       properties:
         background_color: ''
@@ -148,7 +152,7 @@ components_by_slot:
         text: RESEARCH DESIGN
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'HOJLOV,YJYWGG'}
+    - layout_properties: {full_width_row: true, grid_position: 'HOJLOV,YJYWGG'}
       name: heading_3
       properties:
         font_family: ser
@@ -159,7 +163,7 @@ components_by_slot:
         text: Methodology
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components: []
-      layout_properties: {grid_position: 'CECWFN,KAPVRW'}
+      layout_properties: {full_width_row: true, grid_position: 'CECWFN,KAPVRW'}
       name: rich_text_6
       properties: {content: This research combines a Canada-wide survey with in-depth interviews to examine how financing structures and institutional arrangements shape community energy projects - and what they mean for the communities they serve., font_size: 16}
       type: RichText
@@ -172,7 +176,7 @@ components_by_slot:
             properties:
               align: center
               background: '#003c30'
-              border: '3px solid #ffffff '
+              border: ''
               content: |-
                 <div style="border-right: 3px solid;">
                 <h6>PHASE 1</h6>
@@ -183,7 +187,7 @@ components_by_slot:
               format: restricted_html
               spacing:
                 margin: ['0', null, '0', null]
-                padding: [null, '0', null, '0']
+                padding: [null, '-1', null, '0']
             type: RichText
           - components: []
             layout_properties: {grid_position: 'REJOKE,XFUIDY'}
@@ -232,7 +236,7 @@ components_by_slot:
         properties:
           margin: ['0', '0', '0', '0']
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'CECWFN,ZWLOTZ'}
+      layout_properties: {full_width_row: true, grid_position: 'CECWFN,ZWLOTZ'}
       name: card_5
       properties:
         appearance: outlined
@@ -240,9 +244,9 @@ components_by_slot:
         spacing:
           margin: ['0', '0', '0', '0']
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_widths: '{"XQDFXJ":40,"KCDPLN":40,"KAPVRW":20,"ZWLOTZ":40}'}
+    properties: {col_widths: '{"XQDFXJ":40,"KCDPLN":40,"KAPVRW":30,"ZWLOTZ":30}'}
     type: ColumnPanel
   title_slot:
   - components:
