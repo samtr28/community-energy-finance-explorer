@@ -96,7 +96,7 @@ components_by_slot:
         name: card_content_container_2
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'WTQZQD,AVYDUN'}
+      layout_properties: {grid_position: 'WTQZQD,AVYDUN JEGHFQ,ZWPJLL'}
       name: card_2
       properties: {appearance: elevated, background_color: 'theme:Tertiary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
@@ -117,7 +117,7 @@ components_by_slot:
         name: card_content_container_3
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'FBMEMM,UYZBKE'}
+      layout_properties: {grid_position: 'WTQZQD,AVYDUN YRAORD,PGPKLI'}
       name: card_3
       properties: {appearance: elevated, background_color: 'theme:Primary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
