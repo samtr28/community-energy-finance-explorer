@@ -206,6 +206,34 @@ components_by_slot:
       name: heading_5
       properties: {font_family: ser, scale: medium, style: headline, text: Data Collection}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'LICYDZ,JWINFD'}
+      name: heading_6
+      properties: {scale: large, style: title, text: Canada-Wide Survey}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'LICYDZ,EHBNLJ'}
+      name: heading_7
+      properties: {scale: large, style: title, text: Semi-Structured Interviews}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'TKPHZS,KKFLSV'}
+      name: text_3
+      properties:
+        font_size: 18
+        scale: large
+        spacing:
+          padding: [null, '0', null, null]
+        text: |-
+          A national survey was developed and deployed using the REDCap platform to collect project-level data on financing and funding instruments, ownership and governance structures, and community benefit mechanisms. The survey was developed iteratively through expert review and piloting with practitioners active in community energy financing, and continues to evolve as new projects and contexts are added to the dataset.
+
+          Participants were selected on the basis of in-depth knowledge of a specific project's community context, development process, and financing structure, including project managers, finance leads, and energy coordinators. Both completed projects and those currently under construction were eligible for inclusion. Each survey focused on a single project, required approximately 30-45 minutes to complete, and participants received a $95 honorarium in recognition of their time.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ'}
+      name: text_4
+      properties: {font_size: 18, scale: large, text: 'Semi-structured interviews complement the survey by capturing perspectives that quantitative data cannot easily convey, including how financial mechanisms shape participation, benefit distribution, and perceived fairness. Participants are purposefully selected for their ability to speak to a project''s financial and governance arrangements, or their direct experience of community impact - drawing on project leaders, community members, Indigenous representatives, and local government actors. Each case study includes up to four interviews, with participants compensated at $100 per hour and a guaranteed minimum of $75.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ UIGEVW,QMDEMI'}
+      name: spacer_2
+      properties: {height: '50'}
+      type: Spacer
     - components:
       - components: []
         layout_properties: {grid_position: 'REJOKE,TANBNZ'}
@@ -235,7 +263,7 @@ components_by_slot:
           content: |-
             <div style="border-right: 3px solid">
             <h5>PHASE 2</h5>
-            <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Case Studies & Expanded Data Collection</h4>
+            <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Case Studies & Further Data Collection</h4>
             </div>
           font_size: 16
           foreground: theme:On Secondary
@@ -259,37 +287,19 @@ components_by_slot:
             margin: ['0', null, '0', null]
             padding: ['7', '0', '7', '0']
         type: RichText
-      layout_properties: {grid_position: 'SJOPJU,MTTDJT'}
+      layout_properties: {grid_position: 'TKPHZS,NLITRQ DCJRAF,OTJGCQ'}
       name: column_panel_3
       properties:
         border: ''
         col_spacing: none
+        col_widths: '{"TANBNZ":20,"XFUIDY":20,"MGLWXT":20}'
         spacing:
-          margin: ['20', null, '10', '25']
-          padding: [null, '25', null, null]
+          margin: ['20', null, '10', '0']
+          padding: [null, '0', null, null]
       type: ColumnPanel
-    - layout_properties: {full_width_row: true, grid_position: 'LICYDZ,JWINFD'}
-      name: heading_6
-      properties: {scale: large, style: title, text: Canada-Wide Survey}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'LICYDZ,EHBNLJ'}
-      name: heading_7
-      properties: {scale: large, style: title, text: Semi-Structured Interviews}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'TKPHZS,KKFLSV'}
-      name: text_3
-      properties:
-        font_size: 18
-        scale: large
-        text: "A national survey was developed and deployed using the REDCap platform. It collects project-level data on financing and funding instruments, ownership and governance structures, and community benefit mechanisms. The survey was developed iteratively through expert review and piloting with practitioners active in community energy financing and continues to evolve as new projects and contexts are added to the dataset. \n\nParticipants are recruited through targeted outreach to project leaders and developers, complemented by snowball sampling. Data collection is ongoing. We are primarily seeking individuals with in-depth knowledge of a specific project's community context, development process, and financing structure - including project managers, finance leads, energy coordinators, and similar roles. Completed projects and those currently under construction are both eligible.\n\nThe survey takes approximately 30-45 minutes to complete and participants receive a $95 honorarium in recognition of their time. Each survey should focus on a single project."
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'TKPHZS,NLITRQ'}
-      name: text_4
-      properties: {font_size: 18, scale: large, text: 'Semi-structured interviews complement the survey by revealing perspectives that quantitative data cannot easily capture. Participants are purposefully selected based on two criteria: their ability to speak to a project''s financial and governance arrangements, or their direct experience of how a project has affected their community. This includes project leaders, community members, Indigenous representatives, and local government actors, and is not limited to those with formal involvement in project development or decision-making.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: large, col_widths: '{"XQDFXJ":35,"KODIRW":35,"LHLQJJ":30,"MIFXPI":30,"CNHTZS":30,"SBVFBQ":30,"KKFLSV":30}'}
+    properties: {col_spacing: huge, col_widths: '{"XQDFXJ":35,"KODIRW":35,"LHLQJJ":30,"MIFXPI":30,"CNHTZS":30,"SBVFBQ":30,"KKFLSV":30}'}
     type: ColumnPanel
   title_slot:
   - components:
