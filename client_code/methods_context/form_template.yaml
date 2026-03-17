@@ -34,11 +34,19 @@ components_by_slot:
           font: ''
           font_size: 18
         type: RichText
-      layout_properties: {full_width_row: true, grid_position: 'SRCEZE,XQDFXJ LGGWLN,SSTJHM'}
+      layout_properties: {full_width_row: true, grid_position: 'SRCEZE,XQDFXJ'}
       name: rich_text_2
       properties: {content: 'The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods', font: '', font_size: 18}
       type: RichText
-    - layout_properties: {grid_position: 'SRCEZE,XQDFXJ IRADSU,SUFNAI'}
+    - layout_properties: {grid_position: 'SRCEZE,KODIRW'}
+      name: image_1
+      properties: {source: _/theme/Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.jpg}
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'XHVTFI,KMXSMD'}
+      name: divider_3
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'WCCVZI,YCNWPO'}
       name: main_heading_2
       properties:
         background_color: ''
@@ -52,10 +60,6 @@ components_by_slot:
         text: CONTEXT
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'SRCEZE,KODIRW'}
-      name: image_1
-      properties: {source: _/theme/Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.jpg}
-      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'FPJRRD,CBFKOY'}
       name: heading_2
       properties:
@@ -166,6 +170,10 @@ components_by_slot:
         spacing:
           margin: ['4', null, '4', null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'RXFIHU,VGGDFW'}
+      name: divider_2
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'MDICJT,DROZZD'}
       name: main_heading_3
       properties:
@@ -196,15 +204,43 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'AOGOGQ,CNHTZS'}
       name: text_2
-      properties: {font_size: 18, scale: large, text: 'One of the main difficulties in researching this sector is the term itself. "Community energy" is applied to a wide range of project types including Indigenous-owned utilities, neighbourhood solar cooperatives, municipally supported geothermal, with very different arrangements of ownership, governance, and benefit distribution. In the absence of a single, widely accepted definition of community energy in Canada, a scorecard was developed to evaluate projects across six dimensions, and allows the dataset to reflect the range of arrangements that practitioners actually describe as community energy in practice.'}
+      properties:
+        font_size: 18
+        scale: large
+        text: |
+          One of the main difficulties in researching this sector is the term itself. "Community energy" is applied to a wide range of project types including Indigenous-owned utilities, neighbourhood solar cooperatives, municipally supported geothermal, with very different arrangements of ownership, governance, and benefit distribution. In the absence of a single, widely accepted definition of community energy in Canada, a scorecard was developed to evaluate projects across six dimensions, and allows the dataset to reflect the range of arrangements that practitioners actually describe as community energy in practice.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'AOGOGQ,SBVFBQ'}
       name: spacer_1
       properties: {}
       type: Spacer
+    - layout_properties: {full_width_row: true, grid_position: 'GFUZFU,GNFZGM'}
+      name: divider_1
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'HUZJZH,SKJIGH'}
+      name: main_heading_4
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: RESEARCH DESIGN
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'IQOEVJ,HTWGYY'}
       name: heading_5
-      properties: {font_family: ser, scale: medium, style: headline, text: Data Collection}
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Data Collection
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'LICYDZ,JWINFD'}
       name: heading_6
