@@ -16,5 +16,6 @@ class methods_context(methods_contextTemplate):
       """This method is called when the form is shown on the page"""
     self.layout.reset_links()
     self.layout.methods_nav.role = 'selected'
+
     pass
     # Any code you write here will run before the form opens.
