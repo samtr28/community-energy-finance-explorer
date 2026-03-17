@@ -1,9 +1,10 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {grid_position: 'XUTYVW,RMTAVU'}
+    - layout_properties: {grid_position: 'GTVKWN,HRQOSW'}
       name: main_heading
       properties:
+        background_color: ''
         bold: true
         font_family: ''
         scale: small
@@ -14,18 +15,24 @@ components_by_slot:
         text: OVERVIEW
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'FQPAJV,YBKYSS'}
+    - layout_properties: {grid_position: 'SZZUDT,JKMETB'}
       name: heading_1
-      properties: {font_family: ser, scale: small, text: An open platform for exploring community energy financing in Canada}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'GRCIQW,UMFIVH'}
-      name: text_1
       properties:
-        text: |
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['0', null, null, null]
+        style: headline
+        text: An open platform for exploring community energy financing in Canada
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'WVJHYA,XOAWUX'}
+      name: rich_text_1
+      properties:
+        content: |-
           The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods.
 
-          The Navigator is built on data from an ongoing national research project led by the Impact Investing Hub and <a href="url_of_destination">Link text</a>Accelerating Community Energy Transformation (ACET) at the University of Victoria. CET is funded through the Canada First Research Excellence Fund (CFREF) and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with in-depth interviews with practitioners, community members, and project leaders directly involved in community energy development.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+          The Navigator is built on data from an ongoing national research project led by the Impact Investing Hub and Accelerating Community Energy Transformation (ACET) at the University of Victoria. CET is funded through the Canada First Research Excellence Fund (CFREF) and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with in-depth interviews with practitioners, community members, and project leaders directly involved in community energy development.
+      type: RichText
     layout_properties: {}
     name: column_panel_1
     properties: {}
