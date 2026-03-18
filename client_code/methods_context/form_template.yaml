@@ -85,6 +85,35 @@ components_by_slot:
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_5
+          properties:
+            content: |-
+              <h5>DATA GAP</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">No Shared Evidence Base</h4>
+              <p>Canada lacks the systematic, project-level data on community energy that jurisdictions like the UK and EU have used to build evidence-based policy and sector support. This gap leaves communities, investors, and policymakers without the evidence base needed to make informed decisions.</p>
+            font_size: 16
+            foreground: theme:On Primary Container
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_3
+        properties:
+          margin: ['8', '16', '8', '16']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'VAKWIG,MIFXPI GAZFUZ,HDREUB'}
+      name: card_3
+      properties:
+        appearance: elevated
+        background_color: theme:Primary Container
+        spacing:
+          margin: ['4', null, '4', null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
           name: rich_text_4
           properties:
             content: |-
@@ -109,35 +138,6 @@ components_by_slot:
         appearance: elevated
         background_color: theme:Tertiary Container
         orientation: row
-        spacing:
-          margin: ['4', null, '4', null]
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: rich_text_5
-          properties:
-            content: |-
-              <h5>DATA GAP</h5>
-              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">No Shared Evidence Base</h4>
-              <p>Canada lacks the systematic, project-level data on community energy that jurisdictions like the UK and EU have used to build evidence-based policy and sector support. This gap leaves communities, investors, and policymakers without the evidence base needed to make informed decisions.</p>
-            font_size: 16
-            foreground: theme:On Primary Container
-            format: restricted_html
-            spacing:
-              margin: ['0', null, '0', null]
-              padding: ['0', null, '0', null]
-          type: RichText
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_3
-        properties:
-          margin: ['8', '16', '8', '16']
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'VAKWIG,MIFXPI GSTQGI,EPZVII'}
-      name: card_3
-      properties:
-        appearance: elevated
-        background_color: theme:Primary Container
         spacing:
           margin: ['4', null, '4', null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
@@ -333,7 +333,127 @@ components_by_slot:
           margin: ['20', null, '10', '0']
           padding: [null, '0', null, null]
       type: ColumnPanel
-    layout_properties: {full_width_row: true}
+    - layout_properties: {full_width_row: true, grid_position: 'NEPPMX,IBOVXC'}
+      name: main_heading_5
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: KNOWLEDGE MOBILIZATION
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: ''}
+      name: heading_8
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Building the Community Energy Finance Navigator
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GMHBUQ,OZZIME'}
+      name: text_5
+      properties:
+        font_size: 18
+        scale: large
+        text: |-
+          Survey data informs the Navigator's interactive visualizations, organized around capital flows, ownership models, project outcomes, and cross-case comparison. Our data collection also documented where participants most wanted support - and this directly shaped which visualizations were developed. Semi-structured interview data will form the basis of case studies that document individual projects from multiple perspectives.
+
+          Visualizations and educational materials derived from the data will be made publicly available through the Navigator as open-access resources, with the underlying dataset potentially published in a future phase of the project. Communities whose projects are featured will have the opportunity to review and provide feedback on how their project is presented before publication, and may withdraw their project from the platform at any time.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_6
+          properties:
+            content: |-
+              <h5>Complimentary Research</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Justice, equity & the energy transition</h4>
+              <p>A parallel workstream within the broader ACET project - led by PhD Candidate Pavel Soriano Hernandez - analyzes the same dataset through an equity and justice lens, examining how financing and governance structures shape who benefits and who bears risk in the clean energy transition. This work explores whether various funding and financing models advance energy justice by ensuring fair, inclusive, and equitable access to the economic, social, and environmental benefits of clean energy. Findings from this workstream may be integrated into a future version of the Navigator.</p>
+            font_size: 16
+            foreground: theme:On Secondary Container
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_4
+        properties:
+          margin: ['8', '16', '8', '16']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'GMHBUQ,TAVWOZ'}
+      name: card_4
+      properties:
+        appearance: elevated
+        background_color: theme:Secondary Container
+        spacing:
+          margin: ['4', null, '4', null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {grid_position: 'OTFVJB,XSSNSK'}
+      name: main_heading_6
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: PHASE 2
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'VDCLQU,VGOHEX'}
+      name: heading_9
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Iteration & Future Plans
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'LJNGTX,BWENQQ'}
+      name: text_6
+      properties: {font_size: 18, scale: large, text: 'Following the platform launch, a webinar will be conducted to gather user feedback and guide iterative improvements to both the visualizations and dashboard functionality. Phase 2 of the project will expand data collection and refine the platform in response to user needs.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_10
+          properties:
+            content: |-
+              <h5>Complimentary Research</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Justice, equity & the energy transition</h4>
+              <p>A parallel workstream within the broader ACET project - led by PhD Candidate Pavel Soriano Hernandez - analyzes the same dataset through an equity and justice lens, examining how financing and governance structures shape who benefits and who bears risk in the clean energy transition. This work explores whether various funding and financing models advance energy justice by ensuring fair, inclusive, and equitable access to the economic, social, and environmental benefits of clean energy. Findings from this workstream may be integrated into a future version of the Navigator.</p>
+            font_size: 16
+            foreground: theme:On Secondary Container
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_5
+        properties:
+          margin: ['8', '16', '8', '16']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'LJNGTX,FVSNJJ'}
+      name: card_5
+      properties:
+        appearance: elevated
+        background_color: theme:Secondary Container
+        spacing:
+          margin: ['4', null, '4', null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    layout_properties: {}
     name: column_panel_1
     properties: {col_spacing: huge, col_widths: '{"XQDFXJ":35,"KODIRW":35,"LHLQJJ":30,"MIFXPI":30,"CNHTZS":30,"SBVFBQ":30,"KKFLSV":30}'}
     type: ColumnPanel
