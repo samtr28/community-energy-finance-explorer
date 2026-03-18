@@ -1253,3 +1253,15 @@ footer a, .footer .anvil-component {
 .anvil-role-button-link.anvil-m3-link {
   border-radius: 100px;
 }
+
+.anvil-role-equal-height .anvil-panel-row {
+  align-items: stretch;
+}
+
+.anvil-role-equal-height .anvil-panel-col,
+.anvil-role-equal-height .anvil-panel-col .col-padding,
+.anvil-role-equal-height .anvil-panel-col .anvil-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}

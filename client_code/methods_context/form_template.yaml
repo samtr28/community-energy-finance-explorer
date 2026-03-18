@@ -26,59 +26,27 @@ components_by_slot:
         text: An open platform for exploring community energy financing in Canada
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
-      - name: rich_text_3
+      - layout_properties: {}
+        name: rich_text_3
         properties:
           content: |2-
 
-            The Navigator is built on data from an ongoing national research project led by the **[Impact Investing Hub](https://impactinvestinghub.ca/)** and **[Accelerating Community Energy Transformation (ACET)](https://www.uvic.ca/acet/index.php)** at the University of Victoria. CET is funded through the Canada First Research Excellence Fund (CFREF)and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with in-depth interviews with practitioners, community members, and project leaders directly involved in community energy development.
+            The Navigator is built on data from an ongoing national research project led by the **[Impact Investing Hub](https://impactinvestinghub.ca/)** and **[Accelerating Community Energy Transformation (ACET)](https://www.uvic.ca/acet/index.php)** at the University of Victoria. ACET is funded through the Canada First Research Excellence Fund (CFREF)and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with interviews with practitioners, community members, and project leaders directly involved in community energy development.
           font: ''
           font_size: 18
         type: RichText
       layout_properties: {full_width_row: true, grid_position: 'SRCEZE,XQDFXJ'}
       name: rich_text_2
-      properties: {content: 'The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods', font: '', font_size: 18}
+      properties: {content: 'The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods.', font: '', font_size: 18}
       type: RichText
-    - layout_properties: {grid_position: 'SRCEZE,KODIRW WIBAVZ,HWZOXG'}
+    - layout_properties: {full_width_row: true, grid_position: 'SRCEZE,KODIRW WIBAVZ,HWZOXG'}
       name: spacer_3
       properties: {}
       type: Spacer
-    - layout_properties: {grid_position: 'SRCEZE,KODIRW GRNBMC,YYIKWJ'}
-      name: avatar_1
-      properties: {appearance: tonal, user_name: ''}
-      type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-    - layout_properties: {grid_position: 'SRCEZE,KODIRW QIMTUL,YCEWNH'}
+    - layout_properties: {full_width_row: true, grid_position: 'SRCEZE,KODIRW QIMTUL,YCEWNH'}
       name: text_8
       properties: {text: SOME SORT OF GRAPHIC HERE}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: rich_text_11
-          properties:
-            content: |-
-              <h5>COMPLIMENTARY RESEARCH</h5>
-              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Justice, equity & the energy transition</h4>
-              <p>A parallel workstream within the broader ACET project - led by PhD Candidate Pavel Soriano Hernandez - analyzes the same dataset through an equity and justice lens, examining how financing and governance structures shape who benefits and who bears risk in the clean energy transition. This work explores whether various funding and financing models advance energy justice by ensuring fair, inclusive, and equitable access to the economic, social, and environmental benefits of clean energy. Findings from this workstream may be integrated into a future version of the Navigator.</p>
-            font_size: 16
-            foreground: theme:On Secondary Container
-            format: restricted_html
-            spacing:
-              margin: ['0', null, '0', null]
-              padding: ['0', null, '0', null]
-          type: RichText
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_6
-        properties:
-          margin: ['8', '16', '8', '16']
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'SRCEZE,KODIRW AWLXPY,AGGMUK'}
-      name: card_6
-      properties:
-        appearance: elevated
-        background_color: theme:Secondary Container
-        spacing:
-          margin: ['4', null, '4', null]
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
     - layout_properties: {full_width_row: true, grid_position: 'XHVTFI,KMXSMD'}
       name: divider_3
       properties: {}
@@ -275,6 +243,7 @@ components_by_slot:
           font_size: 16
           foreground: theme:On Primary
           format: restricted_html
+          role: null
           spacing:
             margin: ['0', null, '0', null]
             padding: [null, '-1', null, '0']
@@ -318,6 +287,7 @@ components_by_slot:
         border: ''
         col_spacing: none
         col_widths: '{"XFUIDY":20,"MGLWXT":20}'
+        role: equal-height
         spacing:
           margin: ['20', null, '10', '0']
           padding: [null, '0', null, null]
@@ -361,19 +331,20 @@ components_by_slot:
         scale: large
         spacing:
           padding: [null, '0', null, null]
-        text: |-
-          A national survey was developed and deployed using the REDCap platform to collect project-level data on financing and funding instruments, ownership and governance structures, and community benefit mechanisms. The survey was developed iteratively through expert review and piloting with practitioners active in community energy financing, and continues to evolve as new projects and contexts are added to the dataset.
-
-          Participants were selected on the basis of in-depth knowledge of a specific project's community context, development process, and financing structure, including project managers, finance leads, and energy coordinators. Both completed projects and those currently under construction were eligible for inclusion. Each survey focused on a single project, required approximately 30-45 minutes to complete, and participants received a $95 honorarium in recognition of their time.
+        text: A national survey was developed and deployed using the REDCap platform to collect project-level data on financing and funding instruments, ownership and governance structures, and community benefit mechanisms. The survey was developed iteratively through expert review and piloting with practitioners active in community energy financing, and continues to evolve as new projects and contexts are added to the dataset.Participants were selected on the basis of in-depth knowledge of a specific project's community context, development process, and financing structure, including project managers, finance leads, and energy coordinators. Both completed projects and those currently under construction were eligible for inclusion. Each survey focused on a single project, required approximately 30-45 minutes to complete, and participants received a honorarium in recognition of their time.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'TKPHZS,NLITRQ'}
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ TACIRU,ADYYHV'}
       name: text_4
-      properties: {font_size: 18, scale: large, text: 'Semi-structured interviews complement the survey by capturing perspectives that quantitative data cannot easily convey, including how financial mechanisms shape participation, benefit distribution, and perceived fairness. Participants are purposefully selected for their ability to speak to a project''s financial and governance arrangements, or their direct experience of community impact - drawing on project leaders, community members, Indigenous representatives, and local government actors. Each case study includes up to four interviews, with participants compensated at $100 per hour and a guaranteed minimum of $75.'}
+      properties: {font_size: 18, scale: large, text: 'Semi-structured interviews complement the survey by capturing perspectives that quantitative data cannot easily convey, including how financial mechanisms shape participation, benefit distribution, and perceived fairness. Participants are purposefully selected for their ability to speak to a project''s financial and governance arrangements, or their direct experience of community impact - drawing on project leaders, community members, Indigenous representatives, and local government actors. Each case study includes up to four interviews, with participants receiving an honorarium for their time.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'TKPHZS,NLITRQ UIGEVW,QMDEMI'}
       name: spacer_2
       properties: {height: '50'}
       type: Spacer
+    - layout_properties: {full_width_row: true, grid_position: 'TKPHZS,NLITRQ RPGJXD,FCHCNC'}
+      name: text_9
+      properties: {bold: true, font_size: 18, scale: large, style: body, text: We are grateful to the many individuals and organizations who helped distribute the survey and facilitated connections with community energy projects across Canada., text_color: 'theme:Primary'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'AJAJGV,HKHCGL'}
       name: divider_5
       properties: {}
@@ -418,16 +389,36 @@ components_by_slot:
           name: rich_text_6
           properties:
             content: |-
-              <h5>Complimentary Research</h5>
-              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Justice, equity & the energy transition</h4>
-              <p>A parallel workstream within the broader ACET project - led by PhD Candidate Pavel Soriano Hernandez - analyzes the same dataset through an equity and justice lens, examining how financing and governance structures shape who benefits and who bears risk in the clean energy transition. This work explores whether various funding and financing models advance energy justice by ensuring fair, inclusive, and equitable access to the economic, social, and environmental benefits of clean energy. Findings from this workstream may be integrated into a future version of the Navigator.</p>
+              <h5>ABOUT</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">The people behind this project</h4>
+              <p></p>
             font_size: 16
-            foreground: theme:On Tertiary Container
+            foreground: theme:On Primary Container
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
               padding: ['0', null, '0', null]
           type: RichText
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_1
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_2
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_3
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_4
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_5
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
         layout_properties: {slot: card-content-slot}
         name: card_content_container_4
         properties:
@@ -437,7 +428,7 @@ components_by_slot:
       name: card_4
       properties:
         appearance: elevated
-        background_color: theme:Tertiary Container
+        background_color: theme:Primary Container
         spacing:
           margin: ['4', null, '4', null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
@@ -508,7 +499,7 @@ components_by_slot:
         spacing:
           margin: ['4', null, '4', null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {col_spacing: huge, col_widths: '{"XQDFXJ":35,"KODIRW":35,"LHLQJJ":30,"MIFXPI":30,"CNHTZS":30,"SBVFBQ":30}'}
     type: ColumnPanel

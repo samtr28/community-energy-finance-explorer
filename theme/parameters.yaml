@@ -343,3 +343,4 @@ roles:
 - components: [RepeatingPanel]
   name: 3-cols
 - {components: null, display_in_toolbox: false, name: button-link}
+- {name: equal-height}
