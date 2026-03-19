@@ -39,18 +39,10 @@ components_by_slot:
       name: rich_text_2
       properties: {content: 'The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods.', font: '', font_size: 18}
       type: RichText
-    - layout_properties: {full_width_row: true, grid_position: 'SRCEZE,KODIRW WIBAVZ,HWZOXG'}
-      name: spacer_3
-      properties: {}
-      type: Spacer
-    - layout_properties: {grid_position: 'SRCEZE,KODIRW HSBTSR,VRFNYZ'}
+    - layout_properties: {grid_position: 'SRCEZE,KODIRW'}
       name: lottie_methods_1
       properties: {}
       type: form:methods_context.lottie_methods
-    - layout_properties: {full_width_row: true, grid_position: 'SRCEZE,KODIRW QIMTUL,YCEWNH'}
-      name: text_8
-      properties: {text: SOME SORT OF GRAPHIC HERE}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'XHVTFI,KMXSMD'}
       name: divider_3
       properties: {}
@@ -344,9 +336,9 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'TKPHZS,NLITRQ UIGEVW,QMDEMI'}
       name: spacer_2
-      properties: {height: '50'}
+      properties: {height: 5vh}
       type: Spacer
-    - layout_properties: {full_width_row: true, grid_position: 'TKPHZS,NLITRQ RPGJXD,FCHCNC'}
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ WQGVHD,QOGAZA'}
       name: text_9
       properties: {bold: true, font_size: 18, scale: large, style: body, text: We are grateful to the many individuals and organizations who helped distribute the survey and facilitated connections with community energy projects across Canada., text_color: 'theme:Primary'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text

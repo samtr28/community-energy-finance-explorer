@@ -1081,9 +1081,12 @@ div.plot-container.plotly svg.main-svg {
 .footer > .footer-slot > .placeholder { outline: 1px dotted; padding-left: 16px; padding-right: 16px; margin-top: 12px; display:none; }
 .anvil-highlight .footer > .footer-slot > .placeholder { display:block; }
 
-.content{
-  /*  adjusted for the footer  */
-  margin-bottom: 50px;
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding-bottom: 50px; /* keeps content above the fixed footer */
 }
 
 .footer a, .footer a.anvil-component {
