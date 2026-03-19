@@ -1258,10 +1258,21 @@ footer a, .footer .anvil-component {
   align-items: stretch;
 }
 
+/* 1. Row must stretch cells vertically (default is baseline) */
+.anvil-role-equal-height .anvil-panel-row {
+  align-items: stretch;
+}
+
+/* 2. Flex chain down through Anvil's wrapper layers */
 .anvil-role-equal-height .anvil-panel-col,
 .anvil-role-equal-height .anvil-panel-col .col-padding,
 .anvil-role-equal-height .anvil-panel-col .anvil-container {
   display: flex;
   flex-direction: column;
+  flex: 1;
+}
+
+/* 3. Stretch the actual component root element (whatever it is) */
+.anvil-role-equal-height .anvil-panel-col .anvil-container > * {
   flex: 1;
 }
