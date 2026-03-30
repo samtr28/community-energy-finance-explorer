@@ -114,7 +114,7 @@ components:
       role: null
       spacing:
         margin: [null, null, '4', null]
-      text: Methods & Context
+      text: Methods
     type: Link
   layout_properties: {slot: left-nav}
   name: column_panel_1

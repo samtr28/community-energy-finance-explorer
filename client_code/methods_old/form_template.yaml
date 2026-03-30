@@ -1,0 +1,519 @@
+components_by_slot:
+  content_slot:
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'GTVKWN,HRQOSW'}
+      name: main_heading
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '0', null]
+        style: title
+        text: OVERVIEW
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'TVCQUE,QZWCBA'}
+      name: heading_1
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: An open platform for exploring community energy financing in Canada
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - components:
+      - layout_properties: {}
+        name: rich_text_3
+        properties:
+          content: |2-
+
+            The Navigator is built on data from an ongoing national research project led by the **[Impact Investing Hub](https://impactinvestinghub.ca/)** and **[Accelerating Community Energy Transformation (ACET)](https://www.uvic.ca/acet/index.php)** at the University of Victoria. ACET is funded through the Canada First Research Excellence Fund (CFREF)and collaborates with communities to co-create equitable and resilient clean energy solutions that generate local economic opportunities and strengthen community autonomy. The project combines a Canada-wide survey with interviews with practitioners, community members, and project leaders directly involved in community energy development.
+          font: ''
+          font_size: 18
+        type: RichText
+      layout_properties: {full_width_row: true, grid_position: 'SRCEZE,XQDFXJ'}
+      name: rich_text_2
+      properties: {content: 'The Community Energy Finance Navigator is a free, open platform designed to help community groups, project developers, policymakers, investors, and anyone curious about community energy financing explore how projects across Canada are structured, financed, and governed. It does not assume prior knowledge of energy finance or research methods.', font: '', font_size: 18}
+      type: RichText
+    - layout_properties: {grid_position: 'SRCEZE,KODIRW'}
+      name: lottie_methods_1
+      properties: {}
+      type: form:methods.lottie_methods
+    - layout_properties: {full_width_row: true, grid_position: 'XHVTFI,KMXSMD'}
+      name: divider_3
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'WCCVZI,YCNWPO'}
+      name: main_heading_2
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: CONTEXT
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'FPJRRD,CBFKOY'}
+      name: heading_2
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Barriers, gaps, and the need for documentation
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'VAKWIG,LHLQJJ'}
+      name: text_1
+      properties:
+        font_size: 18
+        scale: large
+        spacing:
+          padding: [null, '16', null, null]
+        text: |-
+          Community energy initiatives are widely discussed in the context of Canada's low-carbon transition, particularly in remote, rural, and Indigenous settings where they are often expected to support local economic development and energy autonomy alongside decarbonization goals. Federal investment in this space has been substantial - Natural Resources Canada's Clean Energy for Rural and Remote Communities (CERRC) program has supported 111 projects nationally - yet many communities continue to face significant barriers to accessing capital for renewable energy development.
+
+          These barriers are not unique to Canada, but they are poorly documented in the Canadian context. Unlike the UK and EU -where systematic, project-level data on community energy financing has been used to support evidence-based policy and dedicated financing programs - Canada lacks a comparable shared record of how projects are structured, what instruments are used, and which approaches have proved viable. This project is an effort to begin building that evidence base.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - components:
+          - layout_properties: {slot: card-content-container-slot}
+            name: rich_text_4
+            properties:
+              content: |-
+                <h5>ACCESS BARRIER</h5>
+                <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Difficulty Securing Capital</h4>
+                <p>Accessing financing remains a persistent challenge for community projects. Barriers include high transaction costs, collateral requirements, geographic constraints limiting access to traditional lenders, and investor perceptions of elevated risk or limited returns.</p>
+              font_size: 16
+              foreground: theme:On Tertiary Container
+              format: restricted_html
+              spacing:
+                margin: ['0', null, '0', null]
+                padding: ['0', null, '0', null]
+            type: RichText
+          layout_properties: {slot: card-content-slot}
+          name: card_content_container_2
+          properties:
+            margin: ['8', '16', '8', '16']
+          type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+        layout_properties: {grid_position: 'WEIZGG,HNNQJI'}
+        name: card_2
+        properties:
+          appearance: elevated
+          background_color: theme:Tertiary Container
+          orientation: row
+          spacing:
+            margin: ['4', '8', '8', '8']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card
+      - components:
+        - components:
+          - layout_properties: {slot: card-content-container-slot}
+            name: rich_text_5
+            properties:
+              content: |-
+                <h5>DATA GAP</h5>
+                <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">No Shared Evidence Base</h4>
+                <p>Canada lacks the systematic, project-level data on community energy that jurisdictions like the UK and EU have used to build evidence-based policy and sector support. This gap leaves communities, investors, and policymakers without the evidence base needed to make informed decisions.</p>
+              font_size: 16
+              foreground: theme:On Primary Container
+              format: restricted_html
+              spacing:
+                margin: ['0', null, '0', null]
+                padding: ['0', null, '0', null]
+            type: RichText
+          layout_properties: {slot: card-content-slot}
+          name: card_content_container_3
+          properties:
+            margin: ['8', '16', '8', '16']
+          type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+        layout_properties: {grid_position: 'WEIZGG,FQHUIV'}
+        name: card_3
+        properties:
+          appearance: elevated
+          background_color: theme:Primary Container
+          spacing:
+            margin: ['4', '8', '8', null]
+        type: form:dep_9kcxnwm3upyjd:_Components.Card
+      - components:
+        - components:
+          - layout_properties: {slot: card-content-container-slot}
+            name: rich_text_1
+            properties:
+              content: |-
+                <h5>KNOWLEDGE GAP</h5>
+                <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Limited Financing Expertise in Community Teams</h4>
+                <p>Community project teams, many of whom are volunteers, typically lack specialist experience in renewable energy financing. Without accessible documentation of how other projects have been structured, identifying viable financing pathways is difficult, even when options exist.</p>
+              font_size: 16
+              foreground: theme:On Secondary Container
+              format: restricted_html
+              spacing:
+                margin: ['0', null, '0', null]
+                padding: ['0', null, '0', null]
+            type: RichText
+          layout_properties: {slot: card-content-slot}
+          name: card_content_container_1
+          properties:
+            margin: ['8', '16', '8', '16']
+          type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+        layout_properties: {grid_position: 'TDGAQU,XYSHZP'}
+        name: card_1
+        properties:
+          appearance: elevated
+          background_color: theme:Secondary Container
+          spacing:
+            margin: ['20', null, '4', null]
+        type: form:dep_9kcxnwm3upyjd:_Components.Card
+      layout_properties: {full_width_row: true, grid_position: 'VAKWIG,MIFXPI'}
+      name: column_panel_2
+      properties: {col_spacing: small, role: equal-height}
+      type: ColumnPanel
+    - layout_properties: {full_width_row: true, grid_position: 'RXFIHU,VGGDFW'}
+      name: divider_2
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'MDICJT,DROZZD'}
+      name: main_heading_3
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: METHODOLOGY
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'HOJLOV,YJYWGG'}
+      name: heading_3
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Defining Community Energy
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'AOGOGQ,CNHTZS'}
+      name: text_2
+      properties:
+        font_size: 18
+        scale: large
+        text: |
+          One of the main difficulties in researching this sector is the term itself. "Community energy" is applied to a wide range of project types including Indigenous-owned utilities, neighbourhood solar cooperatives, municipally supported geothermal, with very different arrangements of ownership, governance, and benefit distribution. In the absence of a single, widely accepted definition of community energy in Canada, a scorecard was developed to evaluate projects across six dimensions, and allows the dataset to reflect the range of arrangements that practitioners actually describe as community energy in practice.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'AOGOGQ,SBVFBQ PDHSSM,FWZMKI'}
+      name: spacer_1
+      properties: {}
+      type: Spacer
+    - layout_properties: {grid_position: 'AOGOGQ,SBVFBQ ITBPYS,DFRLYA'}
+      name: text_7
+      properties: {text: GRAPHIC OF COMMUNITY ENERGY DIMENSIONS HERE}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'GFUZFU,GNFZGM'}
+      name: divider_1
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - components:
+      - components: []
+        layout_properties: {full_width_row: true, grid_position: 'REJOKE,NFJLZP'}
+        name: rich_text_7
+        properties:
+          align: center
+          background: '#003c30'
+          border: ''
+          content: |-
+            <div style="border-right: 3px solid;">
+            <h5>PHASE 1</h5>
+            <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Study design, data collection & platform launch</h4>
+            </div>
+          font_size: 16
+          foreground: theme:On Primary
+          format: restricted_html
+          role: null
+          spacing:
+            margin: ['0', null, '0', null]
+            padding: [null, '-1', null, '0']
+        type: RichText
+      - components: []
+        layout_properties: {full_width_row: true, grid_position: 'REJOKE,XFUIDY'}
+        name: rich_text_8
+        properties:
+          align: center
+          background: '#01665e'
+          content: |-
+            <div style="border-right: 3px solid">
+            <h5>PHASE 2</h5>
+            <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Collaborations, iterative improvements & further data collection </h4>
+            </div>
+          font_size: 16
+          foreground: theme:On Secondary
+          format: restricted_html
+          spacing:
+            margin: ['0', null, '0', '0']
+            padding: [null, '0', null, '0']
+        type: RichText
+      - layout_properties: {full_width_row: true, grid_position: 'REJOKE,MGLWXT'}
+        name: rich_text_9
+        properties:
+          align: center
+          background: '#35978f'
+          content: |
+            <h5>PHASE 3</h5>
+            <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;"> Dissemination, platform improvements & data publication</h4>
+          font_size: 16
+          foreground: theme:On Secondary
+          format: restricted_html
+          spacing:
+            margin: ['0', null, '0', null]
+            padding: ['7', '0', '7', '0']
+        type: RichText
+      layout_properties: {full_width_row: true, grid_position: 'ILBIKM,HHNSRY'}
+      name: column_panel_3
+      properties:
+        border: ''
+        col_spacing: none
+        col_widths: '{"XFUIDY":20,"MGLWXT":20}'
+        role: equal-height
+        spacing:
+          margin: ['20', null, '10', '0']
+          padding: [null, '0', null, null]
+      type: ColumnPanel
+    - layout_properties: {full_width_row: true, grid_position: 'XZGMMM,HKRQVI'}
+      name: main_heading_4
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: RESEARCH DESIGN
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'IQOEVJ,HTWGYY'}
+      name: heading_5
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Data Collection
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'LICYDZ,JWINFD'}
+      name: heading_6
+      properties: {scale: large, style: title, text: Canada-Wide Survey}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'LICYDZ,EHBNLJ'}
+      name: heading_7
+      properties: {scale: large, style: title, text: Semi-Structured Interviews}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'TKPHZS,KKFLSV'}
+      name: text_3
+      properties:
+        font_size: 18
+        scale: large
+        spacing:
+          padding: [null, '0', null, null]
+        text: A national survey was developed and deployed using the REDCap platform to collect project-level data on financing and funding instruments, ownership and governance structures, and community benefit mechanisms. The survey was developed iteratively through expert review and piloting with practitioners active in community energy financing, and continues to evolve as new projects and contexts are added to the dataset.Participants were selected on the basis of in-depth knowledge of a specific project's community context, development process, and financing structure, including project managers, finance leads, and energy coordinators. Both completed projects and those currently under construction were eligible for inclusion. Each survey focused on a single project, required approximately 30-45 minutes to complete, and participants received a honorarium in recognition of their time.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ TACIRU,ADYYHV'}
+      name: text_4
+      properties: {font_size: 18, scale: large, text: 'Semi-structured interviews complement the survey by capturing perspectives that quantitative data cannot easily convey, including how financial mechanisms shape participation, benefit distribution, and perceived fairness. Participants are purposefully selected for their ability to speak to a project''s financial and governance arrangements, or their direct experience of community impact - drawing on project leaders, community members, Indigenous representatives, and local government actors. Each case study includes up to four interviews, with participants receiving an honorarium for their time.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ UIGEVW,QMDEMI'}
+      name: spacer_2
+      properties: {height: 5vh}
+      type: Spacer
+    - layout_properties: {grid_position: 'TKPHZS,NLITRQ WQGVHD,QOGAZA'}
+      name: text_9
+      properties: {bold: true, font_size: 18, scale: large, style: body, text: We are grateful to the many individuals and organizations who helped distribute the survey and facilitated connections with community energy projects across Canada., text_color: 'theme:Primary'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'AJAJGV,HKHCGL'}
+      name: divider_5
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'NEPPMX,IBOVXC'}
+      name: main_heading_5
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: KNOWLEDGE MOBILIZATION
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: ',undefined'}
+      name: heading_8
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Building the Community Energy Finance Navigator
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GMHBUQ,OZZIME'}
+      name: text_5
+      properties:
+        font_size: 18
+        scale: large
+        text: |-
+          Survey data informs the Navigator's interactive visualizations, organized around capital flows, ownership models, project outcomes, and cross-case comparison. Our data collection also documented where participants most wanted support - and this directly shaped which visualizations were developed. Semi-structured interview data will form the basis of case studies that document individual projects from multiple perspectives.
+
+          Visualizations and educational materials derived from the data will be made publicly available through the Navigator as open-access resources, with the underlying dataset potentially published in a future phase of the project. Communities whose projects are featured will have the opportunity to review and provide feedback on how their project is presented before publication, and may withdraw their project from the platform at any time.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_6
+          properties:
+            content: |-
+              <h5>ABOUT</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">The people behind this project</h4>
+              <p></p>
+            font_size: 16
+            foreground: theme:On Primary Container
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_1
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_2
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_3
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_4
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        - layout_properties: {slot: card-content-container-slot}
+          name: avatar_5
+          properties: {}
+          type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_4
+        properties:
+          margin: ['8', '16', '8', '16']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'GMHBUQ,TAVWOZ'}
+      name: card_4
+      properties:
+        appearance: elevated
+        background_color: theme:Primary Container
+        spacing:
+          margin: ['4', null, '4', null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'HRBTYU,YYYJAX'}
+      name: divider_4
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'OTFVJB,XSSNSK'}
+      name: main_heading_6
+      properties:
+        background_color: ''
+        bold: true
+        font_family: ''
+        scale: small
+        spacing:
+          margin: [null, null, '0', null]
+          padding: [null, null, '', null]
+        style: title
+        text: PHASES 2 & 3
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'VDCLQU,VGOHEX'}
+      name: heading_9
+      properties:
+        font_family: ser
+        scale: medium
+        spacing:
+          margin: ['-20', null, null, null]
+        style: headline
+        text: Future Plans
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'LJNGTX,BWENQQ'}
+      name: text_6
+      properties:
+        font_size: 18
+        scale: large
+        text: |-
+          Phase 2 focuses on expanding the reach and depth of the research through new collaborations, further data collection, and iterative improvements to the Navigator. User feedback gathered through a post-launch webinar will guide refinements to the platform's visualizations and functionality, ensuring it continues to meet the evolving needs of practitioners, policymakers, and community members.
+
+          Phase 3 shifts emphasis toward broader dissemination and long-term accessibility. Research findings will be shared through peer-reviewed publications, conference presentations, policy briefs, fact sheets, and case studies. The Navigator will continue to be refined, and the underlying dataset will be prepared for open-access publication, making the evidence base available to researchers, funders, and communities beyond the project team.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_10
+          properties:
+            content: |-
+              <h5>COMPLIMENTARY RESEARCH</h5>
+              <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Justice, equity & the energy transition</h4>
+              <p>A parallel workstream within the broader ACET project - led by PhD Candidate Pavel Soriano Hernandez - analyzes the same dataset through an equity and justice lens, examining how financing and governance structures shape who benefits and who bears risk in the clean energy transition. This work explores whether various funding and financing models advance energy justice by ensuring fair, inclusive, and equitable access to the economic, social, and environmental benefits of clean energy. Findings from this workstream may be integrated into a future version of the Navigator.</p>
+            font_size: 16
+            foreground: theme:On Secondary Container
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_5
+        properties:
+          margin: ['8', '16', '8', '16']
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'LJNGTX,FVSNJJ'}
+      name: card_5
+      properties:
+        appearance: elevated
+        background_color: theme:Secondary Container
+        spacing:
+          margin: ['4', null, '4', null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    layout_properties: {full_width_row: true}
+    name: column_panel_1
+    properties: {col_spacing: huge, col_widths: '{"XQDFXJ":35,"KODIRW":35,"LHLQJJ":30,"MIFXPI":30,"CNHTZS":30,"SBVFBQ":30}', role: null}
+    type: ColumnPanel
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 320}
+      name: title
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Methods}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
+is_package: true
+layout: {type: 'form:Base'}

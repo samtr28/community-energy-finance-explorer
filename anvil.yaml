@@ -53,5 +53,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/files.yml
-startup: {module: methods_context, type: form}
+startup: {module: methods, type: form}
 startup_form: null

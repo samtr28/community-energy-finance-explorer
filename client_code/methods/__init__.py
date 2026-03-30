@@ -1,4 +1,4 @@
-from ._anvil_designer import methods_contextTemplate
+from ._anvil_designer import methodsTemplate
 from anvil import *
 import m3.components as m3
 import anvil.server
@@ -7,7 +7,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 
-class methods_context(methods_contextTemplate):
+class methods(methodsTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
