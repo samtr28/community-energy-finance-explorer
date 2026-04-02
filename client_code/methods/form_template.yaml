@@ -20,7 +20,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {}
+    properties: {col_widths: '{"ZVANVM":30,"KSLZDF":30}'}
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: button_data
@@ -34,45 +34,45 @@ components_by_slot:
       icon: mi:expand_circle_down
       icon_align: left
       icon_color: ''
-      icon_size: 25
+      icon_size: 30
       role: accordion-header
       spacing:
-        margin: [null, null, '0', null]
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
       text: Where does the data in the navigator come from?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'SAJNQD,VYSUDC'}
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU SAJNQD,VYSUDC'}
       name: text_1
       properties: {font_size: 18, text: 'The Navigator draws on three sources of information about community energy projects in Canada:'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'LFWNED,PLCOUF'}
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU LFWNED,PLCOUF'}
       name: heading_2
       properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Project Survey (primary source)}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'KVBMIB,XAAEBR'}
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU KVBMIB,XAAEBR'}
       name: text_3
       properties: {font_size: 18, text: 'Most project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'ISIEFY,RLKNXB'}
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU ISIEFY,RLKNXB'}
       name: heading_3
       properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Interviews (context & clarification}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'GWYAUY,QHLSES'}
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU GWYAUY,QHLSES'}
       name: text_4
       properties: {font_size: 18, text: 'For a subset of projects, we conduct interviews with project leads, These conversations help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: ''}
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU '}
       name: heading_4
       properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Secondary sources (validation & completion)}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: ''}
+    - layout_properties: {grid_position: 'DXOYGQ,VTWCEZ'}
+      name: spacer_1
+      properties: {}
+      type: Spacer
+    - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU '}
       name: text_5
-      properties:
-        font_size: 18
-        text: |-
-          Where possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete.
-
-          For a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.
+      properties: {font_size: 18, text: 'Where possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete. For a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: panel_data
@@ -80,10 +80,10 @@ components_by_slot:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
-      col_widths: '{"VYSUDC":30,"PLCOUF":60,"LLBPCN":50}'
+      col_widths: '{"VYSUDC":31,"PLCOUF":60,"KIMXPU":45,"VTWCEZ":15}'
       spacing:
         margin: ['0', '4', 1%, '4']
-        padding: [2%, 30%, 2%, 4%]
+        padding: [2%, 2%, 2%, 2%]
     type: ColumnPanel
   - layout_properties: {}
     name: button_survey
@@ -97,55 +97,583 @@ components_by_slot:
       icon: mi:expand_circle_down
       icon_align: left
       icon_color: ''
-      icon_size: 25
+      icon_size: 30
       role: accordion-header
       spacing:
-        margin: [null, null, '0', null]
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
       text: What kind of information is collected in the survey?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'SAJNQD,VYSUDC'}
-      name: text_6
-      properties: {font_size: 18, text: 'The Navigator draws on three sources of information about community energy projects in Canada:'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'LFWNED,PLCOUF'}
-      name: heading_5
-      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Project Survey (primary source)}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'LFWNED,KADHMQ'}
-      name: heading_6
-      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Interviews (context & clarification}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'LFWNED,DMVEBB'}
-      name: heading_7
-      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Secondary sources (validation & completion)}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'HJUNMC,CKJYRS'}
-      name: text_7
-      properties: {font_size: 18, text: 'Most project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'HJUNMC,OLIEQW'}
-      name: text_8
-      properties: {font_size: 18, text: 'For a subset of projects, we conduct interviews with project leads, These conversations help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'HJUNMC,SSYWOJ'}
-      name: text_9
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: rich_text_1
       properties:
-        font_size: 18
-        text: |-
-          Where possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete.
+        content: |-
+          <p>We collect information that is useful for learning and comparison, while respecting the confidentiality of sensitive financial agreements and deal terms.</p>
 
-          For a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    layout_properties: {}
+          <p><b>The survey covers the following topics:</b></p>
+
+          <ul>
+            <li>Basic project details (location, technology, energy production capacity, stage)</li>
+            <li>High-level financing breakdown (the project's capital stack, such as grants, loans, equity, community investment, and partner contributions)</li>
+            <li>Ownership model (for example co-op, municipal, Indigenous-led, community-owned, partnerships)</li>
+            <li>Outcomes and community impacts (jobs created, greenhouse gas reductions, revenue sharing and other benefits where possible)</li>
+          </ul>
+
+          <p>We also ask about challenges faced during implementation, resources that would have helped, and topics participants want to learn more about. These responses directly shaped the content and resources featured on the Navigator.</p>
+
+          <p><b>We do not request or publish:</b></p>
+
+          <ul>
+            <li>Confidential contracts or commercially sensitive terms</li>
+            <li>Detailed pricing, proprietary operating data, or information you consider confidential</li>
+            <li>Personal details such as demographics are collected for research purposes only and are never displayed on the Navigator</li>
+          </ul>
+
+          <p>If a question feels too sensitive, we encourage respondents to skip it. Partial entries are allowed.</p>
+
+          <p>Each respondent chooses the level of visibility desired for their project. Anonymous participation means project data are authorized to be reflected only in aggregate charts and data, while non-anonymous participation results in projects authorized to be featured in the Project Explorer. Preferences of respondents can be adjusted at any time if they contact us to withdraw their project data from the Project Explorer.</p>
+        font_size: 18
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,HOYAPP'}
+      name: spacer_2
+      properties: {}
+      type: Spacer
+    layout_properties: {full_width_row: true}
     name: panel_survey
     properties:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
+      col_widths: '{"AMTVWF":45,"HOYAPP":15}'
       spacing:
         margin: ['0', '4', 1%, '4']
-        padding: [2%, 2%, 2%, 4%]
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_interview
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: What kind of topics are covered in interviews?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: rich_text_2
+      properties:
+        content: |-
+          <p>Interviews go deeper than the survey. They give project teams the chance to share context, reflect on what worked, and describe challenges that are difficult to capture in an online survey.</p>
+
+          <p>Topics may include:</p>
+
+          <ul>
+            <li>How the community was involved in financial decisions</li>
+            <li>How financing was chosen — who led the process and what alternatives were considered</li>
+            <li>How benefits are shared and whether outcomes reflect community priorities</li>
+          </ul>
+
+          <p>Insights from interviews will inform case studies, stories and resources featured on the Navigator. Participation is voluntary, and interviewees can review how their contributions are presented before publication of any case study.</p>
+        font_size: 18
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_3
+      properties: {}
+      type: Spacer
+    layout_properties: {full_width_row: true}
+    name: panel_interview
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_projects
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: What kinds of energy projects are in the Navigator?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: rich_text_3
+      properties:
+        content: |-
+          <p>The Navigator focuses on what we broadly call community energy — clean energy projects that are driven by and for the communities they serve, with local involvement in ownership, decision-making, or benefits. This includes renewable energy, electromobility, and energy efficiency projects that have moved beyond the proposal stage into active development, construction, or operation. Our geographical focus is Canada, including all provinces and territories.</p>
+
+          <p>We also include projects that began development but did not reach completion. Documenting these experiences is just as valuable — understanding where and why projects stall helps other communities anticipate challenges and plan accordingly.</p>
+
+          <p><strong>Project types include:</strong></p>
+
+          <ul>
+            <li>Renewable energy — solar, wind, hydro, biomass, geothermal, tidal, hydrogen</li>
+            <li>Electromobility — community EV charging, electric transit</li>
+            <li>Energy efficiency — building retrofits, insulation, community-wide programs</li>
+            <li>District energy — community heating, cooling, or combined thermal networks</li>
+          </ul>
+
+          <p><strong>Led by or involving organizations such as:</strong></p>
+
+          <ul>
+            <li>Co-operatives and community groups</li>
+            <li>Municipalities and municipal utilities</li>
+            <li>Indigenous communities and Indigenous-led organizations</li>
+            <li>Non-profits and community development organizations</li>
+          </ul>
+
+          <p>These are examples, not eligibility criteria. If your project involves community-led clean energy, we'd welcome your participation.</p>
+        font_size: 18
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_4
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_projects
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_comparable
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: How are projects made comparable?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: rich_text_4
+      properties:
+        content: |-
+          <p>Projects are financed and structured in many different ways. To support meaningful comparison, we use common categories and definitions across the dataset.</p>
+
+          <p>For example:</p>
+
+          <ul>
+            <li>Financing sources are grouped into consistent categories (such as grants, debt, equity, community investment, and other tools)</li>
+            <li>Ownership is classified using a clear list of model types</li>
+            <li>Outcomes and impacts are summarized using shared measures where data is available</li>
+          </ul>
+
+          <p>Each financing option includes examples and plain-language guidance to help ensure consistency in responses and avoid duplicate entries.</p>
+        font_size: 18
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_5
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_comparable
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_validate
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: How is the data validated?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: rich_text_5
+      properties:
+        content: |-
+          <p>We use a combination of manual and automated checks to maintain data quality.</p>
+
+          <ul>
+            <li><strong>Consistency checks</strong> to confirm totals make sense – for example that individual financing amounts add up to the reported total project cost, or within a small threshold if the respondent used estimates</li>
+            <li><strong>Follow-up questions</strong> are sent by our team to the respondent when a response is unclear or appears to be missing a key element</li>
+            <li><strong>Cross-referencing with</strong> publicly available sources helps verify details where possible</li>
+            <li><strong>Ongoing improvements</strong> as projects update their data or provide additional details over time</li>
+          </ul>
+
+          <p>Because this is a pilot, not every project will have every data field. Where data is missing, we show that transparently. Future updates will aim to complete any missing data in addition to adding new projects.</p>
+        font_size: 18
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_6
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_validate
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_update
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: Can I update my project information after submitting?  How often is the Navigator updated?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: text_6
+      properties:
+        font_size: 18
+        text: "Project information can change as financing closes, partnerships evolve, or outcomes become measurable. We encourage project teams to update their entries as new information becomes available - whether that's a completed financing round, updated impact and outcomes metrics, or a change in project status.\n\nTo update your information, contact our team at samanthatreacy@uvic.ca and we will update your entry as needed. \n\nThe Navigator's visuals are refreshed as new projects are added and existing entries are updated. The platform will continue to grow through expanded outreach, new partnerships, and richer project data. Case studies and resources will be added over time, informed by ongoing interviews with project teams and community members.  New case studies  will be published when all interviews about a given project are completed and the draft is verified and approved for publication by project owners. "
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_7
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_update
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_privacy
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: How do we ensure privacy, consent, and respectful use of data?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: text_7
+      properties:
+        font_size: 18
+        text: |-
+          Project teams contribute information voluntarily. The Navigator is designed to support peer learning and public understanding, not to evaluate or rank individual projects.
+
+          We share information in a way that is useful while respecting confidentiality and community priorities. If you have concerns about how your project is represented, you can contact us and we will work with you to correct or adjust the entry.
+
+          We recognize the importance of Indigenous data sovereignty and all team members are trained in OCAP principles to ensure information is shared in ways that align with a given community's protocols and priorities.
+
+          This study has received ethics approval from the University of Victoria Research Ethics Board (Protocol #24-046). For questions about the ethics of this research, contact ethics@uvic.ca or samanthatreacy@uvic.ca
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_8
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_privacy
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_storage
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: How is my information stored and protected?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+      name: text_8
+      properties: {font_size: 18, text: 'Survey responses are collected through REDCap, a secure, web-based research data platform hosted at the University of Victoria. Access to identifiable information is limited to the core research team. Data is stored securely in accordance with UVic''s research data management policies.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_9
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_storage
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_limitations
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: ' Limitations and how to interpret the dashboards'
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF SNBIML,ZRXVGC'}
+      name: rich_text_6
+      properties:
+        content: |-
+          <p>This is a pilot dataset. The Navigator reflects the projects that have participated so far, so it should be interpreted as a growing picture rather than a complete census of all community-led clean energy projects in Canada.</p>
+
+          <p>A few things to keep in mind:</p>
+
+          <ul>
+            <li>Some outcomes and impact measures may be estimated or reported at different time horizons</li>
+            <li>Early-stage projects may not yet have measurable outcomes to share</li>
+            <li>The dataset may reflect regional or sectoral gaps depending on participation to date</li>
+          </ul>
+
+          <p>We present results based on the best available information and will continue to improve comparability as more projects are included in the dataset.</p>
+        font_size: 18
+        format: restricted_html
+      type: RichText
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_10
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_limitations
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_team
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: Who is behind the Navigator? How can I get in touch?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_11
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_team
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_contribute
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: How can I contribute?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_12
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_contribute
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_share
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 30
+      role: accordion-header
+      spacing:
+        margin: ['0', null, '0', null]
+        padding: ['8', null, '8', null]
+      text: Can I share visualizations and resources from the Navigator?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
+      name: spacer_13
+      properties: {}
+      type: Spacer
+    layout_properties: {}
+    name: panel_share
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 2%]
     type: ColumnPanel
   title_slot:
   - components:

@@ -16,6 +16,18 @@ class methods(methodsTemplate):
     # Accordion sections
     self.sections = [
       (self.button_data, self.panel_data),
+      (self.button_survey, self.panel_survey),
+      (self.button_interview, self.panel_interview),
+      (self.button_projects, self.panel_projects),
+      (self.button_comparable, self.panel_comparable),
+      (self.button_validate, self.panel_validate),
+      (self.button_update, self.panel_update), 
+      (self.button_privacy, self.panel_privacy),
+      (self.button_storage, self.panel_storage),
+      (self.button_limitations, self.panel_limitations),
+      (self.button_team, self.panel_team),
+      (self.button_contribute, self.panel_contribute),
+      (self.button_share, self.panel_share)
     ]
     for button, panel in self.sections:
       panel.visible = False
