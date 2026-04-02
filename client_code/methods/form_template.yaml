@@ -1,23 +1,40 @@
 components_by_slot:
   content_slot:
-  - layout_properties: {}
-    name: heading_1
-    properties: {text: 'How the Navigator''s data Is gathered, verified, and presented'}
-    type: form:dep_9kcxnwm3upyjd:_Components.Heading
   - components:
-    - layout_properties: {grid_position: 'XPHDPR,HKWJSY'}
-      name: text_1
-      properties: {scale: large, text: 'The Community Energy Finance Navigator is built to support peer learning and share research insights and decision-useful resources that support community energy transitions. This page explains how information is collected and how we work to make it accurate and comparable, while respecting confidentiality and community priorities.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'BDGCCR,VAGSXA'}
+      name: heading_1
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: column_panel_1
     properties: {}
     type: ColumnPanel
+  - layout_properties: {full_width_row: true}
+    name: button_1
+    properties: {align: full, appearance: tonal, font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'Where does the data in the navigator come from?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - layout_properties: {}
+    name: text_1
+    properties:
+      text: "The Navigator draws on three sources of information about community energy projects in Canada.\nProject survey (primary source)\nMost project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.\nInterviews (context and clarification)\nFor a subset of projects, we conduct interviews with project leads,  These conversations  help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.\nSecondary sources (validation and completion)\nWhere possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete. \nFor a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.\n"
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  - layout_properties: {full_width_row: true}
+    name: button_2
+    properties: {align: full, appearance: elevated, background_color: 'theme:Secondary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kind of information is collected in the survey?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - layout_properties: {full_width_row: true}
+    name: button_3
+    properties: {align: full, appearance: outlined, background_color: 'theme:Tertiary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kind of topics are covered in interviews?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - layout_properties: {}
+    name: button_4
+    properties: {align: full, appearance: outlined, background_color: 'theme:Tertiary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kinds of energy projects are in the Navigator?'}
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
   title_slot:
   - components:
     - layout_properties: {expand: false, width: 320}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Methods}
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Data & Methods}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

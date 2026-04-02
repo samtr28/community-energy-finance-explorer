@@ -17,3 +17,8 @@ class methods(methodsTemplate):
     self.layout.reset_links()
     self.layout.methods_nav.role = 'selected'
     # Any code you write here will run before the form opens.
+
+  @handle("link_1", "click")
+  def link_1_click(self, **event_args):
+    """This method is called clicked"""
+    pass
