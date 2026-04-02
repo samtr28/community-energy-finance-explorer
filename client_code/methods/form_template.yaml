@@ -24,22 +24,128 @@ components_by_slot:
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: button_data
-    properties: {align: left, appearance: text, background_color: '', bold: true, border: none, font_size: 20, icon: 'mi:expand_circle_down', icon_align: left, icon_color: '', icon_size: 25, role: accordion-header, text: 'Where does the data in the navigator come from?'}
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 25
+      role: accordion-header
+      spacing:
+        margin: [null, null, '0', null]
+      text: Where does the data in the navigator come from?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
     - layout_properties: {full_width_row: true, grid_position: 'SAJNQD,VYSUDC'}
       name: text_1
+      properties: {font_size: 18, text: 'The Navigator draws on three sources of information about community energy projects in Canada:'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'LFWNED,PLCOUF'}
+      name: heading_2
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Project Survey (primary source)}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'KVBMIB,XAAEBR'}
+      name: text_3
+      properties: {font_size: 18, text: 'Most project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'ISIEFY,RLKNXB'}
+      name: heading_3
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Interviews (context & clarification}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GWYAUY,QHLSES'}
+      name: text_4
+      properties: {font_size: 18, text: 'For a subset of projects, we conduct interviews with project leads, These conversations help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: ''}
+      name: heading_4
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Secondary sources (validation & completion)}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: ''}
+      name: text_5
       properties:
         font_size: 18
-        text: "The Navigator draws on three sources of information about community energy projects in Canada.\nProject survey (primary source)\nMost project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.\nInterviews (context and clarification)\nFor a subset of projects, we conduct interviews with project leads,  These conversations  help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.\nSecondary sources (validation and completion)\nWhere possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete. \nFor a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.\n"
+        text: |-
+          Where possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete.
+
+          For a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: panel_data
     properties:
       background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      col_widths: '{"VYSUDC":30,"PLCOUF":60,"LLBPCN":50}'
       spacing:
-        margin: ['0', null, '', null]
-        padding: ['16', '16', null, '30']
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 30%, 2%, 4%]
+    type: ColumnPanel
+  - layout_properties: {}
+    name: button_survey
+    properties:
+      align: left
+      appearance: text
+      background_color: ''
+      bold: true
+      border: none
+      font_size: 22
+      icon: mi:expand_circle_down
+      icon_align: left
+      icon_color: ''
+      icon_size: 25
+      role: accordion-header
+      spacing:
+        margin: [null, null, '0', null]
+      text: What kind of information is collected in the survey?
+    type: form:dep_9kcxnwm3upyjd:_Components.Button
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'SAJNQD,VYSUDC'}
+      name: text_6
+      properties: {font_size: 18, text: 'The Navigator draws on three sources of information about community energy projects in Canada:'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'LFWNED,PLCOUF'}
+      name: heading_5
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Project Survey (primary source)}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'LFWNED,KADHMQ'}
+      name: heading_6
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Interviews (context & clarification}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'LFWNED,DMVEBB'}
+      name: heading_7
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Secondary sources (validation & completion)}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'HJUNMC,CKJYRS'}
+      name: text_7
+      properties: {font_size: 18, text: 'Most project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'HJUNMC,OLIEQW'}
+      name: text_8
+      properties: {font_size: 18, text: 'For a subset of projects, we conduct interviews with project leads, These conversations help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'HJUNMC,SSYWOJ'}
+      name: text_9
+      properties:
+        font_size: 18
+        text: |-
+          Where possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete.
+
+          For a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {}
+    name: panel_survey
+    properties:
+      background: '#ffffff'
+      border: '1px solid #005493'
+      col_spacing: huge
+      spacing:
+        margin: ['0', '4', 1%, '4']
+        padding: [2%, 2%, 2%, 4%]
     type: ColumnPanel
   title_slot:
   - components:

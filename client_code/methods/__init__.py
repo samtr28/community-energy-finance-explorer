@@ -17,12 +17,10 @@ class methods(methodsTemplate):
     self.sections = [
       (self.button_data, self.panel_data),
     ]
-
     for button, panel in self.sections:
       panel.visible = False
       button.icon = "mi:expand_circle_down"
       button.set_event_handler('click', self._make_handler(button, panel))
-
       dom = get_dom_node(button)
       btn = dom.querySelector('.anvil-m3-button')
       if btn:
@@ -37,6 +35,13 @@ class methods(methodsTemplate):
         "mi:expand_circle_up" if panel.visible
         else "mi:expand_circle_down"
       )
+      dom = get_dom_node(button)
+      btn = dom.querySelector('.anvil-m3-button')
+      if btn:
+        if panel.visible:
+          btn.style.borderBottom = "none"
+        else:
+          btn.style.borderBottom = "1px solid #005493"
     return handler
 
   def form_show(self, **event_args):
