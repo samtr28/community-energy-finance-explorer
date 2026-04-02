@@ -1,34 +1,45 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {grid_position: 'BDGCCR,VAGSXA'}
+    - layout_properties: {full_width_row: true, grid_position: 'OKWWMP,ZVANVM BDGCCR,VAGSXA'}
       name: heading_1
-      properties: {}
+      properties: {scale: small, text: 'How the Navigator’s data is gathered, verified and presented'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    layout_properties: {}
+    - layout_properties: {grid_position: 'OKWWMP,KSLZDF'}
+      name: lottie_methods_1
+      properties: {}
+      type: form:methods.lottie_methods
+    - layout_properties: {full_width_row: true, grid_position: 'OKWWMP,ZVANVM TKWJGI,WJRQJQ'}
+      name: text_2
+      properties:
+        font_size: 18
+        text: |-
+          The Community Energy Finance Navigator is built to support peer learning and share research insights and decision-useful resources to support communities in their energy transition initiatives. This page explains how information is collected and how we work to make it accurate and comparable, while respecting confidentiality and community priorities.
+
+          Below we answer common questions about our data, methods, and how to get involved.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {}
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
-    name: button_1
-    properties: {align: full, appearance: tonal, font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'Where does the data in the navigator come from?'}
+    name: button_data
+    properties: {align: full, appearance: outlined, background_color: '', bold: true, font_size: 20, icon: 'mi:expand_circle_down', icon_align: right, icon_color: '', text: 'Where does the data in the navigator come from?'}
     type: form:dep_9kcxnwm3upyjd:_Components.Button
-  - layout_properties: {}
-    name: text_1
-    properties:
-      text: "The Navigator draws on three sources of information about community energy projects in Canada.\nProject survey (primary source)\nMost project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.\nInterviews (context and clarification)\nFor a subset of projects, we conduct interviews with project leads,  These conversations  help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.\nSecondary sources (validation and completion)\nWhere possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete. \nFor a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.\n"
-    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  - components:
+    - layout_properties: {grid_position: 'SAJNQD,VYSUDC'}
+      name: text_1
+      properties:
+        font_size: 18
+        text: "The Navigator draws on three sources of information about community energy projects in Canada.\nProject survey (primary source)\nMost project details come directly from project teams through a structured survey developed by our research team. The survey captures high-level information about financing, ownership, and outcomes in a consistent format designed for comparison. The survey takes roughly 30–45 minutes and was distributed to project teams through direct outreach, referrals, and partner networks.\nInterviews (context and clarification)\nFor a subset of projects, we conduct interviews with project leads,  These conversations  help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.\nSecondary sources (validation and completion)\nWhere possible, we check and complement project information using publicly available sources such as project websites, public reports, press releases, and program/funder announcements. This helps validate key details and reduce gaps where survey responses are incomplete. \nFor a small number of projects where substantial public information was available, we collected data directly from these sources to broaden the dataset.\n"
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {full_width_row: true}
+    name: panel_data
+    properties: {}
+    type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: button_2
     properties: {align: full, appearance: elevated, background_color: 'theme:Secondary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kind of information is collected in the survey?'}
-    type: form:dep_9kcxnwm3upyjd:_Components.Button
-  - layout_properties: {full_width_row: true}
-    name: button_3
-    properties: {align: full, appearance: outlined, background_color: 'theme:Tertiary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kind of topics are covered in interviews?'}
-    type: form:dep_9kcxnwm3upyjd:_Components.Button
-  - layout_properties: {}
-    name: button_4
-    properties: {align: full, appearance: outlined, background_color: 'theme:Tertiary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kinds of energy projects are in the Navigator?'}
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   title_slot:
   - components:
@@ -46,4 +57,6 @@ components_by_slot:
       vertical_align: middle
     type: FlowPanel
 is_package: true
-layout: {type: 'form:Base'}
+layout:
+  form_event_bindings: {show: form_show}
+  type: form:Base
