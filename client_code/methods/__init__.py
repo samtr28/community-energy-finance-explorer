@@ -5,6 +5,7 @@ import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from anvil.js import get_dom_node
 
 
 class methods(methodsTemplate):
@@ -22,14 +23,20 @@ class methods(methodsTemplate):
       button.icon = "mi:expand_circle_down"
       button.set_event_handler('click', self._make_handler(button, panel))
 
+      dom = get_dom_node(button)
+      btn = dom.querySelector('.anvil-m3-button')
+      if btn:
+        btn.style.borderRadius = "0"
+        btn.style.border = "none"
+        btn.style.borderBottom = "1px solid #005694"
 
   def _make_handler(self, button, panel):
     def handler(**event_args):
       panel.visible = not panel.visible
       button.icon = (
-        "mi:expand_circle_down" if panel.visible
-        else "mi:expand_circle_up"
-        )
+        "mi:expand_circle_up" if panel.visible
+        else "mi:expand_circle_down"
+      )
     return handler
 
   def form_show(self, **event_args):

@@ -1279,3 +1279,17 @@ footer a, .footer .anvil-component {
 .anvil-role-equal-height .anvil-panel-col .anvil-container > * {
   flex: 1;
 }
+
+
+.anvil-role-accordion-header {
+  width: 100% !important;
+}
+
+.anvil-role-accordion-header .anvil-m3-button {
+  width: 100% !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 3px solid #2a7d4f !important;
+  outline: none !important;
+  box-shadow: none !important;
+}

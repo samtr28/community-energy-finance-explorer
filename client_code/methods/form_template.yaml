@@ -24,10 +24,10 @@ components_by_slot:
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: button_data
-    properties: {align: full, appearance: outlined, background_color: '', bold: true, font_size: 20, icon: 'mi:expand_circle_down', icon_align: right, icon_color: '', text: 'Where does the data in the navigator come from?'}
+    properties: {align: left, appearance: text, background_color: '', bold: true, border: none, font_size: 20, icon: 'mi:expand_circle_down', icon_align: left, icon_color: '', icon_size: 25, role: accordion-header, text: 'Where does the data in the navigator come from?'}
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {grid_position: 'SAJNQD,VYSUDC'}
+    - layout_properties: {full_width_row: true, grid_position: 'SAJNQD,VYSUDC'}
       name: text_1
       properties:
         font_size: 18
@@ -35,12 +35,12 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: panel_data
-    properties: {}
+    properties:
+      background: '#ffffff'
+      spacing:
+        margin: ['0', null, '', null]
+        padding: ['16', '16', null, '30']
     type: ColumnPanel
-  - layout_properties: {full_width_row: true}
-    name: button_2
-    properties: {align: full, appearance: elevated, background_color: 'theme:Secondary Container', font_size: 20, icon: 'mi:expand_more', icon_align: right, icon_color: '', text: 'What kind of information is collected in the survey?'}
-    type: form:dep_9kcxnwm3upyjd:_Components.Button
   title_slot:
   - components:
     - layout_properties: {expand: false, width: 320}
