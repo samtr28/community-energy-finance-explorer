@@ -590,17 +590,44 @@ components_by_slot:
       text: Who is behind the Navigator? How can I get in touch?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
-      name: spacer_11
-      properties: {}
-      type: Spacer
+    - components: []
+      layout_properties: {grid_position: 'IHSDPA,HOXFGB UYRRWF,GARFCE'}
+      name: rich_text_9
+      properties: {content: 'The Community Energy Finance Navigator is a research initiative led by the Impact Investing Hub and Accelerating Community Energy Transformation (ACET) at the University of Victoria. The project is funded by the Canada First Research Excellence Fund (CFREF). ', font_size: 18, format: restricted_html}
+      type: RichText
+    - layout_properties: {grid_position: 'IHSDPA,KGPIYI'}
+      name: rich_text_10
+      properties:
+        content: |
+          <b>Research Team</b>
+          Basma Majerbi<br>
+
+          Samantha Treacy
+        font_size: 18
+        format: restricted_html
+      type: RichText
+    - layout_properties: {grid_position: 'IHSDPA,HOXFGB ZTFCMB,KUWTZQ'}
+      name: link_3
+      properties:
+        align: center
+        background_color: theme:Tertiary Container
+        bold: true
+        font_size: 22
+        role: button-link
+        spacing:
+          padding: ['5', '5', '5', '5']
+        text: Contact the team
+        text_color: theme:Tertiary
+        underline: false
+        url: https://redcap.link/comm_energy
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
     layout_properties: {}
     name: panel_team
     properties:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
-      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      col_widths: '{"GARFCE":60,"HOXFGB":45,"KGPIYI":15}'
       spacing:
         margin: ['0', '4', 1%, '4']
         padding: [2%, 2%, 2%, 2%]
@@ -625,17 +652,69 @@ components_by_slot:
       text: How can I contribute?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,MPIGUV YSEWEU,TFRYXS'}
+      name: rich_text_7
+      properties:
+        content: |-
+          <p><b>Involved in a community clean energy project?</b></p>
+          <p>Help shape the future of community energy in Canada by adding your project to the Navigator. The survey takes approximately 30 minutes and is designed for participants with detailed knowledge of their project's financing. Any community-led clean energy project that has moved beyond the proposal stage is eligible. A $95 honorarium is offered per completed survey.</p>
+        font_size: 18
+        format: restricted_html
+      type: RichText
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'RFTLOI,MPIGUV ELFFWH,QKNADA'}
+      name: link_1
+      properties:
+        align: center
+        background_color: theme:Tertiary Container
+        bold: true
+        font_size: 22
+        role: button-link
+        spacing:
+          padding: ['5', '5', '5', '5']
+        text: Add your project
+        text_color: theme:Tertiary
+        underline: false
+        url: https://redcap.link/comm_energy
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
+    - components: []
+      layout_properties: {grid_position: 'RFTLOI,MPIGUV FJRRNA,ZGSLDQ'}
+      name: rich_text_8
+      properties:
+        content: |-
+          <p><b>Are you an association or network?</b></p>
+          <p>Partner with us to broaden participation, create shared tools and insights, and strengthen the evidence base for the communities and projects you support..</p>
+        font_size: 18
+        format: restricted_html
+      type: RichText
+    - components: []
+      layout_properties: {grid_position: 'RFTLOI,MPIGUV'}
+      name: link_2
+      properties:
+        align: center
+        background_color: theme:Primary Container
+        bold: true
+        font_size: 22
+        role: button-link
+        spacing:
+          padding: ['5', '5', '5', '5']
+        text: Partner with us
+        text_color: theme:Primary
+        underline: false
+        url: https://redcap.link/comm_energy
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_12
       properties: {}
       type: Spacer
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: panel_contribute
     properties:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
-      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      col_widths: '{"IUEJCM":13,"TFRYXS":60,"MPIGUV":40}'
+      role: equal-height
       spacing:
         margin: ['0', '4', 1%, '4']
         padding: [2%, 2%, 2%, 2%]
@@ -660,6 +739,11 @@ components_by_slot:
       text: Can I share visualizations and resources from the Navigator?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
+    - components: []
+      layout_properties: {grid_position: 'RFTLOI,EJFRMT'}
+      name: data_row_panel_1
+      properties: {}
+      type: DataRowPanel
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_13
       properties: {}
@@ -670,7 +754,7 @@ components_by_slot:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
-      col_widths: '{"AMTVWF":45,"IUEJCM":15}'
+      col_widths: '{"IUEJCM":12,"EJFRMT":35}'
       spacing:
         margin: ['0', '4', 1%, '4']
         padding: [2%, 2%, 2%, 2%]
