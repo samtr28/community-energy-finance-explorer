@@ -4,7 +4,7 @@ container:
     html: |-
       <div class="iframe-wrapper">
         <center style="color:#888; margin: 0em;">
-          <lottie-player src="https://lottie.host/19c847d8-2bcc-46a5-a359-c1cf31e57bcf/EItv90AtZ7.json" background="transparent"  speed="0.4"  style="width: 90%; "  loop  autoplay></lottie-player>
+          <lottie-player src="https://lottie.host/19c847d8-2bcc-46a5-a359-c1cf31e57bcf/EItv90AtZ7.json" background="transparent" speed="0.4" style="width: 70%;" loop autoplay></lottie-player>
         </center>
       </div>
   type: HtmlTemplate
