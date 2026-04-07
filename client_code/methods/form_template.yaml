@@ -614,76 +614,52 @@ components_by_slot:
       name: spacer_11
       properties: {}
       type: Spacer
-    - layout_properties: {grid_position: 'URCEHL,IWZUKB LIWNXI,DDPUGM'}
+    - layout_properties: {grid_position: 'URCEHL,IWZUKB AWUSNS,OAUXGK'}
       name: heading_5
       properties: {text: Meet the team}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
-      - layout_properties: {col_xs: 0, row: WMNADX, width_xs: 2}
-        name: avatar_1
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {col_xs: 1, row: WMNADX, width_xs: 4}
-        name: rich_text_13
-        properties: {content: Basma Majerbi, font_size: 18, format: restricted_html}
-        type: RichText
-      - layout_properties: {col_xs: 6, row: WMNADX, width_xs: 2}
+      - layout_properties: {grid_position: 'IZTOGN,XHMMOK'}
         name: avatar_3
         properties: {align: center, size: 40, text_color: '', user_name: ''}
         type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {col_xs: 8, row: WMNADX, width_xs: 4}
-        name: rich_text_14
-        properties: {content: Pavel Soriano Hernandez, font_size: 18, format: restricted_html}
-        type: RichText
-      layout_properties: {grid_position: 'URCEHL,IWZUKB HMADKY,JOBZIY'}
-      name: grid_panel_1
-      properties: {}
-      type: GridPanel
-    - layout_properties: {grid_position: 'URCEHL,IWZUKB BDDMSM,GFOOAS'}
-      name: flow_panel_1
-      properties: {}
-      type: FlowPanel
-    - layout_properties: {grid_position: 'URCEHL,IWZUKB SAGAQY,PVDEVX'}
-      name: column_panel_3
-      properties: {}
-      type: ColumnPanel
-    - components:
-      - layout_properties: {grid_position: 'EXUUJO,MSIZES TLNMCR,BATMAP'}
-        name: avatar_6
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'EXUUJO,MSIZES TLNMCR,UMJXRG'}
-        name: rich_text_17
-        properties: {content: Dave Atkinson, font_size: 18, format: restricted_html}
-        type: RichText
-      - layout_properties: {grid_position: 'EXUUJO,UWIXFT JPWABD,OOPIJL'}
-        name: avatar_2
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
       - components: []
-        layout_properties: {grid_position: 'EXUUJO,UWIXFT JPWABD,AYMDPF'}
-        name: rich_text_12
-        properties: {content: Samantha Treacy, font_size: 18, format: restricted_html}
+        layout_properties: {grid_position: 'IZTOGN,TXJUKV'}
+        name: rich_text_13
+        properties: {content: Basma Majerbi, font_size: 18, format: restricted_html}
         type: RichText
-      - layout_properties: {grid_position: 'EXUUJO,UWIXFT TNIZWS,MVCSRZ'}
+      - layout_properties: {grid_position: 'VGSEFN,BKCBRL'}
         name: avatar_5
         properties: {align: center, size: 40, text_color: '', user_name: ''}
         type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'EXUUJO,UWIXFT TNIZWS,UOSHKI'}
-        name: avatar_4
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'EXUUJO,UWIXFT TNIZWS,RAMIEE'}
+      - layout_properties: {grid_position: 'VGSEFN,ULWKQW'}
         name: rich_text_15
-        properties: {content: Dave Atkinson, font_size: 18, format: restricted_html}
-        type: RichText
-      - layout_properties: {grid_position: 'EXUUJO,UWIXFT TNIZWS,ZMPGJN'}
-        name: rich_text_16
         properties: {content: Pavel Soriano Hernandez, font_size: 18, format: restricted_html}
         type: RichText
-      layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB MJCRST,UGHTRK'}
-      name: column_panel_2
-      properties: {col_widths: '{"MSIZES":20,"UWIXFT":18,"OOPIJL":20,"AYMDPF":40,"UOSHKI":13,"RAMIEE":27,"MVCSRZ":10,"ZMPGJN":10}'}
+      layout_properties: {grid_position: 'URCEHL,IWZUKB SAGAQY,PVDEVX'}
+      name: column_panel_3
+      properties: {col_widths: '{"BKCBRL":20,"ULWKQW":40,"XHMMOK":20,"TXJUKV":40}'}
+      type: ColumnPanel
+    - components:
+      - layout_properties: {grid_position: 'IZTOGN,XHMMOK'}
+        name: avatar_6
+        properties: {align: center, size: 40, text_color: '', user_name: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'IZTOGN,TXJUKV'}
+        name: rich_text_16
+        properties: {content: Basma Majerbi, font_size: 18, format: restricted_html}
+        type: RichText
+      - layout_properties: {grid_position: 'VGSEFN,BKCBRL'}
+        name: avatar_7
+        properties: {align: center, size: 40, text_color: '', user_name: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'VGSEFN,ULWKQW'}
+        name: rich_text_17
+        properties: {content: Pavel Soriano Hernandez, font_size: 18, format: restricted_html}
+        type: RichText
+      layout_properties: {grid_position: 'URCEHL,IWZUKB SAGAQY,MUAFTQ'}
+      name: column_panel_5
+      properties: {col_widths: '{"BKCBRL":20,"ULWKQW":40,"XHMMOK":20,"TXJUKV":40}'}
       type: ColumnPanel
     layout_properties: {full_width_row: true}
     name: panel_team
