@@ -1,0 +1,3 @@
+components: []
+container: {type: DataRowPanel}
+is_package: true

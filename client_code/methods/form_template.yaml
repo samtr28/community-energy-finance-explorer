@@ -591,22 +591,11 @@ components_by_slot:
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
     - components: []
-      layout_properties: {grid_position: 'IHSDPA,HOXFGB UYRRWF,GARFCE'}
+      layout_properties: {grid_position: 'UYRRWF,GARFCE'}
       name: rich_text_9
       properties: {content: 'The Community Energy Finance Navigator is a research initiative led by the Impact Investing Hub and Accelerating Community Energy Transformation (ACET) at the University of Victoria. The project is funded by the Canada First Research Excellence Fund (CFREF). ', font_size: 18, format: restricted_html}
       type: RichText
-    - layout_properties: {grid_position: 'IHSDPA,KGPIYI'}
-      name: rich_text_10
-      properties:
-        content: |
-          <b>Research Team</b>
-          Basma Majerbi<br>
-
-          Samantha Treacy
-        font_size: 18
-        format: restricted_html
-      type: RichText
-    - layout_properties: {grid_position: 'IHSDPA,HOXFGB ZTFCMB,KUWTZQ'}
+    - layout_properties: {grid_position: 'ZTFCMB,KUWTZQ'}
       name: link_3
       properties:
         align: center
@@ -621,13 +610,24 @@ components_by_slot:
         underline: false
         url: https://redcap.link/comm_energy
       type: form:dep_9kcxnwm3upyjd:_Components.Link
+    - layout_properties: {grid_position: 'UVPEGR,FACMLU'}
+      name: rich_text_11
+      properties:
+        content: |
+          <b>Research Team</b>
+          Basma Majerbi<br>
+
+          Samantha Treacy
+        font_size: 18
+        format: restricted_html
+      type: RichText
     layout_properties: {}
     name: panel_team
     properties:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
-      col_widths: '{"GARFCE":60,"HOXFGB":45,"KGPIYI":15}'
+      col_widths: '{"GARFCE":60}'
       spacing:
         margin: ['0', '4', 1%, '4']
         padding: [2%, 2%, 2%, 2%]
