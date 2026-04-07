@@ -609,7 +609,7 @@ components_by_slot:
         text: Contact form
         text_color: theme:Tertiary
         underline: false
-        url: https://redcap.link/comm_energy
+        url: https://www.surveymonkey.ca/r/BPBX3RC
       type: form:dep_9kcxnwm3upyjd:_Components.Link
     - layout_properties: {grid_position: 'URCEHL,IWZUKB RMFNFL,KABSYG'}
       name: heading_5
@@ -818,7 +818,7 @@ components_by_slot:
         text: Partner with us
         text_color: theme:Primary
         underline: false
-        url: https://redcap.link/comm_energy
+        url: https://www.surveymonkey.ca/r/BPBX3RC
       type: form:dep_9kcxnwm3upyjd:_Components.Link
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_12
