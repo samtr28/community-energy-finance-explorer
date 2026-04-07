@@ -632,13 +632,22 @@ components_by_slot:
         name: avatar_5
         properties: {align: center, size: 40, text_color: '', user_name: ''}
         type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'VGSEFN,ULWKQW'}
+      - components: []
+        layout_properties: {grid_position: 'VGSEFN,ULWKQW'}
         name: rich_text_15
         properties: {content: Pavel Soriano Hernandez, font_size: 18, format: restricted_html}
         type: RichText
+      - layout_properties: {grid_position: 'NJVQAX,LBPJRC'}
+        name: avatar_8
+        properties: {align: center, size: 40, text_color: '', user_name: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'NJVQAX,IGKDRN'}
+        name: rich_text_18
+        properties: {content: Tamara Krawchenko, font_size: 18, format: restricted_html}
+        type: RichText
       layout_properties: {grid_position: 'URCEHL,IWZUKB SAGAQY,PVDEVX'}
       name: column_panel_3
-      properties: {col_widths: '{"BKCBRL":20,"ULWKQW":40,"XHMMOK":20,"TXJUKV":40}'}
+      properties: {col_widths: '{"BKCBRL":20,"ULWKQW":40,"XHMMOK":20,"TXJUKV":40,"LBPJRC":20,"IGKDRN":40}'}
       type: ColumnPanel
     - components:
       - layout_properties: {grid_position: 'IZTOGN,XHMMOK'}
@@ -647,7 +656,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Avatar
       - layout_properties: {grid_position: 'IZTOGN,TXJUKV'}
         name: rich_text_16
-        properties: {content: Basma Majerbi, font_size: 18, format: restricted_html}
+        properties: {content: Samantha Treacy, font_size: 18, format: restricted_html}
         type: RichText
       - layout_properties: {grid_position: 'VGSEFN,BKCBRL'}
         name: avatar_7
@@ -655,7 +664,15 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Avatar
       - layout_properties: {grid_position: 'VGSEFN,ULWKQW'}
         name: rich_text_17
-        properties: {content: Pavel Soriano Hernandez, font_size: 18, format: restricted_html}
+        properties: {content: Dave Atkinson, font_size: 18, format: restricted_html}
+        type: RichText
+      - layout_properties: {grid_position: 'SQOUCK,HVBIMV'}
+        name: avatar_9
+        properties: {align: center, size: 40, text_color: '', user_name: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'CNEYSS,LVIKCM'}
+        name: rich_text_19
+        properties: {content: Tamara Krawchenko, font_size: 18, format: restricted_html}
         type: RichText
       layout_properties: {grid_position: 'URCEHL,IWZUKB SAGAQY,MUAFTQ'}
       name: column_panel_5
