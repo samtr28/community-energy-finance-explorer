@@ -615,14 +615,6 @@ components_by_slot:
           font_size: 18
           format: restricted_html
         type: RichText
-      - layout_properties: {grid_position: 'FOQRTC,MAOWYY'}
-        name: avatar_6
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'FOQRTC,EZBPJO'}
-        name: rich_text_16
-        properties: {content: '<b>Samantha Treacy</b> <br>Lead Researcher, Platform Development & Data Visualization<br><i>University of Victoria</i>', font_size: 18, format: restricted_html}
-        type: RichText
       - layout_properties: {grid_position: 'VGSEFN,BKCBRL'}
         name: avatar_5
         properties: {align: center, size: 40, text_color: '', user_name: ''}
@@ -635,20 +627,6 @@ components_by_slot:
             <b>Pavel Soriano Hernandez</b>
             <br>Lead Researcher, Case Studies, Energy Justice
             <br><i>PhD Student, University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      - layout_properties: {grid_position: 'VPRIIZ,NJRBCQ'}
-        name: avatar_10
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'VPRIIZ,DZEZKK'}
-        name: rich_text_20
-        properties:
-          content: |-
-            <b>Julie MacArthur</b>
-            <br>Research Collaborator & Advisor
-            <br><i>Royal Roads University</i>
           font_size: 18
           format: restricted_html
         type: RichText
@@ -712,7 +690,7 @@ components_by_slot:
         type: RichText
       layout_properties: {grid_position: 'URCEHL,IWZUKB FXFVUE,ERQCWO'}
       name: column_panel_3
-      properties: {col_widths: '{"LBPJRC":20,"IGKDRN":40,"WXWTWK":20,"PXJADJ":40,"THRROX":20,"NAFKUL":40,"NFWAVN":20,"UXKNQT":40,"TJFBQU":20,"FXUSBI":40,"MAOWYY":20,"EZBPJO":40,"BKCBRL":20,"VIYSPP":40,"NJRBCQ":20,"DZEZKK":40}', role: equal-height}
+      properties: {col_widths: '{"LBPJRC":20,"IGKDRN":40,"WXWTWK":20,"PXJADJ":40,"THRROX":20,"NAFKUL":40,"NFWAVN":20,"UXKNQT":40,"TJFBQU":20,"FXUSBI":40,"BKCBRL":20,"VIYSPP":40}', role: equal-height}
       type: ColumnPanel
     - components:
       - layout_properties: {grid_position: 'FOQRTC,MAOWYY'}
@@ -722,20 +700,6 @@ components_by_slot:
       - layout_properties: {grid_position: 'FOQRTC,EZBPJO'}
         name: rich_text_22
         properties: {content: '<b>Samantha Treacy</b> <br>Lead Researcher, Platform Development & Data Visualization<br><i>University of Victoria</i>', font_size: 18, format: restricted_html}
-        type: RichText
-      - layout_properties: {grid_position: 'VGSEFN,BKCBRL'}
-        name: avatar_13
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'VGSEFN,VIYSPP'}
-        name: rich_text_23
-        properties:
-          content: |-
-            <b>Pavel Soriano Hernandez</b>
-            <br>Lead Researcher, Case Studies, Energy Justice
-            <br><i>PhD Student, University of Victoria</i>
-          font_size: 18
-          format: restricted_html
         type: RichText
       - layout_properties: {grid_position: 'VPRIIZ,NJRBCQ'}
         name: avatar_14
@@ -751,10 +715,6 @@ components_by_slot:
           font_size: 18
           format: restricted_html
         type: RichText
-      - layout_properties: {grid_position: 'RSUHGO,THRROX'}
-        name: avatar_15
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
       - layout_properties: {grid_position: 'RSUHGO,NAFKUL'}
         name: rich_text_25
         properties:
@@ -809,7 +769,7 @@ components_by_slot:
         type: RichText
       layout_properties: {grid_position: 'URCEHL,IWZUKB FXFVUE,NAZTBN'}
       name: column_panel_4
-      properties: {col_widths: '{"LBPJRC":20,"IGKDRN":40,"WXWTWK":20,"PXJADJ":40,"THRROX":20,"NAFKUL":40,"NFWAVN":20,"UXKNQT":40,"MAOWYY":20,"EZBPJO":40,"BKCBRL":20,"VIYSPP":40,"NJRBCQ":20,"DZEZKK":40}', role: equal-height}
+      properties: {col_widths: '{"LBPJRC":20,"IGKDRN":40,"WXWTWK":20,"PXJADJ":40,"NAFKUL":40,"NFWAVN":20,"UXKNQT":40,"MAOWYY":20,"EZBPJO":40,"NJRBCQ":20,"DZEZKK":40}', role: equal-height}
       type: ColumnPanel
     - layout_properties: {grid_position: 'URCEHL,DXUOPA'}
       name: link_3
