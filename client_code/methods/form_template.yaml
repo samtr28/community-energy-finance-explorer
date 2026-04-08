@@ -1,15 +1,11 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'OKWWMP,ZVANVM BDGCCR,VAGSXA'}
+    - layout_properties: {full_width_row: true, grid_position: 'BDGCCR,VAGSXA'}
       name: heading_1
       properties: {scale: small, text: 'How the Navigator’s data is gathered, verified and presented'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'OKWWMP,AFGUHU'}
-      name: lottie_methods_1
-      properties: {}
-      type: form:methods.lottie_methods
-    - layout_properties: {full_width_row: true, grid_position: 'OKWWMP,ZVANVM TKWJGI,WJRQJQ'}
+    - layout_properties: {full_width_row: true, grid_position: 'TKWJGI,WJRQJQ'}
       name: text_2
       properties:
         font_size: 18
