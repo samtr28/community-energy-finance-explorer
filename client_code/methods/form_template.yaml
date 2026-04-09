@@ -852,16 +852,25 @@ components_by_slot:
       text: Can I share visualizations and resources from the Navigator?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - components: []
-      layout_properties: {grid_position: 'RFTLOI,EJFRMT'}
-      name: data_row_panel_1
-      properties: {}
-      type: DataRowPanel
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,EJFRMT'}
+      name: rich_text_10
+      properties:
+        content: |-
+          Yes! The Community Energy Finance Navigator is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)</a>. This means you are free to copy, redistribute, remix, transform, and build upon the material for any purpose, including commercially, as long as you:</p>
+          <ol>
+            <li><strong>Give credit</strong> — You must attribute the work to Impact Investing Hub &amp; ACET, provide a link to the license, and indicate if you made any changes. You can do this in any reasonable way, but not in a manner that suggests we endorse you or your use.</li>
+            <li><strong>Share alike</strong> — If you remix, transform, or build upon the material, you must distribute your contributions under the same CC BY-SA 4.0 license (or a compatible one).</li>
+          </ol>
+          <p>You do not need to ask permission first. There are no additional restrictions, though you may not apply legal terms or technological measures that prevent others from doing anything the license permits.</p>
+          <p>For full license details, visit <a href="https://creativecommons.org/licenses/by-sa/4.0/">creativecommons.org/licenses/by-sa/4.0</a>.
+        font_size: 18
+        format: restricted_html
+      type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_13
       properties: {}
       type: Spacer
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: panel_share
     properties:
       background: '#ffffff'

@@ -166,31 +166,37 @@ components:
     style: headline
     text: Community Energy Finance Navigator
   type: form:dep_9kcxnwm3upyjd:_Components.Heading
-- components:
-  - layout_properties: {width: 300}
-    name: iih_logo
-    properties:
-      display_mode: fill_width
-      height: ''
-      margin: ['0', null, null, null]
-      source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
-      vertical_align: bottom
-    type: Image
-  layout_properties: {slot: nav-right}
-  name: flow_panel_2
-  properties: {}
-  type: FlowPanel
-- components: []
-  layout_properties: {slot: footer-slot}
-  name: flow_panel_1
+- layout_properties: {slot: footer-nav}
+  name: image_1
   properties:
-    align: left
-    gap: huge
+    display_mode: shrink_to_fit
+    height: '40'
+    horizontal_align: left
+    margin: ['0', null, '0', null]
+    source: https://www.uvic.ca/assets/core-4-0/img/shield-horz-white.svg
+  type: Image
+- layout_properties: {slot: footer-slot}
+  name: rich_text_1
+  properties:
+    align: right
+    content: '<p>The Community Energy Finance Navigator © 2026 by<a href="https://impactinvestinghub.ca/" style="color: #C2DDFF">Impact Investing Hub</a> &amp; <a href="https://www.uvic.ca/acet/index.php" style="color: #C2DDFF">ACET</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color: #C2DDFF">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:3em;max-height:2em;margin-left:.3em;vertical-align:middle;"></p>'
+    enable_slots: false
+    font: ser
+    font_size: 11
+    format: restricted_html
     spacing:
-      margin: ['10', '15', '0', '15']
-      padding: [null, '0', null, null]
-    vertical_align: middle
-  type: FlowPanel
+      margin: ['0', null, '0', null]
+      padding: ['0', null, '0', null]
+  type: RichText
+- layout_properties: {slot: nav-right}
+  name: iih_logo
+  properties:
+    display_mode: shrink_to_fit
+    height: ''
+    margin: ['0', null, null, null]
+    source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
+    vertical_align: bottom
+  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

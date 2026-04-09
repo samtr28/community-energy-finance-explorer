@@ -461,11 +461,28 @@ color: %color:On Primary Container%;
 .footer > .footer-slot {
   flex: 1;
   margin: 0;
+  padding: 8px 24px;
 }
 
 @media (max-width: 998px) {
   .footer > .footer-nav {
-    display: none;
+    width: auto;
+    padding: 4px 8px;
+  }
+  .footer > .footer-nav img {
+    max-height: 24px;
+    width: auto;
+  }
+  .footer > .footer-slot {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+  .footer > .footer-slot img {
+    max-height: 16px;
+  }
+  .app-bar > .app-bar-nav img {
+    max-height: 30px;
+    width: auto;
   }
 }
 
@@ -1313,4 +1330,33 @@ footer a, .footer .anvil-component {
   border-bottom: 3px solid #2a7d4f !important;
   outline: none !important;
   box-shadow: none !important;
+}
+
+@media (max-width: 998px) {
+  .app-bar > .title {
+    padding: 0;
+    margin: 0;
+  }
+  .app-bar > .title .anvil-component {
+    padding: 0;
+    margin: 0;
+    line-height: 1.2;
+  }
+  .app-bar > .app-bar-nav {
+    float: none;
+    clear: both;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    min-height: 0;
+  }
+  .app-bar > .app-bar-nav .anvil-container {
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .app-bar > .app-bar-nav img {
+    margin: 0;
+    padding: 0;
+  }
 }
