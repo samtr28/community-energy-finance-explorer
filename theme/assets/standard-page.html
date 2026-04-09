@@ -32,10 +32,13 @@
 
 <div anvil-drop-default anvil-drop-redirect=".placeholder" anvil-drop-container=".anvil-container"></div>
 <div class="footer">
+  <div class="footer-nav" anvil-slot="footer-nav">
+    <div class="placeholder anvil-designer-only" anvil-if-slot-empty="footer-nav" anvil-drop-here>Nav footer slot</div>
+  </div>
   <div class="footer-slot" anvil-slot="footer-slot">
     <div class="placeholder anvil-designer-only" anvil-if-slot-empty="footer-slot" anvil-drop-here>Drop a FlowPanel or Label or Link Component here</div>
   </div>
-</div> 
+</div>
  
 <script>
   var ln = $('.structure > .nav-holder > .left-nav');

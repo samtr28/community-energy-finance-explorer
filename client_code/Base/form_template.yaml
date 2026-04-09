@@ -167,12 +167,12 @@ components:
     text: Community Energy Finance Navigator
   type: form:dep_9kcxnwm3upyjd:_Components.Heading
 - components:
-  - layout_properties: {width: 214}
+  - layout_properties: {width: 300}
     name: iih_logo
     properties:
       display_mode: fill_width
       height: ''
-      margin: [4%, null, null, null]
+      margin: ['0', null, null, null]
       source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
       vertical_align: bottom
     type: Image
@@ -182,11 +182,15 @@ components:
   type: FlowPanel
 - components: []
   layout_properties: {slot: footer-slot}
-  name: grid_panel_1
+  name: flow_panel_1
   properties:
+    align: left
+    gap: huge
     spacing:
-      margin: ['0', null, '0', null]
-  type: GridPanel
+      margin: ['10', '15', '0', '15']
+      padding: [null, '0', null, null]
+    vertical_align: middle
+  type: FlowPanel
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate
