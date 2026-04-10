@@ -52,11 +52,11 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU ISIEFY,RLKNXB'}
       name: heading_3
-      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Interviews (context & clarification}
+      properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Interviews (context & clarification)}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU GWYAUY,QHLSES'}
       name: text_4
-      properties: {font_size: 18, text: 'For a subset of projects, we conduct interviews with project leads, These conversations help us understand context, clarify survey responses, and capture lessons that may appear in forthecoming case studies.'}
+      properties: {font_size: 18, text: 'For a subset of projects, we will conduct interviews with project leads, These conversations help us understand context, clarify survey responses, and capture lessons that will appear in the forthcoming case studies section of the platform.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'DXOYGQ,KIMXPU '}
       name: heading_4
@@ -101,7 +101,8 @@ components_by_slot:
       text: What kind of information is collected in the survey?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF BCXJLX,CPIDEZ'}
       name: rich_text_1
       properties:
         content: |-
@@ -135,6 +136,21 @@ components_by_slot:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
       type: RichText
+    - layout_properties: {grid_position: 'RFTLOI,AMTVWF CXEYRF,GKSPMB'}
+      name: link_4
+      properties:
+        align: center
+        background_color: theme:Tertiary Container
+        bold: true
+        font_size: 22
+        role: button-link
+        spacing:
+          padding: ['5', '5', '5', '5']
+        text: Add your project
+        text_color: theme:Tertiary
+        underline: false
+        url: https://redcap.link/comm_energy
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,HOYAPP'}
       name: spacer_2
       properties: {}
@@ -406,11 +422,22 @@ components_by_slot:
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
-      name: text_6
+      name: rich_text_11
       properties:
+        content: |-
+          <p>Project information can change as financing closes, partnerships evolve, or outcomes become measurable. We encourage project teams to update their entries as new information becomes available — whether that's a completed financing round, updated impact and outcomes metrics, or a change in project status.</p>
+
+          <p>To update your information, contact our team at <a href="mailto:samanthatreacy@uvic.ca">samanthatreacy@uvic.ca</a> and we will update your entry as needed.</p>
+
+          <p>The Navigator's visuals are refreshed as new projects are added and existing entries are updated. The platform will continue to grow through expanded outreach, new partnerships, and richer project data.</p>
+
+          <p>Case studies and resources will be added over time, informed by ongoing interviews with project teams and community members. New case studies will be published when all interviews about a given project are completed and the draft is verified and approved for publication by project owners.</p>
         font_size: 18
-        text: "Project information can change as financing closes, partnerships evolve, or outcomes become measurable. We encourage project teams to update their entries as new information becomes available - whether that's a completed financing round, updated impact and outcomes metrics, or a change in project status.\n\nTo update your information, contact our team at samanthatreacy@uvic.ca and we will update your entry as needed. \n\nThe Navigator's visuals are refreshed as new projects are added and existing entries are updated. The platform will continue to grow through expanded outreach, new partnerships, and richer project data. Case studies and resources will be added over time, informed by ongoing interviews with project teams and community members.  New case studies  will be published when all interviews about a given project are completed and the draft is verified and approved for publication by project owners. "
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_7
       properties: {}
