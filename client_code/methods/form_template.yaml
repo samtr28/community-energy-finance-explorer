@@ -421,13 +421,14 @@ components_by_slot:
       text: Can I update my project information after submitting?  How often is the Navigator updated?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
       name: rich_text_11
       properties:
         content: |-
-          <p>Project information can change as financing closes, partnerships evolve, or outcomes become measurable. We encourage project teams to update their entries as new information becomes available — whether that's a completed financing round, updated impact and outcomes metrics, or a change in project status.</p>
+          <p>Project information can change as financing closes, partnerships evolve, or outcomes become measurable. We encourage project teams to update their entries as new information becomes available -  whether that's a completed financing round, updated impact and outcomes metrics, or a change in project status.</p>
 
-          <p>To update your information, contact our team at <a href="mailto:samanthatreacy@uvic.ca">samanthatreacy@uvic.ca</a> and we will update your entry as needed.</p>
+          <p>To update your information, contact our team at <a href="mailto:samanthatreacy@uvic.ca">samanthatreacy@uvic.ca</a> and we will update your entry as needed. The contact form below may also be used.</p>
 
           <p>The Navigator's visuals are refreshed as new projects are added and existing entries are updated. The platform will continue to grow through expanded outreach, new partnerships, and richer project data.</p>
 
@@ -438,6 +439,22 @@ components_by_slot:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
       type: RichText
+    - layout_properties: {grid_position: 'RFTLOI,AMTVWF ANERHT,VFLBTW'}
+      name: link_5
+      properties:
+        align: center
+        background_color: theme:Tertiary Container
+        bold: true
+        font_size: 22
+        role: button-link
+        spacing:
+          margin: ['0', null, null, null]
+          padding: ['5', '5', '5', '5']
+        text: Contact form
+        text_color: theme:Tertiary
+        underline: false
+        url: https://www.surveymonkey.ca/r/BPBX3RC
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_7
       properties: {}
@@ -473,19 +490,40 @@ components_by_slot:
       text: How do we ensure privacy, consent, and respectful use of data?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
-      name: text_7
+    - components: []
+      layout_properties: {grid_position: 'RFTLOI,AMTVWF OOQEIX,KLGDUI'}
+      name: rich_text_12
       properties:
+        content: |-
+          <p>Project teams contribute information voluntarily. The Navigator is designed to support peer learning and public understanding, not to evaluate or rank individual projects.</p>
+
+          <p>We share information in a way that is useful while respecting confidentiality and community priorities. If you have concerns about how your project is represented, you can contact us and we will work with you to correct or adjust the entry.</p>
+
+          <p>We recognize the importance of Indigenous data sovereignty and all team members are trained in OCAP principles to ensure information is shared in ways that align with a given community's protocols and priorities.</p>
+
+          <p>This study has received ethics approval from the University of Victoria Research Ethics Board (Protocol #24-046). For questions about the ethics of this research, contact <a href="mailto:ethics@uvic.ca">ethics@uvic.ca</a> or <a href="mailto:samanthatreacy@uvic.ca">samanthatreacy@uvic.ca</a>, or use the form below.</p>
         font_size: 18
-        text: |-
-          Project teams contribute information voluntarily. The Navigator is designed to support peer learning and public understanding, not to evaluate or rank individual projects.
-
-          We share information in a way that is useful while respecting confidentiality and community priorities. If you have concerns about how your project is represented, you can contact us and we will work with you to correct or adjust the entry.
-
-          We recognize the importance of Indigenous data sovereignty and all team members are trained in OCAP principles to ensure information is shared in ways that align with a given community's protocols and priorities.
-
-          This study has received ethics approval from the University of Victoria Research Ethics Board (Protocol #24-046). For questions about the ethics of this research, contact ethics@uvic.ca or samanthatreacy@uvic.ca
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - layout_properties: {grid_position: 'RFTLOI,AMTVWF AMRZGY,YLGAWX'}
+      name: link_6
+      properties:
+        align: center
+        background_color: theme:Tertiary Container
+        bold: true
+        font_size: 22
+        role: button-link
+        spacing:
+          margin: ['0', null, null, null]
+          padding: ['5', '5', '5', '5']
+        text: Contact form
+        text_color: theme:Tertiary
+        underline: false
+        url: https://www.surveymonkey.ca/r/BPBX3RC
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_8
       properties: {}
