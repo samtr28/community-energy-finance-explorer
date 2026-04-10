@@ -1361,22 +1361,3 @@ footer a, .footer .anvil-component {
   }
 }
 
-.beta-banner {
-  background-color: #f59e0b;
-  color: #fff;
-  text-align: center;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  padding: 6px 16px;
-  position: fixed;
-  top: 0;
-  top: %anvil-banner-height%;
-  left: 0;
-  right: 0;
-  z-index: 1001;
-}
-
-.beta-banner:empty {
-  display: none;
-}
