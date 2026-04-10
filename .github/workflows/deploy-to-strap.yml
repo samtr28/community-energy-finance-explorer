@@ -28,7 +28,7 @@ jobs:
         run: |
           cd app
           DOCKER_BUILDKIT=1
-          IMAGE_NAME=${REGISTRY_HOST}/community-energy/app:latest
+          IMAGE_NAME=${REGISTRY_HOST}/community-energy-finance/app:latest
           echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
           docker build --platform linux/amd64 -t ${IMAGE_NAME} .
 
