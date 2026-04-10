@@ -1,17 +1,8 @@
-From bc4783953c7109334e3d26411123ba97f3f849b6 Mon Sep 17 00:00:00 2001
-From: Archie To <toanhminh0412@gmail.com>
-Date: Wed, 25 Feb 2026 16:48:15 +0000
-Subject: [PATCH 2/4] Make server persistent
-
----
- anvil.yaml | 1 +
- 1 file changed, 1 insertion(+)
-
 diff --git a/anvil.yaml b/anvil.yaml
-index c28e2c8..6f94df5 100644
+index 329081e..0cbc547 100644
 --- a/anvil.yaml
 +++ b/anvil.yaml
-@@ -43,6 +43,7 @@ runtime_options:
+@@ -45,6 +45,7 @@ runtime_options:
    legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
    server_spec: {base: python310-datascience}
    server_version: python3-sandbox
@@ -19,44 +10,18 @@ index c28e2c8..6f94df5 100644
    version: 3
  services:
  - client_config: {}
--- 
-2.43.0
-
-
-From ed48318f83289fcc89de5da2566aa827da1d90f1 Mon Sep 17 00:00:00 2001
-From: Archie To <toanhminh0412@gmail.com>
-Date: Wed, 25 Feb 2026 16:48:37 +0000
-Subject: [PATCH 3/4] Print app errors to stdout
-
----
- client_code/Base/__init__.py | 1 +
- 1 file changed, 1 insertion(+)
-
 diff --git a/client_code/Base/__init__.py b/client_code/Base/__init__.py
-index 82fbcaf..577f2d2 100644
+index ec205ce..2dd6ca1 100644
 --- a/client_code/Base/__init__.py
 +++ b/client_code/Base/__init__.py
-@@ -10,6 +10,7 @@ from anvil.tables import app_tables
- from anvil.js.window import jQuery
+@@ -8,6 +8,7 @@ from anvil.tables import app_tables
+ from anvil.js.window import jQuery, innerWidth
  from anvil.js import get_dom_node
  
 +set_default_error_handling(print)
  
  class Base(BaseTemplate):
    def __init__(self, **properties):
--- 
-2.43.0
-
-
-From 8d7f80bd6ee12ee05bd47b155b365d913845224d Mon Sep 17 00:00:00 2001
-From: Archie To <toanhminh0412@gmail.com>
-Date: Wed, 25 Feb 2026 16:48:47 +0000
-Subject: [PATCH 4/4] Load data from SQL
-
----
- server_code/Global_Server_Functions/__init__.py | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
 diff --git a/server_code/Global_Server_Functions/__init__.py b/server_code/Global_Server_Functions/__init__.py
 index e5c123a..2bd33a0 100644
 --- a/server_code/Global_Server_Functions/__init__.py
@@ -87,6 +52,3 @@ index e5c123a..2bd33a0 100644
  
    df = _DATA_CACHE  # start from cached data
  
--- 
-2.43.0
-
