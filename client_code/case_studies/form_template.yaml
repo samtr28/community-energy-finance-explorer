@@ -1,13 +1,84 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {grid_position: 'GXKVMR,MPYWWG'}
-      name: text_1
-      properties: {font_size: 18, text: 'We''re developing in-depth case studies that show how Canadian communities have navigated the financing journey -  from choosing ownership models and assembling capital stacks to measuring outcomes and impacts on the ground. These stories will bring the Navigator''s data to life, showing how real communities used the capital sources, ownership models, and strategies you can explore throughout the Navigator.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'ZVDKFB,LXUYYY'}
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'GXKVMR,MPYWWG'}
+      name: rich_text_1
+      properties:
+        content: |-
+          <p>We're developing in-depth case studies that show how Canadian community energy projects have navigated the financing journey — from choosing ownership models and assembling capital stacks to measuring outcomes and impacts on the ground. These stories will bring the Navigator's data to life, showing how real communities used the capital sources, ownership models, and strategies you can explore throughout the Navigator.</p>
+
+          <p>Interviews go deeper than the survey — giving project teams the chance to share context, reflect on what worked, and describe challenges that are hard to capture online.</p>
+
+          <ul>
+            <li>How the community was involved in financial decisions</li>
+            <li>How financing was chosen — who led the process and what alternatives were considered</li>
+            <li>How benefits are shared and whether outcomes reflect community priorities</li>
+          </ul>
+
+          <p><em>Participation is voluntary. Interviewees can review their contributions before publication.</em></p>
+        font_size: 18
+        foreground: ''
+        format: restricted_html
+        spacing:
+          margin: ['0', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: RichText
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: heading_2
+          properties: {bold: true, font_size: 20, icon: 'mi:chat', icon_color: 'theme:On Primary Container', scale: medium, style: title, text: 'Involved in a community energy project?', text_color: 'theme:On Primary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - layout_properties: {slot: card-content-container-slot}
+          name: text_1
+          properties: {font_size: 18, text: 'Take our survey to share your project details,  and sign up for an interview to tell the deeper story.'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        - layout_properties: {slot: card-content-container-slot}
+          name: link_1
+          properties:
+            align: center
+            background_color: theme:On Primary Container
+            bold: true
+            font_size: 22
+            icon: mi:forms_add_on
+            role: button-link
+            spacing:
+              margin: ['5', null, '5', null]
+              padding: ['5', '5', '5', '5']
+            text: Take the survey
+            text_color: theme:On Primary
+            underline: false
+            url: https://redcap.link/comm_energy
+          type: form:dep_9kcxnwm3upyjd:_Components.Link
+        - layout_properties: {slot: card-content-container-slot}
+          name: link_4
+          properties:
+            align: center
+            background_color: '#f5aa1c'
+            bold: true
+            font_size: 22
+            icon: mi:interpreter_mode
+            role: button-link
+            spacing:
+              margin: ['5', null, '5', null]
+              padding: ['5', '5', '5', '5']
+            text: Book an interview
+            text_color: theme:On Tertiary Container
+            underline: false
+            url: https://www.surveymonkey.ca/r/BPBX3RC
+          type: form:dep_9kcxnwm3upyjd:_Components.Link
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_1
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'GXKVMR,FLVPEQ'}
+      name: card_1
+      properties: {appearance: filled, background_color: 'theme:Primary Overlay 3'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'ZVDKFB,LXUYYY'}
       name: heading_1
-      properties: {text: Development progress}
+      properties: {font_family: ser, scale: small, text: Our progress on case studies so far}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'REJOKE,NFJLZP'}
@@ -51,14 +122,14 @@ components_by_slot:
         name: rich_text_10
         properties:
           align: center
-          background: '#f5aa1c'
+          background: theme:Primary Overlay 3
           content: |-
             <div style="border-right: 3px solid">
             <h5>PHASE 3</h5>
             <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Drafting</h4>
             </div>
           font_size: 16
-          foreground: theme:On Secondary
+          foreground: ''
           format: restricted_html
           spacing:
             margin: ['0', null, '0', '0']
@@ -68,99 +139,55 @@ components_by_slot:
         name: rich_text_9
         properties:
           align: center
-          background: '#35978f'
+          background: theme:Primary Overlay 3
           content: |
             <h5>PHASE 4</h5>
             <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;"> Publication</h4>
           font_size: 16
-          foreground: theme:On Secondary
+          foreground: ''
           format: restricted_html
           spacing:
             margin: ['0', null, '0', null]
             padding: ['7', '0', '7', '0']
         type: RichText
-      layout_properties: {grid_position: 'TYDYOS,HEKUZL'}
+      layout_properties: {full_width_row: true, grid_position: 'TYDYOS,HEKUZL'}
       name: column_panel_3
       properties:
         border: ''
-        col_spacing: tiny
+        col_spacing: none
         col_widths: '{}'
         role: equal-height
         spacing:
           margin: ['20', null, '10', '0']
           padding: [null, '0', null, null]
       type: ColumnPanel
-    - layout_properties: {grid_position: 'YZHNMJ,CIACSM SAZYCL,NEXSAZ'}
+    - layout_properties: {full_width_row: true, grid_position: 'YZHNMJ,CIACSM SDFKMU,RVJQBF'}
       name: determinate_2
       properties: {height: '20', indicator_colour: 'theme:Primary', progress: 0.6, track_colour: 'theme:Primary Container'}
       type: form:dep_ar2wlcmlppsllr:ProgressBar.Determinate
-    - layout_properties: {grid_position: 'YZHNMJ,CIACSM CKKULV,UAJGBF'}
-      name: rich_text_1
-      properties:
-        content: |-
-          <h3>3</h3>
-          Community energy projects selected for case studies
-        format: restricted_html
-      type: RichText
-    - layout_properties: {grid_position: 'YZHNMJ,CIACSM SMCDBH,GFDOMV'}
+    - layout_properties: {grid_position: 'YZHNMJ,CIACSM MIXPWA,DMPIMU'}
       name: text_2
-      properties: {}
+      properties: {align: center, italic: true, scale: small, text: 3/5 projects selected}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'YZHNMJ,BUXJZM'}
+    - layout_properties: {full_width_row: true, grid_position: 'YZHNMJ,BUXJZM LPRRZY,EVXENL'}
       name: determinate_1
-      properties: {height: '20', indicator_colour: 'theme:Secondary', progress: 0.6, track_colour: 'theme:Secondary Container'}
+      properties: {height: '20', indicator_colour: 'theme:Secondary', progress: 0.1, track_colour: 'theme:Secondary Container'}
       type: form:dep_ar2wlcmlppsllr:ProgressBar.Determinate
+    - layout_properties: {grid_position: 'YZHNMJ,BUXJZM MSXXTJ,GVINWH'}
+      name: text_3
+      properties: {align: center, italic: true, scale: small, text: 2/20 interviews conducted}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'YZHNMJ,KBGJDL'}
-      name: determinate_3
-      properties: {height: '20', indicator_colour: '#f5aa1c', progress: 0.6, track_colour: 'theme:Tertiary Container'}
-      type: form:dep_ar2wlcmlppsllr:ProgressBar.Determinate
+      name: text_4
+      properties: {align: center, italic: true, scale: small, text: 'Up next '}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'YZHNMJ,VJJRVJ'}
-      name: determinate_4
-      properties: {height: '20', indicator_colour: 'theme:Accent Text', progress: 0.6, track_colour: 'theme:On Secondary Container'}
-      type: form:dep_ar2wlcmlppsllr:ProgressBar.Determinate
-    - components: []
-      layout_properties: {grid_position: 'PNEURJ,DTNWWW'}
-      name: card_1
-      properties: {}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - components:
-      - components:
-        - components: []
-          layout_properties: {slot: card-content-container-slot}
-          name: rich_text_2
-          properties:
-            content: |-
-              <h3>4</h3>
-              Provinces represented
-            format: restricted_html
-          type: RichText
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_2
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'PNEURJ,BXJZYD'}
-      name: card_2
-      properties: {}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: rich_text_3
-          properties:
-            content: "<h3>12</h3>\nInterviews completed "
-            format: restricted_html
-          type: RichText
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_3
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'PNEURJ,DYZUZJ'}
-      name: card_3
-      properties: {}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
-    layout_properties: {}
+      name: text_5
+      properties: {align: center, italic: true, scale: small, text: Upcoming}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {}
+    properties: {col_spacing: large, col_widths: '{"MPYWWG":35,"FLVPEQ":25}'}
     type: ColumnPanel
   slot_3: []
   title_slot:
