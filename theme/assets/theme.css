@@ -283,8 +283,7 @@ color: %color:On Primary Container%;
 .nav-holder .left-nav, .left-nav-placeholder {
   display: flex;
   flex-direction: column;
-  /*background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
-  background: #ffffff;
+  background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
 /*   border-right: 1px solid #e0e0e0; */
   font-size: 18px;
   font-weight: 500;
@@ -366,6 +365,7 @@ color: %color:On Primary Container%;
   margin: 0 -8px;
   padding: 4px 16px;
   border-radius: 100px;
+  backgrou
 }
 .left-nav .anvil-component.left_edge-icon {
   padding-left: 72px;
