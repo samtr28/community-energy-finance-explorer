@@ -285,7 +285,7 @@ color: %color:On Primary Container%;
   flex-direction: column;
   background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; 
 /*   border-right: 1px solid #e0e0e0; */
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   color: %color:On Surface Variant%; 
   overflow-x: hidden;
@@ -336,8 +336,10 @@ color: %color:On Primary Container%;
 
 .left-nav .anvil-component-icon.left-icon {
   width: 0;
-  margin-right: 24px;
+  margin-right: 40px;
   position: relative;
+  /* added incon colour */
+  color: #f5aa1c; 
 }
 
 .left-nav .anvil-component-icon.left_edge-icon, .left-nav .anvil-component-icon.right_edge-icon {
@@ -368,6 +370,7 @@ color: %color:On Primary Container%;
   padding-left: 72px;
 }
 
+
 .left-nav a:hover, .app-bar a:hover, .app-bar a:active {
   background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%;
   opacity: 100%;
@@ -382,6 +385,24 @@ color: %color:On Primary Container%;
   background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), %color:Secondary%;
   color: %color:On Secondary%;
 }
+
+/*ICON STYLING */
+.left-nav a:hover, .app-bar a:hover, .app-bar a:active {
+  background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%;
+opacity: 100%;
+}
+.left-nav a:hover .anvil-component-icon {
+  color: #0F6E56;  /* icon color on hover */
+}
+
+.left-nav a.anvil-role-selected, .app-bar a.anvil-role-selected {
+  background-color: %color:Secondary Container%;
+  color: %color:On Secondary Container%;
+}
+.left-nav a.anvil-role-selected .anvil-component-icon {
+  color: %color:On Secondary Container%;  /* icon color when selected */
+}
+/* DONE ADDING ICON STYLING */
 
 .designer .nav-holder .left-nav {
   min-width: 56px;
