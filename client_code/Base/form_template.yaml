@@ -156,16 +156,6 @@ components:
     spacing_above: none
     spacing_below: none
   type: ColumnPanel
-- layout_properties: {slot: title}
-  name: heading_1
-  properties:
-    font_size: null
-    scale: large
-    spacing:
-      margin: ['-15', null, null, null]
-    style: headline
-    text: Community Energy Finance Navigator
-  type: form:dep_9kcxnwm3upyjd:_Components.Heading
 - layout_properties: {slot: footer-nav}
   name: image_1
   properties:
@@ -197,6 +187,43 @@ components:
     source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
     vertical_align: bottom
   type: Image
+- components:
+  - layout_properties: {slot: app-title-slot}
+    name: heading_1
+    properties:
+      font_size: null
+      scale: large
+      spacing:
+        margin: ['-15', null, null, null]
+      style: headline
+      text: Community Energy Finance Navigator
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
+  - data_bindings: []
+    layout_properties: {slot: beta-slot, width: null}
+    name: text_1
+    properties:
+      align: center
+      background_color: theme:Tertiary Container
+      font_size: 14
+      icon: mi:info
+      icon_size: 18
+      role: beta-pill
+      spacing:
+        margin: ['5', null, '5', '25']
+        padding: ['5', '10', '5', '10']
+      style: label
+      text: Beta Version
+      text_color: theme:Tertiary
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  layout_properties: {slot: title}
+  name: rich_text_2
+  properties:
+    content: <span >{app-title-slot}</span> <span>{beta-slot}</span>
+    format: restricted_html
+    spacing:
+      margin: ['0', '0', null, null]
+      padding: ['0', null, '0', null]
+  type: RichText
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate
