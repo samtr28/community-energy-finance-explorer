@@ -14,7 +14,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Overview
       tooltip: Learn about the project
     type: Link
@@ -30,7 +30,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Capital Explorer
     type: Link
   - components: []
@@ -44,7 +44,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Ownership Models
     type: Link
   - components: []
@@ -58,7 +58,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Outcomes & Impacts
     type: Link
   - components: []
@@ -73,7 +73,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Project Explorer
     type: Link
   - event_bindings: {click: case_nav_click}
@@ -86,7 +86,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Case Studies
     type: Link
   - components: []
@@ -100,7 +100,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Resources
     type: Link
   - components: []
@@ -114,7 +114,7 @@ components:
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Data & Methods
     type: Link
   layout_properties: {slot: left-nav}
