@@ -282,7 +282,7 @@ components_by_slot:
       name: column_panel_3
       properties:
         border: ''
-        col_spacing: none
+        col_spacing: huge
         col_widths: '{"XFUIDY":20,"MGLWXT":20}'
         role: equal-height
         spacing:
@@ -515,5 +515,6 @@ components_by_slot:
         margin: ['0', null, '0', null]
       vertical_align: middle
     type: FlowPanel
+custom_component: false
 is_package: true
 layout: {type: 'form:Base'}
