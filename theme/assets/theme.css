@@ -1361,3 +1361,8 @@ footer a, .footer .anvil-component {
   }
 }
 
+.rich-text .anvil-extras-message-pill {
+  font-size: 12px;
+  padding: 2px 8px;
+  transform: scale(0.5);
+}

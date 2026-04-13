@@ -156,16 +156,6 @@ components:
     spacing_above: none
     spacing_below: none
   type: ColumnPanel
-- layout_properties: {slot: title}
-  name: heading_1
-  properties:
-    font_size: null
-    scale: large
-    spacing:
-      margin: ['-15', null, null, null]
-    style: headline
-    text: Community Energy Finance Navigator
-  type: form:dep_9kcxnwm3upyjd:_Components.Heading
 - layout_properties: {slot: footer-nav}
   name: image_1
   properties:
@@ -188,15 +178,34 @@ components:
       margin: ['0', null, '0', null]
       padding: ['0', null, '0', null]
   type: RichText
-- layout_properties: {slot: nav-right}
-  name: iih_logo
+- components:
+  - layout_properties: {}
+    name: message_pill_1
+    properties: {level: warning, message: Beta version}
+    type: form:dep_ar2wlcmlppsllr:MessagePill
+  - layout_properties: {}
+    name: iih_logo
+    properties:
+      display_mode: shrink_to_fit
+      height: ''
+      margin: ['0', null, null, null]
+      source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
+      vertical_align: bottom
+    type: Image
+  layout_properties: {slot: nav-right}
+  name: flow_panel_1
+  properties: {}
+  type: FlowPanel
+- layout_properties: {slot: title}
+  name: heading_1
   properties:
-    display_mode: shrink_to_fit
-    height: ''
-    margin: ['0', null, null, null]
-    source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
-    vertical_align: bottom
-  type: Image
+    font_size: null
+    scale: large
+    spacing:
+      margin: ['-15', null, null, null]
+    style: headline
+    text: Community Energy Finance Navigator
+  type: form:dep_9kcxnwm3upyjd:_Components.Heading
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate
