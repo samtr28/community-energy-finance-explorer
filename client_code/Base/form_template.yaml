@@ -206,10 +206,11 @@ components:
       background_color: theme:Tertiary Container
       font_size: 14
       icon: mi:info
+      icon_size: 18
       role: beta-pill
       spacing:
-        margin: ['5', null, '5', '12']
-        padding: ['5', '5', '5', '5']
+        margin: ['5', null, '5', '25']
+        padding: ['5', '10', '5', '10']
       style: label
       text: Beta Version
       text_color: theme:Tertiary
