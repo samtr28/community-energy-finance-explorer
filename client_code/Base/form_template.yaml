@@ -195,7 +195,7 @@ components:
     name: text_1
     properties:
       align: center
-      background_color: theme:Tertiary Container
+      background_color: theme:Primary Container
       font_size: 14
       icon: mi:info
       icon_size: 18
@@ -205,7 +205,7 @@ components:
         padding: ['5', '10', '5', '10']
       style: label
       text: Beta Version
-      text_color: theme:Tertiary
+      text_color: theme:On Primary Container
     type: form:dep_9kcxnwm3upyjd:_Components.Text
   layout_properties: {slot: title}
   name: rich_text_2
