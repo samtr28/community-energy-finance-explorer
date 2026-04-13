@@ -1361,3 +1361,6 @@ footer a, .footer .anvil-component {
   }
 }
 
+.anvil-role-beta-pill {
+  border-radius: 20px;
+}

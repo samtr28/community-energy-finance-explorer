@@ -345,3 +345,4 @@ roles:
 - {components: null, display_in_toolbox: false, name: button-link}
 - {name: equal-height}
 - {components: null, name: accordion-header}
+- {name: beta-pill}
