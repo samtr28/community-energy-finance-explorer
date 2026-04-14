@@ -15,7 +15,25 @@ class Project_Card(Project_CardTemplate):
     else:
       self.data_source_pill.level = "warning"
 
-    # Setup ownership plot immediately
+    # ============ PORTFOLIO BADGE ============
+    subs = self.item.get('sub_projects', [])
+    is_portfolio = isinstance(subs, list) and len(subs) > 0
+
+    if hasattr(self, 'portfolio_badge'):
+      if is_portfolio:
+        self.portfolio_badge.visible = True
+        self.portfolio_badge.text = f"Portfolio — {len(subs)} sites"
+      else:
+        self.portfolio_badge.visible = False
+
+    if hasattr(self, 'sub_projects_panel'):
+      if is_portfolio:
+        self.sub_projects_panel.items = subs
+        self.sub_projects_panel.visible = False  # collapsed by default
+      else:
+        self.sub_projects_panel.visible = False
+
+    # ============ OWNERSHIP PLOT ============
     self.ownership_plot.data = self.item["ownership_traces"]
     self.ownership_plot.layout.barmode = "stack"
     self.ownership_plot.layout.margin = dict(l=5, r=5, t=30, b=5)
@@ -35,7 +53,7 @@ class Project_Card(Project_CardTemplate):
       tr.textposition = "inside"
       tr["hovertemplate"] = "<b>%{customdata[0]}</b><br>Type: %{customdata[1]}<br>%: %{x:.1f}<extra></extra>"
 
-    # Setup capital mix plot immediately
+    # ============ CAPITAL MIX PLOT ============
     self.capital_mix_plot.data = self.item["capital_mix_traces"]
 
     num_categories = len(set(tr.name for tr in self.capital_mix_plot.data))
@@ -105,17 +123,20 @@ class Project_Card(Project_CardTemplate):
       ]
 
   def project_card_click(self, **event_args):
-    """Handle card selection"""
-    parent = self.parent
-    card_idx = parent.get_components().index(self)
+    """Handle card selection — uses record_id, not index"""
+    record_id = self.item.get('record_id')
+    if record_id is None:
+      return
+
     form = get_open_form()
 
-    # Calculate actual index in full dataset
-    start_idx = (form._current_page - 1) * form._page_size
-    actual_idx = start_idx + card_idx
-
     # Toggle selection
-    if hasattr(form, '_selected_idx') and form._selected_idx == actual_idx:
+    if form._selected_record_id == str(record_id):
       form._unselect_all()
     else:
-      form._select_index(actual_idx)
+      form._select_by_record_id(record_id)
+
+  def toggle_sub_projects_click(self, **event_args):
+    """Toggle visibility of sub-projects list (for portfolio cards)"""
+    if hasattr(self, 'sub_projects_panel'):
+      self.sub_projects_panel.visible = not self.sub_projects_panel.visible

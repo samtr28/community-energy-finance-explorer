@@ -8,6 +8,24 @@ components:
         name: project_lbl
         properties: {bold: true, scale: medium, style: title, text_color: '#002754'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - data_bindings: []
+        layout_properties: {grid_position: 'VBARGX,SSPTZN'}
+        name: portfolio_badge
+        properties:
+          align: center
+          background_color: theme:Primary Container
+          font_size: 14
+          icon: mi:info
+          icon_size: 18
+          role: beta-pill
+          spacing:
+            margin: ['5', null, '5', '25']
+            padding: ['5', '10', '5', '10']
+          style: label
+          text: ''
+          text_color: theme:On Primary Container
+          visible: false
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
       - components:
         - data_bindings:
           - {code: 'self.item[''project_type_formatted'']', property: text, writeback: false}
@@ -55,7 +73,7 @@ components:
       layout_properties: {slot: card-content-container-slot}
       name: column_panel_1
       properties:
-        col_widths: '{"ASFRGZ":35,"COVGGE":25}'
+        col_widths: '{"ASFRGZ":35,"COVGGE":25,"AUEWVP":35,"SSPTZN":25}'
         spacing:
           margin: ['0', null, '0', null]
       type: ColumnPanel
@@ -64,6 +82,10 @@ components:
     properties:
       margin: ['4', '8', '4', '8']
     type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+  - layout_properties: {slot: card-content-slot}
+    name: sub_projects_panel
+    properties: {item_template: projects_explorer.Project_Card.sub_projects_panel_template, visible: false}
+    type: RepeatingPanel
   event_bindings: {click: project_card_click}
   layout_properties: {grid_position: 'HXJKRZ,SATLEW'}
   name: project_card
