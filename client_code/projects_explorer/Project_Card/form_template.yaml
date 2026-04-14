@@ -52,6 +52,12 @@ components:
           height: 15vh
           margin: ['2', null, '2', null]
         type: Plot
+      - data_bindings:
+        - {code: 'self.item[''portfolio_badge'']', property: message, writeback: false}
+        layout_properties: {grid_position: 'AYOXBW,BZNBJT'}
+        name: data_source_pill_2
+        properties: {level: info, message: 'self.item[''data_source'']'}
+        type: form:dep_ar2wlcmlppsllr:MessagePill
       layout_properties: {slot: card-content-container-slot}
       name: column_panel_1
       properties:

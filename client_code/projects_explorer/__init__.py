@@ -13,13 +13,19 @@ class projects_explorer(projects_explorerTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self._hi_card = None
-    self._selected_idx = None
+    self._selected_record_id = None
 
     # Pagination state
     self._current_page = 1
     self._page_size = 8
     self._total_count = 0
     self._total_pages = 0
+
+    # Map ↔ Card linking
+    # Maps record_id -> list of map point indices (for highlighting all portfolio pins)
+    self._record_id_to_map_indices = {}
+    # Maps record_id -> card index within current page (for scrolling to card)
+    self._page_record_ids = []
 
     # Prevent double-loading on init
     self._initialized = False
@@ -28,7 +34,7 @@ class projects_explorer(projects_explorerTemplate):
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     if self._initialized:
-      return  # Prevent double-loading
+      return
 
     self.layout.reset_links()
     self.layout.projects_nav.role = 'selected'
@@ -52,16 +58,14 @@ class projects_explorer(projects_explorerTemplate):
   def schedule_filter_update(self):
     """Schedule a filter update with debouncing - waits 300ms after last change"""
     if not self._filters_ready:
-      return  # Don't trigger during initialization
+      return
     self.filter_timer.interval = 0.3
 
   def apply_filters(self, page=None):
     """Apply filters and update map + cards with ONE server call"""
     if page is None:
-      # Filter changed - reset to page 1
       self._current_page = 1
     else:
-      # Specific page requested
       self._current_page = page
 
     # Read current filter selections
@@ -84,30 +88,24 @@ class projects_explorer(projects_explorerTemplate):
     if project_scale:
       kwargs["project_scale"] = project_scale
 
-    # UPDATE CHIPS - Build chip data from selections
+    # UPDATE CHIPS
     chips = []
-    
     if provinces:
       for p in provinces:
         chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
-    
     if proj_types:
       for pt in proj_types:
         chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
-    
     if stages:
       for s in stages:
         chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
-    
     if indigenous_ownership:
       for io in indigenous_ownership:
         chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
-    
     if project_scale:
       for ps in project_scale:
         chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
-    
-    # Update the repeating panel
+
     self.filter_chips_panel.items = chips
 
     # Add pagination parameters
@@ -117,11 +115,19 @@ class projects_explorer(projects_explorerTemplate):
     # SINGLE SERVER CALL
     all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
 
-    # Update map (always show all filtered points)
+    # Update map (all filtered points, portfolios exploded into individual pins)
     self.project_map.data = [all_data['map_data']]
 
-    # Update project cards (replace with current page)
+    # Update project cards (one card per project/portfolio, paginated)
     self.project_cards.items = all_data['project_cards']
+
+    # Store map ↔ card linking data
+    self._record_id_to_map_indices = all_data.get('record_id_to_map_indices', {})
+
+    # Build list of record_ids for the current page of cards
+    self._page_record_ids = [
+      card.get('record_id') for card in all_data['project_cards']
+    ]
 
     # Update pagination state
     self._total_count = all_data['total_count']
@@ -130,9 +136,12 @@ class projects_explorer(projects_explorerTemplate):
     # Update pagination UI
     self._update_pagination_ui()
 
+    # Clear any previous selection
+    self._selected_record_id = None
+    self._hi_card = None
+
   def remove_filter(self, filter_type, value):
     """Remove a specific filter value and refresh"""
-    # Remove the value from the appropriate dropdown
     if filter_type == 'provinces':
       current = list(self.provinces_dd.selected)
       current.remove(value)
@@ -153,13 +162,12 @@ class projects_explorer(projects_explorerTemplate):
       current = list(self.project_scale_dd.selected)
       current.remove(value)
       self.project_scale_dd.selected = current
-  
-    # Schedule update with debouncing
+
     self.schedule_filter_update()
 
   def filter_timer_tick(self, **event_args):
     """This method is called when the timer fires"""
-    self.filter_timer.interval = 0  # Stop the timer
+    self.filter_timer.interval = 0
     self.apply_filters()
 
   # ============ PAGINATION UI ============
@@ -171,37 +179,29 @@ class projects_explorer(projects_explorerTemplate):
 
     self.pagination_container.visible = True
 
-    # Update info label
     start = (self._current_page - 1) * self._page_size + 1
     end = min(self._current_page * self._page_size, self._total_count)
     self.page_info_label.text = f"Showing {start}-{end} of {self._total_count} projects"
-
-    # Update page number label
     self.current_page_label.text = f"Page {self._current_page} of {self._total_pages}"
 
-    # Enable/disable navigation buttons
     self.first_page_btn.enabled = self._current_page > 1
     self.prev_page_btn.enabled = self._current_page > 1
     self.next_page_btn.enabled = self._current_page < self._total_pages
     self.last_page_btn.enabled = self._current_page < self._total_pages
 
   def first_page_btn_click(self, **event_args):
-    """Go to first page"""
     if self._current_page != 1:
       self.apply_filters(page=1)
 
   def prev_page_btn_click(self, **event_args):
-    """Go to previous page"""
     if self._current_page > 1:
       self.apply_filters(page=self._current_page - 1)
 
   def next_page_btn_click(self, **event_args):
-    """Go to next page"""
     if self._current_page < self._total_pages:
       self.apply_filters(page=self._current_page + 1)
 
   def last_page_btn_click(self, **event_args):
-    """Go to last page"""
     if self._current_page != self._total_pages:
       self.apply_filters(page=self._total_pages)
 
@@ -221,41 +221,68 @@ class projects_explorer(projects_explorerTemplate):
   def project_scale_dd_change(self, **event_args):
     self.schedule_filter_update()
 
-  # ============ MAP CLICK EVENTS ============
-  def _select_index(self, idx: int):
-    """Highlight point idx on the map and the matching card."""
-    # Map: select just this point
+  # ============ SELECTION HELPERS ============
+  def _highlight_map_pins(self, record_id):
+    """Highlight all map pins belonging to a record_id."""
     fig = self.project_map.figure
-    if fig and fig.data:
-      fig.data[0].selectedpoints = [idx]
-      self.project_map.figure = fig
+    if not fig or not fig.data:
+      return
+  
+    indices = self._record_id_to_map_indices.get(str(record_id), [])
+    fig.data[0].selectedpoints = indices
+    self.project_map.figure = fig
 
-    # Calculate which page this card is on
-    target_page = (idx // self._page_size) + 1
+  def _highlight_card(self, record_id):
+    """Scroll to and highlight the card matching record_id on the current page."""
+    # Clear previous highlight
+    if self._hi_card:
+      self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
+      self._hi_card = None
 
-    # If not on the right page, load it
-    if target_page != self._current_page:
-      self.apply_filters(page=target_page)
+    # Find the card index on the current page
+    try:
+      card_idx = self._page_record_ids.index(record_id)
+    except ValueError:
+      # record_id not on current page — need to find which page it's on
+      return False
 
-    # Calculate card index within the current page
-    start_idx = (self._current_page - 1) * self._page_size
-    card_idx = idx - start_idx
-
-    # Card: scroll + highlight
     rows = self.project_cards.get_components()
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
       row.scroll_into_view()
-
-      # Clear previous highlight
-      if self._hi_card:
-        self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
-
       row.project_card.role = ((row.project_card.role or "") + " card-highlight").strip()
       self._hi_card = row.project_card
 
-    # Track current selection
-    self._selected_idx = idx
+    return True
+
+  def _find_page_for_record_id(self, record_id):
+    """Determine which page a record_id is on.
+    Returns page number or None if not found.
+    
+    NOTE: This requires the server to provide ordered record_ids,
+    or a separate server call. For now, returns None and the caller
+    can decide whether to make an additional server call."""
+    # Since cards are filtered and paginated server-side, we don't have
+    # the full filtered list client-side. If the record_id is not on the
+    # current page, we can't know which page it's on without asking the server.
+    # For most use cases (clicking a map pin), the card will be on the current page
+    # or the user will navigate to it.
+    return None
+
+  def _select_by_record_id(self, record_id):
+    """Select a project by record_id: highlight its map pins and card."""
+    # Highlight all map pins for this record_id (handles portfolios)
+    self._highlight_map_pins(record_id)
+
+    # Try to highlight the card on the current page
+    found = self._highlight_card(record_id)
+
+    if not found:
+      # Card is on a different page — we could load it, but for now
+      # just highlight the map pins. The user can navigate pages.
+      pass
+
+    self._selected_record_id = record_id
 
   def _unselect_all(self):
     """Clear selection from both map and cards."""
@@ -270,22 +297,29 @@ class projects_explorer(projects_explorerTemplate):
       self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
       self._hi_card = None
 
-    # Clear tracking
-    self._selected_idx = None
+    self._selected_record_id = None
 
+  # ============ MAP CLICK EVENTS ============
   def project_map_click(self, points, **event_args):
-    """Handle map click events - jump directly to the page"""
+    """Handle map click events.
+    Clicking a pin highlights all pins for that project/portfolio
+    and scrolls to the matching card."""
     if not points:
-      # Clicked empty area - unselect
       self._unselect_all()
       return
 
-    idx = points[0]["point_number"]
-
-    # Toggle: if clicking same point, unselect
-    if self._selected_idx == idx:
+    # Extract record_id from customdata [community, record_id]
+    customdata = points[0].get("customdata", [])
+    if len(customdata) < 2:
       self._unselect_all()
       return
 
-    # Select (will load correct page if needed)
-    self._select_index(idx)
+    record_id = customdata[1]
+
+    # Toggle: if clicking same project, unselect
+    if self._selected_record_id == record_id:
+      self._unselect_all()
+      return
+
+    # Select by record_id (highlights all portfolio pins + scrolls to card)
+    self._select_by_record_id(record_id)

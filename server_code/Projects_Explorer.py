@@ -11,6 +11,7 @@ from collections.abc import Iterable
 from .Global_Server_Functions import add_formatted_list_columns, format_number_column, get_data
 from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors
 
+
 # ============= COLOR PALETTE CONFIGURATION =============
 def create_palette_from_hex(hex_color, num_shades=5):
   """Create a palette of shades from a base hex color"""
@@ -19,13 +20,14 @@ def create_palette_from_hex(hex_color, num_shades=5):
 
   palette = []
   for i in range(num_shades):
-    blend = i * 0.15  # Each step gets 15% lighter
+    blend = i * 0.15
     new_r = int(r + (255 - r) * blend)
     new_g = int(g + (255 - g) * blend)
     new_b = int(b + (255 - b) * blend)
     palette.append(f'#{new_r:02x}{new_g:02x}{new_b:02x}')
 
   return palette
+
 
 # Base colors from config
 BASE_COLORS = {
@@ -53,24 +55,15 @@ DEFAULT_PALETTE = ['#7f7f7f', '#a0a0a0', '#c0c0c0', '#d9d9d9', '#efefef']
 # Color palette for ownership bars (using gradient palette)
 OWNERSHIP_COLORS = gradient_palette[::-1]
 
+
 # ============= DATA LOADING =============
 # Load data ONCE at module level - cached in memory
 DATA = get_data(project_privacy=True)
 
-# ============= REMOVED - DON'T BUILD TRACES AT MODULE LEVEL =============
-# BEFORE (SLOW):
-# DATA["ownership_traces"] = DATA["owners"].apply(
-#   lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
-# )
-# DATA["capital_mix_traces"] = DATA["capital_mix"].apply(
-#   lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
-# )
-# ============= TRACES NOW BUILT ON-DEMAND PER PAGE =============
 
 # ============= HELPER FUNCTIONS =============
 def build_ownership_bar(owners, ownership_colors):
   """Build bar traces for ownership data. Returns list of go.Bar traces."""
-  # Normalize to list
   if owners is None:
     return []
   elif isinstance(owners, dict):
@@ -78,7 +71,6 @@ def build_ownership_bar(owners, ownership_colors):
   elif not isinstance(owners, (list, tuple)):
     return []
 
-  # Build bar traces
   bars = []
   for i, o in enumerate(owners):
     if not isinstance(o, dict):
@@ -91,14 +83,13 @@ def build_ownership_bar(owners, ownership_colors):
     except Exception:
       pct = 0.0
 
-    # Cycle through ownership colors
     color = ownership_colors[i % len(ownership_colors)]
 
     bars.append(
       go.Bar(
-        x=[pct], 
-        y=[''], 
-        name=name, 
+        x=[pct],
+        y=[''],
+        name=name,
         orientation='h',
         marker_color=color,
         customdata=[[name, owner_type]],
@@ -110,7 +101,6 @@ def build_ownership_bar(owners, ownership_colors):
 
 def build_capital_mix_traces(capital_mix, category_palettes):
   """Build bar traces for a single capital mix entry. Returns list of go.Bar traces."""
-  # Normalize to list
   if capital_mix is None:
     return []
   elif isinstance(capital_mix, dict):
@@ -136,34 +126,30 @@ def build_capital_mix_traces(capital_mix, category_palettes):
   total_amount = mix_df["amount"].sum()
   difference = 100 - total_percent
 
-  # Handle different scenarios
   if abs(difference) <= 7.5:
-    # Small difference: normalize to 100%
     if total_percent > 0:
       mix_df["display_percent"] = (mix_df["percent"] / total_percent) * 100
     else:
       mix_df["display_percent"] = 0
   elif difference > 7.5:
-    # Under-accounted: add "Unknown" category to fill the gap
     mix_df["display_percent"] = mix_df["percent"]
 
-    # Calculate the unknown amount based on the proportion
     if total_amount > 0 and total_percent > 0:
       unknown_amount = (difference / total_percent) * total_amount
     else:
       unknown_amount = 0
 
     unknown_row = pd.DataFrame({
-      "name": ["Unknown"], 
-      "category": ["Unknown"], 
+      "name": ["Unknown"],
+      "category": ["Unknown"],
       "percent": [difference],
-      "amount": [unknown_amount], 
-      "item_type": ["Unknown"], 
+      "amount": [unknown_amount],
+      "item_type": ["Unknown"],
       "row": [""],
       "display_percent": [difference]
     })
     mix_df = pd.concat([unknown_row, mix_df], ignore_index=True)
-  else:  # difference < -7.5 (over-accounted)
+  else:
     mix_df["display_percent"] = mix_df["percent"]
 
   # Build traces
@@ -180,7 +166,7 @@ def build_capital_mix_traces(capital_mix, category_palettes):
           legendgroup=cat,
           showlegend=(i == 0),
           orientation="h",
-          customdata=[[row.category, row.item_type, row.name, 
+          customdata=[[row.category, row.item_type, row.name,
                        row.percent, row.amount]],
           text=f"{row.display_percent:.0f}%" if row.display_percent > 5 else "",
           textposition="inside",
@@ -199,22 +185,96 @@ def build_capital_mix_traces(capital_mix, category_palettes):
   return traces
 
 
-def apply_filters(df, provinces=None, proj_types=None, stages=None, 
+# ============= PORTFOLIO / SUB-PROJECT HELPERS =============
+def explode_for_map(df):
+  """Expand portfolios into one lightweight map point per sub-project location.
+  Standalone projects pass through as a single point.
+  Only carries fields needed for the map — no financing data."""
+  rows = []
+  for _, row in df.iterrows():
+    subs = row.get("sub_projects")
+    if isinstance(subs, list) and len(subs) > 0:
+      for sub in subs:
+        lat = sub.get("latitude")
+        lon = sub.get("longitude")
+        # Skip sub-projects with no coordinates
+        if lat is None or lon is None:
+          continue
+        rows.append({
+          "record_id": row["record_id"],
+          "project_name": f"{row['project_name']} — {sub.get('site_name', '')}",
+          "community": sub.get("community", ""),
+          "latitude": lat,
+          "longitude": lon,
+          "is_sub_project": True,
+        })
+    else:
+      # Standalone project — skip if no coordinates
+      lat = row.get("latitude")
+      lon = row.get("longitude")
+      if pd.notna(lat) and pd.notna(lon):
+        rows.append({
+          "record_id": row["record_id"],
+          "project_name": row["project_name"],
+          "community": row.get("community", ""),
+          "latitude": lat,
+          "longitude": lon,
+          "is_sub_project": False,
+        })
+
+  return pd.DataFrame(rows) if rows else pd.DataFrame(
+    columns=["record_id", "project_name", "community", "latitude", "longitude", "is_sub_project"]
+  )
+
+
+def apply_filters(df, provinces=None, proj_types=None, stages=None,
                   indigenous_ownership=None, project_scale=None):
-  """
-  Apply filters to dataframe. Returns filtered copy.
-  Uses list filtering for now - will be updated to set filtering later.
-  """
+  """Apply filters to dataframe. Returns filtered copy.
+  For portfolios, also checks sub_projects for province/stage/type matches."""
   df = df.copy()
 
   if provinces:
-    df = df[df["province"].isin(provinces)]
+    if "sub_projects" in df.columns:
+      # Match if parent province OR any sub-project province matches
+      def province_match(row):
+        if row["province"] in provinces:
+          return True
+        subs = row.get("sub_projects")
+        if isinstance(subs, list):
+          return any(s.get("province") in provinces for s in subs)
+        return False
+      df = df[df.apply(province_match, axis=1)]
+    else:
+      df = df[df["province"].isin(provinces)]
 
   if proj_types:
-    df = df[df["project_type"].apply(lambda lst: any(t in lst for t in proj_types))]
+    if "sub_projects" in df.columns:
+      # Match if parent project_type OR any sub-project type matches
+      def type_match(row):
+        parent_types = row.get("project_type", [])
+        if isinstance(parent_types, list) and any(t in parent_types for t in proj_types):
+          return True
+        subs = row.get("sub_projects")
+        if isinstance(subs, list):
+          return any(s.get("project_type") in proj_types for s in subs)
+        return False
+      df = df[df.apply(type_match, axis=1)]
+    else:
+      df = df[df["project_type"].apply(lambda lst: any(t in lst for t in proj_types))]
 
   if stages:
-    df = df[df["stage"].isin(stages)]
+    if "sub_projects" in df.columns:
+      # Match if parent stage OR any sub-project stage matches
+      def stage_match(row):
+        if row["stage"] in stages:
+          return True
+        subs = row.get("sub_projects")
+        if isinstance(subs, list):
+          return any(s.get("stage") in stages for s in subs)
+        return False
+      df = df[df.apply(stage_match, axis=1)]
+    else:
+      df = df[df["stage"].isin(stages)]
 
   if indigenous_ownership:
     df = df[df["indigenous_ownership"].isin(indigenous_ownership)]
@@ -226,14 +286,17 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
 
 
 def get_map_data_internal(df):
-  """Internal function to create map trace from filtered data."""
+  """Create map trace from exploded (one-point-per-location) dataframe."""
+  if df.empty:
+    return go.Scattermap(lat=[], lon=[], mode='markers')
+
   map_data = go.Scattermap(
-    lat=df['latitude'], 
-    lon=df['longitude'], 
-    mode='markers', 
+    lat=df['latitude'],
+    lon=df['longitude'],
+    mode='markers',
     text=df["project_name"],
     marker=dict(size=10, opacity=0.9, color='#00504a'),
-    customdata=df[["community", "record_id"]], 
+    customdata=df[["community", "record_id"]].values.tolist(),
     selected=dict(marker=dict(color='#c63527')),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>"
   )
@@ -241,8 +304,7 @@ def get_map_data_internal(df):
 
 
 def get_project_card_data_internal(df):
-  """Internal function to prepare project card data from filtered dataframe."""
-  # Format columns
+  """Prepare project card data from filtered dataframe."""
   df = add_formatted_list_columns(df, ["project_type", "all_financing_mechanisms"])
   df = format_number_column(df, "total_cost", 0)
 
@@ -251,52 +313,70 @@ def get_project_card_data_internal(df):
 
 # ============= CALLABLE FUNCTION =============
 @anvil.server.callable
-def get_all_map_and_cards(provinces=None, proj_types=None, stages=None, 
+def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
                           indigenous_ownership=None, project_scale=None,
                           page=1, page_size=50):
   """
   Single server call that returns BOTH map data and project cards.
-  Map shows ALL filtered points. Cards are paginated.
-  OPTIMIZED: Only builds traces for current page.
+  
+  Map: explodes portfolios into one pin per sub-project location (all filtered points).
+  Cards: one card per project/portfolio (paginated). Portfolio cards carry sub_projects
+         list so the client can render an expandable site list.
+  
+  OPTIMIZED: Only builds traces for the current page of cards.
   """
 
-  # Select columns needed for map
-  map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
-              "province", "stage", "project_type", "indigenous_ownership", "project_scale"]
-  df_map = DATA.loc[:, map_cols].copy()
+  # --- MAP DATA: needs sub_projects for exploding ---
+  map_cols = [
+    "record_id", "project_name", "community", "latitude", "longitude",
+    "province", "stage", "project_type", "indigenous_ownership",
+    "project_scale", "sub_projects",
+  ]
+  df_map = DATA.loc[:, [c for c in map_cols if c in DATA.columns]].copy()
 
-  # Select columns needed for cards - NOTE: NO TRACES IN INITIAL COLUMNS
-  card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
-               "province", "total_cost", "project_scale", "all_financing_mechanisms", 
-               "owners", "indigenous_ownership", "capital_mix"]  # Raw data only
-  df_cards = DATA.loc[:, card_cols].copy()
+  # --- CARD DATA: one row per project, includes financing + sub_projects ---
+  card_cols = [
+    "record_id", "project_name", "data_source", "stage", "project_type",
+    "province", "total_cost", "project_scale", "all_financing_mechanisms",
+    "owners", "indigenous_ownership", "capital_mix",
+    "sub_projects", "response_type",
+  ]
+  df_cards = DATA.loc[:, [c for c in card_cols if c in DATA.columns]].copy()
 
-  # Apply filters to BOTH dataframes
-  df_map_filtered = apply_filters(df_map, provinces, proj_types, stages, 
-                                  indigenous_ownership, project_scale)
-  df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
-                                    indigenous_ownership, project_scale)
+  # Apply filters to BOTH dataframes (filters check sub_projects too)
+  df_map_filtered = apply_filters(
+    df_map, provinces, proj_types, stages,
+    indigenous_ownership, project_scale
+  )
+  df_cards_filtered = apply_filters(
+    df_cards, provinces, proj_types, stages,
+    indigenous_ownership, project_scale
+  )
 
-  # Generate map data (ALL points)
-  map_data = get_map_data_internal(df_map_filtered)
+  # --- MAP: explode portfolios into individual pins ---
+  df_map_exploded = explode_for_map(df_map_filtered)
+  map_data = get_map_data_internal(df_map_exploded)
 
-  # Calculate pagination
+  # Build a lookup: record_id -> list of map point indices
+  record_id_to_map_indices = {}
+  if not df_map_exploded.empty:
+    for idx, rid in enumerate(df_map_exploded["record_id"]):
+      record_id_to_map_indices.setdefault(str(rid), []).append(idx)
+
+  # --- CARDS: one card per project, paginated ---
   total_count = len(df_cards_filtered)
   start_idx = (page - 1) * page_size
   end_idx = min(start_idx + page_size, total_count)
 
-  # Get cards for this page only
   df_cards_page = df_cards_filtered.iloc[start_idx:end_idx].copy()
 
-  # ============= KEY OPTIMIZATION =============
-  # Build traces ONLY for the cards on this page (e.g., 15 cards instead of 521)
+  # Build traces ONLY for the cards on this page
   df_cards_page["ownership_traces"] = df_cards_page["owners"].apply(
     lambda x: build_ownership_bar(x, OWNERSHIP_COLORS)
   )
   df_cards_page["capital_mix_traces"] = df_cards_page["capital_mix"].apply(
     lambda x: build_capital_mix_traces(x, CATEGORY_PALETTES)
   )
-  # ============================================
 
   results = {
     'map_data': map_data,
@@ -306,7 +386,8 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     'page_size': page_size,
     'has_more': end_idx < total_count,
     'start_idx': start_idx,
-    'end_idx': end_idx
+    'end_idx': end_idx,
+    'record_id_to_map_indices': record_id_to_map_indices,
   }
 
   return results
