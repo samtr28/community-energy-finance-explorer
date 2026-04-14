@@ -1,3 +1,20 @@
-components: []
+components:
+- components:
+  - data_bindings:
+    - {code: 'self.item[''site_name'']', property: text, writeback: false}
+    layout_properties: {grid_position: 'EYLQCC,NWHKIK'}
+    name: site_name
+    properties: {}
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  - data_bindings:
+    - {code: 'self.item[''project_cost'']', property: text, writeback: false}
+    layout_properties: {grid_position: 'EYLQCC,IHPRAC'}
+    name: cost
+    properties: {}
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  layout_properties: {grid_position: 'WGUTKS,JFEVVO'}
+  name: column_panel_1
+  properties: {}
+  type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true
