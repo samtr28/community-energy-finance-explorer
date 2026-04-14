@@ -55,7 +55,7 @@ components:
       - data_bindings:
         - {code: 'self.item[''portfolio_badge'']', property: message, writeback: false}
         layout_properties: {grid_position: 'AYOXBW,BZNBJT'}
-        name: data_source_pill_2
+        name: portfolio_badge
         properties: {level: info, message: 'self.item[''data_source'']'}
         type: form:dep_ar2wlcmlppsllr:MessagePill
       layout_properties: {slot: card-content-container-slot}

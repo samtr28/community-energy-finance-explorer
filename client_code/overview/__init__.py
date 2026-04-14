@@ -12,8 +12,8 @@ class overview(overviewTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     
-    total_cost, row_count = anvil.server.call('get_summary_data')
-    self.project_number.text = f"{row_count}"
+    total_cost, project_num = anvil.server.call('get_summary_data')
+    self.project_number.text = f"{project_num}"
     self.total_funding_number.text = f"${total_cost / 1e9:.1f}B"
 
 
