@@ -283,9 +283,9 @@ color: %color:On Primary Container%;
 .nav-holder .left-nav, .left-nav-placeholder {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; 
+  background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
 /*   border-right: 1px solid #e0e0e0; */
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   color: %color:On Surface Variant%; 
   overflow-x: hidden;
@@ -336,8 +336,11 @@ color: %color:On Primary Container%;
 
 .left-nav .anvil-component-icon.left-icon {
   width: 0;
-  margin-right: 24px;
+  margin-right: 40px;
   position: relative;
+  /* added incon colour */
+  color: %color:On Primary Container%; 
+  font-size: 25px;
 }
 
 .left-nav .anvil-component-icon.left_edge-icon, .left-nav .anvil-component-icon.right_edge-icon {
@@ -362,26 +365,36 @@ color: %color:On Primary Container%;
   margin: 0 -8px;
   padding: 4px 16px;
   border-radius: 100px;
+  /* added */
+  background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%;
 }
-
 .left-nav .anvil-component.left_edge-icon {
   padding-left: 72px;
 }
-
 .left-nav a:hover, .app-bar a:hover, .app-bar a:active {
+  /* changed
   background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%;
+opacity: 100%;
+  ADDED BELOW */
+  background: %color:Primary Container%;
   opacity: 100%;
 }
-
 .left-nav a.anvil-role-selected, .app-bar a.anvil-role-selected  {
-  background-color: %color:Secondary Container%;
-  color: %color:On Secondary Container%;
+  background-color: %color:Primary%;
+  color: %color:On Primary%;
 }
-
 .left-nav a.anvil-role-selected:hover, .app-bar a.anvil-role-selected:hover {
-  background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), %color:Secondary%;
-  color: %color:On Secondary%;
+  background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), %color:Primary%;
+color: %color:On Primary%;
 }
+/*ICON STYLING - hover and selected icon colours */
+.left-nav a:hover .anvil-component-icon {
+  color: #005493;  /* icon color on hover */
+}
+.left-nav a.anvil-role-selected .anvil-component-icon {
+  color: %color:On Primary%;  /* icon color when selected */
+}
+/* DONE ADDING ICON STYLING */
 
 .designer .nav-holder .left-nav {
   min-width: 56px;
@@ -1212,7 +1225,7 @@ footer a, .footer .anvil-component {
 }
 
 .anvil-role-card-highlight {
-  background: %color:Secondary Container% !important; 
+  background: %color:Primary Container% !important; 
   /*transition: background 800ms ease;          /* match your cards */
 }
 
@@ -1363,4 +1376,9 @@ footer a, .footer .anvil-component {
 
 .anvil-role-beta-pill {
   border-radius: 20px;
+}
+
+.anvil-role-sub-card-highlight {
+  background: %color:Tertiary Container% !important; 
+  /*transition: background 800ms ease;          /* match your cards */
 }

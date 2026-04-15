@@ -9,12 +9,12 @@ components:
       align: left
       background: theme:UVic Blue Container
       border: ''
-      font_size: 16
+      font_size: 18
       icon: fa:home
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Overview
       tooltip: Learn about the project
     type: Link
@@ -25,12 +25,12 @@ components:
     properties:
       align: left
       bold: false
-      font_size: 16
+      font_size: 18
       icon: fa:bar-chart
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Capital Explorer
     type: Link
   - components: []
@@ -39,12 +39,12 @@ components:
     name: ownership_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 18
       icon: fa:handshake-o
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Ownership Models
     type: Link
   - components: []
@@ -53,12 +53,12 @@ components:
     name: outcomes_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 18
       icon: fa:bullseye
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Outcomes & Impacts
     type: Link
   - components: []
@@ -67,12 +67,13 @@ components:
     name: projects_nav
     properties:
       align: left
-      font_size: 16
+      bold: false
+      font_size: 18
       icon: fa:map-marker
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Project Explorer
     type: Link
   - event_bindings: {click: case_nav_click}
@@ -80,12 +81,12 @@ components:
     name: case_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 18
       icon: fa:book
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Case Studies
     type: Link
   - components: []
@@ -94,12 +95,12 @@ components:
     name: resources_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 18
       icon: fa:briefcase
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Resources
     type: Link
   - components: []
@@ -108,12 +109,12 @@ components:
     name: methods_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 18
       icon: fa:info-circle
       icon_align: left
       role: null
       spacing:
-        margin: [null, null, '4', null]
+        margin: ['4', null, '4', null]
       text: Data & Methods
     type: Link
   layout_properties: {slot: left-nav}
@@ -169,7 +170,7 @@ components:
   name: rich_text_1
   properties:
     align: right
-    content: '<p>The Community Energy Finance Navigator © 2026 by<a href="https://impactinvestinghub.ca/" style="color: #F5AA1c">Impact Investing Hub</a> &amp; <a href="https://www.uvic.ca/acet/index.php" style="color: #f5aa1c">ACET</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color: #C2DDFF">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:3em;max-height:2em;margin-left:.3em;vertical-align:middle;"></p>'
+    content: '<p>The Community Energy Finance Navigator © 2026 by<a href="https://impactinvestinghub.ca/" style="color: #c2ddff">Impact Investing Hub</a> &amp; <a href="https://www.uvic.ca/acet/index.php" style="color: #c2ddff">ACET</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color: #C2DDFF">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:3em;max-height:2em;margin-left:.3em;vertical-align:middle;"></p>'
     enable_slots: false
     font: ser
     font_size: 11
@@ -178,15 +179,6 @@ components:
       margin: ['0', null, '0', null]
       padding: ['0', null, '0', null]
   type: RichText
-- layout_properties: {slot: nav-right}
-  name: iih_logo
-  properties:
-    display_mode: shrink_to_fit
-    height: ''
-    margin: ['0', null, null, null]
-    source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
-    vertical_align: bottom
-  type: Image
 - components:
   - layout_properties: {slot: app-title-slot}
     name: heading_1
@@ -203,7 +195,7 @@ components:
     name: text_1
     properties:
       align: center
-      background_color: theme:Tertiary Container
+      background_color: theme:Primary Container
       font_size: 14
       icon: mi:info
       icon_size: 18
@@ -213,7 +205,7 @@ components:
         padding: ['5', '10', '5', '10']
       style: label
       text: Beta Version
-      text_color: theme:Tertiary
+      text_color: theme:On Primary Container
     type: form:dep_9kcxnwm3upyjd:_Components.Text
   layout_properties: {slot: title}
   name: rich_text_2
@@ -224,6 +216,15 @@ components:
       margin: ['0', '0', null, null]
       padding: ['0', null, '0', null]
   type: RichText
+- layout_properties: {slot: nav-right}
+  name: iih_logo
+  properties:
+    display_mode: shrink_to_fit
+    height: ''
+    margin: ['0', null, null, null]
+    source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
+    vertical_align: bottom
+  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate

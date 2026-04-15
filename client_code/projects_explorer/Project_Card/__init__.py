@@ -9,11 +9,24 @@ class Project_Card(Project_CardTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
+    # Hide sub-project panel initially
+    self.sub_projects_list.visible = False
+
+    self._showing_all = False
+
     # Set basic info
     if self.item["data_source"] == "Survey response":
       self.data_source_pill.level = "info"
     else:
       self.data_source_pill.level = "warning"
+
+    # Show sub-project count for portfolios
+    subs = self.item.get("sub_projects", [])
+    if subs and len(subs) > 0:
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects"
+      self.sub_projects_label.visible = True
+    else:
+      self.sub_projects_label.visible = False
 
     # Setup ownership plot immediately
     self.ownership_plot.data = self.item["ownership_traces"]
@@ -104,18 +117,58 @@ class Project_Card(Project_CardTemplate):
         )
       ]
 
+    # Show/hide portfolio pill
+    self.portfolio_pill.visible = bool(self.item.get("portfolio_text"))
+
+    
   def project_card_click(self, **event_args):
     """Handle card selection"""
-    parent = self.parent
-    card_idx = parent.get_components().index(self)
     form = get_open_form()
 
-    # Calculate actual index in full dataset
+    # Skip if this was triggered by a sub-project click bubbling up
+    if getattr(form, '_handling_sub_click', False):
+      form._handling_sub_click = False
+      return
+
+    parent = self.parent
+    card_idx = parent.get_components().index(self)
+
     start_idx = (form._current_page - 1) * form._page_size
     actual_idx = start_idx + card_idx
 
-    # Toggle selection
     if hasattr(form, '_selected_idx') and form._selected_idx == actual_idx:
       form._unselect_all()
     else:
       form._select_index(actual_idx)
+
+  def toggle_sub_list(self, **event_args):
+    """Toggle the sub-project list visibility"""
+    self.sub_projects_list.visible = not self.sub_projects_list.visible
+
+    if self.sub_projects_list.visible:
+      subs = self.item.get("sub_projects", [])
+      # Show first 5, with a way to load more later
+      self.sub_projects_list.items = subs[:5]
+      self._showing_all = len(subs) <= 5
+
+      if not self._showing_all:
+        self.sub_projects_label.text = f"Portfolio · showing 5 of {len(subs)} ▾"
+      else:
+        self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"
+    else:
+      subs = self.item.get("sub_projects", [])
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects"
+      self.sub_projects_list.items = []
+
+  def highlight_sub_row(self, sub_id):
+    """Highlight the selected sub-project row"""
+    for row in self.sub_projects_list.get_components():
+      if row.item.get("sub_id") == sub_id:
+        row.sub_project_card.role = "sub-card-highlight"
+      else:
+        row.sub_project_card.role = ""
+
+  def clear_sub_highlight(self):
+    """Clear all sub-project row highlights"""
+    for row in self.sub_projects_list.get_components():
+      row.sub_project_card.role = ""

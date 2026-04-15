@@ -13,7 +13,10 @@ class projects_explorer(projects_explorerTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self._hi_card = None
+    self._hi_row = None
     self._selected_idx = None
+
+    self._handling_sub_click = False
 
     # Pagination state
     self._current_page = 1
@@ -117,8 +120,11 @@ class projects_explorer(projects_explorerTemplate):
     # SINGLE SERVER CALL
     all_data = anvil.server.call('get_all_map_and_cards', **kwargs)
 
-    # Update map (always show all filtered points)
-    self.project_map.data = [all_data['map_data']]
+    self.project_map.data = all_data['map_data']
+    
+    # Store sub-project → parent mapping for click handling
+    self._sub_parent_map = all_data.get('sub_parent_map', {})
+    self._sub_id_to_point = all_data.get('sub_id_to_point', {})
 
     # Update project cards (replace with current page)
     self.project_cards.items = all_data['project_cards']
@@ -222,70 +228,137 @@ class projects_explorer(projects_explorerTemplate):
     self.schedule_filter_update()
 
   # ============ MAP CLICK EVENTS ============
-  def _select_index(self, idx: int):
+  def _select_index(self, idx: int, sub_id=None):
     """Highlight point idx on the map and the matching card."""
-    # Map: select just this point
     fig = self.project_map.figure
     if fig and fig.data:
       fig.data[0].selectedpoints = [idx]
+      if len(fig.data) > 1:
+        fig.data[1].selectedpoints = []
       self.project_map.figure = fig
-
-    # Calculate which page this card is on
+  
     target_page = (idx // self._page_size) + 1
-
-    # If not on the right page, load it
+  
     if target_page != self._current_page:
       self.apply_filters(page=target_page)
-
-    # Calculate card index within the current page
+  
     start_idx = (self._current_page - 1) * self._page_size
     card_idx = idx - start_idx
-
-    # Card: scroll + highlight
+  
     rows = self.project_cards.get_components()
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
       row.scroll_into_view()
-
+  
       # Clear previous highlight
       if self._hi_card:
         self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
-
+      if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
+        self._hi_row.clear_sub_highlight()
+  
+        # Set new highlight
       row.project_card.role = ((row.project_card.role or "") + " card-highlight").strip()
       self._hi_card = row.project_card
-
-    # Track current selection
+      self._hi_row = row
+  
     self._selected_idx = idx
-
+    self._selected_sub_id = sub_id
+  
   def _unselect_all(self):
     """Clear selection from both map and cards."""
-    # Map: clear selection
     fig = self.project_map.figure
     if fig and fig.data:
       fig.data[0].selectedpoints = []
+      if len(fig.data) > 1:
+        fig.data[1].selectedpoints = []
       self.project_map.figure = fig
 
-    # Card: remove highlight
     if self._hi_card:
       self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
       self._hi_card = None
+    if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
+      self._hi_row.clear_sub_highlight()
+      self._hi_row = None
 
-    # Clear tracking
     self._selected_idx = None
+    self._selected_sub_id = None
 
   def project_map_click(self, points, **event_args):
-    """Handle map click events - jump directly to the page"""
+    """Handle map click events"""
     if not points:
-      # Clicked empty area - unselect
       self._unselect_all()
       return
+  
+    pt = points[0]
+    curve = pt.get("curve_number", 0)
+    idx = pt["point_number"]
+  
+    if curve == 0:
+      if self._selected_idx == idx:
+        self._unselect_all()
+      else:
+        self._select_index(idx)
+  
+    elif curve == 1:
+      info = self._sub_parent_map.get(str(idx))
+      if info:
+        self._select_sub_project(info["parent_pos"], info["sub_id"], scroll=True)
 
-    idx = points[0]["point_number"]
+  def _select_sub_project(self, parent_pos, sub_id, scroll=False):
+    """Select a sub-project: highlight parent card, expand list, highlight row and map pin"""
+    # === 1. Update map — BOTH traces in one write ===
+    point_idx = self._sub_id_to_point.get(sub_id)
+    fig = self.project_map.figure
+    if fig and fig.data:
+      fig.data[0].selectedpoints = [parent_pos]
+      if len(fig.data) > 1:
+        fig.data[1].selectedpoints = [point_idx] if point_idx is not None else []
+      self.project_map.figure = fig
 
-    # Toggle: if clicking same point, unselect
-    if self._selected_idx == idx:
-      self._unselect_all()
-      return
+    # === 2. Navigate to correct page ===
+    target_page = (parent_pos // self._page_size) + 1
+    if target_page != self._current_page:
+      self.apply_filters(page=target_page)
 
-    # Select (will load correct page if needed)
-    self._select_index(idx)
+    # === 3. Highlight parent card ===
+    start_idx = (self._current_page - 1) * self._page_size
+    card_idx = parent_pos - start_idx
+    rows = self.project_cards.get_components()
+    if 0 <= card_idx < len(rows):
+      row = rows[card_idx]
+
+      # Clear previous highlights
+      if self._hi_card:
+        self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
+      if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
+        self._hi_row.clear_sub_highlight()
+
+      row.project_card.role = ((row.project_card.role or "") + " card-highlight").strip()
+      self._hi_card = row.project_card
+      self._hi_row = row
+
+      # === 4. Expand list and ensure the sub-project is visible ===
+      subs = row.item.get("sub_projects", [])
+      if subs:
+        first_five_ids = [s.get("sub_id") for s in subs[:5]]
+        if sub_id in first_five_ids:
+          if not row.sub_projects_list.visible:
+            row.toggle_sub_list()
+        else:
+          row.sub_projects_list.items = subs
+          row.sub_projects_list.visible = True
+          row._showing_all = True
+          row.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"
+
+      # === 5. Highlight the sub-project row ===
+      row.highlight_sub_row(sub_id)
+
+      # === 6. Scroll to the specific sub-project row (only from map clicks) ===
+      if scroll:
+        for sub_row in row.sub_projects_list.get_components():
+          if sub_row.item.get("sub_id") == sub_id:
+            sub_row.scroll_into_view()
+            break
+
+    self._selected_idx = parent_pos
+    self._selected_sub_id = sub_id

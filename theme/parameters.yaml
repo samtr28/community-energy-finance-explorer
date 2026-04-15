@@ -346,3 +346,4 @@ roles:
 - {name: equal-height}
 - {components: null, name: accordion-header}
 - {name: beta-pill}
+- {name: sub-card-highlight}
