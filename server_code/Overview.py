@@ -29,9 +29,9 @@ def build_province_pie():
 @anvil.server.callable
 def get_summary_data():
   total_cost = DATA['total_cost'].sum()
-  row_count = len(DATA)
+  project_num = DATA['num_projects_response'].sum()
 
-  return total_cost, row_count
+  return total_cost, project_num
 
 
 @anvil.server.callable
