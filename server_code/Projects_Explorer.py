@@ -235,7 +235,8 @@ def get_map_data_internal(df):
     marker=dict(size=10, opacity=0.9, color='#00504a'),
     customdata=df[["community", "record_id"]], 
     selected=dict(marker=dict(color='#c63527')),
-    hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>"
+    hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>",
+    showlegend=False
   )
   return map_data
 
@@ -245,6 +246,9 @@ def get_project_card_data_internal(df):
   # Format columns
   df = add_formatted_list_columns(df, ["project_type", "all_financing_mechanisms"])
   df = format_number_column(df, "total_cost", 0)
+  df["portfolio_text"] = df["sub_projects"].apply(
+    lambda x: "Portfolio of Projects" if isinstance(x, list) and len(x) > 0 else ""
+  )
 
   return df.to_dict(orient="records")
 
@@ -307,10 +311,11 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     lon=sub_lons,
     mode='markers',
     text=sub_names,
-    marker=dict(size=7, opacity=0.8, color='#378ADD'),
+    marker=dict(size=10, opacity=0.9, color='#00504a'),
     customdata=sub_customdata,
     selected=dict(marker=dict(color='#c63527')),
-    hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<br><i>Part of: %{customdata[4]}</i><extra></extra>"
+    hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<br><i>Part of: %{customdata[4]}</i><extra></extra>",
+    showlegend=False
   )
 
   # Build point_index → parent_pos lookup

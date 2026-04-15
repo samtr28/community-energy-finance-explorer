@@ -117,6 +117,10 @@ class Project_Card(Project_CardTemplate):
         )
       ]
 
+    # Show/hide portfolio pill
+    self.portfolio_pill.visible = bool(self.item.get("portfolio_text"))
+
+    
   def project_card_click(self, **event_args):
     """Handle card selection"""
     form = get_open_form()
