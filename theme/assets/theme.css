@@ -1377,3 +1377,8 @@ footer a, .footer .anvil-component {
 .anvil-role-beta-pill {
   border-radius: 20px;
 }
+
+.anvil-role-sub-card-highlight {
+  background: %color:Secondary Container% !important; 
+  /*transition: background 800ms ease;          /* match your cards */
+}

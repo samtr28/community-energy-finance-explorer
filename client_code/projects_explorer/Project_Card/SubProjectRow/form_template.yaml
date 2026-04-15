@@ -1,0 +1,31 @@
+components:
+- components:
+  - components:
+    - components:
+      - layout_properties: {grid_position: 'JPPNWK,ADNSEW MNKJPI,FLRLUN'}
+        name: sub_name_label
+        properties: {text: ''}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'JPPNWK,OVDCOR'}
+        name: sub_type_label
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'JPPNWK,EXECEU'}
+        name: sub_cost_label
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {slot: card-content-container-slot}
+      name: sub_project_column
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {slot: card-content-slot}
+    name: card_content
+    properties: {}
+    type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+  event_bindings: {click: sub_row_click}
+  layout_properties: {grid_position: 'JKRBQK,YKUEXU'}
+  name: sub_project_card
+  properties: {appearance: outlined, enabled: true}
+  type: form:dep_9kcxnwm3upyjd:_Components.InteractiveCard
+container: {type: ColumnPanel}
+is_package: true
