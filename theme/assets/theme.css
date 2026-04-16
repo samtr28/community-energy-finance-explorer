@@ -1225,7 +1225,7 @@ footer a, .footer .anvil-component {
 }
 
 .anvil-role-card-highlight {
-  background: %color:Primary Container% !important; 
+  background: %color:Accent Green% !important; 
   /*transition: background 800ms ease;          /* match your cards */
 }
 
