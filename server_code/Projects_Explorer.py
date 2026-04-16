@@ -249,6 +249,12 @@ def get_project_card_data_internal(df):
   df["portfolio_text"] = df["sub_projects"].apply(
     lambda x: "Portfolio of Projects" if isinstance(x, list) and len(x) > 0 else ""
   )
+  df["location_text"] = df.apply(
+    lambda r: f"{r['community']}, {r['province_abbr']}" 
+    if pd.notna(r.get('community')) and pd.notna(r.get('province_abbr'))
+    else (r.get('province_abbr', '') or ''),
+    axis=1
+  )
 
   return df.to_dict(orient="records")
 
@@ -272,7 +278,8 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   # Select columns needed for cards - NOTE: NO TRACES IN INITIAL COLUMNS
   card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
                "province", "total_cost", "project_scale", "all_financing_mechanisms", 
-               "owners", "indigenous_ownership", "capital_mix","sub_projects"]  # Raw data only
+               "owners", "indigenous_ownership", "capital_mix", "sub_projects",
+               "community", "province_abbr"]  # Raw data only
   df_cards = DATA.loc[:, card_cols].copy()
 
   # Apply filters to BOTH dataframes
@@ -328,6 +335,14 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     }
     sub_id_to_point[cd[1]] = i  # sub_id → point index
 
+  # Build parent_pos → list of sub-project point indices
+  parent_to_sub_points = {}
+  for i, cd in enumerate(sub_customdata):
+    parent_pos = cd[3]
+    if str(parent_pos) not in parent_to_sub_points:
+      parent_to_sub_points[str(parent_pos)] = []
+    parent_to_sub_points[str(parent_pos)].append(i)
+
   # Calculate pagination
   total_count = len(df_cards_filtered)
   start_idx = (page - 1) * page_size
@@ -350,6 +365,7 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     'map_data': [map_data,sub_map_data],
     'sub_parent_map': sub_parent_map,
     'sub_id_to_point': sub_id_to_point,
+    'parent_to_sub_points': parent_to_sub_points,
     'project_cards': get_project_card_data_internal(df_cards_page),
     'total_count': total_count,
     'page': page,

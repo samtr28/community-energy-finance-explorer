@@ -11,8 +11,12 @@ class Project_Card(Project_CardTemplate):
 
     # Hide sub-project panel initially
     self.sub_projects_list.visible = False
+    self.show_more_link.visible = False
 
     self._showing_all = False
+
+    # Hide location if empty
+    self.community.visible = bool(self.item.get("location_text"))
 
     # Set basic info
     if self.item["data_source"] == "Survey response":
@@ -23,7 +27,7 @@ class Project_Card(Project_CardTemplate):
     # Show sub-project count for portfolios
     subs = self.item.get("sub_projects", [])
     if subs and len(subs) > 0:
-      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects"
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▾"
       self.sub_projects_label.visible = True
     else:
       self.sub_projects_label.visible = False
@@ -144,21 +148,25 @@ class Project_Card(Project_CardTemplate):
   def toggle_sub_list(self, **event_args):
     """Toggle the sub-project list visibility"""
     self.sub_projects_list.visible = not self.sub_projects_list.visible
-
+  
     if self.sub_projects_list.visible:
       subs = self.item.get("sub_projects", [])
-      # Show first 5, with a way to load more later
       self.sub_projects_list.items = subs[:5]
       self._showing_all = len(subs) <= 5
-
+  
       if not self._showing_all:
         self.sub_projects_label.text = f"Portfolio · showing 5 of {len(subs)} ▾"
+        self.show_more_link.text = f"Show all {len(subs)} sub-projects ▾"
+        self.show_more_link.visible = True
       else:
         self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"
+        self.show_more_link.text = "Collapse ▴"
+        self.show_more_link.visible = True
     else:
       subs = self.item.get("sub_projects", [])
-      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects"
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▾"
       self.sub_projects_list.items = []
+      self.show_more_link.visible = False
 
   def highlight_sub_row(self, sub_id):
     """Highlight the selected sub-project row"""
@@ -172,3 +180,16 @@ class Project_Card(Project_CardTemplate):
     """Clear all sub-project row highlights"""
     for row in self.sub_projects_list.get_components():
       row.sub_project_card.role = ""
+
+  def show_more_click(self, **event_args):
+    """Show all sub-projects or collapse the list"""
+    if self._showing_all:
+      # Collapse the list
+      self.toggle_sub_list()
+    else:
+      # Show all
+      subs = self.item.get("sub_projects", [])
+      self.sub_projects_list.items = subs
+      self._showing_all = True
+      self.show_more_link.text = "Collapse ▴"
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"

@@ -1382,3 +1382,13 @@ footer a, .footer .anvil-component {
   background: %color:Tertiary Container% !important; 
   /*transition: background 800ms ease;          /* match your cards */
 }
+
+.anvil-role-portfolio-toggle {
+  width: 100%;
+  border-radius: 6px !important;
+}
+
+.anvil-role-portfolio-toggle:hover {
+  filter: brightness(1.15);
+  cursor: pointer;
+}

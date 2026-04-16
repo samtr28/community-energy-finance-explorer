@@ -6,7 +6,7 @@ components:
         - {code: 'self.item[''project_name'']', property: text, writeback: false}
         layout_properties: {grid_position: 'ZIOHFB,DMFPRR'}
         name: project_lbl
-        properties: {bold: true, scale: large, style: title, text_color: 'theme:On Primary'}
+        properties: {bold: true, font_size: 20, scale: large, style: title, text_color: 'theme:On Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - data_bindings:
         - {code: 'self.item[''data_source'']', property: message, writeback: false}
@@ -24,10 +24,11 @@ components:
       name: column_panel_2
       properties:
         background: theme:On Secondary Container
-        col_widths: '{"DMFPRR":35,"GWVKSL":25}'
+        col_spacing: small
+        col_widths: '{"DMFPRR":30,"GWVKSL":30}'
         spacing:
-          margin: ['-8', '-8', '', '-8']
-          padding: ['8', '8', '8', '8']
+          margin: ['-8', '-8', '0', '-8']
+          padding: ['8', '8', '0', '8']
       type: ColumnPanel
     - components:
       - components:
@@ -35,13 +36,18 @@ components:
           - {code: 'self.item[''project_type_formatted'']', property: text, writeback: false}
           layout_properties: {slot: type_slot}
           name: type
-          properties: {bold: true, font_size: 18, scale: large, style: body}
+          properties: {bold: true, font_size: 18, scale: large, style: body, text_color: 'theme:On Secondary'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {full_width_row: true, grid_position: 'YGHQWY,YIWIMA'}
         name: rich_text_1
         properties:
-          content: "Type(s): \n<br>{type_slot}"
+          background: theme:Accent Text
+          content: 'Type(s):  {type_slot}'
+          foreground: theme:On Primary
           format: restricted_html
+          spacing:
+            margin: [null, '-8', null, '-8']
+            padding: ['2', '8', '2', '8']
           spacing_above: none
           spacing_below: none
           visible: true
@@ -56,6 +62,28 @@ components:
         layout_properties: {full_width_row: true, grid_position: 'ZWSBYP,ACMTFS'}
         name: total_cost_rich_text
         properties: {content: 'Total Cost:<br> $ {cost_slot}', format: restricted_html, spacing_above: none, spacing_below: none, visible: true}
+        type: RichText
+      - components:
+        - data_bindings:
+          - {code: 'self.item[''location_text'']', property: text, writeback: false}
+          layout_properties: {slot: community_slot}
+          name: community
+          properties: {bold: true, font_size: 18}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        layout_properties: {grid_position: 'ZWSBYP,ZETNWC'}
+        name: total_cost_rich_text_3
+        properties: {content: 'Community:<br> {community_slot}', format: restricted_html, spacing_above: none, spacing_below: none, visible: true}
+        type: RichText
+      - components:
+        - data_bindings:
+          - {code: 'self.item[''stage'']', property: text, writeback: false}
+          layout_properties: {slot: stage_slot}
+          name: stage
+          properties: {bold: true, font_size: 18}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        layout_properties: {grid_position: 'ZWSBYP,YCTHKK'}
+        name: total_cost_rich_text_2
+        properties: {content: 'Stage:<br> {stage_slot}', format: restricted_html, spacing_above: none, spacing_below: none, visible: true}
         type: RichText
       - data_bindings:
         - {code: 'self.item[''capital_mix_traces'']', property: data, writeback: false}
@@ -76,19 +104,39 @@ components:
       - event_bindings: {click: toggle_sub_list}
         layout_properties: {full_width_row: true, grid_position: 'GECVZB,SCTIOP'}
         name: sub_projects_label
-        properties: {align: full, appearance: tonal, background_color: 'theme:On Primary Container', font_size: 20, icon: 'mi:grid_view', icon_color: 'theme:On Primary', icon_size: 15, text_color: 'theme:On Primary'}
+        properties:
+          align: full
+          appearance: text
+          background_color: theme:Primary
+          font_size: 20
+          icon: mi:grid_view
+          icon_color: theme:On Primary
+          icon_size: 20
+          spacing:
+            margin: [null, '0', null, '0']
+          text_color: theme:On Primary
         type: form:dep_9kcxnwm3upyjd:_Components.Button
       layout_properties: {slot: card-content-container-slot}
       name: column_panel_1
       properties:
-        col_widths: '{}'
+        col_spacing: large
+        col_widths: '{"ACMTFS":20,"ZETNWC":20}'
         spacing:
           margin: ['0', null, '0', null]
       type: ColumnPanel
     - layout_properties: {slot: card-content-container-slot}
       name: sub_projects_list
-      properties: {background: 'theme:Primary', item_template: projects_explorer.Project_Card.SubProjectRow, visible: true}
+      properties:
+        background: ''
+        item_template: projects_explorer.Project_Card.SubProjectRow
+        margin: ['0', null, '0', null]
+        visible: true
       type: RepeatingPanel
+    - event_bindings: {click: show_more_click}
+      layout_properties: {slot: card-content-container-slot}
+      name: show_more_link
+      properties: {visible: false}
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
     layout_properties: {slot: card-content-slot}
     name: card_content_container_2
     properties:

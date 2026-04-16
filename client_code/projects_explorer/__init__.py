@@ -125,6 +125,7 @@ class projects_explorer(projects_explorerTemplate):
     # Store sub-project → parent mapping for click handling
     self._sub_parent_map = all_data.get('sub_parent_map', {})
     self._sub_id_to_point = all_data.get('sub_id_to_point', {})
+    self._parent_to_sub_points = all_data.get('parent_to_sub_points', {})
 
     # Update project cards (replace with current page)
     self.project_cards.items = all_data['project_cards']
@@ -180,7 +181,7 @@ class projects_explorer(projects_explorerTemplate):
     # Update info label
     start = (self._current_page - 1) * self._page_size + 1
     end = min(self._current_page * self._page_size, self._total_count)
-    self.page_info_label.text = f"Showing {start}-{end} of {self._total_count} projects"
+    self.page_info_label.text = f"Showing {start}-{end} of {self._total_count}"
 
     # Update page number label
     self.current_page_label.text = f"Page {self._current_page} of {self._total_pages}"
@@ -234,7 +235,15 @@ class projects_explorer(projects_explorerTemplate):
     if fig and fig.data:
       fig.data[0].selectedpoints = [idx]
       if len(fig.data) > 1:
-        fig.data[1].selectedpoints = []
+        sub_points = self._parent_to_sub_points.get(str(idx), [])
+        fig.data[1].selectedpoints = sub_points
+
+      # Zoom to the selected point
+      lat = fig.data[0].lat[idx]
+      lon = fig.data[0].lon[idx]
+      fig.layout.map.center = dict(lat=lat, lon=lon)
+      fig.layout.map.zoom = 6
+
       self.project_map.figure = fig
   
     target_page = (idx // self._page_size) + 1
@@ -271,6 +280,9 @@ class projects_explorer(projects_explorerTemplate):
       fig.data[0].selectedpoints = []
       if len(fig.data) > 1:
         fig.data[1].selectedpoints = []
+      # Reset zoom
+      fig.layout.map.center = dict(lat=57, lon=-97)
+      fig.layout.map.zoom = 2
       self.project_map.figure = fig
 
     if self._hi_card:
@@ -313,6 +325,14 @@ class projects_explorer(projects_explorerTemplate):
       fig.data[0].selectedpoints = [parent_pos]
       if len(fig.data) > 1:
         fig.data[1].selectedpoints = [point_idx] if point_idx is not None else []
+
+      # Zoom to the sub-project
+      if point_idx is not None and len(fig.data) > 1:
+        lat = fig.data[1].lat[point_idx]
+        lon = fig.data[1].lon[point_idx]
+        fig.layout.map.center = dict(lat=lat, lon=lon)
+        fig.layout.map.zoom = 6
+
       self.project_map.figure = fig
 
     # === 2. Navigate to correct page ===
@@ -337,28 +357,33 @@ class projects_explorer(projects_explorerTemplate):
       self._hi_card = row.project_card
       self._hi_row = row
 
-      # === 4. Expand list and ensure the sub-project is visible ===
+      # === 4. Expand list with selected sub-project at the top ===
       subs = row.item.get("sub_projects", [])
       if subs:
-        first_five_ids = [s.get("sub_id") for s in subs[:5]]
-        if sub_id in first_five_ids:
-          if not row.sub_projects_list.visible:
-            row.toggle_sub_list()
-        else:
-          row.sub_projects_list.items = subs
+        selected = [s for s in subs if s.get("sub_id") == sub_id]
+        others = [s for s in subs if s.get("sub_id") != sub_id]
+        reordered = selected + others
+
+        if len(subs) <= 5:
+          row.sub_projects_list.items = reordered
           row.sub_projects_list.visible = True
           row._showing_all = True
           row.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"
+          row.show_more_link.visible = False
+        else:
+          row.sub_projects_list.items = reordered[:5]
+          row.sub_projects_list.visible = True
+          row._showing_all = False
+          row.sub_projects_label.text = f"Portfolio · showing 5 of {len(subs)} ▾"
+          row.show_more_link.text = f"Show all {len(subs)} sub-projects"
+          row.show_more_link.visible = True
 
       # === 5. Highlight the sub-project row ===
       row.highlight_sub_row(sub_id)
 
-      # === 6. Scroll to the specific sub-project row (only from map clicks) ===
+      # === 6. Scroll to the parent card (only from map clicks) ===
       if scroll:
-        for sub_row in row.sub_projects_list.get_components():
-          if sub_row.item.get("sub_id") == sub_id:
-            sub_row.scroll_into_view()
-            break
+        row.scroll_into_view()
 
     self._selected_idx = parent_pos
     self._selected_sub_id = sub_id

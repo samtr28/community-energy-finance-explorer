@@ -348,3 +348,4 @@ roles:
 - {components: null, name: accordion-header}
 - {name: beta-pill}
 - {name: sub-card-highlight}
+- {name: portfolio-toggle}
