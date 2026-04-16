@@ -7,12 +7,6 @@ components:
         properties: {bold: true, font_size: 18, text: '', text_color: 'theme:On Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - components:
-        - data_bindings:
-          - {code: 'self.item[''project_type_formatted'']', property: text, writeback: false}
-          layout_properties: {slot: type_slot}
-          name: sub_type_label
-          properties: {bold: false, font_size: null, scale: medium, style: body, text_color: 'theme:On Secondary'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Text
         - layout_properties: {slot: icon1_slot}
           name: type_icon_1
           properties: {background_color: 'theme:Secondary Container', enabled: true, icon: '', icon_color: 'theme:On Primary Container'}
@@ -33,7 +27,7 @@ components:
         name: type_panel
         properties:
           background: ''
-          content: '{icon1_slot}{icon2_slot}{icon3_slot}{icon4_slot}Project type:  {type_slot}'
+          content: '{icon1_slot}{icon2_slot}{icon3_slot}{icon4_slot}'
           foreground: theme:On Primary
           format: restricted_html
           spacing:

@@ -11,7 +11,6 @@ class SubProjectRow(SubProjectRowTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self.sub_name_label.text = self.item.get("site_name", "")
-    self.sub_type_label.text = self.item.get("project_type", "")
     cost = self.item.get("project_cost")
     if cost:
       self.sub_cost_label.text = f"${cost:,.0f}"
@@ -21,14 +20,17 @@ class SubProjectRow(SubProjectRowTemplate):
     TYPE_ICONS = {
       'Biofuel/Biogas': 'mi:local_fire_department',
       'Solar': 'mi:solar_power',
-      'Wind': 'mi:wind_power',
+      'Wind': 'mi:wind_energy',  # more commonly used than wind_power
       'Hydro': 'mi:water_drop',
       'Biomass': 'mi:eco',
       'Energy storage': 'mi:battery_charging_full',
       'Geothermal': 'mi:thermostat',
       'Building efficiency upgrades': 'mi:apartment',
-      'Heat pump': 'mi:heat_pump',
-      'District energy': 'mi:device_hub',
+      'Electro-mobility': 'mi:electric_car',
+      'Hydrogen': 'mi:bubble_chart',  # abstract molecule-like icon
+      'Tidal/Wave': 'mi:waves',
+      'Microgrid': 'mi:grid_on',
+      'Waste to energy': 'mi:recycling'
     }
 
     icon_components = [self.type_icon_1, self.type_icon_2, self.type_icon_3, self.type_icon_4]

@@ -12,15 +12,19 @@ class Project_Card(Project_CardTemplate):
     # Set type icon
     # Set type icons (up to 4)
     TYPE_ICONS = {
+      'Biofuel/Biogas': 'mi:local_fire_department',
       'Solar': 'mi:solar_power',
-      'Wind': 'mi:wind_power',
+      'Wind': 'mi:wind_energy',  # more commonly used than wind_power
       'Hydro': 'mi:water_drop',
-      'Biomass': 'mi:local_fire_department',
+      'Biomass': 'mi:eco',
       'Energy storage': 'mi:battery_charging_full',
       'Geothermal': 'mi:thermostat',
       'Building efficiency upgrades': 'mi:apartment',
-      'Heat pump': 'mi:heat_pump',
-      'District energy': 'mi:device_hub',
+      'Electro-mobility': 'mi:electric_car',
+      'Hydrogen': 'mi:bubble_chart',  # abstract molecule-like icon
+      'Tidal/Wave': 'mi:waves',
+      'Microgrid': 'mi:grid_on',
+      'Waste to energy': 'mi:recycling'
     }
 
     icon_components = [self.type_icon_1, self.type_icon_2, self.type_icon_3, self.type_icon_4]

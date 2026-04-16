@@ -1225,7 +1225,7 @@ footer a, .footer .anvil-component {
 }
 
 .anvil-role-card-highlight {
-  background: %color:Accent Green% !important; 
+  background: %color:Tertiary Container% !important; 
   /*transition: background 800ms ease;          /* match your cards */
 }
 
@@ -1379,7 +1379,7 @@ footer a, .footer .anvil-component {
 }
 
 .anvil-role-sub-card-highlight {
-  background: %color:Tertiary Container% !important; 
+  background: %color:Tertiary% !important; 
   /*transition: background 800ms ease;          /* match your cards */
 }
 
