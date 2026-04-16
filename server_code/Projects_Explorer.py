@@ -234,7 +234,8 @@ def get_map_data_internal(df):
     text=df["project_name"],
     marker=dict(size=10, opacity=0.9, color='#00504a'),
     customdata=df[["community", "record_id"]], 
-    selected=dict(marker=dict(color='#c63527')),
+    selected=dict(marker=dict(color='#c63527', size=16)),
+    unselected=dict(marker=dict(opacity=0.3, size=8)),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>",
     showlegend=False
   )
@@ -249,6 +250,13 @@ def get_project_card_data_internal(df):
   df["portfolio_text"] = df["sub_projects"].apply(
     lambda x: "Portfolio of Projects" if isinstance(x, list) and len(x) > 0 else ""
   )
+  df["location_text"] = df.apply(
+    lambda r: f"{r['community']}, {r['province_abbr']}" 
+    if pd.notna(r.get('community')) and pd.notna(r.get('province_abbr'))
+    else (r.get('province_abbr', '') or ''),
+    axis=1
+  )
+
 
   return df.to_dict(orient="records")
 
@@ -272,7 +280,8 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   # Select columns needed for cards - NOTE: NO TRACES IN INITIAL COLUMNS
   card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
                "province", "total_cost", "project_scale", "all_financing_mechanisms", 
-               "owners", "indigenous_ownership", "capital_mix","sub_projects"]  # Raw data only
+               "owners", "indigenous_ownership", "capital_mix", "sub_projects",
+               "community", "province_abbr"]  # Raw data only
   df_cards = DATA.loc[:, card_cols].copy()
 
   # Apply filters to BOTH dataframes
@@ -313,7 +322,8 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     text=sub_names,
     marker=dict(size=10, opacity=0.9, color='#00504a'),
     customdata=sub_customdata,
-    selected=dict(marker=dict(color='#c63527')),
+    selected=dict(marker=dict(color='#c63527', size=16)),
+    unselected=dict(marker=dict(opacity=0.5, size=8)),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<br><i>Part of: %{customdata[4]}</i><extra></extra>",
     showlegend=False
   )
@@ -327,6 +337,14 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
       "sub_id": cd[1],
     }
     sub_id_to_point[cd[1]] = i  # sub_id → point index
+
+  # Build parent_pos → list of sub-project point indices
+  parent_to_sub_points = {}
+  for i, cd in enumerate(sub_customdata):
+    parent_pos = cd[3]
+    if str(parent_pos) not in parent_to_sub_points:
+      parent_to_sub_points[str(parent_pos)] = []
+    parent_to_sub_points[str(parent_pos)].append(i)
 
   # Calculate pagination
   total_count = len(df_cards_filtered)
@@ -346,10 +364,22 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   )
   # ============================================
 
+  # Build coordinate lookup for zoom
+  point_coords = {}
+  for i, (_, r) in enumerate(df_map_filtered.iterrows()):
+    point_coords[str(i)] = {"lat": float(r["latitude"]), "lon": float(r["longitude"])}
+
+  sub_point_coords = {}
+  for i in range(len(sub_lats)):
+    sub_point_coords[str(i)] = {"lat": float(sub_lats[i]), "lon": float(sub_lons[i])}
+    
   results = {
-    'map_data': [map_data,sub_map_data],
+    'map_data': [map_data, sub_map_data],
     'sub_parent_map': sub_parent_map,
     'sub_id_to_point': sub_id_to_point,
+    'parent_to_sub_points': parent_to_sub_points,
+    'point_coords': point_coords,
+    'sub_point_coords': sub_point_coords,
     'project_cards': get_project_card_data_internal(df_cards_page),
     'total_count': total_count,
     'page': page,

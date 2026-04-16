@@ -8,11 +8,47 @@ import m3.components as m3
 class Project_Card(Project_CardTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
+    # Show type icons
+    # Set type icon
+    # Set type icons (up to 4)
+    TYPE_ICONS = {
+      'Biofuel/Biogas': 'mi:local_fire_department',
+      'Solar': 'mi:solar_power',
+      'Wind': 'mi:wind_energy',  # more commonly used than wind_power
+      'Hydro': 'mi:water_drop',
+      'Biomass': 'mi:eco',
+      'Energy storage': 'mi:battery_charging_full',
+      'Geothermal': 'mi:thermostat',
+      'Building efficiency upgrades': 'mi:apartment',
+      'Electro-mobility': 'mi:electric_car',
+      'Hydrogen': 'mi:bubble_chart',  # abstract molecule-like icon
+      'Tidal/Wave': 'mi:waves',
+      'Microgrid': 'mi:grid_on',
+      'Waste to energy': 'mi:recycling'
+    }
 
+    icon_components = [self.type_icon_1, self.type_icon_2, self.type_icon_3, self.type_icon_4]
+
+    types = self.item.get("project_type", [])
+    if isinstance(types, str):
+      types = [types]
+
+    for i, icon_comp in enumerate(icon_components):
+      if i < len(types):
+        icon_comp.icon = TYPE_ICONS.get(types[i], 'mi:bolt')
+        icon_comp.visible = True
+      else:
+        icon_comp.visible = False
+
+        
     # Hide sub-project panel initially
     self.sub_projects_list.visible = False
+    self.show_more_link.visible = False
 
     self._showing_all = False
+
+    # Hide location if empty
+    self.community.visible = bool(self.item.get("location_text"))
 
     # Set basic info
     if self.item["data_source"] == "Survey response":
@@ -23,7 +59,7 @@ class Project_Card(Project_CardTemplate):
     # Show sub-project count for portfolios
     subs = self.item.get("sub_projects", [])
     if subs and len(subs) > 0:
-      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects"
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▾"
       self.sub_projects_label.visible = True
     else:
       self.sub_projects_label.visible = False
@@ -144,21 +180,25 @@ class Project_Card(Project_CardTemplate):
   def toggle_sub_list(self, **event_args):
     """Toggle the sub-project list visibility"""
     self.sub_projects_list.visible = not self.sub_projects_list.visible
-
+  
     if self.sub_projects_list.visible:
       subs = self.item.get("sub_projects", [])
-      # Show first 5, with a way to load more later
       self.sub_projects_list.items = subs[:5]
       self._showing_all = len(subs) <= 5
-
+  
       if not self._showing_all:
         self.sub_projects_label.text = f"Portfolio · showing 5 of {len(subs)} ▾"
+        self.show_more_link.text = f"Show all {len(subs)} sub-projects ▾"
+        self.show_more_link.visible = True
       else:
         self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"
+        self.show_more_link.text = "Collapse ▴"
+        self.show_more_link.visible = True
     else:
       subs = self.item.get("sub_projects", [])
-      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects"
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▾"
       self.sub_projects_list.items = []
+      self.show_more_link.visible = False
 
   def highlight_sub_row(self, sub_id):
     """Highlight the selected sub-project row"""
@@ -172,3 +212,16 @@ class Project_Card(Project_CardTemplate):
     """Clear all sub-project row highlights"""
     for row in self.sub_projects_list.get_components():
       row.sub_project_card.role = ""
+
+  def show_more_click(self, **event_args):
+    """Show all sub-projects or collapse the list"""
+    if self._showing_all:
+      # Collapse the list
+      self.toggle_sub_list()
+    else:
+      # Show all
+      subs = self.item.get("sub_projects", [])
+      self.sub_projects_list.items = subs
+      self._showing_all = True
+      self.show_more_link.text = "Collapse ▴"
+      self.sub_projects_label.text = f"Portfolio · {len(subs)} sub-projects ▴"

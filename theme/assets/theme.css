@@ -1225,7 +1225,7 @@ footer a, .footer .anvil-component {
 }
 
 .anvil-role-card-highlight {
-  background: %color:Primary Container% !important; 
+  background: %color:Tertiary Container% !important; 
   /*transition: background 800ms ease;          /* match your cards */
 }
 
@@ -1379,6 +1379,16 @@ footer a, .footer .anvil-component {
 }
 
 .anvil-role-sub-card-highlight {
-  background: %color:Tertiary Container% !important; 
+  background: %color:Tertiary% !important; 
   /*transition: background 800ms ease;          /* match your cards */
+}
+
+.anvil-role-portfolio-toggle {
+  width: 100%;
+  border-radius: 6px !important;
+}
+
+.anvil-role-portfolio-toggle:hover {
+  filter: brightness(1.15);
+  cursor: pointer;
 }
