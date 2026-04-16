@@ -57,7 +57,7 @@ components:
           - {code: 'self.item[''total_cost'']', property: text, writeback: false}
           layout_properties: {slot: cost_slot}
           name: cost
-          properties: {bold: true, font_size: 18}
+          properties: {bold: true, font_size: 16}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {full_width_row: true, grid_position: 'ZWSBYP,ACMTFS'}
         name: total_cost_rich_text
@@ -68,7 +68,7 @@ components:
           - {code: 'self.item[''location_text'']', property: text, writeback: false}
           layout_properties: {slot: community_slot}
           name: community
-          properties: {bold: true, font_size: 18}
+          properties: {bold: true, font_size: 16}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'ZWSBYP,ZETNWC'}
         name: total_cost_rich_text_3
@@ -79,7 +79,7 @@ components:
           - {code: 'self.item[''stage'']', property: text, writeback: false}
           layout_properties: {slot: stage_slot}
           name: stage
-          properties: {bold: true, font_size: 18}
+          properties: {bold: true, font_size: 16}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'ZWSBYP,YCTHKK'}
         name: total_cost_rich_text_2

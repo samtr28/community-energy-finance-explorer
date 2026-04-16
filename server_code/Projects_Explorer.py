@@ -361,6 +361,15 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   )
   # ============================================
 
+  # Build coordinate lookup for zoom
+  point_coords = {}
+  for i, (_, r) in enumerate(df_map_filtered.iterrows()):
+    point_coords[str(i)] = {"lat": float(r["latitude"]), "lon": float(r["longitude"])}
+
+  sub_point_coords = {}
+  for i in range(len(sub_lats)):
+    sub_point_coords[str(i)] = {"lat": float(sub_lats[i]), "lon": float(sub_lons[i])}
+    
   results = {
     'map_data': [map_data,sub_map_data],
     'sub_parent_map': sub_parent_map,
