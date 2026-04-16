@@ -258,7 +258,7 @@ class projects_explorer(projects_explorerTemplate):
         coords = self._point_coords.get(str(idx))
         if coords and coords["lat"] != 0 and coords["lon"] != 0:
           fig.layout.map.center = dict(lat=coords["lat"], lon=coords["lon"])
-          fig.layout.map.zoom = 6
+          fig.layout.map.zoom = 5
 
       self.project_map.figure = fig
 

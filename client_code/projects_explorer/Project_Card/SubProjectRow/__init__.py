@@ -18,6 +18,32 @@ class SubProjectRow(SubProjectRowTemplate):
     else:
       self.sub_cost_label.text = "—"
 
+    TYPE_ICONS = {
+      'Biofuel/Biogas': 'mi:local_fire_department',
+      'Solar': 'mi:solar_power',
+      'Wind': 'mi:wind_power',
+      'Hydro': 'mi:water_drop',
+      'Biomass': 'mi:eco',
+      'Energy storage': 'mi:battery_charging_full',
+      'Geothermal': 'mi:thermostat',
+      'Building efficiency upgrades': 'mi:apartment',
+      'Heat pump': 'mi:heat_pump',
+      'District energy': 'mi:device_hub',
+    }
+
+    icon_components = [self.type_icon_1, self.type_icon_2, self.type_icon_3, self.type_icon_4]
+
+    types = self.item.get("project_type", [])
+    if isinstance(types, str):
+      types = [types]
+  
+    for i, icon_comp in enumerate(icon_components):
+      if i < len(types):
+        icon_comp.icon = TYPE_ICONS.get(types[i], 'mi:bolt')
+        icon_comp.visible = True
+      else:
+        icon_comp.visible = False
+
   def sub_row_click(self, **event_args):
     """When a sub-project row is clicked, highlight on map"""
     form = get_open_form()

@@ -10,6 +10,7 @@ class Project_Card(Project_CardTemplate):
     self.init_components(**properties)
     # Show type icons
     # Set type icon
+    # Set type icons (up to 4)
     TYPE_ICONS = {
       'Solar': 'mi:solar_power',
       'Wind': 'mi:wind_power',
@@ -21,15 +22,21 @@ class Project_Card(Project_CardTemplate):
       'Heat pump': 'mi:heat_pump',
       'District energy': 'mi:device_hub',
     }
+
+    icon_components = [self.type_icon_1, self.type_icon_2, self.type_icon_3, self.type_icon_4]
+
     types = self.item.get("project_type", [])
     if isinstance(types, str):
       types = [types]
 
-    if types:
-      self.type_icon.icon = TYPE_ICONS.get(types[0], 'mi:bolt')
-      self.type_icon.visible = True
-    else:
-      self.type_icon.visible = False
+    for i, icon_comp in enumerate(icon_components):
+      if i < len(types):
+        icon_comp.icon = TYPE_ICONS.get(types[i], 'mi:bolt')
+        icon_comp.visible = True
+      else:
+        icon_comp.visible = False
+
+        
     # Hide sub-project panel initially
     self.sub_projects_list.visible = False
     self.show_more_link.visible = False

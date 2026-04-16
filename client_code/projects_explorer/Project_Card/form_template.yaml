@@ -36,22 +36,32 @@ components:
           - {code: 'self.item[''project_type_formatted'']', property: text, writeback: false}
           layout_properties: {slot: type_slot}
           name: type
-          properties: {bold: true, font_size: 18, scale: large, style: body, text_color: 'theme:On Secondary'}
+          properties: {bold: false, font_size: null, scale: medium, style: body, text_color: 'theme:On Secondary'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         - layout_properties: {slot: icon1_slot}
           name: type_icon_1
-          properties: {enabled: false, icon: '', icon_color: 'theme:Tertiary Container'}
+          properties: {background_color: 'theme:Secondary Container', enabled: true, icon: '', icon_color: 'theme:On Primary Container'}
           type: form:dep_9kcxnwm3upyjd:_Components.IconButton
         - layout_properties: {slot: icon2_slot}
           name: type_icon_2
-          properties: {enabled: false, icon: '', icon_color: 'theme:Tertiary Container'}
+          properties: {background_color: 'theme:Secondary Container', enabled: true, icon: '', icon_color: 'theme:On Primary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.IconButton
+        - layout_properties: {slot: icon3_slot}
+          name: type_icon_3
+          properties: {background_color: 'theme:Secondary Container', enabled: true, icon: '', icon_color: 'theme:On Primary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.IconButton
+        - layout_properties: {slot: icon4_slot}
+          name: type_icon_4
+          properties: {appearance: standard, background_color: 'theme:Secondary Container', enabled: true, icon: '', icon_color: 'theme:On Primary Container'}
           type: form:dep_9kcxnwm3upyjd:_Components.IconButton
         layout_properties: {full_width_row: true, grid_position: 'YGHQWY,YIWIMA'}
         name: type_panel
         properties:
           background: theme:Accent Text
-          content: |
-            Type(s):  {type_slot}     {icon1_slot}{icon2_slot}{icon3_slot}{icon4_slot}
+          content: |-
+            {icon1_slot}{icon2_slot}{icon3_slot}{icon4_slot}
+            <br>
+            Project type:  {type_slot}
           foreground: theme:On Primary
           format: restricted_html
           spacing:
@@ -116,7 +126,7 @@ components:
         properties:
           align: full
           appearance: text
-          background_color: theme:Primary
+          background_color: theme:On Primary Container
           font_size: 20
           icon: mi:grid_view
           icon_color: theme:On Primary
