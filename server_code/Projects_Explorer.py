@@ -234,7 +234,8 @@ def get_map_data_internal(df):
     text=df["project_name"],
     marker=dict(size=10, opacity=0.9, color='#00504a'),
     customdata=df[["community", "record_id"]], 
-    selected=dict(marker=dict(color='#c63527')),
+    selected=dict(marker=dict(color='#c63527', size=16)),
+    unselected=dict(marker=dict(opacity=0.3, size=8)),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>",
     showlegend=False
   )
@@ -255,6 +256,7 @@ def get_project_card_data_internal(df):
     else (r.get('province_abbr', '') or ''),
     axis=1
   )
+
 
   return df.to_dict(orient="records")
 
@@ -320,7 +322,8 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     text=sub_names,
     marker=dict(size=10, opacity=0.9, color='#00504a'),
     customdata=sub_customdata,
-    selected=dict(marker=dict(color='#c63527')),
+    selected=dict(marker=dict(color='#c63527', size=16)),
+    unselected=dict(marker=dict(opacity=0.5, size=8)),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<br><i>Part of: %{customdata[4]}</i><extra></extra>",
     showlegend=False
   )
@@ -371,10 +374,12 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     sub_point_coords[str(i)] = {"lat": float(sub_lats[i]), "lon": float(sub_lons[i])}
     
   results = {
-    'map_data': [map_data,sub_map_data],
+    'map_data': [map_data, sub_map_data],
     'sub_parent_map': sub_parent_map,
     'sub_id_to_point': sub_id_to_point,
     'parent_to_sub_points': parent_to_sub_points,
+    'point_coords': point_coords,
+    'sub_point_coords': sub_point_coords,
     'project_cards': get_project_card_data_internal(df_cards_page),
     'total_count': total_count,
     'page': page,

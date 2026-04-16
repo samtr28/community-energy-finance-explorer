@@ -8,7 +8,28 @@ import m3.components as m3
 class Project_Card(Project_CardTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
+    # Show type icons
+    # Set type icon
+    TYPE_ICONS = {
+      'Solar': 'mi:solar_power',
+      'Wind': 'mi:wind_power',
+      'Hydro': 'mi:water_drop',
+      'Biomass': 'mi:local_fire_department',
+      'Energy storage': 'mi:battery_charging_full',
+      'Geothermal': 'mi:thermostat',
+      'Building efficiency upgrades': 'mi:apartment',
+      'Heat pump': 'mi:heat_pump',
+      'District energy': 'mi:device_hub',
+    }
+    types = self.item.get("project_type", [])
+    if isinstance(types, str):
+      types = [types]
 
+    if types:
+      self.type_icon.icon = TYPE_ICONS.get(types[0], 'mi:bolt')
+      self.type_icon.visible = True
+    else:
+      self.type_icon.visible = False
     # Hide sub-project panel initially
     self.sub_projects_list.visible = False
     self.show_more_link.visible = False

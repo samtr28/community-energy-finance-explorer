@@ -38,11 +38,20 @@ components:
           name: type
           properties: {bold: true, font_size: 18, scale: large, style: body, text_color: 'theme:On Secondary'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
+        - layout_properties: {slot: icon1_slot}
+          name: type_icon_1
+          properties: {enabled: false, icon: '', icon_color: 'theme:Tertiary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.IconButton
+        - layout_properties: {slot: icon2_slot}
+          name: type_icon_2
+          properties: {enabled: false, icon: '', icon_color: 'theme:Tertiary Container'}
+          type: form:dep_9kcxnwm3upyjd:_Components.IconButton
         layout_properties: {full_width_row: true, grid_position: 'YGHQWY,YIWIMA'}
-        name: rich_text_1
+        name: type_panel
         properties:
           background: theme:Accent Text
-          content: 'Type(s):  {type_slot}'
+          content: |
+            Type(s):  {type_slot}     {icon1_slot}{icon2_slot}{icon3_slot}{icon4_slot}
           foreground: theme:On Primary
           format: restricted_html
           spacing:
@@ -120,7 +129,7 @@ components:
       name: column_panel_1
       properties:
         col_spacing: large
-        col_widths: '{"ACMTFS":20,"ZETNWC":20}'
+        col_widths: '{"ACMTFS":15,"ZETNWC":30,"YCTHKK":15}'
         spacing:
           margin: ['0', null, '0', null]
       type: ColumnPanel

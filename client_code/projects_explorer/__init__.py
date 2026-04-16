@@ -126,6 +126,8 @@ class projects_explorer(projects_explorerTemplate):
     self._sub_parent_map = all_data.get('sub_parent_map', {})
     self._sub_id_to_point = all_data.get('sub_id_to_point', {})
     self._parent_to_sub_points = all_data.get('parent_to_sub_points', {})
+    self._point_coords = all_data.get('point_coords', {})
+    self._sub_point_coords = all_data.get('sub_point_coords', {})
 
     # Update project cards (replace with current page)
     self.project_cards.items = all_data['project_cards']
@@ -192,25 +194,31 @@ class projects_explorer(projects_explorerTemplate):
     self.next_page_btn.enabled = self._current_page < self._total_pages
     self.last_page_btn.enabled = self._current_page < self._total_pages
 
+  def _scroll_to_first_card(self):
+    """Scroll to the first card in the list"""
+    rows = self.project_cards.get_components()
+    if rows:
+      rows[0].scroll_into_view()
+
   def first_page_btn_click(self, **event_args):
-    """Go to first page"""
     if self._current_page != 1:
       self.apply_filters(page=1)
+      self._scroll_to_first_card()
 
   def prev_page_btn_click(self, **event_args):
-    """Go to previous page"""
     if self._current_page > 1:
       self.apply_filters(page=self._current_page - 1)
+      self._scroll_to_first_card()
 
   def next_page_btn_click(self, **event_args):
-    """Go to next page"""
     if self._current_page < self._total_pages:
       self.apply_filters(page=self._current_page + 1)
+      self._scroll_to_first_card()
 
   def last_page_btn_click(self, **event_args):
-    """Go to last page"""
     if self._current_page != self._total_pages:
       self.apply_filters(page=self._total_pages)
+      self._scroll_to_first_card()
 
   # ============ DROPDOWN CHANGE EVENTS ============
   def provinces_dd_change(self, **event_args):
@@ -229,49 +237,54 @@ class projects_explorer(projects_explorerTemplate):
     self.schedule_filter_update()
 
   # ============ MAP CLICK EVENTS ============
-  def _select_index(self, idx: int, sub_id=None):
+  def _select_index(self, idx: int):
     """Highlight point idx on the map and the matching card."""
     fig = self.project_map.figure
     if fig and fig.data:
       fig.data[0].selectedpoints = [idx]
+      sub_points = self._parent_to_sub_points.get(str(idx), [])
       if len(fig.data) > 1:
-        sub_points = self._parent_to_sub_points.get(str(idx), [])
         fig.data[1].selectedpoints = sub_points
 
-      # Zoom to the selected point
-      lat = fig.data[0].lat[idx]
-      lon = fig.data[0].lon[idx]
-      fig.layout.map.center = dict(lat=lat, lon=lon)
-      fig.layout.map.zoom = 6
+      # For portfolios, zoom to centroid of sub-projects
+      if sub_points and self._sub_point_coords:
+        sub_coords = [self._sub_point_coords[str(sp)] for sp in sub_points if str(sp) in self._sub_point_coords]
+        if sub_coords:
+          avg_lat = sum(c["lat"] for c in sub_coords) / len(sub_coords)
+          avg_lon = sum(c["lon"] for c in sub_coords) / len(sub_coords)
+          fig.layout.map.center = dict(lat=avg_lat, lon=avg_lon)
+          fig.layout.map.zoom = 4
+      else:
+        coords = self._point_coords.get(str(idx))
+        if coords and coords["lat"] != 0 and coords["lon"] != 0:
+          fig.layout.map.center = dict(lat=coords["lat"], lon=coords["lon"])
+          fig.layout.map.zoom = 6
 
       self.project_map.figure = fig
-  
+
     target_page = (idx // self._page_size) + 1
-  
+
     if target_page != self._current_page:
       self.apply_filters(page=target_page)
-  
+
     start_idx = (self._current_page - 1) * self._page_size
     card_idx = idx - start_idx
-  
+
     rows = self.project_cards.get_components()
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
       row.scroll_into_view()
-  
-      # Clear previous highlight
+
       if self._hi_card:
         self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
       if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
         self._hi_row.clear_sub_highlight()
-  
-        # Set new highlight
+
       row.project_card.role = ((row.project_card.role or "") + " card-highlight").strip()
       self._hi_card = row.project_card
       self._hi_row = row
-  
+
     self._selected_idx = idx
-    self._selected_sub_id = sub_id
   
   def _unselect_all(self):
     """Clear selection from both map and cards."""
@@ -280,7 +293,6 @@ class projects_explorer(projects_explorerTemplate):
       fig.data[0].selectedpoints = []
       if len(fig.data) > 1:
         fig.data[1].selectedpoints = []
-      # Reset zoom
       fig.layout.map.center = dict(lat=57, lon=-97)
       fig.layout.map.zoom = 2
       self.project_map.figure = fig
@@ -326,12 +338,11 @@ class projects_explorer(projects_explorerTemplate):
       if len(fig.data) > 1:
         fig.data[1].selectedpoints = [point_idx] if point_idx is not None else []
 
-      # Zoom to the sub-project
-      if point_idx is not None and len(fig.data) > 1:
-        lat = fig.data[1].lat[point_idx]
-        lon = fig.data[1].lon[point_idx]
-        fig.layout.map.center = dict(lat=lat, lon=lon)
-        fig.layout.map.zoom = 6
+      if point_idx is not None:
+        coords = self._sub_point_coords.get(str(point_idx))
+        if coords:
+          fig.layout.map.center = dict(lat=coords["lat"], lon=coords["lon"])
+          fig.layout.map.zoom = 6
 
       self.project_map.figure = fig
 
@@ -347,7 +358,6 @@ class projects_explorer(projects_explorerTemplate):
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
 
-      # Clear previous highlights
       if self._hi_card:
         self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
       if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
