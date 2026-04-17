@@ -9,7 +9,7 @@ components:
       align: left
       background: theme:UVic Blue Container
       border: ''
-      font_size: 18
+      font_size: 16
       icon: fa:home
       icon_align: left
       role: null
@@ -25,7 +25,7 @@ components:
     properties:
       align: left
       bold: false
-      font_size: 18
+      font_size: 16
       icon: fa:bar-chart
       icon_align: left
       role: null
@@ -39,7 +39,7 @@ components:
     name: ownership_nav
     properties:
       align: left
-      font_size: 18
+      font_size: 16
       icon: fa:handshake-o
       icon_align: left
       role: null
@@ -53,7 +53,7 @@ components:
     name: outcomes_nav
     properties:
       align: left
-      font_size: 18
+      font_size: 16
       icon: fa:bullseye
       icon_align: left
       role: null
@@ -68,7 +68,7 @@ components:
     properties:
       align: left
       bold: false
-      font_size: 18
+      font_size: 16
       icon: fa:map-marker
       icon_align: left
       role: null
@@ -81,7 +81,7 @@ components:
     name: case_nav
     properties:
       align: left
-      font_size: 18
+      font_size: 16
       icon: fa:book
       icon_align: left
       role: null
@@ -95,7 +95,7 @@ components:
     name: resources_nav
     properties:
       align: left
-      font_size: 18
+      font_size: 16
       icon: fa:briefcase
       icon_align: left
       role: null
@@ -233,7 +233,7 @@ is_package: true
 slots:
   content_slot:
     index: 0
-    set_layout_properties: {full_width_row: true, grid_position: 'CWYVSY,BZYHHO'}
+    set_layout_properties: {grid_position: 'CBKDVT,BFQVLB'}
     target: {name: sub_content_panel, type: container}
   title_slot:
     index: 0
