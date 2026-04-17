@@ -93,8 +93,12 @@ components_by_slot:
         spacing:
           margin: ['0', null, null, null]
         style: body
-        text: Browse real-world community energy projects and see how they were financed. Each project shared their financing journey through our survey to inspire and inform future initiatives.
+        text: 'Browse real-world community energy projects and see how they were financed. Each project shared their financing journey through our survey to inspire and inform future initiatives. Please note, this map only features projects that chose to have their projects featured publicly. There are some projects who chose to participate anonymously,with their projects only featured in aggregate data visualizations and statistics. '
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'NVUPCC,LTQTQB'}
+      name: spacer_1
+      properties: {}
+      type: Spacer
     - data_bindings: []
       event_bindings: {click: project_map_click}
       layout_properties: {full_width_row: true, grid_position: 'CWYAPV,WSRNCB'}
@@ -147,11 +151,11 @@ components_by_slot:
       name: pagination_container
       properties: {}
       type: FlowPanel
-    layout_properties: {full_width_row: true}
+    layout_properties: {}
     name: column_panel_2
     properties:
       col_spacing: small
-      col_widths: '{"WSRNCB":35,"ZNMRWP":25}'
+      col_widths: '{"WSRNCB":35,"ZNMRWP":25,"YZPPBW":35,"LTQTQB":25}'
       role: null
       spacing:
         margin: ['0', null, '0', null]
