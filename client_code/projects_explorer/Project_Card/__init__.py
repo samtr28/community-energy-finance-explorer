@@ -14,7 +14,7 @@ class Project_Card(Project_CardTemplate):
     TYPE_ICONS = {
       'Biofuel/Biogas': 'mi:local_fire_department',
       'Solar': 'mi:solar_power',
-      'Wind': 'mi:wind_energy',  # more commonly used than wind_power
+      'Wind': 'mi:wind_power', 
       'Hydro': 'mi:water_drop',
       'Biomass': 'mi:eco',
       'Energy storage': 'mi:battery_charging_full',

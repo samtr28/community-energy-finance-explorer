@@ -198,7 +198,7 @@ class projects_explorer(projects_explorerTemplate):
     """Scroll to the first card in the list"""
     rows = self.project_cards.get_components()
     if rows:
-      rows[0].scroll_into_view()
+      anvil.js.call_js('smoothScroll', rows[0])
 
   def first_page_btn_click(self, **event_args):
     if self._current_page != 1:
@@ -273,7 +273,8 @@ class projects_explorer(projects_explorerTemplate):
     rows = self.project_cards.get_components()
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
-      row.scroll_into_view()
+      #row.scroll_into_view()
+      anvil.js.call_js('smoothScroll', row)
 
       if self._hi_card:
         self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
@@ -393,7 +394,7 @@ class projects_explorer(projects_explorerTemplate):
 
       # === 6. Scroll to the parent card (only from map clicks) ===
       if scroll:
-        row.scroll_into_view()
+        anvil.js.call_js('smoothScroll', row)
 
     self._selected_idx = parent_pos
     self._selected_sub_id = sub_id

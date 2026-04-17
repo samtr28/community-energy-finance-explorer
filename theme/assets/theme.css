@@ -413,11 +413,6 @@ color: %color:On Primary%;
   flex: 1;
 }
 
-.content {
-  flex: 1;
-  overflow-x: hidden;
-}
-
 /* Components: App Bar */
 .app-bar {
   min-height: 56px;
@@ -1391,4 +1386,8 @@ footer a, .footer .anvil-component {
 .anvil-role-portfolio-toggle:hover {
   filter: brightness(1.15);
   cursor: pointer;
+}
+
+html {
+  overflow-y: scroll;
 }

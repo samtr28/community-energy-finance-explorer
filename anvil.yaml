@@ -38,6 +38,13 @@ native_deps:
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+
+    <script>
+      window.smoothScroll = function(comp) {
+        try { comp.getElement().scrollIntoView({behavior: 'smooth', block: 'start', inline: 'nearest'}); } catch(e) {}
+      }
+    </script>
 package_name: M3_App_3
 renamed: true
 runtime_options:
@@ -53,5 +60,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/files.yml
-startup: {module: projects_explorer, type: form}
+startup: {module: overview, type: form}
 startup_form: null
