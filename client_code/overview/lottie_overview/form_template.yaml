@@ -1,0 +1,12 @@
+components: []
+container:
+  properties:
+    html: |-
+      <div class="iframe-wrapper">
+        <center style="color:#888; margin: 0em;">
+          <lottie-player src="https://lottie.host/2b331815-5a90-4d4d-9aaa-04b344b5daba/og5yvT1ya5.json" background="transparent" speed="0.4" style="width: 100%;" loop autoplay></lottie-player>
+        </center>
+      </div>
+  type: HtmlTemplate
+custom_component: true
+is_package: true

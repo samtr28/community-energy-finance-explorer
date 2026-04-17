@@ -121,18 +121,18 @@ components_by_slot:
       type: ColumnPanel
     - components:
       - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: card_header
+          properties:
+            font_family: serif
+            scale: small
+            spacing:
+              margin: [null, null, '0', null]
+              padding: [null, null, '', null]
+            style: headline
+            text: Our Progress so Far
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components:
-          - layout_properties: {full_width_row: true, grid_position: 'DFHHLZ,GUTHPQ'}
-            name: card_header
-            properties:
-              font_family: serif
-              scale: small
-              spacing:
-                margin: [null, null, '0', null]
-                padding: [null, null, '', null]
-              style: headline
-              text: Our Progress so Far
-            type: form:dep_9kcxnwm3upyjd:_Components.Heading
           - components: []
             layout_properties: {full_width_row: true, grid_position: 'NWMOVG,GLIBBX'}
             name: rich_text_2
@@ -141,6 +141,10 @@ components_by_slot:
               font_size: 16
               format: restricted_html
             type: RichText
+          - layout_properties: {grid_position: 'AUBLCE,MVVVCQ'}
+            name: lottie_overview_1
+            properties: {}
+            type: form:overview.lottie_overview
           - components:
             - layout_properties: {slot: stat1}
               name: project_number
@@ -157,7 +161,7 @@ components_by_slot:
                 text: projects surveyed
                 text_color: theme:On Tertiary Container
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
-            layout_properties: {full_width_row: true, grid_position: 'AUBLCE,BZUZBX'}
+            layout_properties: {full_width_row: true, grid_position: 'AUBLCE,BZUZBX NPOBIA,TWKHQW'}
             name: rich_text_4
             properties:
               align: center
@@ -181,13 +185,13 @@ components_by_slot:
               name: total_funding_number
               properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
-            layout_properties: {full_width_row: true, grid_position: 'AUBLCE,LFCGNA'}
+            layout_properties: {grid_position: 'AUBLCE,BZUZBX UMGIAG,WYLUEH'}
             name: rich_text_5
             properties: {align: center, content: '{stat2}<br>{desc2}', format: restricted_html}
             type: RichText
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2
-          properties: {}
+          properties: {col_widths: '{"MVVVCQ":40,"BZUZBX":20}'}
           type: ColumnPanel
         layout_properties: {slot: card-content-slot}
         name: card_content_container_1
