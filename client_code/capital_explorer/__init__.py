@@ -180,3 +180,44 @@ class capital_explorer(capital_explorerTemplate):
     self.filter_timer.interval = 0
     # Apply the filters
     self.apply_filters()
+
+
+  def _get_filter_kwargs(self):
+    """Returns filter kwargs dict for the server call."""
+    kwargs = {}
+    if self.provinces_dd.selected:
+      kwargs['provinces'] = self.provinces_dd.selected
+    if self.proj_types_dd.selected:
+      kwargs['proj_types'] = self.proj_types_dd.selected
+    if self.stages_dd.selected:
+      kwargs['stages'] = self.stages_dd.selected
+    if self.indig_owners_dd.selected:
+      kwargs['indigenous_ownership'] = self.indig_owners_dd.selected
+    if self.project_scale_dd.selected:
+      kwargs['project_scale'] = self.project_scale_dd.selected
+    return kwargs
+
+  def _get_active_filters(self):
+    """Returns human-readable filter summary for the export annotation."""
+    def fmt(selected):
+      return ", ".join(selected) if selected else "All"
+    return {
+      "Provinces":       fmt(self.provinces_dd.selected),
+      "Project Types":   fmt(self.proj_types_dd.selected),
+      "Stages":          fmt(self.stages_dd.selected),
+      "Indigenous":      fmt(self.indig_owners_dd.selected),
+      "Project Scale":   fmt(self.project_scale_dd.selected),
+    }
+  
+  def _download_chart(self, chart_key):
+    """Reusable download method. Pass any chart key from CAPITAL_CHART_BUILDERS."""
+    media = anvil.server.call(
+      'export_capital_chart',
+      chart_key,
+      self._get_active_filters(),
+      **self._get_filter_kwargs()
+    )
+    anvil.download(media)
+
+  def download_box_plot_click(self, **event_args):
+    self._download_chart('box_plot')

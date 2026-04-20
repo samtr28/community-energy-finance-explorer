@@ -11,7 +11,17 @@ from .Global_Server_Functions import get_data
 import plotly.graph_objects as go
 import plotly.express as px
 import textwrap
+from .export_utils import export_figure
 
+CAPITAL_CHART_BUILDERS = {
+  'box_plot':         lambda d: create_box_plot_internal(d['df_raw_filtered'], d['category_order_reversed']),
+  'time_chart':       lambda d: create_time_chart_internal(d['df_capital_filtered'], d['category_order']),
+  'sankey':           lambda d: create_sankey_internal(d['df_capital_no_proj'], d['proj_types']),
+  'stacked_bar':      lambda d: create_stacked_bar_internal(d['df_capital_filtered'], d['category_order_reversed']),
+  'bottleneck_chart': lambda d: create_bottleneck_lollipop_internal(d['df_raw_filtered']),
+  'treemap':          lambda d: create_treemap_internal(d['df_raw_filtered']),
+  'scale_pies':       lambda d: create_scale_pies_internal(d['df_capital_filtered']),
+}
 # ==================== UTILITY FUNCTIONS ====================
 
 def wrap_text(text, width=15):
@@ -1222,3 +1232,42 @@ def create_scale_pies_internal(df):
   )
 
   return fig
+
+
+@anvil.server.callable
+def export_capital_chart(chart_key, active_filters, provinces=None, proj_types=None,
+                         stages=None, indigenous_ownership=None, project_scale=None):
+  """Export any chart from the capital explorer page as a branded PNG."""
+
+  # Data pipeline — same as get_all_capital_charts
+  df_raw = get_data()
+  df_capital_mix = process_capital_mix_data(df_raw)
+
+  df_raw_filtered = apply_filters(df_raw, provinces, proj_types, stages,
+                                  indigenous_ownership, project_scale)
+  df_capital_filtered = apply_filters(df_capital_mix, provinces, proj_types, stages,
+                                      indigenous_ownership, project_scale)
+  df_capital_no_proj = apply_filters(df_capital_mix, provinces, None, stages,
+                                     indigenous_ownership, project_scale)
+
+  category_order = get_category_order(df_capital_filtered)
+
+  data = {
+    'df_raw_filtered':         df_raw_filtered,
+    'df_capital_filtered':     df_capital_filtered,
+    'df_capital_no_proj':      df_capital_no_proj,
+    'category_order':          category_order,
+    'category_order_reversed': list(reversed(category_order)),
+    'proj_types':              proj_types,
+  }
+
+  if chart_key not in CAPITAL_CHART_BUILDERS:
+    raise ValueError(f"Unknown chart key: {chart_key}")
+
+  fig = CAPITAL_CHART_BUILDERS[chart_key](data)
+
+  return export_figure(
+    fig,
+    active_filters,
+    filename=f"{chart_key}_export.png"
+  )
