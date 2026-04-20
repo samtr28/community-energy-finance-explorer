@@ -7,6 +7,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import config
+# capital_explorer.py (client)
+from .download_helper import download_chart
 
 class capital_explorer(capital_explorerTemplate):
   def __init__(self, **properties):
@@ -180,3 +182,6 @@ class capital_explorer(capital_explorerTemplate):
     self.filter_timer.interval = 0
     # Apply the filters
     self.apply_filters()
+
+  def download_sankey_btn_click(self, **event_args):
+    download_chart(self, 'capital_sankey')

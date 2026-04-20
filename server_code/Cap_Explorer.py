@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors
 from .Global_Server_Functions import get_data
+from .chart_downloads import register_data_source, register_chart
 import plotly.graph_objects as go
 import plotly.express as px
 import textwrap
@@ -1222,3 +1223,61 @@ def create_scale_pies_internal(df):
   )
 
   return fig
+
+  @register_data_source('capital_raw')
+  def _capital_raw(filters):
+    return apply_filters(get_data(), **filters)
+  
+  @register_data_source('capital_mix')
+  def _capital_mix(filters):
+    return apply_filters(process_capital_mix_data(get_data()), **filters)
+  
+  @register_data_source('capital_mix_no_proj')
+  def _capital_mix_no_proj(filters):
+    f = {**filters, 'proj_types': None}
+    return apply_filters(process_capital_mix_data(get_data()), **f)
+  
+  # Register all the charts on this page
+  register_chart('capital_sankey',
+                title='Capital flow: Source → Category → Project type',
+                filename='capital_flow_sankey',
+                data_source='capital_mix_no_proj',
+                builder=lambda df, f: create_sankey_internal(df, f.get('proj_types')))
+  
+  register_chart('capital_box',
+                title='Contribution of each financing source to project costs',
+                filename='financing_contribution',
+                data_source='capital_raw',
+                builder=lambda df, f: create_box_plot_internal(
+                  df, list(reversed(get_category_order(DATA_SOURCES['capital_mix'](f))))))
+  
+  register_chart('capital_time',
+                title='Average time to funding',
+                filename='time_to_funding',
+                data_source='capital_mix',
+                builder=lambda df, f: create_time_chart_internal(df, get_category_order(df)))
+  
+  register_chart('capital_stacked',
+                title='Funding sources by category',
+                filename='funding_sources',
+                data_source='capital_mix',
+                builder=lambda df, f: create_stacked_bar_internal(
+                  df, list(reversed(get_category_order(df)))))
+  
+  register_chart('capital_bottlenecks',
+                title='Financing bottlenecks',
+                filename='financing_bottlenecks',
+                data_source='capital_raw',
+                builder=lambda df, f: create_bottleneck_lollipop_internal(df))
+  
+  register_chart('capital_treemap',
+                title='Use of funding & financing mechanisms',
+                filename='financing_mechanisms',
+                data_source='capital_raw',
+                builder=lambda df, f: create_treemap_internal(df))
+  
+  register_chart('capital_scale_pies',
+                title='Funding distribution by project scale',
+                filename='funding_by_scale',
+                data_source='capital_mix',
+                builder=lambda df, f: create_scale_pies_internal(df))
