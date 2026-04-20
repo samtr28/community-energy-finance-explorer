@@ -148,9 +148,9 @@ components_by_slot:
         height: 70vh
         margin: ['4', null, '4', null]
       type: Plot
-    - event_bindings: {click: download_pies_btn_click}
+    - event_bindings: {click: download_sankey_btn_click}
       layout_properties: {full_width_row: true, grid_position: 'JDUVTD,WPOENU QJIVRZ,XUINDR'}
-      name: download_pies_btn_3
+      name: download_sankey_btn
       properties:
         align: right
         background_color: theme:Primary Overlay 3
