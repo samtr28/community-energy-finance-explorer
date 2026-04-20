@@ -125,7 +125,7 @@ components_by_slot:
             background_color: theme:Secondary
             bold: true
             font_size: 14
-            icon: mi:question_exchange
+            icon: question
             icon_color: theme:On Secondary Container
             icon_size: 25
             spacing:
