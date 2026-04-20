@@ -188,7 +188,7 @@ components_by_slot:
       name: scale_pies_plot
       properties:
         height: 45vh
-        margin: ['4', null, '4', null]
+        margin: ['8', null, '4', null]
       type: Plot
     - event_bindings: {click: download_pies_btn_click}
       layout_properties: {full_width_row: true, grid_position: 'SINLER,LXTODE'}

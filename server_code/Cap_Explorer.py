@@ -709,7 +709,7 @@ def create_scale_pies_internal(df):
     showlegend=True,
     legend=dict(orientation='h', y=0.01, x=0.5, xanchor='center'),
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Funding distribution by project scale'),
+    title=dict(text='Most used sources of capital by project '),
   )
   return fig
 
