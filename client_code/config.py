@@ -3,6 +3,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil import app
+import plotly.graph_objects as go
+import plotly.express as px
 
 ##### COLOUR SCHEME
 
@@ -140,3 +142,17 @@ def get_owner_type_colors(owner_types_list, palette='dunsparce'):
     owner_type: colors[i % len(colors)] 
     for i, owner_type in enumerate(sorted_types)
   }
+
+brand_template = go.layout.Template(
+  layout=go.Layout(
+    images=[dict(
+      source=None,  # logo URI gets filled in at registration time
+      xref="paper", yref="paper",
+      x=1.0, y=1.08,
+      sizex=0.12, sizey=0.12,
+      xanchor="right", yanchor="bottom",
+      layer="above"
+    )]
+  )
+)
+

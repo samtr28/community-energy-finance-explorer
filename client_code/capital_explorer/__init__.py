@@ -180,3 +180,48 @@ class capital_explorer(capital_explorerTemplate):
     self.filter_timer.interval = 0
     # Apply the filters
     self.apply_filters()
+
+
+def get_active_filters(self):
+  """Returns current filter selections as a dict"""
+  active_filters = {}
+  if self.provinces_dd.selected:
+    active_filters['provinces'] = list(self.provinces_dd.selected)
+  if self.proj_types_dd.selected:
+    active_filters['proj_types'] = list(self.proj_types_dd.selected)
+  if self.stages_dd.selected:
+    active_filters['stages'] = list(self.stages_dd.selected)
+  if self.indig_owners_dd.selected:
+    active_filters['indigenous_ownership'] = list(self.indig_owners_dd.selected)
+  if self.project_scale_dd.selected:
+    active_filters['project_scale'] = list(self.project_scale_dd.selected)
+  return active_filters
+
+
+def sankey_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.capital_flow_plot.figure, self.get_active_filters(), "capital_flow")
+  anvil.media.download(media)
+
+def box_plot_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.box_plot.figure, self.get_active_filters(), "cost_distribution")
+  anvil.media.download(media)
+
+def stacked_bar_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.stacked_plot.figure, self.get_active_filters(), "funding_sources")
+  anvil.media.download(media)
+
+def time_chart_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.funding_time_plot.figure, self.get_active_filters(), "time_to_funding")
+  anvil.media.download(media)
+
+def lollipop_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.lollipop_chart.figure, self.get_active_filters(), "bottlenecks")
+  anvil.media.download(media)
+
+def treemap_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.bubble_plot.figure, self.get_active_filters(), "financing_mechanisms")
+  anvil.media.download(media)
+
+def scale_pies_download_btn_click(self, **event_args):
+  media = anvil.server.call('download_chart', self.scale_pies_plot.figure, self.get_active_filters(), "scale_distribution")
+  anvil.media.download(media)

@@ -10,6 +10,8 @@ import plotly.graph_objects as go
 from collections.abc import Iterable
 from .Global_Server_Functions import add_formatted_list_columns, format_number_column, get_data
 from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors
+import plotly.io as pio
+
 
 # ============= COLOR PALETTE CONFIGURATION =============
 def create_palette_from_hex(hex_color, num_shades=5):
