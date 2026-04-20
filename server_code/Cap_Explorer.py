@@ -11,6 +11,7 @@ from .Global_Server_Functions import get_data
 import plotly.graph_objects as go
 import plotly.express as px
 import textwrap
+from .Export_Utils import export_figure_from_bytes
 
 # ==================== UTILITY FUNCTIONS ====================
 
@@ -1222,3 +1223,16 @@ def create_scale_pies_internal(df):
   )
 
   return fig
+
+
+@anvil.server.callable
+def export_capital_chart(chart_key, img_b64, active_filters):
+  """
+    Receives a rendered PNG from the client browser,
+    adds logo and filter summary, returns decorated PNG for download.
+    """
+  return export_figure_from_bytes(
+    img_b64,
+    active_filters,
+    filename=f"{chart_key}_export.png"
+  )
