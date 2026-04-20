@@ -93,27 +93,23 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'DZDDZR,YDAWWH'}
       name: heading_1
       properties:
+        background_color: ''
         font_family: serif
         spacing:
           margin: ['', null, null, null]
         text: How is capital flowing into community energy?
+        text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'AMGKGH,TUOREN'}
+      name: divider_1
+      properties: {color: 'theme:Accent Text'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,YDSMDU KAIHME,MZTLAW'}
       name: text_1
       properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - components:
       - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: heading_1_copy_2
-          properties:
-            scale: large
-            spacing:
-              margin: ['', null, null, null]
-            style: title
-            text: Where do projects need help?
-            text_color: theme:On Secondary Container
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: lollipop_chart
           properties: {height: 30vh}
@@ -140,7 +136,10 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
       layout_properties: {grid_position: 'JDUVTD,YDSMDU LJTJDK,GEAOPC'}
       name: card_1
-      properties: {background_color: 'theme:Secondary Container'}
+      properties:
+        background_color: theme:Secondary Container
+        spacing:
+          margin: ['20', null, null, null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,WPOENU KHHXJQ,KAKWQQ'}
       name: capital_flow_plot
@@ -171,7 +170,12 @@ components_by_slot:
         spacing:
           margin: ['', null, null, null]
         text: How does a project's size affect its capital stack?
+        text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'NIWASN,FWGQWY'}
+      name: divider_5
+      properties: {color: 'theme:Accent Text'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,OYCAXX'}
       name: text_2
       properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
@@ -184,7 +188,7 @@ components_by_slot:
       name: scale_pies_plot
       properties:
         height: 45vh
-        margin: ['4', null, '4', null]
+        margin: ['8', null, '4', null]
       type: Plot
     - event_bindings: {click: download_pies_btn_click}
       layout_properties: {full_width_row: true, grid_position: 'SINLER,LXTODE'}
@@ -209,7 +213,12 @@ components_by_slot:
         spacing:
           margin: ['', null, null, null]
         text: Which financing mechanisms are used the most?
+        text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'TKOOZK,OABAWG'}
+      name: divider_4
+      properties: {color: 'theme:Accent Text'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'GUCLJM,PWAGAM UAHNZD,EVBZRG'}
       name: bubble_plot
       properties: {height: 65vh}
@@ -320,6 +329,10 @@ components_by_slot:
       name: heading_2
       properties: {font_family: serif, text: 'Another title here '}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'WLUMOG,CMRHRX'}
+      name: divider_3
+      properties: {color: 'theme:Accent Text'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'ENMWCZ,OFQLVY VWEECP,NJGRQS'}
       name: stacked_plot
       properties:
@@ -368,6 +381,10 @@ components_by_slot:
       name: heading_2_copy
       properties: {font_family: serif, text: 'Another title here '}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'HGNSET,RTFAAN'}
+      name: divider_2
+      properties: {color: 'theme:Accent Text'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'ZFLEWF,ZHQPHM'}
       name: text_1_copy_copy
       properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. '}

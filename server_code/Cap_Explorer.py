@@ -36,7 +36,14 @@ FONT_FAMILY, FONT_SIZE, FONT_COLOR,
 from .Global_Server_Functions import get_data
 from .Export_Utils import export_figure_from_bytes, apply_display_template
 
-
+CATEGORY_OTHER_LABEL = {
+  'Grants & non-repayable contributions': 'Other grants & non-repayable funding',
+  'External equity investments':          'Other equity',
+  'Debt financing':                       'Other debt',
+  'Community financing':                  'Other community financing',
+  'Crowdfunding':                         'Other crowdfunding',
+  'Internal capital':                     'Other internal capital',
+}
 # ==================== UTILITY FUNCTIONS ====================
 
 def wrap_text(text, width=15):
@@ -190,7 +197,7 @@ def process_capital_mix_data(df):
     "Don't know":            'Other/Unknown',
   })
   mask = df_long['source'] == 'Other/Unknown'
-  df_long.loc[mask, 'source'] = df_long.loc[mask, 'source'] + '-' + df_long.loc[mask, 'category']
+  df_long.loc[mask, 'source'] = df_long.loc[mask, 'category'].map(CATEGORY_OTHER_LABEL).fillna('Other')
 
   # ── TEMPORARY FIX: Reclassify CIB debt for projects 77 & 106 ──
   # TODO: Remove once survey data is recoded
@@ -702,14 +709,14 @@ def create_scale_pies_internal(df):
     fig.layout.annotations[i].update(
       text=f'{scale}<br>({n} projects)',
       font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-      y=0.9
+      y=0.93
     )
 
   fig.update_layout(
     showlegend=True,
     legend=dict(orientation='h', y=0.01, x=0.5, xanchor='center'),
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Funding distribution by project scale'),
+    title=dict(text='Most used sources of capital by project scale'),
   )
   return fig
 
