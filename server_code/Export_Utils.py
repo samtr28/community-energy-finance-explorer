@@ -18,8 +18,10 @@ import io
 from anvil.files import data_files
 from PIL import Image, ImageDraw, ImageFont
 
+# Update the import at the top
 from .config import (
 FONT_FAMILY, FONT_SIZE, FONT_COLOR,
+TITLE_FONT_FAMILY,               # ← add this
 TITLE_SIZE, TITLE_PAD_B, MARGIN_TOP
 )
 
@@ -30,52 +32,30 @@ TITLE_SIZE, TITLE_PAD_B, MARGIN_TOP
 # To change the app-wide chart style, edit the constants in config.py.
 
 def apply_display_template(fig):
-  """
-  Apply a consistent visual style to any Plotly figure.
-
-  What it sets:
-    - Transparent background (blends with the app theme)
-    - Title: larger, clearly separated from the plot by padding
-    - Base font: uniform size across tick labels, legend, hover text
-    - Top margin: enough room for the title
-    - Annotation fonts: base font applied only where not already set
-      (preserves intentional overrides such as the white lollipop counts)
-
-  Call this on every figure in the main callable, after building it,
-  before adding it to the results dict. Per-chart specifics (axis
-  visibility, bar modes, colours) are set inside the chart functions
-  themselves and are not touched here.
-  """
   fig.update_layout(
-    # ── Backgrounds ──
     plot_bgcolor='rgba(0,0,0,0)',
     paper_bgcolor='rgba(0,0,0,0)',
-
-    # ── Base font — cascades to tick labels, legend, hover ──
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-
-    # ── Title — prominent and clearly separated from the chart ──
     title=dict(
-      font=dict(family=FONT_FAMILY, size=TITLE_SIZE, color=FONT_COLOR),
+      font=dict(family=TITLE_FONT_FAMILY, size=TITLE_SIZE, color=FONT_COLOR),
       x=0.01, xanchor='left',
       y=0.98, yanchor='top',
       pad=dict(b=TITLE_PAD_B),
     ),
-
-    # ── Axes — ensure tick font matches base size ──
     xaxis=dict(tickfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)),
     yaxis=dict(tickfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)),
-
-    # ── Legend ──
     legend=dict(font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)),
-
-    # ── Top margin — room for the title ──
     margin=dict(t=MARGIN_TOP),
+
+    # ── Modebar — keep only reset, remove everything else ──
+    modebar=dict(
+      remove=[
+        'toImage', 'zoom2d', 'pan2d', 'select2d',
+        'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d',
+      ]
+    ),
   )
 
-  # Apply base font to annotations only where not explicitly overridden.
-  # This preserves intentional per-annotation styles (e.g. white lollipop
-  # count numbers, dark teal category labels).
   for ann in fig.layout.annotations:
     if ann.font.size   is None: ann.font.size   = FONT_SIZE
     if ann.font.family is None: ann.font.family = FONT_FAMILY
@@ -85,19 +65,29 @@ def apply_display_template(fig):
 
 
 # ==================== EXPORT DECORATION ====================
-# Configuration — edit these to adjust the exported PNG appearance.
 
-DEFAULT_LOGO_FILENAME  = 'logo.png'   # must match filename in Anvil Assets exactly
-FILTER_BANNER_HEIGHT   = 60           # px added below chart for filter text
-LOGO_MAX_HEIGHT        = 60           # logo resized to this height (px), width proportional
-LOGO_PADDING           = 10           # px padding from top-right corner
-FILTER_TEXT_COLOR      = '#555555'
-FILTER_TEXT_SIZE       = 18           # pt
-FILTER_TEXT_OFFSET     = (30, 15)     # (x, y) within the banner
+DEFAULT_LOGO_FILENAME = 'logo.png'
+
+# ── Top banner (filter summary) ──
+FILTER_BANNER_HEIGHT  = 50
+FILTER_TEXT_SIZE      = 20
+FILTER_TEXT_COLOR     = '#222222'
+FILTER_TEXT_OFFSET    = (30, 14)   # (x, y) within the top banner
+
+# ── Bottom banner (source + logo) ──
+SOURCE_BANNER_HEIGHT  = 100
+SOURCE_TEXT           = 'Source: Community Energy Finance Navigator'
+SOURCE_TEXT_SIZE      = 16
+SOURCE_TEXT_COLOR     = '#555555'
+SOURCE_TEXT_OFFSET    = (30, 16)   # (x, y) within the bottom banner
+
+# ── Logo ──
+LOGO_MAX_HEIGHT       = 90         # fits neatly in the bottom banner
+LOGO_PADDING          = 10         # px from right and bottom edges of banner
 
 
-def _load_font(size=FILTER_TEXT_SIZE):
-  """Load DejaVu Sans if available on the server, fall back to Pillow default."""
+def _load_font(size):
+  """Load DejaVu Sans at the given size, fall back to Pillow default."""
   try:
     return ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', size)
   except Exception:
@@ -107,47 +97,52 @@ def _load_font(size=FILTER_TEXT_SIZE):
 def _build_filter_text(active_filters):
   """Format active filters dict into a single annotation string."""
   parts = [f"{k}: {v}" for k, v in active_filters.items() if v != 'All']
-  return 'Filters: ' + ('   |   '.join(parts) if parts else 'No filters applied')
-
-
-def _stamp_logo(canvas, logo_filename=DEFAULT_LOGO_FILENAME):
-  """
-  Load logo from Anvil Assets, resize it, and paste into the top-right
-  corner of the canvas. Fails silently if the logo file is not found.
-  """
-  try:
-    logo = Image.open(data_files[logo_filename]).convert('RGBA')
-    ratio = LOGO_MAX_HEIGHT / logo.height
-    logo  = logo.resize((int(logo.width * ratio), LOGO_MAX_HEIGHT), Image.LANCZOS)
-    canvas.paste(logo, (canvas.width - logo.width - LOGO_PADDING, LOGO_PADDING), logo)
-  except Exception as e:
-    print(f"Logo skipped: {e}")
-  return canvas
+  return 'Filters applied — ' + ('   |   '.join(parts) if parts else 'None')
 
 
 def add_logo_and_filters_pil(img_bytes, active_filters, logo_filename=DEFAULT_LOGO_FILENAME):
   """
-  Decorate a raw PNG (as bytes) with a white filter-text banner and the app logo.
+  Decorate a raw PNG with:
+    - A top banner showing the active filter summary (larger text)
+    - A bottom banner showing the data source and logo (bottom-right)
   Returns the decorated PNG as bytes.
   """
-  img    = Image.open(io.BytesIO(img_bytes)).convert('RGBA')
-  w, h   = img.size
+  img   = Image.open(io.BytesIO(img_bytes)).convert('RGBA')
+  w, h  = img.size
+  total = h + FILTER_BANNER_HEIGHT + SOURCE_BANNER_HEIGHT
 
-  # New canvas = original height + banner
-  canvas = Image.new('RGBA', (w, h + FILTER_BANNER_HEIGHT), 'white')
-  canvas.paste(img, (0, 0))
-
-  # Filter text in the banner
+  # ── Build canvas: top banner + chart + bottom banner ──
+  canvas = Image.new('RGBA', (w, total), 'white')
+  canvas.paste(img, (0, FILTER_BANNER_HEIGHT))   # chart sits below the top banner
   draw = ImageDraw.Draw(canvas)
+
+  # ── Top banner: filter summary ──
   draw.text(
-    (FILTER_TEXT_OFFSET[0], h + FILTER_TEXT_OFFSET[1]),
+    (FILTER_TEXT_OFFSET[0], FILTER_TEXT_OFFSET[1]),
     _build_filter_text(active_filters),
     fill=FILTER_TEXT_COLOR,
-    font=_load_font()
+    font=_load_font(FILTER_TEXT_SIZE)
   )
 
-  # Logo top-right
-  canvas = _stamp_logo(canvas, logo_filename)
+  # ── Bottom banner: source text ──
+  source_y = FILTER_BANNER_HEIGHT + h + SOURCE_TEXT_OFFSET[1]
+  draw.text(
+    (SOURCE_TEXT_OFFSET[0], source_y),
+    SOURCE_TEXT,
+    fill=SOURCE_TEXT_COLOR,
+    font=_load_font(SOURCE_TEXT_SIZE)
+  )
+
+  # ── Bottom banner: logo bottom-right ──
+  try:
+    logo  = Image.open(data_files[logo_filename]).convert('RGBA')
+    ratio = LOGO_MAX_HEIGHT / logo.height
+    logo  = logo.resize((int(logo.width * ratio), LOGO_MAX_HEIGHT), Image.LANCZOS)
+    x     = w - logo.width - LOGO_PADDING
+    y     = FILTER_BANNER_HEIGHT + h + (SOURCE_BANNER_HEIGHT - logo.height) // 2
+    canvas.paste(logo, (x, y), logo)
+  except Exception as e:
+    print(f"Logo skipped: {e}")
 
   out = io.BytesIO()
   canvas.convert('RGB').save(out, format='PNG')

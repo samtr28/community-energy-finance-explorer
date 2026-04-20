@@ -11,7 +11,8 @@ from anvil import app
 # Used by apply_display_template() in Export_Utils.py (server)
 # and available to client forms for any custom UI styling.
 
-FONT_FAMILY = 'Arial, sans-serif'
+FONT_FAMILY  = 'Arial, sans-serif'   # body — tick labels, legend, bar text
+TITLE_FONT_FAMILY = 'Georgia, serif' # title — serif contrasts clearly with sans-serif body
 FONT_SIZE   = 12    # base size — tick labels, legend, hover, bar text
 FONT_COLOR  = 'black'
 TITLE_SIZE  = 17    # noticeably larger than body text
