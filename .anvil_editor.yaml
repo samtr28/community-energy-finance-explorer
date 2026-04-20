@@ -27,6 +27,7 @@ unique_ids:
     projects_explorer.Project_Card.SubProjectRow: '1776286655811963906776874.5742'
     resources: '1759257439766755211398664.8079'
   modules:
+    chart_export: '1776717885549981665053013.2372'
     config: '1761843729959440190662753.931'
   scripts: {}
   server_modules:
