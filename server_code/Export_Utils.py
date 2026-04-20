@@ -101,7 +101,9 @@ FILTER_LEFT_MARGIN = 30            # px from left edge
 FILTER_BOTTOM_PAD  = 18            # px gap between last filter line and chart
 
 # ── Bottom strip (disclaimer + date) ──
-BOTTOM_STRIP_HEIGHT = 44           # px
+BOTTOM_STRIP_HEIGHT = 52           # px
+BOTTOM_STRIP_HEIGHT = 52           # px
+BOTTOM_STRIP_HEIGHT = 52           # px
 DISCLAIMER_TEXT     = 'Data reflects survey responses collected as part of ongoing research. For informational purposes only.'
 DISCLAIMER_SIZE     = 15           # pt
 DISCLAIMER_COLOR    = '#777777'
