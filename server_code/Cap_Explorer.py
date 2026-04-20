@@ -702,7 +702,7 @@ def create_scale_pies_internal(df):
     fig.layout.annotations[i].update(
       text=f'{scale}<br>({n} projects)',
       font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-      y=0.9
+      y=0.93
     )
 
   fig.update_layout(
