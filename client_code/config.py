@@ -140,3 +140,4 @@ def get_owner_type_colors(owner_types_list, palette='dunsparce'):
     owner_type: colors[i % len(colors)] 
     for i, owner_type in enumerate(sorted_types)
   }
+

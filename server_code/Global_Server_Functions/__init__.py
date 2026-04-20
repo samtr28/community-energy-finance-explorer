@@ -6,6 +6,10 @@ from anvil.tables import app_tables
 import anvil.server
 from collections.abc import Iterable
 import pandas as pd
+import plotly.io as pio
+import plotly.graph_objects as go
+import base64
+from anvil.files import data_files
 
 
 _DATA_CACHE = None
@@ -82,5 +86,69 @@ def format_number_column(df: pd.DataFrame, col: str, decimals: int = 0, new_col:
     df[col] = formatted
   return df
 
+# Define and register brand template - server side only
+def _register_brand_template():
+  # Define the template here, not in config.py
+  brand_template = go.layout.Template(
+    layout=go.Layout(
+      images=[dict(
+        source=None,
+        xref="paper", yref="paper",
+        x=1.0, y=1.08,
+        sizex=0.12, sizey=0.12,
+        xanchor="right", yanchor="bottom",
+        layer="above"
+      )]
+    )
+  )
 
+  with open(data_files['uvic_logo.png'], 'rb') as f:
+    encoded = base64.b64encode(f.read()).decode('utf-8')
+  logo_uri = f"data:image/png;base64,{encoded}"
+
+  brand_template.layout.images[0]['source'] = logo_uri
+  pio.templates["my_brand"] = brand_template
+
+# Runs once when the module loads
+_register_brand_template()
+
+
+@anvil.server.callable
+def download_chart(fig_dict, active_filters: dict, filename: str = "chart"):
+  fig = go.Figure(fig_dict)
+
+  filter_parts = []
+  label_map = {
+    'provinces': 'Province',
+    'proj_types': 'Project Type',
+    'stages': 'Stage',
+    'indigenous_ownership': 'Indigenous Ownership',
+    'project_scale': 'Project Scale'
+  }
+  for key, label in label_map.items():
+    values = active_filters.get(key)
+    if values:
+      filter_parts.append(f"<b>{label}:</b> {', '.join(values)}")
+
+  filter_text = "  |  ".join(filter_parts) if filter_parts else "No filters applied"
+
+  fig.update_layout(
+    template="my_brand",
+    paper_bgcolor='white',
+    plot_bgcolor='white',
+    margin=dict(l=20, r=20, t=80, b=60)
+  )
+
+  fig.add_annotation(
+    text=filter_text,
+    xref="paper", yref="paper",
+    x=0.0, y=-0.08,
+    showarrow=False,
+    font=dict(size=10, color="gray", family="Arial, sans-serif"),
+    align="left",
+    xanchor="left"
+  )
+
+  img_bytes = pio.to_image(fig, format="png", width=1400, height=700)
+  return anvil.BlobMedia("image/png", img_bytes, name=f"{filename}.png")
 
