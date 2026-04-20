@@ -213,5 +213,5 @@ class capital_explorer(capital_explorerTemplate):
   def download_treemap_btn_click(self, **event_args):
     self._download_chart('treemap', button=self.download_treemap_btn)
 
-  def download_scale_pies_btn_click(self, **event_args):
+  def download_pies_btn_click(self, **event_args):
     self._download_chart('scale_pies', button=self.download_pies_btn)

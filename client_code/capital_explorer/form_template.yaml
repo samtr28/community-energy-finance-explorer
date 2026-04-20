@@ -118,20 +118,6 @@ components_by_slot:
           name: lollipop_chart
           properties: {height: 30vh}
           type: Plot
-        - layout_properties: {slot: card-content-container-slot}
-          name: button_1
-          properties:
-            align: center
-            background_color: theme:Secondary
-            bold: true
-            font_size: 14
-            icon: mi:question_exchange
-            icon_color: theme:On Secondary Container
-            icon_size: 25
-            spacing:
-              padding: [null, '16', null, null]
-            text: How can I get help for my project?
-          type: form:dep_9kcxnwm3upyjd:_Components.Button
         layout_properties: {slot: card-content-slot}
         name: card_content_container_1
         properties: {}
@@ -144,7 +130,7 @@ components_by_slot:
       name: capital_flow_plot
       properties:
         height: 70vh
-        margin: ['8', null, '8', null]
+        margin: ['4', null, '4', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'CMUXYT,KJAPDR'}
       name: heading_3
@@ -170,8 +156,24 @@ components_by_slot:
       name: scale_pies_plot
       properties:
         height: 45vh
-        margin: ['20', null, '8', null]
+        margin: ['4', null, '4', null]
       type: Plot
+    - event_bindings: {click: download_pies_btn_click}
+      layout_properties: {grid_position: 'SINLER,LXTODE'}
+      name: download_pies_btn
+      properties:
+        align: right
+        background_color: theme:Primary Overlay 3
+        font_size: 14
+        icon: mi:download
+        icon_color: theme:On Primary Container
+        icon_size: 16
+        spacing:
+          margin: ['2', null, '0', null]
+          padding: [null, '16', null, null]
+        text: Download
+        text_color: theme:On Primary Container
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - layout_properties: {full_width_row: true, grid_position: 'LFTYHJ,UVJNTD'}
       name: heading_1_copy
       properties:
@@ -180,10 +182,26 @@ components_by_slot:
           margin: ['', null, null, null]
         text: Which financing mechanisms are used the most?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'GUCLJM,PWAGAM'}
+    - layout_properties: {full_width_row: true, grid_position: 'GUCLJM,PWAGAM UAHNZD,EVBZRG'}
       name: bubble_plot
       properties: {height: 65vh}
       type: Plot
+    - event_bindings: {click: download_treemap_btn_click}
+      layout_properties: {grid_position: 'GUCLJM,PWAGAM LYVGMU,VMVQCL'}
+      name: download_treemap_btn
+      properties:
+        align: right
+        background_color: theme:Primary Overlay 3
+        font_size: 14
+        icon: mi:download
+        icon_color: theme:On Primary Container
+        icon_size: 16
+        spacing:
+          margin: ['2', null, '0', null]
+          padding: [null, '16', null, null]
+        text: Download
+        text_color: theme:On Primary Container
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -278,7 +296,7 @@ components_by_slot:
       name: stacked_plot
       properties:
         height: 30vh
-        margin: ['8', null, '8', null]
+        margin: ['4', null, '4', null]
       type: Plot
     - event_bindings: {click: download_stacked_btn_click}
       layout_properties: {grid_position: 'ENMWCZ,OFQLVY AGLDGP,KZWUJS'}
@@ -291,7 +309,7 @@ components_by_slot:
         icon_color: theme:On Primary Container
         icon_size: 16
         spacing:
-          margin: ['0', null, '0', null]
+          margin: ['2', null, '0', null]
           padding: [null, '16', null, null]
         text: Download
         text_color: theme:On Primary Container
@@ -300,7 +318,7 @@ components_by_slot:
       name: funding_time_plot
       properties:
         height: 30vh
-        margin: ['8', null, '8', null]
+        margin: ['4', null, '4', null]
       type: Plot
     - event_bindings: {click: download_time_btn_click}
       layout_properties: {grid_position: 'ENMWCZ,WAMEZI ZBHPOQ,DLKWIS'}
@@ -313,7 +331,7 @@ components_by_slot:
         icon_color: theme:On Primary Container
         icon_size: 16
         spacing:
-          margin: ['0', null, '0', null]
+          margin: ['2', null, '0', null]
           padding: [null, '16', null, null]
         text: Download
         text_color: theme:On Primary Container
@@ -330,7 +348,7 @@ components_by_slot:
       name: box_plot
       properties:
         height: 45vh
-        margin: ['8', null, '8', null]
+        margin: ['4', null, '4', null]
       type: Plot
     - event_bindings: {click: download_box_btn_click}
       layout_properties: {grid_position: 'ZFLEWF,LXTUMR BVZOAH,ODUMOH'}

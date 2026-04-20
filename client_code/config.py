@@ -15,7 +15,7 @@ FONT_FAMILY  = 'Arial, sans-serif'   # body — tick labels, legend, bar text
 TITLE_FONT_FAMILY = 'Georgia, serif' # title — serif contrasts clearly with sans-serif body
 FONT_SIZE   = 12    # base size — tick labels, legend, hover, bar text
 FONT_COLOR  = 'black'
-TITLE_SIZE  = 17    # noticeably larger than body text
+TITLE_SIZE  = 20    # noticeably larger than body text
 TITLE_PAD_B = 14    # pixels of space between title and plot area
 MARGIN_TOP  = 52    # top margin — must be large enough to fit the title
 
