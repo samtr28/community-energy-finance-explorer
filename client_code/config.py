@@ -1,142 +1,140 @@
-import anvil.server
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
+# config.py — Client module
+# =========================
+# Colours, palettes, and font constants shared across the whole app.
+# This is a CLIENT module — importable from both client forms and server modules.
+# Do NOT import server-only libraries (plotly, pandas, etc.) here.
+
 from anvil import app
 
-##### COLOUR SCHEME
 
-# Dunsparce palette - exact order from screenshot
-# Left column:  #005694, #0FAFB9, #d7da7c, #76b37f, #f5aa1c, #00504a, #DE7002, #83d5ca, #c63527, #7b38c7, #CAEFF1, #002754
-# Right column: #F9D88B, #DE7002, #2d847b, #c2ddff, #7e570f, #392000, #f8f8f8, #8e9099
+# ==================== DISPLAY FONT CONSTANTS ====================
+# Used by apply_display_template() in Export_Utils.py (server)
+# and available to client forms for any custom UI styling.
 
+FONT_FAMILY = 'Arial, sans-serif'
+FONT_SIZE   = 12    # base size — tick labels, legend, hover, bar text
+FONT_COLOR  = 'black'
+TITLE_SIZE  = 17    # noticeably larger than body text
+TITLE_PAD_B = 14    # pixels of space between title and plot area
+MARGIN_TOP  = 52    # top margin — must be large enough to fit the title
+
+
+# ==================== COLOUR PALETTE ====================
+
+# Dunsparce palette — full ordered list
 dunsparce_colors = [
-  '#005694',  # dark blue
-  '#0FAFB9',  # teal
-  '#d7da7c',  # yellow-green
-  '#76b37f',  # green
-  '#f5aa1c',  # amber
-  '#00504a',  # dark teal
-  '#DE7002',  # orange
-  '#83d5ca',  # light teal
-  '#c63527',  # red
-  '#7b38c7',  # purple
-  '#CAEFF1',  # very light teal
-  '#7e570f',  # dark brown
-  '#002754',  # navy
-  '#F9D88B',  # light yellow
-  '#2d847b',  # slate teal
-  '#c2ddff',  # light blue
-  '#392000',  # very dark brown
-  '#e99286',  # salmon/orange (right col)
-  '#f8f8f8',  # off-white
-  '#8e9099',  # grey
+  '#005694',  # 0  dark blue
+  '#0FAFB9',  # 1  teal
+  '#d7da7c',  # 2  yellow-green
+  '#76b37f',  # 3  green
+  '#f5aa1c',  # 4  amber
+  '#00504a',  # 5  dark teal
+  '#DE7002',  # 6  orange
+  '#83d5ca',  # 7  light teal
+  '#c63527',  # 8  red
+  '#7b38c7',  # 9  purple
+  '#CAEFF1',  # 10 very light teal
+  '#7e570f',  # 11 dark brown
+  '#002754',  # 12 navy
+  '#F9D88B',  # 13 light yellow
+  '#2d847b',  # 14 slate teal
+  '#c2ddff',  # 15 light blue
+  '#392000',  # 16 very dark brown
+  '#e99286',  # 17 salmon
+  '#f8f8f8',  # 18 off-white
+  '#8e9099',  # 19 grey
 ]
+
+# Gradient palette (dark teal → dark brown, for sequential data)
+gradient_palette = [
+  '#003c30', '#01665e', '#35978f', '#80cdc1', '#c7eae5',
+  '#f5f5f5', '#f6e8c3', '#dfc27d', '#bf812d', '#8c510a', '#543005'
+]
+
+
+# ==================== CATEGORY COLOUR MAPPING ====================
+# Maps financing category names (and their variants) to brand colours.
 
 COLOUR_MAPPING = {
-  'Grants':                                    '#005694',  # dark blue
-  'Grants & non-repayable contributions':      '#005694',
-  'Equity':                                    '#d7da7c',  # yellow-green
-  'External equity investments':               '#d7da7c',
-  'Debt':                                      '#c63527',  # red
-  'Debt financing':                            '#c63527',
-  'Crowdfund':                                 '#7b38c7',  # purple
-  'Crowdfunding campaigns':                    '#7b38c7',
-  'Crowdfunding':                              '#7b38c7',
-  'Internal capital':                          '#76b37f',  # green
-  'Internal/owner-contributed capital':        '#76b37f',
-  'Community finance':                         '#0FAFB9',  # teal
-  'Community finance models':                  '#0FAFB9',
-  'Community financing':                       '#0FAFB9',
-  'Tax credits':                               '#f5aa1c',  # amber
-  'Tax credits/accelerated depreciation':      '#f5aa1c',
-  'Loan guarantees':                           '#DE7002',  # orange
-  'Loan guarantees/credit enhancements':       '#DE7002',
-  'Leasing':                                   '#7e570f',  # dark brown
-  'Leasing/third-party ownership models':      '#7e570f',
-  'Public Private Partnership (P3)':           '#2d847b',  # slate teal
-  'Public Private Partnership':               '#2d847b',
-  'Feed-in tariffs/power purchase agreements': '#00504a',  # dark teal
-  'Other':                                     '#8e9099',  # grey
+  # Grants
+  'Grants':                                     '#005694',
+  'Grants & non-repayable contributions':       '#005694',
+  # Equity
+  'Equity':                                     '#d7da7c',
+  'External equity investments':                '#d7da7c',
+  # Debt
+  'Debt':                                       '#c63527',
+  'Debt financing':                             '#c63527',
+  # Crowdfunding
+  'Crowdfund':                                  '#7b38c7',
+  'Crowdfunding campaigns':                     '#7b38c7',
+  'Crowdfunding':                               '#7b38c7',
+  # Internal capital
+  'Internal capital':                           '#76b37f',
+  'Internal/owner-contributed capital':         '#76b37f',
+  # Community finance
+  'Community finance':                          '#0FAFB9',
+  'Community finance models':                   '#0FAFB9',
+  'Community financing':                        '#0FAFB9',
+  # Other financing types
+  'Tax credits':                                '#f5aa1c',
+  'Tax credits/accelerated depreciation':       '#f5aa1c',
+  'Loan guarantees':                            '#DE7002',
+  'Loan guarantees/credit enhancements':        '#DE7002',
+  'Leasing':                                    '#7e570f',
+  'Leasing/third-party ownership models':       '#7e570f',
+  'Public Private Partnership (P3)':            '#2d847b',
+  'Public Private Partnership':                 '#2d847b',
+  'Feed-in tariffs/power purchase agreements':  '#00504a',
+  'Other':                                      '#8e9099',
 }
 
-# Gradient palette (from dark teal to dark brown)
-gradient_palette = [
-  '#003c30',
-  '#01665e',
-  '#35978f',
-  '#80cdc1',
-  '#c7eae5',
-  '#f5f5f5',
-  '#f6e8c3',
-  '#dfc27d',
-  '#bf812d',
-  '#8c510a',
-  '#543005'
-]
-# Category display order (bottom to top for stacked bar, left to right for box plot)
+# Default category display order
 CATEGORY_ORDER = [
-  'Crowdfunding',
-  'Community finance',
-  'Grants',
-  'Debt',
-  'Equity',
-  'Internal capital'
+  'Crowdfunding', 'Community finance', 'Grants', 'Debt', 'Equity', 'Internal capital'
 ]
 
+
+# ==================== PROJECT TYPE COLOURS ====================
 
 PROJECT_TYPE_COLORS = {
-  'Solar': '#f5aa1c',                      # amber - sun
-  'Wind': '#c2ddff',                       # light blue - sky
-  'Hydro': '#005694',                      # dark blue - water
-  'Geothermal': '#c63527',                 # red - heat/earth core
-  'Biomass': '#76b37f',                    # green - organic matter
-  'Biofuel/Biogas': '#d7da7c',             # yellow-green - organic/gas
-  'Hydrogen': '#83d5ca',                   # light teal - clean/future
-  'Energy storage': '#7b38c7',             # purple - batteries
-  'Building efficiency upgrades': '#2d847b', # slate teal - buildings
-  'Waste to energy': '#7e570f',            # dark brown - waste
-  'Tidal/wave': '#002754',                 # navy - deep ocean
-  'Microgrid': '#0FAFB9',                  # teal - grid/network
-  'Electro-mobility': '#00504a',           # dark teal - electric transport
+  'Solar':                        '#f5aa1c',
+  'Wind':                         '#c2ddff',
+  'Hydro':                        '#005694',
+  'Geothermal':                   '#c63527',
+  'Biomass':                      '#76b37f',
+  'Biofuel/Biogas':               '#d7da7c',
+  'Hydrogen':                     '#83d5ca',
+  'Energy storage':               '#7b38c7',
+  'Building efficiency upgrades': '#2d847b',
+  'Waste to energy':              '#7e570f',
+  'Tidal/wave':                   '#002754',
+  'Microgrid':                    '#0FAFB9',
+  'Electro-mobility':             '#00504a',
 }
 
 def get_project_type_color(project_type):
-  """Get color for a project type, with fallback to grey"""
+  """Return the brand colour for a project type, falling back to grey."""
   return PROJECT_TYPE_COLORS.get(project_type, '#8e9099')
 
-def get_project_type_color(project_type):
-  """Get color for a project type, with fallback to grey"""
-  return PROJECT_TYPE_COLORS.get(project_type, '#8e9099')
-  
-##### OWNERSHIP COLOR MAPPING
-# Function to automatically assign colors to owner types
+
+# ==================== OWNER TYPE COLOURS ====================
+
 def get_owner_type_colors(owner_types_list, palette='dunsparce'):
   """
-  Automatically assign colors to a list of owner types.
-  
+  Assign colours from a palette to a list of owner types.
+
   Args:
-    owner_types_list: List of unique owner types
-    palette: 'dunsparce', 'gradient', or list of hex colors
-  
+    owner_types_list: list of unique owner type strings
+    palette:          'dunsparce', 'gradient', or a custom list of hex strings
+
   Returns:
-    Dictionary mapping owner_type to color
+    dict mapping each owner type to a hex colour string
   """
-  # Choose palette
-  if palette == 'dunsparce':
-    colors = dunsparce_colors
-  elif palette == 'gradient':
-    colors = gradient_palette
-  elif isinstance(palette, list):
-    colors = palette
-  else:
-    colors = dunsparce_colors  # Default
-
-  # Sort for consistency
-  sorted_types = sorted(owner_types_list)
-
-  # Assign colors
-  return {
-    owner_type: colors[i % len(colors)] 
-    for i, owner_type in enumerate(sorted_types)
-  }
+  colors = (
+    dunsparce_colors if palette == 'dunsparce' else
+    gradient_palette if palette == 'gradient'  else
+    palette          if isinstance(palette, list) else
+    dunsparce_colors
+  )
+  return {t: colors[i % len(colors)] for i, t in enumerate(sorted(owner_types_list))}

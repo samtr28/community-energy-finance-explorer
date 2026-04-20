@@ -204,14 +204,14 @@ class capital_explorer(capital_explorerTemplate):
   def download_sankey_btn_click(self, **event_args):
     self._download_chart('sankey', button=self.download_sankey_btn)
 
-  def download_stacked_bar_btn_click(self, **event_args):
+  def download_stacked_btn_click(self, **event_args):
     self._download_chart('stacked_bar', button=self.download_stacked_btn)
 
-  def download_bottleneck_btnclick(self, **event_args):
+  def download_bottleneck_btn_click(self, **event_args):
     self._download_chart('bottleneck_chart', button=self.download_bottleneck_btn)
 
-  def download_treemap_click(self, **event_args):
+  def download_treemap_btn_click(self, **event_args):
     self._download_chart('treemap', button=self.download_treemap_btn)
 
-  def download_scale_pies_click(self, **event_args):
+  def download_scale_pies_btn_click(self, **event_args):
     self._download_chart('scale_pies', button=self.download_pies_btn)
