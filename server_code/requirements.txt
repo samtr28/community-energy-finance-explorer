@@ -1,2 +1,2 @@
 PyMuPDF
-kaleido
+kaleido==1.0.0

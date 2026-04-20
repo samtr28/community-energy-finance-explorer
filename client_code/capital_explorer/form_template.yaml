@@ -146,9 +146,9 @@ components_by_slot:
         height: 70vh
         margin: ['8', null, '8', null]
       type: Plot
-    - event_bindings: {click: download_sankey_button_click}
+    - event_bindings: {click: download_sankey_btn_click}
       layout_properties: {grid_position: 'JDUVTD,WPOENU TGRIUY,CFKWWV'}
-      name: download_sankey_button
+      name: download_sankey_btn
       properties: {text: download}
       type: form:dep_9kcxnwm3upyjd:_Components.Button
     - layout_properties: {full_width_row: true, grid_position: 'CMUXYT,KJAPDR'}
