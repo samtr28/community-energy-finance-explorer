@@ -154,7 +154,7 @@ components:
     - event_bindings: {click: show_more_click}
       layout_properties: {slot: card-content-container-slot}
       name: show_more_link
-      properties: {visible: false}
+      properties: {align: center, bold: true, font_size: 18, underline: true, visible: false}
       type: form:dep_9kcxnwm3upyjd:_Components.Link
     layout_properties: {slot: card-content-slot}
     name: card_content_container_2

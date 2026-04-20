@@ -109,12 +109,13 @@ components:
     name: methods_nav
     properties:
       align: left
-      font_size: 18
+      font_size: 16
       icon: fa:info-circle
       icon_align: left
       role: null
       spacing:
         margin: ['4', null, '4', null]
+        padding: [null, '16', null, null]
       text: Data & Methods
     type: Link
   layout_properties: {slot: left-nav}

@@ -340,7 +340,7 @@ color: %color:On Primary Container%;
   position: relative;
   /* added incon colour */
   color: %color:On Primary Container%; 
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .left-nav .anvil-component-icon.left_edge-icon, .left-nav .anvil-component-icon.right_edge-icon {
