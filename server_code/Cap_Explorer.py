@@ -36,7 +36,16 @@ FONT_FAMILY, FONT_SIZE, FONT_COLOR,
 from .Global_Server_Functions import get_data
 from .Export_Utils import export_figure_from_bytes, apply_display_template
 
-
+# ── Chart title strings used in exports ──
+CHART_TITLES = {
+  'box_plot':         'Average Contribution of Each Financing Source to Total Project Costs',
+  'time_chart':       'Average Time to Funding',
+  'sankey':           'Capital Flow: Source → Category → Project Type',
+  'stacked_bar':      'Funding Sources by Category',
+  'bottleneck_chart': 'Financing Bottlenecks',
+  'treemap':          'Use of Funding & Financing Mechanisms',
+  'scale_pies':       'Funding Distribution by Project Scale',
+}
 # ==================== UTILITY FUNCTIONS ====================
 
 def wrap_text(text, width=15):
