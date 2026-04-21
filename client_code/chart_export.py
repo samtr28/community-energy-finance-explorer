@@ -30,6 +30,7 @@ EXPORT_TEMPLATE = {
   'font.family':      'Arial, sans-serif',
   'font.size':        13,
   'font.color':       '#333333',
+  'title.text':       '',           # ← add this — title shown in banner instead
   'title.font.size':  18,
   'title.font.color': '#1a1a1a',
   'xaxis.gridcolor':  '#e0e0e0',

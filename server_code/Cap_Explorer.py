@@ -785,9 +785,9 @@ def calculate_indicators_internal(df):
 
 @anvil.server.callable
 def export_capital_chart(chart_key, img_b64, active_filters, chart_title=''):
-    return export_figure_from_bytes(
-      img_b64,
-      active_filters,
-      filename=f'{chart_key}_export.png',
-      chart_title=chart_title,
-    )
+  return export_figure_from_bytes(
+    img_b64,
+    active_filters,
+    filename=f'{chart_key}_export.png',
+    chart_title=chart_title,
+  )
