@@ -784,13 +784,10 @@ def calculate_indicators_internal(df):
 # ==================== EXPORT CALLABLE ====================
 
 @anvil.server.callable
-def export_capital_chart(chart_key, img_b64, active_filters):
-  """
-  Receive a base64 PNG from the client browser, decorate it with the logo
-  and active filter summary, return BlobMedia for anvil.download().
-  """
-  return export_figure_from_bytes(
-    img_b64,
-    active_filters,
-    filename=f'{chart_key}_export.png'
-  )
+def export_capital_chart(chart_key, img_b64, active_filters, chart_title=''):
+    return export_figure_from_bytes(
+      img_b64,
+      active_filters,
+      filename=f'{chart_key}_export.png',
+      chart_title=chart_title,
+    )

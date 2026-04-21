@@ -81,6 +81,13 @@ def download_chart(plot_component, chart_key, active_filters, server_callable, b
   # ── Build export figure without touching the DOM ──
   node = get_dom_node(plot_component)
 
+  # ── Read chart title directly from the figure ──
+  chart_title = ''
+  try:
+    chart_title = node.layout.title.text or ''
+  except Exception:
+    pass
+
   export_layout = dict(node.layout)       # copy current layout
   export_layout.update(EXPORT_TEMPLATE)   # overlay export styling
 
@@ -97,7 +104,7 @@ def download_chart(plot_component, chart_key, active_filters, server_callable, b
 
   # ── Send to server for logo + filter decoration, then download ──
   # call_s = silent call, suppresses Anvil's loading spinner
-  media = anvil.server.call_s(server_callable, chart_key, img_b64, active_filters)
+  media = anvil.server.call_s(server_callable, chart_key, img_b64, active_filters, chart_title)
   anvil.download(media)
 
   # ── Restore button ──

@@ -138,7 +138,7 @@ def _build_filter_lines(active_filters):
   return [(f"{k}:", v) for k, v in active_filters.items() if v != 'All']
 
 
-def add_logo_and_filters_pil(img_bytes, active_filters, logo_filename=DEFAULT_LOGO_FILENAME):
+def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='', logo_filename=DEFAULT_LOGO_FILENAME):
   """
   Decorate a raw PNG with a coloured top banner and a plain bottom strip.
 
@@ -205,7 +205,7 @@ def add_logo_and_filters_pil(img_bytes, active_filters, logo_filename=DEFAULT_LO
   # ── Source heading: top-left ──
   draw.text(
     (FILTER_LEFT_MARGIN, SOURCE_TOP_MARGIN),
-    SOURCE_TEXT,
+    chart_title,
     fill=SOURCE_TEXT_COLOR,
     font=_load_font(SOURCE_TEXT_SIZE, bold=True)
   )
@@ -274,7 +274,7 @@ def add_logo_and_filters_pil(img_bytes, active_filters, logo_filename=DEFAULT_LO
 # ==================== PUBLIC ENTRY POINT ====================
 
 def export_figure_from_bytes(img_b64, active_filters, filename='chart_export.png',
-                             logo_filename=DEFAULT_LOGO_FILENAME):
+                               chart_title='', logo_filename=DEFAULT_LOGO_FILENAME):
   """
   Entry point called by every page's export server callable.
 
@@ -288,6 +288,6 @@ def export_figure_from_bytes(img_b64, active_filters, filename='chart_export.png
     anvil.BlobMedia ready for anvil.download() on the client
   """
   decorated = add_logo_and_filters_pil(
-    base64.b64decode(img_b64), active_filters, logo_filename
+    base64.b64decode(img_b64), active_filters, chart_title=chart_title, logo_filename=logo_filename
   )
   return anvil.BlobMedia('image/png', decorated, name=filename)
