@@ -30,13 +30,14 @@ EXPORT_TEMPLATE = {
   'font.family':      'Arial, sans-serif',
   'font.size':        13,
   'font.color':       '#333333',
-  'title.text':       '',           # ← add this — title shown in banner instead
+  'title.text':       '',
   'title.font.size':  18,
   'title.font.color': '#1a1a1a',
   'xaxis.gridcolor':  '#e0e0e0',
   'xaxis.linecolor':  '#cccccc',
   'yaxis.gridcolor':  '#e0e0e0',
   'yaxis.linecolor':  '#cccccc',
+  'margin.t':         10,          # ← add this — removes the title gap
 }
 
 
@@ -91,6 +92,7 @@ def download_chart(plot_component, chart_key, active_filters, server_callable, b
 
   export_layout = dict(node.layout)       # copy current layout
   export_layout.update(EXPORT_TEMPLATE)   # overlay export styling
+  export_layout['title'] = {'text': ''}   # ← add this line
 
   figure = {
     'data':   node.data,      # traces unchanged

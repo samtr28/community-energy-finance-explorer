@@ -663,10 +663,6 @@ def create_treemap_internal(df):
 
 
 def create_scale_pies_internal(df):
-  """
-  Row of pie charts: funding category mix per project scale (smallest to largest).
-  Chart-specific: white text inside pie slices, legend position, subplot annotations.
-  """
   SCALE_ORDER = [
     'Micro (< $100K)', 'Small ($100K-$1M)', 'Medium ($1M-$5M)',
     'Large ($5M-$25M)', 'Very Large ($25M-$100M)', 'Mega (> $100M)'
@@ -677,39 +673,38 @@ def create_scale_pies_internal(df):
     fig.update_layout(title=dict(text='No data available'))
     return fig
 
+  # No subplot_titles — labels live on the pie traces instead
   fig = make_subplots(
     rows=1, cols=len(scales),
     specs=[[{'type': 'domain'}] * len(scales)],
-    subplot_titles=scales
   )
 
   for i, scale in enumerate(scales):
     sub     = df[df['project_scale'] == scale]
     grouped = sub.groupby('category', as_index=False)['amount'].sum()
     colors  = [COLOUR_MAPPING.get(c, '#808080') for c in grouped['category']]
+    n       = sub['record_id'].nunique()
 
     fig.add_trace(go.Pie(
       labels=grouped['category'], values=grouped['amount'], name=scale,
       marker=dict(colors=colors),
       texttemplate='%{percent:.1%}', textposition='inside',
-      # White text inside slices — intentional override
       textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color='white'),
       sort=False,
       hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
+      # ── Title is relative to the pie — never overlaps regardless of screen size ──
+      title=dict(
+        text=f'{scale}<br>({n} projects)',
+        position='top center',
+        font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)
+      ),
     ), row=1, col=i + 1)
-
-    n = sub['record_id'].nunique()
-    fig.layout.annotations[i].update(
-      text=f'{scale}<br>({n} projects)',
-      font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-      y=0.93
-    )
 
   fig.update_layout(
     showlegend=True,
-    legend=dict(orientation='h', y=0.01, x=0.5, xanchor='center'),
-    margin=dict(l=0, r=0, b=0),
-    title=dict(text='Most used sources of capital by project '),
+    legend=dict(orientation='h', y=-0.15, x=0.5, xanchor='center'),
+    margin=dict(l=0, r=0, b=0, t=0),
+    title=dict(text='Funding distribution by project scale'),
   )
   return fig
 

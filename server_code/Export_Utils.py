@@ -9,9 +9,12 @@ Export layout:
   ┌─[LIGHT GREY BANNER]────────────────────────────────────┐
   │  Average Time to Funding                               │  ← chart title (large bold)
   │  Survey-based data downloaded on April 21, 2026        │  ← subtitle
-  │  Filters applied — Scale: Small   |   Province: BC     │  ← all on one line
+  │  Filters applied —                                     │  ← bold prefix
+  │  Scale: Small   |   Province: BC   |   Stage: Plan     │  ← wrapped filter values
   ├────────────────────────────────────────────────────────┤
-  │                      chart (no title)                  │
+  │   [white padding]                                      │
+  │       chart image (no title)                           │
+  │   [white padding]                                      │
   ├────────────────────────────────────────────────────────┤
   │  Source: Community Energy Finance Navigator, UVic [LOGO]│  ← bottom strip
   └────────────────────────────────────────────────────────┘
@@ -39,11 +42,7 @@ TITLE_FONT_FAMILY, TITLE_SIZE, TITLE_PAD_B, MARGIN_TOP
 def apply_display_template(fig):
   """
   Apply a consistent visual style to any Plotly figure.
-
-  Sets: transparent backgrounds, distinctive title font, uniform base font,
-  top margin, and a stripped-down modebar (reset only).
-  Annotation fonts are only set where not already explicitly defined,
-  preserving intentional per-annotation overrides.
+  Annotation fonts only set where not already explicitly defined.
   """
   fig.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
@@ -77,39 +76,47 @@ def apply_display_template(fig):
 
 DEFAULT_LOGO_FILENAME = 'logo.png'
 
+# ── Chart padding — white space around the chart image ──
+CHART_PADDING_H     = 40           # px left and right of chart
+CHART_PADDING_V     = 5            # px above and below chart
+
 # ── Banner (top section, light grey) ──
-BANNER_BG_COLOR    = '#f0f0f0'
-LEFT_MARGIN        = 30            # px from left edge throughout banner
-BANNER_TOP_PAD     = 24            # px from top of banner to first line
-LINE_SPACING       = 12            # px between each text line in the banner
-BANNER_BOTTOM_PAD  = 20            # px below last line before chart
+BANNER_BG_COLOR     = '#f0f0f0'
+LEFT_MARGIN         = 30           # px from left edge
+BANNER_TOP_PAD      = 24           # px from top of banner to first line
+LINE_SPACING        = 12           # px between each text line
+BANNER_BOTTOM_PAD   = 20           # px below last line before chart padding
 
 # ── Chart title ──
-TITLE_TEXT_SIZE    = 28            # pt
-TITLE_TEXT_COLOR   = '#002754'     # brand navy
+TITLE_TEXT_SIZE     = 45           # pt
+TITLE_TEXT_COLOR    = '#002754'    # brand navy
 
 # ── Subtitle ──
-SUBTITLE_SIZE      = 16            # pt
-SUBTITLE_COLOR     = '#444444'
+SUBTITLE_SIZE       = 30           # pt
+SUBTITLE_COLOR      = '#444444'
 
-# ── Filters line ──
-FILTER_SIZE        = 15            # pt
-FILTER_TEXT_COLOR  = '#1a1a1a'
-FILTER_SEPARATOR   = '   |   '     # separator between filter values on one line
+# ── Filter line ──
+# "Filters applied —" is bold; all keys and values are regular weight.
+# If the full line exceeds the available width it wraps:
+#   Line 1: "Filters applied —"
+#   Line 2+: each filter on its own indented line
+FILTER_SIZE         = 18           # pt
+FILTER_TEXT_COLOR   = '#1a1a1a'
+FILTER_SEPARATOR    = '   |   '    # separator between entries on the same line
 
-# ── Bottom strip (source + large logo) ──
-LOGO_MAX_HEIGHT    = 200           # px
-LOGO_MAX_WIDTH     = 500           # px
-STRIP_PADDING      = 20            # px inside strip
-BOTTOM_STRIP_HEIGHT = LOGO_MAX_HEIGHT + STRIP_PADDING * 2   # auto-sizes to logo
+# ── Bottom strip ──
+LOGO_MAX_HEIGHT     = 150          # px
+LOGO_MAX_WIDTH      = 500          # px
+STRIP_PADDING       = 20           # px inside strip
+BOTTOM_STRIP_HEIGHT = LOGO_MAX_HEIGHT + STRIP_PADDING * 2
 
-SOURCE_TEXT        = 'Source: Community Energy Finance Navigator, University of Victoria'
-SOURCE_TEXT_SIZE   = 17            # pt
-SOURCE_TEXT_COLOR  = '#444444'
+SOURCE_TEXT         = 'Source: Community Energy Finance Navigator, University of Victoria'
+SOURCE_TEXT_SIZE    = 20           # pt
+SOURCE_TEXT_COLOR   = '#444444'
 
 
 def _load_font(size, bold=False):
-  """Load DejaVu Sans (bold or regular) at the given pt size."""
+  """Load DejaVu Sans bold or regular at the given pt size."""
   try:
     path = (
       '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf' if bold
@@ -117,7 +124,14 @@ def _load_font(size, bold=False):
     )
     return ImageFont.truetype(path, size)
   except Exception:
-    return ImageFont.load_default()
+    try:
+      path = (
+        '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf' if bold
+        else '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf'
+      )
+      return ImageFont.truetype(path, size)
+    except Exception:
+      return ImageFont.load_default()
 
 
 def _resize_logo(logo, max_h, max_w):
@@ -126,68 +140,174 @@ def _resize_logo(logo, max_h, max_w):
   return logo.resize((int(logo.width * ratio), int(logo.height * ratio)), Image.LANCZOS)
 
 
-def _build_filter_line(active_filters):
+def _measure_filter_line(draw, parts, font_bold, font_reg, separator):
+  """Measure the total pixel width of the full filter line if drawn on one line."""
+  prefix_w = draw.textlength('Filters applied — ', font=font_bold)
+  parts_w  = sum(
+    draw.textlength(label, font=font_reg) +
+    draw.textlength(' ' + value, font=font_reg) +
+    (draw.textlength(separator, font=font_reg) if i < len(parts) - 1 else 0)
+    for i, (label, value) in enumerate(parts)
+  )
+  return prefix_w + parts_w
+
+
+def _draw_filter_text(draw, x, y, active_filters, font_bold, font_reg,
+                      color, separator, max_width):
   """
-  Build a single line string of all active filters.
-  e.g. "Filters applied — Scale: Small   |   Province: BC"
-  Returns empty string if no filters are active.
+  Draw the filter summary, wrapping if necessary.
+
+  If everything fits on one line:
+    "Filters applied — Scale: Small   |   Province: BC"
+     ^bold              ^regular throughout
+
+  If too wide:
+    "Filters applied —"      ← bold prefix on its own line
+    "Scale: Small   |   Province: BC   |   ..."   ← filters on next line(s)
+    wrapping at separator boundaries as needed
+
+  Returns the number of lines drawn (for banner height calculation).
   """
-  parts = [f"{k}: {v}" for k, v in active_filters.items() if v != 'All']
+  parts = [(k + ':', v) for k, v in active_filters.items() if v != 'All']
+  prefix = 'Filters applied — '
+
   if not parts:
-    return 'Filters applied — None'
-  return 'Filters applied — ' + FILTER_SEPARATOR.join(parts)
+    draw.text((x, y), prefix + 'None', fill=color, font=font_bold)
+    return 1
+
+  total_w = _measure_filter_line(draw, parts, font_bold, font_reg, separator)
+
+  if total_w <= max_width:
+    # ── Single line ──
+    cursor_x = x
+    draw.text((cursor_x, y), prefix, fill=color, font=font_bold)
+    cursor_x += draw.textlength(prefix, font=font_bold)
+    for i, (label, value) in enumerate(parts):
+      draw.text((cursor_x, y), label, fill=color, font=font_reg)
+      cursor_x += draw.textlength(label, font=font_reg)
+      val_str = ' ' + value
+      draw.text((cursor_x, y), val_str, fill=color, font=font_reg)
+      cursor_x += draw.textlength(val_str, font=font_reg)
+      if i < len(parts) - 1:
+        draw.text((cursor_x, y), separator, fill=color, font=font_reg)
+        cursor_x += draw.textlength(separator, font=font_reg)
+    return 1
+
+  else:
+    # ── Wrapped: prefix on first line, filters packed onto subsequent lines ──
+    line_h    = FILTER_SIZE + LINE_SPACING
+    indent    = x   # filters align with left margin, not indented after prefix
+    cursor_y  = y
+    lines     = 1
+
+    # Draw prefix alone on first line
+    draw.text((x, cursor_y), prefix, fill=color, font=font_bold)
+    cursor_y += line_h
+
+    # Pack filters onto lines, wrapping at separator boundaries
+    cursor_x     = indent
+    first_on_line = True
+
+    for i, (label, value) in enumerate(parts):
+      part_w = (
+        draw.textlength(label, font=font_reg) +
+        draw.textlength(' ' + value, font=font_reg)
+      )
+      sep_w = draw.textlength(separator, font=font_reg) if not first_on_line else 0
+
+      if not first_on_line and cursor_x + sep_w + part_w > max_width:
+        # Wrap to next line
+        cursor_y     += line_h
+        cursor_x      = indent
+        first_on_line = True
+        sep_w         = 0
+        lines        += 1
+
+      if not first_on_line:
+        draw.text((cursor_x, cursor_y), separator, fill=color, font=font_reg)
+        cursor_x += sep_w
+
+      draw.text((cursor_x, cursor_y), label, fill=color, font=font_reg)
+      cursor_x += draw.textlength(label, font=font_reg)
+      val_str   = ' ' + value
+      draw.text((cursor_x, cursor_y), val_str, fill=color, font=font_reg)
+      cursor_x += draw.textlength(val_str, font=font_reg)
+      first_on_line = False
+
+    return lines + 1   # +1 for the prefix line
 
 
 def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='',
                              logo_filename=DEFAULT_LOGO_FILENAME):
   """
-  Decorate a raw PNG with a top banner and a bottom strip.
+  Decorate a raw PNG.
 
-  Top banner (light grey, top-down layout):
-    Line 1: Chart title (large bold)
-    Line 2: Survey-based data downloaded on DATE
-    Line 3: Filters applied — key: val | key: val  (all on one line)
+  Top banner (light grey):
+    Line 1:   Chart title (large bold)
+    Line 2:   Survey-based data downloaded on DATE
+    Line 3+:  Filters applied — wraps if too wide
 
-  Bottom strip (white, tall):
-    Source citation left, large logo right, both vertically centred.
+  Chart area:
+    White padding surrounds the chart on all sides.
 
-  Returns the decorated PNG as bytes.
+  Bottom strip (white):
+    Source citation left, logo right.
   """
   img  = Image.open(io.BytesIO(img_bytes)).convert('RGBA')
-  w, h = img.size
+  chart_w, chart_h = img.size
 
-  # ── Fonts ──
-  font_title    = _load_font(TITLE_TEXT_SIZE, bold=True)
-  font_subtitle = _load_font(SUBTITLE_SIZE,   bold=False)
-  font_filter   = _load_font(FILTER_SIZE,     bold=False)
+  # Canvas width includes horizontal padding
+  canvas_w  = chart_w + CHART_PADDING_H * 2
+  max_text_w = canvas_w - LEFT_MARGIN - CHART_PADDING_H  # available width for text
+
+  # ── Fonts (needed for measurement before drawing) ──
+  font_title    = _load_font(TITLE_TEXT_SIZE,  bold=True)
+  font_subtitle = _load_font(SUBTITLE_SIZE,    bold=False)
+  font_filter_b = _load_font(FILTER_SIZE,      bold=True)
+  font_filter_r = _load_font(FILTER_SIZE,      bold=False)
   font_source   = _load_font(SOURCE_TEXT_SIZE, bold=False)
 
-  # ── Calculate banner height (top-down stack) ──
+  # ── Pre-calculate filter line count for banner height ──
+  parts        = [(k + ':', v) for k, v in active_filters.items() if v != 'All']
+  total_filter_w = _measure_filter_line(
+    ImageDraw.Draw(Image.new('RGBA', (1, 1))),
+    parts, font_filter_b, font_filter_r, FILTER_SEPARATOR
+  ) if parts else 0
+
+  if not parts or total_filter_w <= max_text_w:
+    filter_lines = 1
+  else:
+    # Prefix line + at least one content line
+    filter_lines = 2
+
+  line_h_filter = FILTER_SIZE + LINE_SPACING
+
+  # ── Banner height ──
   banner_h = (
     BANNER_TOP_PAD
     + TITLE_TEXT_SIZE  + LINE_SPACING
     + SUBTITLE_SIZE    + LINE_SPACING
-    + FILTER_SIZE      + BANNER_BOTTOM_PAD
+    + filter_lines * line_h_filter
+    + BANNER_BOTTOM_PAD
   )
 
-  total_h = banner_h + h + BOTTOM_STRIP_HEIGHT
+  # Chart area height includes vertical padding
+  chart_area_h = chart_h + CHART_PADDING_V * 2
+
+  total_h = banner_h + chart_area_h + BOTTOM_STRIP_HEIGHT
 
   # ── Build canvas ──
-  canvas = Image.new('RGBA', (w, total_h), 'white')
-  canvas.paste(Image.new('RGBA', (w, banner_h), BANNER_BG_COLOR), (0, 0))
-  canvas.paste(img, (0, banner_h))
+  canvas = Image.new('RGBA', (canvas_w, total_h), 'white')
+  canvas.paste(Image.new('RGBA', (canvas_w, banner_h), BANNER_BG_COLOR), (0, 0))
+  canvas.paste(img, (CHART_PADDING_H, banner_h + CHART_PADDING_V))
+
   draw = ImageDraw.Draw(canvas)
 
-  # ── Draw banner lines top-down ──
+  # ── Banner: draw lines top-down ──
   cursor_y = BANNER_TOP_PAD
 
   # Line 1: chart title
-  draw.text(
-    (LEFT_MARGIN, cursor_y),
-    chart_title,
-    fill=TITLE_TEXT_COLOR,
-    font=font_title
-  )
+  draw.text((LEFT_MARGIN, cursor_y), chart_title, fill=TITLE_TEXT_COLOR, font=font_title)
   cursor_y += TITLE_TEXT_SIZE + LINE_SPACING
 
   # Line 2: subtitle
@@ -200,34 +320,29 @@ def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='',
   )
   cursor_y += SUBTITLE_SIZE + LINE_SPACING
 
-  # Line 3: filters — all on one line
-  draw.text(
-    (LEFT_MARGIN, cursor_y),
-    _build_filter_line(active_filters),
-    fill=FILTER_TEXT_COLOR,
-    font=font_filter
+  # Line 3+: filters (wraps automatically)
+  _draw_filter_text(
+    draw, LEFT_MARGIN, cursor_y,
+    active_filters, font_filter_b, font_filter_r,
+    FILTER_TEXT_COLOR, FILTER_SEPARATOR, max_text_w
   )
 
-  # ── Bottom strip: source left, large logo right ──
-  strip_y = banner_h + h
-
-  # Source text — vertically centred
+  # ── Bottom strip: source left, logo right ──
+  strip_y       = banner_h + chart_area_h
   source_text_y = strip_y + (BOTTOM_STRIP_HEIGHT - SOURCE_TEXT_SIZE) // 2
-  draw.text(
-    (STRIP_PADDING, source_text_y),
-    SOURCE_TEXT,
-    fill=SOURCE_TEXT_COLOR,
-    font=font_source
-  )
+  draw.text((STRIP_PADDING, source_text_y), SOURCE_TEXT, fill=SOURCE_TEXT_COLOR, font=font_source)
 
-  # Large logo — vertically centred, right-aligned
   try:
     logo = _resize_logo(
       Image.open(data_files[logo_filename]).convert('RGBA'),
       LOGO_MAX_HEIGHT, LOGO_MAX_WIDTH
     )
     lw, lh = logo.size
-    canvas.paste(logo, (w - lw - STRIP_PADDING, strip_y + (BOTTOM_STRIP_HEIGHT - lh) // 2), logo)
+    canvas.paste(
+      logo,
+      (canvas_w - lw - STRIP_PADDING, strip_y + (BOTTOM_STRIP_HEIGHT - lh) // 2),
+      logo
+    )
   except Exception as e:
     print(f"Logo skipped: {e}")
 
