@@ -15,6 +15,7 @@ class projects_explorer(projects_explorerTemplate):
     self._hi_card = None
     self._hi_row = None
     self._selected_idx = None
+    self._pending_scroll_target = None
 
     self._handling_sub_click = False
 
@@ -280,7 +281,9 @@ class projects_explorer(projects_explorerTemplate):
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
       #row.scroll_into_view()
-      anvil.js.call_js('smoothScroll', row)
+      # AFTER
+      self._pending_scroll_target = row
+      self.scroll_timer.interval = 0.15
 
       if self._hi_card:
         self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
@@ -401,9 +404,16 @@ class projects_explorer(projects_explorerTemplate):
       # === 5. Highlight the sub-project row ===
       row.highlight_sub_row(sub_id)
 
-      # === 6. Scroll to the parent card (only from map clicks) ===
-      if scroll:
-        anvil.js.call_js('smoothScroll', row)
+          # AFTER
+    if scroll:
+      self._pending_scroll_target = row
+      self.scroll_timer.interval = 0.15
 
     self._selected_idx = parent_pos
     self._selected_sub_id = sub_id
+
+  def scroll_timer_tick(self, **event_args):
+    self.scroll_timer.interval = 0
+    if self._pending_scroll_target:
+      anvil.js.call_js('smoothScroll', self._pending_scroll_target)
+      self._pending_scroll_target = None
