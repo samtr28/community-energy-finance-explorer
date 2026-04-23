@@ -233,7 +233,7 @@ def get_map_data_internal(df):
     mode='markers', 
     text=df["project_name"],
     marker=dict(size=10, opacity=0.9, color='#00504a'),
-    customdata=df[["community", "record_id"]], 
+    customdata=df[["community", "record_id", "_card_pos"]],
     selected=dict(marker=dict(color='#c63527', size=16)),
     unselected=dict(marker=dict(opacity=0.3, size=8)),
     hovertemplate="<b>%{text}</b><br>Community: %{customdata[0]}<extra></extra>",
@@ -290,6 +290,7 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
   df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
                                     indigenous_ownership, project_scale)
 
+  df_map_filtered["_card_pos"] = range(len(df_map_filtered))
   # Generate map data (ALL points)
   map_data = get_map_data_internal(df_map_filtered)
 

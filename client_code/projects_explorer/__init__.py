@@ -237,16 +237,21 @@ class projects_explorer(projects_explorerTemplate):
     self.schedule_filter_update()
 
   # ============ MAP CLICK EVENTS ============
-  def _select_index(self, idx: int):
-    """Highlight point idx on the map and the matching card."""
+  def _select_index(self, idx: int, map_point: int = None):
+    """
+    idx = position in the full card list (0-based)
+    map_point = index in the map trace (for selectedpoints), may differ from idx
+    """
+    if map_point is None:
+      map_point = idx  # fallback for calls from card clicks
+
     fig = self.project_map.figure
     if fig and fig.data:
-      fig.data[0].selectedpoints = [idx]
-      sub_points = self._parent_to_sub_points.get(str(idx), [])
+      fig.data[0].selectedpoints = [map_point]     # <-- map index
+      sub_points = self._parent_to_sub_points.get(str(idx), [])  # <-- card index for lookup
       if len(fig.data) > 1:
         fig.data[1].selectedpoints = sub_points
 
-      # For portfolios, zoom to centroid of sub-projects
       if sub_points and self._sub_point_coords:
         sub_coords = [self._sub_point_coords[str(sp)] for sp in sub_points if str(sp) in self._sub_point_coords]
         if sub_coords:
@@ -262,6 +267,7 @@ class projects_explorer(projects_explorerTemplate):
 
       self.project_map.figure = fig
 
+    # Everything below stays the same — uses idx (card position)
     target_page = (idx // self._page_size) + 1
 
     if target_page != self._current_page:
@@ -309,22 +315,25 @@ class projects_explorer(projects_explorerTemplate):
     self._selected_sub_id = None
 
   def project_map_click(self, points, **event_args):
-    """Handle map click events"""
     if not points:
       self._unselect_all()
       return
-  
+
     pt = points[0]
     curve = pt.get("curve_number", 0)
-    idx = pt["point_number"]
-  
+
     if curve == 0:
-      if self._selected_idx == idx:
+      # Use card_pos from customdata, NOT point_number
+      card_pos = pt["customdata"][2]       # _card_pos is index 2
+      map_point = pt["point_number"]       # for selectedpoints only
+
+      if self._selected_idx == card_pos:
         self._unselect_all()
       else:
-        self._select_index(idx)
-  
+        self._select_index(card_pos, map_point=map_point)
+
     elif curve == 1:
+      idx = pt["point_number"]
       info = self._sub_parent_map.get(str(idx))
       if info:
         self._select_sub_project(info["parent_pos"], info["sub_id"], scroll=True)
