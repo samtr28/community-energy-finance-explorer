@@ -239,7 +239,7 @@ def process_capital_mix_data(df):
 
   # Step 4 — Zero out mismatched time columns
   time_cols = ['grants_time', 'debt_time', 'equity_time', 'community_time', 'crowdfunding_time']
-  time_cats = ['Grants',      'Debt',      'Equity',      'Community finance', 'Crowdfund']
+  time_cats = ['Grants',      'Debt',      'Equity',      'Community finance', 'Crowdfunding']
   for col, cat in zip(time_cols, time_cats):
     df_long.loc[(df_long['category'] != cat) & df_long[col].notnull(), col] = pd.NaT
 
@@ -249,6 +249,7 @@ def process_capital_mix_data(df):
     '2-3 years':        2.5,
     '4-5 years':        4.5,
     '8-10 years':       9.0,
+    'More than 10 years': 11.0
   }
   def time_to_numeric(s):
     return np.nan if (pd.isna(s) or s == 'Missing value') else TIME_MAP.get(s, np.nan)
