@@ -1,0 +1,4 @@
+is_package: true
+layout:
+  form_event_bindings: {show: form_show}
+  type: form:Base

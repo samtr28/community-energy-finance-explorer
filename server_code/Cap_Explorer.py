@@ -72,6 +72,85 @@ def standardize_category_name(category):
   if 'community' in c: return 'Community financing'
   return category
 
+# Short labels used when collapsing small sources into an "Other" bucket.
+# Keeps "Other" labels readable in dense charts (Sankey nodes, treemap tiles, etc.)
+CATEGORY_SHORT_LABELS = {
+  'External equity investments':          'external equity',
+  'Grants & non-repayable contributions': 'grants',
+  'Debt financing':                       'debt',
+  'Community financing':                  'community finance',
+  'Crowdfunding':                         'crowdfunding',
+  'Internal capital':                     'internal capital',
+}
+
+
+def group_small_sources(df, by='amount', threshold=None, min_count=None,
+                        category_col='category', source_col='source',
+                        amount_col='amount', record_col='record_id',
+                        force_group=None, omit_categories=None):
+  """
+  ...
+  omit_categories: optional list of category names to skip entirely.
+                   Sources in these categories are never grouped — useful for
+                   sparse categories (e.g. Crowdfunding) where the user wants
+                   to see every source individually.
+  """
+  if df.empty:
+    return df.copy()
+
+  df = df.copy()
+  omit_categories = omit_categories or []
+
+  # Work out small_pairs only on the non-omitted slice of the data
+  df_for_grouping = df[~df[category_col].isin(omit_categories)]
+
+  if df_for_grouping.empty:
+    # Nothing to group, but force_group might still apply below
+    small_pairs = set()
+  else:
+    if by == 'amount':
+      if threshold is None:
+        raise ValueError("`threshold` is required when by='amount'")
+      totals = df_for_grouping.groupby([category_col, source_col])[amount_col].sum()
+      small_mask = totals < threshold
+
+    elif by == 'pct_within_category':
+      if threshold is None:
+        raise ValueError("`threshold` (as a fraction, e.g. 0.03) is required when by='pct_within_category'")
+      source_totals = df_for_grouping.groupby([category_col, source_col])[amount_col].sum()
+      cat_totals    = df_for_grouping.groupby(category_col)[amount_col].sum()
+      pct = source_totals / source_totals.index.get_level_values(category_col).map(cat_totals)
+      small_mask = pct < threshold
+
+    elif by == 'count':
+      if min_count is None:
+        raise ValueError("`min_count` is required when by='count'")
+      counts = df_for_grouping.groupby([category_col, source_col])[record_col].nunique()
+      small_mask = counts < min_count
+
+    else:
+      raise ValueError(f"Unknown grouping mode: {by!r}")
+
+    small_pairs = set(small_mask[small_mask].index.tolist())
+
+  # Force-include certain sources, but still respect omit_categories
+  if force_group:
+    forced = df[
+      df[source_col].isin(force_group) &
+      ~df[category_col].isin(omit_categories)
+      ][[category_col, source_col]]
+    small_pairs.update(map(tuple, forced.drop_duplicates().values.tolist()))
+
+  # Rewrite small sources to "Other {short_category}"
+  def relabel(row):
+    key = (row[category_col], row[source_col])
+    if key in small_pairs:
+      short = CATEGORY_SHORT_LABELS.get(row[category_col], row[category_col])
+      return f'Other {short}'
+    return row[source_col]
+
+  df[source_col] = df.apply(relabel, axis=1)
+  return df
 
 # ==================== DATA FILTERING ====================
 
@@ -367,7 +446,12 @@ def create_sankey_internal(df, proj_types=None):
     lambda x: x if isinstance(x, list) else ([] if pd.isna(x) else [x])
   )
   df['amount'] = pd.to_numeric(df['amount'], errors='coerce').fillna(0)
-
+  
+  # ── Group small sources to reduce Sankey node clutter ──
+  df = group_small_sources(df, by='pct_within_category', threshold=0.03)
+  
+  # Split amount evenly across project types
+  df['pt_count'] = df['project_type'].apply(len).replace(0, 1)
   # Split amount evenly across project types
   df['pt_count'] = df['project_type'].apply(len).replace(0, 1)
   df['amount']   = df['amount'] / df['pt_count']
@@ -472,6 +556,9 @@ def create_stacked_bar_internal(df, category_order):
   Chart-specific: barmode stack, hidden x-axis, y-axis category order, bar text colours.
   """
   df = df[~df['category'].isin(['Internal capital', 'Other'])]
+
+  # ── Collapse sources contributing < 3% of category total ──
+  df = group_small_sources(df, by='pct_within_category', threshold=0.05)
 
   df_grouped = df.groupby(['category', 'source'])['amount'].sum().reset_index()
   group_totals = df_grouped.groupby('category')['amount'].sum().rename('group_total')
@@ -594,79 +681,143 @@ def create_bottleneck_lollipop_internal(df):
 
 def create_treemap_internal(df):
   """
-  Treemap: frequency of each financing mechanism grouped by category.
-  Tile size = number of projects using that source.
-  Chart-specific: per-tile text colours auto-contrasted against tile colour.
+  Treemap with toggle between project count (from financing_mech, filtered to
+  direct sources of capital) and dollar amount (from capital_mix).
+  Tile size = count or $ depending on selected mode.
+  Chart-specific: per-tile text colours auto-contrasted; toggle buttons added
+  to switch between the two metrics.
   """
-  if df.empty or 'financing_mech' not in df.columns:
+  if df.empty or 'financing_mech' not in df.columns or 'capital_mix' not in df.columns:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No data available for selected filters'))
     return fig
 
-  rows = []
+  # ── Count data: from financing_mech, filtered to direct sources only ──
+  count_rows = []
   for _, row in df.iterrows():
     for item in (row.get('financing_mech') or []):
-      rows.append({
+      if item.get('parent') != 'Direct sources of capital':
+        continue
+      count_rows.append({
         'record_id': row.get('record_id'),
         'source':    item.get('source'),
         'category':  standardize_category_name(item.get('category')),
       })
 
-  df_long = pd.DataFrame(rows)
-  if df_long.empty:
+  # ── Amount data: from capital_mix ──
+  amount_rows = []
+  for _, row in df.iterrows():
+    for item in (row.get('capital_mix') or []):
+      amount_rows.append({
+        'record_id': row.get('record_id'),
+        'source':    item.get('source'),
+        'category':  standardize_category_name(item.get('category')),
+        'amount':    pd.to_numeric(item.get('amount'), errors='coerce') or 0,
+      })
+
+  df_count_long  = pd.DataFrame(count_rows)
+  df_amount_long = pd.DataFrame(amount_rows)
+
+
+  if df_count_long.empty and df_amount_long.empty:
     fig = go.Figure()
-    fig.update_layout(title=dict(text='No financing mechanism data available'))
+    fig.update_layout(title=dict(text='No financing data available'))
     return fig
 
-  df_long['source'] = df_long['source'].replace({
-    'Other': 'Other/Unknown', 'Not sure': 'Other/Unknown',
-    'Aggregate total': 'Other/Unknown', 'Aggregate Total': 'Other/Unknown',
-    "Don't know": 'Other/Unknown', 'N/A': 'Other/Unknown',
-  })
-  mask = df_long['source'] == 'Other/Unknown'
-  df_long.loc[mask, 'source'] = df_long.loc[mask, 'source'] + '-' + df_long.loc[mask, 'category']
+  # ── Group small sources independently for each mode ──
+  df_count_long = group_small_sources(
+    df_count_long,
+    by='count',
+    min_count=2,
+    force_group=['Other', 'Not sure', 'Aggregate total', 'Aggregate Total',
+                 "Don't know", 'N/A'],
+    omit_categories=['Internal Capital'],
+  )
 
-  df_grouped = df_long.groupby(['source', 'category']).size().reset_index(name='count')
-  if df_grouped.empty:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No financing mechanism data available'))
-    return fig
+  df_amount_long = group_small_sources(
+    df_amount_long,
+    by='pct_within_category',
+    threshold=0.1,
+    force_group=['Other', 'Not sure', 'Aggregate total', 'Aggregate Total',
+                 "Don't know", 'N/A'],
+    omit_categories=['Crowdfunding'],
+  )
 
-  cat_totals = df_grouped.groupby('category')['count'].sum().to_dict()
-  labels, parents, values, colors, text_colors = [], [], [], [], []
+  # ── Aggregate to (source, category, value) shape ──
+  df_count  = df_count_long.groupby(['source', 'category']).size().reset_index(name='value')
+  df_amount = df_amount_long.groupby(['source', 'category'])['amount'].sum().reset_index(name='value')
 
-  for cat in df_grouped['category'].unique():
-    labels.append(cat); parents.append(''); values.append(cat_totals[cat])
-    col = COLOUR_MAPPING.get(cat, '#808080')
-    colors.append(col); text_colors.append(get_contrast_color(col))
+  # ── Helper to build one treemap trace ──
+  def build_trace(grouped_df, visible, hover_prefix=''):
+    if grouped_df.empty:
+      return go.Treemap(labels=[], parents=[], values=[], visible=visible)
 
-  for _, row in df_grouped.iterrows():
-    labels.append(wrap_text(row['source'], width=20) if row['source'] else row['source'])
-    parents.append(row['category']); values.append(row['count'])
-    col = COLOUR_MAPPING.get(row['category'], '#808080')
-    colors.append(col); text_colors.append(get_contrast_color(col))
+    cat_totals = grouped_df.groupby('category')['value'].sum().to_dict()
+    labels, parents, values, colors, text_colors = [], [], [], [], []
 
-  fig = go.Figure(go.Treemap(
-    labels=labels, parents=parents, values=values,
-    branchvalues='total',
-    marker=dict(colors=colors, line=dict(color='white', width=2)),
-    # Per-tile text colours explicitly set — white or black per tile background
-    textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=text_colors),
-    textposition='middle center',
-    hovertemplate='<b>%{label}</b><br>Count: %{value}<extra></extra>'
-  ))
+    for cat in grouped_df['category'].unique():
+      labels.append(cat)
+      parents.append('')
+      values.append(cat_totals[cat])
+      col = COLOUR_MAPPING.get(cat, '#808080')
+      colors.append(col)
+      text_colors.append(get_contrast_color(col))
+
+    for _, r in grouped_df.iterrows():
+      labels.append(wrap_text(r['source'], width=20) if r['source'] else r['source'])
+      parents.append(r['category'])
+      values.append(r['value'])
+      col = COLOUR_MAPPING.get(r['category'], '#808080')
+      colors.append(col)
+      text_colors.append(get_contrast_color(col))
+
+    return go.Treemap(
+      labels=labels, parents=parents, values=values,
+      branchvalues='total',
+      visible=visible,
+      marker=dict(colors=colors, line=dict(color='white', width=2)),
+      textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=text_colors),
+      textposition='middle center',
+      hovertemplate='<b>%{label}</b><br>' + hover_prefix + '%{value:,.0f}<extra></extra>',
+    )
+
+  # ── Build figure with both traces, count visible by default ──
+  fig = go.Figure()
+  fig.add_trace(build_trace(df_count,  visible=True,  hover_prefix=''))
+  fig.add_trace(build_trace(df_amount, visible=False, hover_prefix='$'))
+
   fig.update_layout(
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Use of Funding & Financing Mechanisms'),
+    title=dict(text='Use of funding & financing mechanisms'),
+    updatemenus=[dict(
+      type='buttons',
+      direction='left',
+      buttons=[
+        dict(
+          label='By Project Count',
+          method='update',
+          args=[{'visible': [True, False]}],
+        ),
+        dict(
+          label='By Dollar Amount',
+          method='update',
+          args=[{'visible': [False, True]}],
+        ),
+      ],
+      pad={'r': 10, 't': 10},
+      showactive=True,
+      x=0.5, y=1.07,
+      xanchor='left', yanchor='top',
+      bgcolor='rgba(255, 255, 255, 0.8)',
+      bordercolor='gray',
+      borderwidth=1,
+    )],
   )
+
   return fig
 
 
 def create_scale_pies_internal(df):
-  """
-  Row of pie charts: funding category mix per project scale (smallest to largest).
-  Chart-specific: white text inside pie slices, legend position, subplot annotations.
-  """
   SCALE_ORDER = [
     'Micro (< $100K)', 'Small ($100K-$1M)', 'Medium ($1M-$5M)',
     'Large ($5M-$25M)', 'Very Large ($25M-$100M)', 'Mega (> $100M)'
@@ -677,39 +828,38 @@ def create_scale_pies_internal(df):
     fig.update_layout(title=dict(text='No data available'))
     return fig
 
+  # No subplot_titles — labels live on the pie traces instead
   fig = make_subplots(
     rows=1, cols=len(scales),
     specs=[[{'type': 'domain'}] * len(scales)],
-    subplot_titles=scales
   )
 
   for i, scale in enumerate(scales):
     sub     = df[df['project_scale'] == scale]
     grouped = sub.groupby('category', as_index=False)['amount'].sum()
     colors  = [COLOUR_MAPPING.get(c, '#808080') for c in grouped['category']]
+    n       = sub['record_id'].nunique()
 
     fig.add_trace(go.Pie(
       labels=grouped['category'], values=grouped['amount'], name=scale,
       marker=dict(colors=colors),
       texttemplate='%{percent:.1%}', textposition='inside',
-      # White text inside slices — intentional override
       textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color='white'),
       sort=False,
       hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
+      # ── Title is relative to the pie — never overlaps regardless of screen size ──
+      title=dict(
+        text=f'{scale}<br>({n} projects)',
+        position='top center',
+        font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)
+      ),
     ), row=1, col=i + 1)
-
-    n = sub['record_id'].nunique()
-    fig.layout.annotations[i].update(
-      text=f'{scale}<br>({n} projects)',
-      font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-      y=0.93
-    )
 
   fig.update_layout(
     showlegend=True,
-    legend=dict(orientation='h', y=0.01, x=0.5, xanchor='center'),
-    margin=dict(l=0, r=0, b=0),
-    title=dict(text='Most used sources of capital by project '),
+    legend=dict(orientation='h', y=-0.15, x=0.5, xanchor='center'),
+    margin=dict(l=0, r=0, b=0, t=0),
+    title=dict(text='Funding distribution by project scale'),
   )
   return fig
 
@@ -784,13 +934,10 @@ def calculate_indicators_internal(df):
 # ==================== EXPORT CALLABLE ====================
 
 @anvil.server.callable
-def export_capital_chart(chart_key, img_b64, active_filters):
-  """
-  Receive a base64 PNG from the client browser, decorate it with the logo
-  and active filter summary, return BlobMedia for anvil.download().
-  """
+def export_capital_chart(chart_key, img_b64, active_filters, chart_title=''):
   return export_figure_from_bytes(
     img_b64,
     active_filters,
-    filename=f'{chart_key}_export.png'
+    filename=f'{chart_key}_export.png',
+    chart_title=chart_title,
   )

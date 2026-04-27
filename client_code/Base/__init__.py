@@ -60,6 +60,11 @@ class Base(BaseTemplate):
     open_form('resources')
     pass
 
+  def team_nav_click(self, **event_args):
+    """This method is called when the link is clicked"""
+    open_form('team')
+    pass
+
   def reset_links(self, **event_args):
     self.overview_nav.role = ''
     self.capital_nav.role = ''
@@ -69,3 +74,4 @@ class Base(BaseTemplate):
     self.case_nav.role = ''
     self.resources_nav.role=''
     self.methods_nav.role=''
+    self.team_nav.role=''

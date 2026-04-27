@@ -118,6 +118,20 @@ components:
         padding: [null, '16', null, null]
       text: Data & Methods
     type: Link
+  - event_bindings: {click: team_nav_click}
+    layout_properties: {grid_position: 'NLMVUW,MFATCT'}
+    name: team_nav
+    properties:
+      align: left
+      font_size: 16
+      icon: fa:group
+      icon_align: left
+      role: null
+      spacing:
+        margin: ['4', null, '4', null]
+        padding: [null, '16', null, null]
+      text: Our Team
+    type: Link
   layout_properties: {slot: left-nav}
   name: column_panel_1
   properties: {}
