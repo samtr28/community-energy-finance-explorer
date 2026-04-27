@@ -72,6 +72,62 @@ def standardize_category_name(category):
   if 'community' in c: return 'Community financing'
   return category
 
+def group_small_sources(df, by='amount', threshold=None, min_count=None,
+                        category_col='category', source_col='source',
+                        amount_col='amount', record_col='record_id',
+                        other_label_template='Other {category} sources'):
+  """
+  Collapse small sources within each category into a single "Other {category}" bucket.
+
+  Modes (set via `by`):
+    'amount'              — group sources whose total $ amount in the category is < threshold
+    'pct_within_category' — group sources contributing < threshold (0-1) of category total
+    'count'               — group sources used by fewer than `min_count` distinct projects
+
+  Returns a new dataframe with the `source_col` rewritten in place for small sources.
+  Original dataframe is not modified.
+  """
+  if df.empty:
+    return df.copy()
+
+  df = df.copy()
+
+  # Identify which (category, source) pairs are "small"
+  if by == 'amount':
+    if threshold is None:
+      raise ValueError("`threshold` is required when by='amount'")
+    totals = df.groupby([category_col, source_col])[amount_col].sum()
+    small_mask = totals < threshold
+
+  elif by == 'pct_within_category':
+    if threshold is None:
+      raise ValueError("`threshold` (as a fraction, e.g. 0.03) is required when by='pct_within_category'")
+    source_totals = df.groupby([category_col, source_col])[amount_col].sum()
+    cat_totals = df.groupby(category_col)[amount_col].sum()
+    pct = source_totals / source_totals.index.get_level_values(category_col).map(cat_totals)
+    small_mask = pct < threshold
+
+  elif by == 'count':
+    if min_count is None:
+      raise ValueError("`min_count` is required when by='count'")
+    counts = df.groupby([category_col, source_col])[record_col].nunique()
+    small_mask = counts < min_count
+
+  else:
+    raise ValueError(f"Unknown grouping mode: {by!r}")
+
+  # Build the lookup: (category, source) -> True if small
+  small_pairs = set(small_mask[small_mask].index.tolist())
+
+  # Rewrite small sources to "Other {category} sources"
+  def relabel(row):
+    key = (row[category_col], row[source_col])
+    if key in small_pairs:
+      return other_label_template.format(category=row[category_col])
+    return row[source_col]
+
+  df[source_col] = df.apply(relabel, axis=1)
+  return df
 
 # ==================== DATA FILTERING ====================
 
@@ -367,7 +423,11 @@ def create_sankey_internal(df, proj_types=None):
     lambda x: x if isinstance(x, list) else ([] if pd.isna(x) else [x])
   )
   df['amount'] = pd.to_numeric(df['amount'], errors='coerce').fillna(0)
-
+  # ── Group small sources to reduce node clutter ──
+  df = group_small_sources(df, by='pct_within_category', threshold=0.03)
+  
+  # Split amount evenly across project types
+  df['pt_count'] = df['project_type'].apply(len).replace(0, 1)
   # Split amount evenly across project types
   df['pt_count'] = df['project_type'].apply(len).replace(0, 1)
   df['amount']   = df['amount'] / df['pt_count']
