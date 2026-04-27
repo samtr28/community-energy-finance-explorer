@@ -72,19 +72,36 @@ def standardize_category_name(category):
   if 'community' in c: return 'Community financing'
   return category
 
+# Short labels used when collapsing small sources into an "Other" bucket.
+# Keeps "Other" labels readable in dense charts (Sankey nodes, treemap tiles, etc.)
+CATEGORY_SHORT_LABELS = {
+  'External equity investments':          'external equity',
+  'Grants & non-repayable contributions': 'grants',
+  'Debt financing':                       'debt',
+  'Community financing':                  'community finance',
+  'Crowdfunding':                         'crowdfunding',
+  'Internal capital':                     'internal capital',
+}
+
+
 def group_small_sources(df, by='amount', threshold=None, min_count=None,
                         category_col='category', source_col='source',
-                        amount_col='amount', record_col='record_id',
-                        other_label_template='Other {category} sources'):
+                        amount_col='amount', record_col='record_id', force_group=None):
   """
-  Collapse small sources within each category into a single "Other {category}" bucket.
+  Collapse small sources within each category into a single "Other {short_category}" bucket.
 
   Modes (set via `by`):
     'amount'              — group sources whose total $ amount in the category is < threshold
     'pct_within_category' — group sources contributing < threshold (0-1) of category total
     'count'               — group sources used by fewer than `min_count` distinct projects
 
-  Returns a new dataframe with the `source_col` rewritten in place for small sources.
+  The "Other" label uses CATEGORY_SHORT_LABELS so e.g. small equity sources become
+  "Other external equity" rather than "Other External equity investments".
+
+  force_group: optional list of source names to always group, regardless of size.
+               Useful for folding 'Other/Unknown' style values into the bucket.
+
+  Returns a new dataframe with the source column rewritten for small sources.
   Original dataframe is not modified.
   """
   if df.empty:
@@ -103,7 +120,7 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
     if threshold is None:
       raise ValueError("`threshold` (as a fraction, e.g. 0.03) is required when by='pct_within_category'")
     source_totals = df.groupby([category_col, source_col])[amount_col].sum()
-    cat_totals = df.groupby(category_col)[amount_col].sum()
+    cat_totals    = df.groupby(category_col)[amount_col].sum()
     pct = source_totals / source_totals.index.get_level_values(category_col).map(cat_totals)
     small_mask = pct < threshold
 
@@ -116,14 +133,20 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
   else:
     raise ValueError(f"Unknown grouping mode: {by!r}")
 
-  # Build the lookup: (category, source) -> True if small
+  # Set of (category, source) pairs that should be relabeled
   small_pairs = set(small_mask[small_mask].index.tolist())
 
-  # Rewrite small sources to "Other {category} sources"
+  # Add forced sources to the small_pairs set (across all categories they appear in)
+  if force_group:
+    forced = df[df[source_col].isin(force_group)][[category_col, source_col]]
+    small_pairs.update(map(tuple, forced.drop_duplicates().values.tolist()))
+
+  # Rewrite small sources to "Other {short_category}"
   def relabel(row):
     key = (row[category_col], row[source_col])
     if key in small_pairs:
-      return other_label_template.format(category=row[category_col])
+      short = CATEGORY_SHORT_LABELS.get(row[category_col], row[category_col])
+      return f'Other {short}'
     return row[source_col]
 
   df[source_col] = df.apply(relabel, axis=1)
@@ -423,7 +446,8 @@ def create_sankey_internal(df, proj_types=None):
     lambda x: x if isinstance(x, list) else ([] if pd.isna(x) else [x])
   )
   df['amount'] = pd.to_numeric(df['amount'], errors='coerce').fillna(0)
-  # ── Group small sources to reduce node clutter ──
+  
+  # ── Group small sources to reduce Sankey node clutter ──
   df = group_small_sources(df, by='pct_within_category', threshold=0.03)
   
   # Split amount evenly across project types
@@ -532,6 +556,9 @@ def create_stacked_bar_internal(df, category_order):
   Chart-specific: barmode stack, hidden x-axis, y-axis category order, bar text colours.
   """
   df = df[~df['category'].isin(['Internal capital', 'Other'])]
+
+  # ── Collapse sources contributing < 3% of category total ──
+  df = group_small_sources(df, by='pct_within_category', threshold=0.05)
 
   df_grouped = df.groupby(['category', 'source'])['amount'].sum().reset_index()
   group_totals = df_grouped.groupby('category')['amount'].sum().rename('group_total')
