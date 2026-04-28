@@ -132,6 +132,14 @@ components_by_slot:
             style: headline
             text: Surveying Community Energy in Canada
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - components: []
+          layout_properties: {slot: card-content-container-slot}
+          name: rich_text_2
+          properties:
+            content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
+            font_size: 16
+            format: restricted_html
+          type: RichText
         - components:
           - components:
             - layout_properties: {slot: stat1}
