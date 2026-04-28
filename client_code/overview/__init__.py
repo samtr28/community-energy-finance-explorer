@@ -31,3 +31,6 @@ class overview(overviewTemplate):
 
   def cap_btn_click(self, **event_args):
     open_form('capital_explorer')
+
+  def proj_btn_click(self, **event_args):
+    open_form('projects_explorer')
