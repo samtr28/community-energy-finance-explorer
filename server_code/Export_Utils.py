@@ -25,10 +25,10 @@ Usage in any page server module:
 
 import anvil.server
 import anvil.media
+import anvil.http
 import base64
 import io
 from datetime import date
-from anvil.files import data_files
 from PIL import Image, ImageDraw, ImageFont
 
 from .config import (
@@ -74,7 +74,29 @@ def apply_display_template(fig):
 
 # ==================== EXPORT DECORATION ====================
 
-DEFAULT_LOGO_FILENAME = 'logo.png'
+# ── Theme asset filenames (must match files in your Assets section) ──
+LOGO_ASSET     = 'Horizontal-IIH-Logomark-Full%20Colour-University-of-Victoria.png'
+FONT_REGULAR   = 'DejaVuSans.ttf'
+FONT_BOLD_FILE = 'DejaVuSans-Bold.ttf'
+
+# Cache fetched asset bytes for the lifetime of the server process
+_ASSET_CACHE = {}
+
+
+def _fetch_asset(filename):
+  """Fetch a Theme Asset's raw bytes via /_/theme/<filename>. Cached on first call."""
+  if filename in _ASSET_CACHE:
+    return _ASSET_CACHE[filename]
+  try:
+    url   = anvil.server.get_app_origin() + '/_/theme/' + filename
+    media = anvil.http.request(url, json=False)
+    data  = media.get_bytes()
+    _ASSET_CACHE[filename] = data
+    return data
+  except Exception as e:
+    print(f"Theme asset fetch failed for '{filename}': {e}")
+    _ASSET_CACHE[filename] = None
+    return None
 
 # ── Chart padding — white space around the chart image ──
 CHART_PADDING_H     = 40           # px left and right of chart
@@ -116,22 +138,19 @@ SOURCE_TEXT_COLOR   = '#444444'
 
 
 def _load_font(size, bold=False):
-  """Load DejaVu Sans bold or regular at the given pt size."""
-  try:
-    path = (
-      '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf' if bold
-      else '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
-    )
-    return ImageFont.truetype(path, size)
-  except Exception:
+  """Load font from theme assets at the given pt size."""
+  filename = FONT_BOLD_FILE if bold else FONT_REGULAR
+  font_bytes = _fetch_asset(filename)
+  if font_bytes:
     try:
-      path = (
-        '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf' if bold
-        else '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf'
-      )
-      return ImageFont.truetype(path, size)
-    except Exception:
-      return ImageFont.load_default()
+      return ImageFont.truetype(io.BytesIO(font_bytes), size)
+    except Exception as e:
+      print(f"Font '{filename}' could not be parsed by PIL: {e}")
+  print(
+    f"WARNING: Could not load '{filename}' from theme assets. "
+    f"Banner will render at default bitmap size — check the Assets section."
+  )
+  return ImageFont.load_default()
 
 
 def _resize_logo(logo, max_h, max_w):
@@ -237,8 +256,7 @@ def _draw_filter_text(draw, x, y, active_filters, font_bold, font_reg,
     return lines + 1   # +1 for the prefix line
 
 
-def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='',
-                             logo_filename=DEFAULT_LOGO_FILENAME):
+def add_logo_and_filters_pil(img_bytes, active_filters, chart_title=''):
   """
   Decorate a raw PNG.
 
@@ -311,7 +329,8 @@ def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='',
   cursor_y += TITLE_TEXT_SIZE + LINE_SPACING
 
   # Line 2: subtitle
-  today_str = date.today().strftime('%B %-d, %Y')
+  today = date.today()
+  today_str = f"{today.strftime('%B')} {today.day}, {today.year}"
   draw.text(
     (LEFT_MARGIN, cursor_y),
     f'Survey-based data downloaded on {today_str}',
@@ -332,19 +351,21 @@ def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='',
   source_text_y = strip_y + (BOTTOM_STRIP_HEIGHT - SOURCE_TEXT_SIZE) // 2
   draw.text((STRIP_PADDING, source_text_y), SOURCE_TEXT, fill=SOURCE_TEXT_COLOR, font=font_source)
 
-  try:
-    logo = _resize_logo(
-      Image.open(data_files[logo_filename]).convert('RGBA'),
-      LOGO_MAX_HEIGHT, LOGO_MAX_WIDTH
-    )
-    lw, lh = logo.size
-    canvas.paste(
-      logo,
-      (canvas_w - lw - STRIP_PADDING, strip_y + (BOTTOM_STRIP_HEIGHT - lh) // 2),
-      logo
-    )
-  except Exception as e:
-    print(f"Logo skipped: {e}")
+  logo_bytes = _fetch_asset(LOGO_ASSET)
+  if logo_bytes:
+    try:
+      logo = _resize_logo(
+        Image.open(io.BytesIO(logo_bytes)).convert('RGBA'),
+        LOGO_MAX_HEIGHT, LOGO_MAX_WIDTH
+      )
+      lw, lh = logo.size
+      canvas.paste(
+        logo,
+        (canvas_w - lw - STRIP_PADDING, strip_y + (BOTTOM_STRIP_HEIGHT - lh) // 2),
+        logo
+      )
+    except Exception as e:
+      print(f"Logo decode failed: {e}")
 
   # ── Convert to RGB PNG bytes ──
   out = io.BytesIO()
@@ -355,7 +376,7 @@ def add_logo_and_filters_pil(img_bytes, active_filters, chart_title='',
 # ==================== PUBLIC ENTRY POINT ====================
 
 def export_figure_from_bytes(img_b64, active_filters, filename='chart_export.png',
-                             chart_title='', logo_filename=DEFAULT_LOGO_FILENAME):
+                             chart_title=''):
   """
   Entry point called by every page's export server callable.
 
@@ -373,6 +394,5 @@ def export_figure_from_bytes(img_b64, active_filters, filename='chart_export.png
     base64.b64decode(img_b64),
     active_filters,
     chart_title=chart_title,
-    logo_filename=logo_filename
   )
   return anvil.BlobMedia('image/png', decorated, name=filename)
