@@ -7,96 +7,167 @@ import anvil.server
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-from .Global_Server_Functions import get_data
-from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors
 import plotly.express as px
 import ast
+import json
+import urllib.request
+
+from .Global_Server_Functions import get_data
+from .Export_Utils import apply_display_template
+from .config import (
+COLOUR_MAPPING, gradient_palette, dunsparce_colors,
+FONT_FAMILY, FONT_SIZE, FONT_COLOR,
+)
 
 DATA = get_data()
 
-@anvil.server.callable
-def build_province_pie():
-  cols = ["province", "province_abbr"]
-  df = DATA.loc[:, cols].copy()
-  fig = px.pie(df, names='province_abbr', hole=0.3)
-  fig.update_traces(
-    textposition='inside', 
-    textinfo='percent+label',
-    hovertemplate='%{label}<extra></extra>'
-  )
-  return fig
-  
+
+# ==================== PROVINCE MAP CONSTANTS ====================
+
+ALL_PROVINCES = [
+  "British Columbia", "Alberta", "Saskatchewan", "Manitoba", "Ontario",
+  "Quebec", "New Brunswick", "Nova Scotia", "Prince Edward Island",
+  "Newfoundland and Labrador", "Yukon Territory", "Northwest Territories", "Nunavut",
+]
+
+PROVINCE_CENTROIDS = {
+  "British Columbia":          (54.0, -125.0),
+  "Alberta":                   (54.5, -115.0),
+  "Saskatchewan":              (54.0, -106.0),
+  "Manitoba":                  (54.5, -98.0),
+  "Ontario":                   (50.0, -86.0),
+  "Quebec":                    (52.5, -72.0),
+  "New Brunswick":             (46.5, -66.5),
+  "Nova Scotia":               (45.0, -63.0),
+  "Prince Edward Island":      (46.5, -63.0),
+  "Newfoundland and Labrador": (53.5, -60.0),
+  "Yukon Territory":           (63.0, -135.0),
+  "Northwest Territories":     (65.0, -120.0),
+  "Nunavut":                   (70.0, -90.0),
+}
+
+PROVINCE_FIX = {"Yukon": "Yukon Territory"}
+
+# Load geojson once at module level
+_GEOJSON_URL = "https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/canada.geojson"
+with urllib.request.urlopen(_GEOJSON_URL) as response:
+  CANADA_GEO = json.load(response)
+
+
+# ==================== CALLABLES ====================
+
 @anvil.server.callable
 def get_summary_data():
   total_cost = DATA['total_cost'].sum()
   project_num = DATA['num_projects_response'].sum()
-
   return total_cost, project_num
 
 
 @anvil.server.callable
-def create_capital_flow_overview():
+def get_province_map():
   """
-  Creates a basic Sankey diagram showing capital flow from category to project type.
-  No filters - shows all data.
-  
-  Returns:
-  plotly.graph_objects.Figure: Sankey diagram figure
-  """
-  # Process all data (no filters)
-  rows = []
-  for idx, row in DATA.iterrows():
-    capital_mix = row['capital_mix']
-    if isinstance(capital_mix, str):
-      capital_mix = ast.literal_eval(capital_mix)
-    if not capital_mix:
-      continue
+    Choropleth: project count per province (log-scaled colour).
+    Provinces with no data shown in light grey.
+    Number labels on coloured provinces with white halo for legibility.
+    Chart-specific properties only — generic styling handled by apply_display_template.
+    """
+  df = DATA.copy()
+  df["province_geo"] = df["province"].replace(PROVINCE_FIX)
 
-    for item in capital_mix:
-      rows.append({
-        'category': item['category'],
-        'amount': item['amount'],
-        'project_type': row.get('project_type'),
-      })
+  province_counts = (
+    df.groupby("province_geo")["num_projects_response"].sum()
+      .reindex(ALL_PROVINCES, fill_value=0)
+      .reset_index(name="projects")
+  )
+  province_counts.columns = ["province", "projects"]
+  province_counts["projects_log"] = np.log1p(province_counts["projects"])
+  province_counts["lat"] = province_counts["province"].map(lambda p: PROVINCE_CENTROIDS[p][0])
+  province_counts["lon"] = province_counts["province"].map(lambda p: PROVINCE_CENTROIDS[p][1])
 
-  df_long = pd.DataFrame(rows)
-  df_long['project_type'] = df_long['project_type'].apply(ast.literal_eval)
-  df_long['count'] = df_long['project_type'].apply(len)
-  df_long = df_long.explode('project_type').reset_index(drop=True)
-  df_long['amount'] = df_long['amount'] / df_long['count']
-  df_long = df_long.drop('count', axis=1)
+  has_data = province_counts[province_counts["projects"] > 0]
+  no_data  = province_counts[province_counts["projects"] == 0]
+  labeled  = province_counts[province_counts["projects"] > 0]
 
-  # Build node lists
-  categories_list = list(df_long['category'].unique())
-  project_types_list = list(df_long['project_type'].unique())
-  all_nodes = categories_list + project_types_list
+  fig = go.Figure()
 
-  # Aggregate flows from category to project type
-  agg_c2p = df_long.groupby(['category', 'project_type'])['amount'].sum().reset_index()
+  # Layer 1: grey "no data" provinces
+  fig.add_trace(go.Choropleth(
+    geojson=CANADA_GEO,
+    locations=no_data["province"],
+    z=[0] * len(no_data),
+    featureidkey="properties.name",
+    colorscale=[[0, "#e0e0e0"], [1, "#e0e0e0"]],
+    showscale=False,
+    marker_line_color="black",
+    marker_line_width=0.5,
+    hovertemplate="<b>%{location}</b><br>No projects<extra></extra>",
+  ))
 
-  # Build flow lists
-  sources = list(agg_c2p['category'].map(lambda x: all_nodes.index(x)))
-  targets = list(agg_c2p['project_type'].map(lambda x: all_nodes.index(x)))
-  values = list(agg_c2p['amount'])
+  # Layer 2: coloured "has data" provinces
+  fig.add_trace(go.Choropleth(
+    geojson=CANADA_GEO,
+    locations=has_data["province"],
+    z=has_data["projects_log"],
+    customdata=has_data["projects"],
+    featureidkey="properties.name",
+    colorscale="Teal",
+    showscale=False,
+    marker_line_color="black",
+    marker_line_width=0.5,
+    hovertemplate="<b>%{location}</b><br>%{customdata} projects<extra></extra>",
+  ))
 
-  # Node colors
-  node_colors = []
-  for node in all_nodes:
-    if node in categories_list:
-      node_colors.append(COLOUR_MAPPING.get(node, '#808080'))
-    else:  # Project types
-      node_colors.append('#696969')
+  # Layer 3: white halo behind count labels
+  halo_offset = 0.08
+  for dlat, dlon in [(halo_offset, 0), (-halo_offset, 0), (0, halo_offset), (0, -halo_offset)]:
+    fig.add_trace(go.Scattergeo(
+      lon=labeled["lon"] + dlon,
+      lat=labeled["lat"] + dlat,
+      text=labeled["projects"].astype(int).astype(str),
+      mode="text",
+      textfont=dict(family=FONT_FAMILY, size=13, color="white", weight="bold"),
+      hoverinfo="skip",
+      showlegend=False,
+    ))
 
-  # Link colors (transparent versions of category colors)
-  def make_transparent(color):
-    if color.startswith('#'):
-      r = int(color[1:3], 16)
-      g = int(color[3:5], 16)
-      b = int(color[5:7], 16)
-      return f'rgba({r}, {g}, {b}, 0.3)'
-    return color
+    # Layer 4: main count labels
+  fig.add_trace(go.Scattergeo(
+    lon=labeled["lon"],
+    lat=labeled["lat"],
+    text=labeled["projects"].astype(int).astype(str),
+    mode="text",
+    textfont=dict(family=FONT_FAMILY, size=13, color=FONT_COLOR, weight="bold"),
+    hoverinfo="skip",
+    showlegend=False,
+  ))
 
-  link_colors = []
-  for _, row in agg_c2p.iterrows():
-    link_colors.append(make_transparent(COLOUR_MAPPING.get(row['category'], '#808080')))
+  fig.update_geos(
+    fitbounds="geojson",
+    visible=False,
+    bgcolor="rgba(0,0,0,0)",       # transparent geo background
+  )
+  # Keep only essentials here (optional)
+  fig.update_layout(
+    title="Projects by province",
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+  )
+
+  # APPLY TEMPLATE FIRST
+  fig = apply_display_template(fig)
+
+  #  FORCE OVERRIDES AFTER TEMPLATE (this is the fix)
+  fig.update_layout(
+    margin=dict(l=0, r=0, t=0, b=0),
+    title=dict(
+      text="Projects by province",
+      y=0.98,
+      yanchor="top",
+      pad=dict(t=0, b=0),
+      automargin=False
+    )
+  )
+
+  return fig
+
 

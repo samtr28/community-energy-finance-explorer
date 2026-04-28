@@ -33,7 +33,7 @@ components_by_slot:
       name: rich_text_1
       properties:
         content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. <br>{slot}\n<br><br>\n\n<b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term.<br> {slot1}\n\n<br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. <br>{slot2}\n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
-        font_size: 16
+        font_size: 18
         format: restricted_html
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ HHLQPH,RPNIYY'}
@@ -133,22 +133,10 @@ components_by_slot:
             text: Our Progress so Far
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components:
-          - components: []
-            layout_properties: {full_width_row: true, grid_position: 'NWMOVG,GLIBBX'}
-            name: rich_text_2
-            properties:
-              content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
-              font_size: 16
-              format: restricted_html
-            type: RichText
-          - layout_properties: {grid_position: 'AUBLCE,MVVVCQ'}
-            name: lottie_overview_1
-            properties: {}
-            type: form:overview.lottie_overview
           - components:
             - layout_properties: {slot: stat1}
               name: project_number
-              properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
+              properties: {align: center, font_family: serif, style: display, text_color: 'theme:Accent Text'}
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             - layout_properties: {slot: desc1}
               name: project_number_caption
@@ -161,7 +149,7 @@ components_by_slot:
                 text: projects surveyed
                 text_color: theme:On Tertiary Container
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
-            layout_properties: {full_width_row: true, grid_position: 'AUBLCE,BZUZBX NPOBIA,TWKHQW'}
+            layout_properties: {grid_position: 'QRVIKA,VMDGMA'}
             name: rich_text_4
             properties:
               align: center
@@ -183,15 +171,21 @@ components_by_slot:
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             - layout_properties: {slot: stat2}
               name: total_funding_number
-              properties: {align: center, font_family: serif, style: display, text_color: 'theme:On Tertiary Container'}
+              properties: {align: center, font_family: serif, style: display, text_color: 'theme:Secondary'}
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
-            layout_properties: {grid_position: 'AUBLCE,BZUZBX UMGIAG,WYLUEH'}
+            layout_properties: {grid_position: 'QRVIKA,XYXOTH'}
             name: rich_text_5
             properties: {align: center, content: '{stat2}<br>{desc2}', format: restricted_html}
             type: RichText
+          - layout_properties: {grid_position: 'OFHKXW,QYOTEE'}
+            name: province_map
+            properties:
+              height: 35vh
+              margin: ['20', null, null, null]
+            type: Plot
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2
-          properties: {col_widths: '{"MVVVCQ":40,"BZUZBX":20}'}
+          properties: {col_widths: '{}'}
           type: ColumnPanel
         layout_properties: {slot: card-content-slot}
         name: card_content_container_1
@@ -199,7 +193,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
       layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX DEJWBX,UCHPXK'}
       name: card_1
-      properties: {background_color: 'theme:Tertiary Container'}
+      properties: {background_color: 'theme:Primary Overlay 3'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     - components:
       - components:
