@@ -125,7 +125,7 @@ def get_province_map():
       lat=labeled["lat"] + dlat,
       text=labeled["projects"].astype(int).astype(str),
       mode="text",
-      textfont=dict(family=FONT_FAMILY, size=13, color="white", weight="bold"),
+      textfont=dict(family=FONT_FAMILY, size=16, color="white", weight="bold"),
       hoverinfo="skip",
       showlegend=False,
     ))
@@ -136,7 +136,7 @@ def get_province_map():
     lat=labeled["lat"],
     text=labeled["projects"].astype(int).astype(str),
     mode="text",
-    textfont=dict(family=FONT_FAMILY, size=13, color=FONT_COLOR, weight="bold"),
+    textfont=dict(family=FONT_FAMILY, size=16, color=FONT_COLOR, weight="bold"),
     hoverinfo="skip",
     showlegend=False,
   ))
