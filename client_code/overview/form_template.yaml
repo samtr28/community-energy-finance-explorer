@@ -12,6 +12,14 @@ components_by_slot:
         style: headline
         text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ GETEAY,ZDMMUS'}
+      name: image_1
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['0', null, '0', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - components:
       - components: []
         event_bindings: {click: owner_btn_click}
@@ -36,10 +44,14 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ HHLQPH,RPNIYY'}
-      name: divider_2
-      properties: {color: 'theme:On Primary Container'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ IAACCY,VGCBFF'}
+      name: image_2
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['0', null, '8', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ HHLFSA,WMDNSO'}
       name: main_heading_2
       properties:
@@ -67,10 +79,14 @@ components_by_slot:
         font_size: 16
         format: restricted_html
       type: RichText
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ MQFBYC,RDTKCI'}
-      name: divider_1
-      properties: {color: 'theme:On Primary Container'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Divider
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ ITKZWY,OMCXJP'}
+      name: image_3
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['0', null, '8', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'GIAKYW,ZDEIQT'}
         name: main_heading_3
@@ -87,7 +103,7 @@ components_by_slot:
         name: heading_1
         properties: {bold: true, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {grid_position: 'PDXQAF,RKAMSD'}
+      - layout_properties: {full_width_row: true, grid_position: 'PDXQAF,RKAMSD'}
         name: text_1
         properties: {scale: large, text: 'Learn from peer examples, find projects like yours, and see how others combined funding sources, chose ownership models, and delivered outcomes that aligned with community goals.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -99,11 +115,11 @@ components_by_slot:
         name: text_2
         properties: {scale: large, text: 'Learn from peer examples, find projects like yours, and see how others combined funding sources, chose ownership models, and delivered outcomes that aligned with community goals.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {grid_position: 'QQXLEO,LASFNC'}
+      - layout_properties: {full_width_row: true, grid_position: 'QQXLEO,LASFNC'}
         name: heading_3
         properties: {bold: true, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {grid_position: 'WUZEJQ,PSZWHB'}
+      - layout_properties: {full_width_row: true, grid_position: 'WUZEJQ,PSZWHB'}
         name: text_3
         properties: {scale: large, text: 'Use structured, filterable project-level information to study how finance, ownership, and context shape outcomes and clean energy deployment.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -320,7 +336,7 @@ components_by_slot:
       name: card_3
       properties: {background_color: 'theme:Primary Overlay 3'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - layout_properties: {grid_position: 'IZDOGX,ANKGAX UXUDWH,HBJUHE'}
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX UXUDWH,HBJUHE'}
       name: heading_5
       properties: {bold: true, font_family: ser, italic: false, scale: large, style: title, text: Trust & Transparency}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
