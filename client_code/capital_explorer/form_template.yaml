@@ -337,6 +337,26 @@ components_by_slot:
         spacing:
           margin: ['2', '2', '2', '2']
       type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'EBCNZY,IWMUNN'}
+      name: circle_pack_plot
+      properties: {height: 70vh}
+      type: Plot
+    - event_bindings: {click: download_circle_pack_btn_click}
+      layout_properties: {full_width_row: true, grid_position: 'GSTIWJ,ICZUBL'}
+      name: download_circle_pack_btn
+      properties:
+        align: right
+        background_color: theme:Primary Overlay 3
+        font_size: 14
+        icon: mi:download
+        icon_color: theme:On Primary Container
+        icon_size: 16
+        spacing:
+          margin: ['2', null, '0', null]
+          padding: [null, '16', null, null]
+        text: Download
+        text_color: theme:On Primary Container
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - layout_properties: {full_width_row: true, grid_position: 'JJTAMT,EPXQPI'}
       name: heading_2
       properties: {font_family: serif, text: 'Another title here '}

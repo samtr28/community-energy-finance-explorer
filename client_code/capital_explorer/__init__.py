@@ -150,6 +150,7 @@ class capital_explorer(capital_explorerTemplate):
     self.lollipop_chart.figure    = all_charts['bottleneck_chart']
     self.bubble_plot.figure       = all_charts['treemap']
     self.scale_pies_plot.figure   = all_charts['scale_pies']
+    self.circle_pack_plot.figure = all_charts['circle_pack']
 
     # ── Indicators ──
     indicators = all_charts['indicators']
@@ -182,6 +183,7 @@ class capital_explorer(capital_explorerTemplate):
       'bottleneck_chart': self.lollipop_chart,
       'treemap':          self.bubble_plot,
       'scale_pies':       self.scale_pies_plot,
+      'circle_pack':      self.circle_pack_plot
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):
@@ -215,3 +217,6 @@ class capital_explorer(capital_explorerTemplate):
 
   def download_pies_btn_click(self, **event_args):
     self._download_chart('scale_pies', button=self.download_pies_btn)
+
+  def download_circle_pack_btn_click(self, **event_args):
+    self._download_chart('circle_pack', button=self.download_circle_pack_btn)
