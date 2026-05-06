@@ -28,6 +28,7 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
 import textwrap
+import math
 
 from .config import (
 COLOUR_MAPPING, gradient_palette, dunsparce_colors,
@@ -340,7 +341,7 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     }
     return {k: empty_fig for k in [
       'box_plot', 'sankey', 'time_chart', 'stacked_bar',
-      'bottleneck_chart', 'treemap', 'scale_pies'
+      'bottleneck_chart', 'treemap', 'scale_pies', 'circle_pack'
     ]} | {'indicators': empty_ind}
 
   # ── Category order — computed once, reused across charts ──
@@ -356,6 +357,7 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     'bottleneck_chart': apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
     'treemap':          apply_display_template(create_treemap_internal(df_raw_filtered)),
     'scale_pies':       apply_display_template(create_scale_pies_internal(df_capital_filtered)),
+    'circle_pack':      apply_display_template(create_circle_pack_internal(df_raw_filtered)), 
     'indicators':       calculate_indicators_internal(df_capital_filtered),
   }
 
@@ -864,6 +866,159 @@ def create_scale_pies_internal(df):
   )
   return fig
 
+
+def create_circle_pack_internal(df):
+  """
+    Circle packing of alternative financing structures and support instruments.
+    Outer rings removed — source bubbles only, with floating category labels.
+    Pulled from financing_mech, filtered to two specific parent buckets.
+    """
+  import circlify  # local import — only needed for this chart
+
+  if df.empty or 'financing_mech' not in df.columns:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No financing mechanism data available'))
+    return fig
+
+  flat = pd.json_normalize(df['financing_mech'].explode().dropna())
+  if flat.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No financing mechanism data available'))
+    return fig
+
+  parents_of_interest = [
+    'Alternative financing structures and partnership models',
+    'Financial support instruments',
+  ]
+  sub = flat[flat['parent'].isin(parents_of_interest)]
+  if sub.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No data for selected filters'))
+    return fig
+
+  df_grouped = sub.groupby(['category', 'source'], as_index=False)['count'].sum()
+
+  hierarchy = [{
+    'id': 'All',
+    'datum': df_grouped['count'].sum(),
+    'children': [
+      {
+        'id': cat,
+        'datum': g['count'].sum(),
+        'children': [{'id': r['source'], 'datum': r['count']} for _, r in g.iterrows()],
+      }
+      for cat, g in df_grouped.groupby('category')
+    ],
+  }]
+
+  circles = circlify.circlify(
+    hierarchy,
+    show_enclosure=False,
+    target_enclosure=circlify.Circle(x=0, y=0, r=1.7),
+  )
+
+  fallback_palette = ['#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3',
+                      '#fdb462', '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd']
+  cats = list(df_grouped['category'].unique())
+  category_colors = {
+    cat: COLOUR_MAPPING.get(cat, fallback_palette[i % len(fallback_palette)])
+    for i, cat in enumerate(cats)
+  }
+
+  SHRINK_INNER, LABEL_OFFSET = 0.75, 0.02
+  fig = go.Figure()
+
+  # Level 2 — category labels only (radially positioned, no background ring)
+  for circle in circles:
+    if circle.level != 2:
+      continue
+    category = circle.ex['id']
+
+    dx, dy = circle.x, circle.y
+    distance = math.sqrt(dx**2 + dy**2)
+    if distance < 0.01:
+      label_x, label_y, textposition = circle.x, circle.y + circle.r, 'top center'
+    else:
+      offset = circle.r + LABEL_OFFSET
+      label_x = circle.x + (dx / distance) * offset
+      label_y = circle.y + (dy / distance) * offset
+      angle = math.degrees(math.atan2(dy, dx))
+      if -22.5 <= angle < 22.5:               textposition = 'middle right'
+      elif 22.5 <= angle < 67.5:              textposition = 'top right'
+      elif 67.5 <= angle < 112.5:             textposition = 'top center'
+      elif 112.5 <= angle < 157.5:            textposition = 'top left'
+      elif angle >= 157.5 or angle < -157.5:  textposition = 'middle left'
+      elif -157.5 <= angle < -112.5:          textposition = 'bottom left'
+      elif -112.5 <= angle < -67.5:           textposition = 'bottom center'
+      else:                                    textposition = 'bottom right'
+
+    fig.add_trace(go.Scatter(
+      x=[label_x], y=[label_y],
+      mode='text',
+      text=f"<b>{wrap_text(category, width=20)}</b>",
+      textposition=textposition,
+      textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+      showlegend=False,
+      hoverinfo='skip',
+    ))
+
+  # Level 3 — source bubbles
+  for circle in circles:
+    if circle.level != 3:
+      continue
+    source = circle.ex['id']
+    count = circle.ex['datum']
+
+    parent_category = None
+    for c in circles:
+      if c.level == 2:
+        dist = ((circle.x - c.x)**2 + (circle.y - c.y)**2) ** 0.5
+        if dist < c.r:
+          parent_category = c.ex['id']
+          break
+
+    color = category_colors.get(parent_category, '#fdb462')
+    size = ((circle.r * SHRINK_INNER) ** 1.1) * 450
+
+    wrapped = wrap_text(source, width=15) if circle.r > 0.03 else ''
+    display_text = f"<b>{wrapped}<br>({count})</b>" if wrapped else ''
+
+    if circle.r > 0.25:   font_size = 14
+    elif circle.r > 0.2:  font_size = 12
+    elif circle.r > 0.15: font_size = 10
+    else:                 font_size = 9
+
+    # Always black text with white outline — readable on every bubble colour
+    fig.add_trace(go.Scatter(
+      x=[circle.x], y=[circle.y],
+      mode='markers+text',
+      marker=dict(size=size, color=color, opacity=0.9,
+                  line=dict(color='white', width=2)),
+      text=display_text,
+      textfont=dict(
+        family=FONT_FAMILY,
+        size=font_size,
+        color='black',
+        shadow='1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white',
+      ),
+      customdata=[[source, parent_category, count]],
+      hovertemplate='<br>'.join([
+        '<b>Mechanism:</b> %{customdata[0]}',
+        '<b>Category:</b> %{customdata[1]}',
+        '<b>Count:</b> %{customdata[2]}',
+      ]) + '<extra></extra>',
+      showlegend=False,
+    ))
+
+  fig.update_layout(
+    showlegend=False,
+    hovermode='closest',
+    margin=dict(l=0, r=0, b=0),
+    title=dict(text='Alternative financing structures & support instruments'),
+  )
+  fig.update_xaxes(visible=False, range=[-2.0, 2.0])
+  fig.update_yaxes(visible=False, scaleanchor='x', scaleratio=1, range=[-2.0, 2.0])
+  return fig
 
 # ==================== INDICATORS CALCULATION ====================
 
