@@ -350,6 +350,7 @@ components_by_slot:
 
           If your project appears in the Project Explorer, you can submit an update at any time to reflect changes to your capital stack, ownership model, or outcomes, or fix any inaccuracies.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    event_bindings: {}
     layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {col_spacing: large, col_widths: '{"DCBHVQ":30,"ANKGAX":30}'}
@@ -372,4 +373,6 @@ components_by_slot:
       vertical_align: middle
     type: FlowPanel
 is_package: true
-layout: {type: 'form:Base'}
+layout:
+  form_event_bindings: {show: form_show}
+  type: form:Base
