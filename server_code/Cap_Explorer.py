@@ -341,7 +341,8 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     }
     return {k: empty_fig for k in [
       'box_plot', 'sankey', 'time_chart', 'stacked_bar',
-      'bottleneck_chart', 'treemap', 'scale_pies', 'circle_pack'
+      'bottleneck_chart', 'treemap', 'scale_pies', 'circle_pack',
+      'mechanism_compare',  # ← add this
     ]} | {'indicators': empty_ind}
 
   # ── Category order — computed once, reused across charts ──
@@ -350,15 +351,16 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
 
   # ── Build all charts and apply the display template to each ──
   return {
-    'time_chart':       apply_display_template(create_time_chart_internal(df_capital_filtered,       cat_order)),
-    'sankey':           apply_display_template(create_sankey_internal(df_capital_no_proj_filter,     proj_types)),
-    'stacked_bar':      apply_display_template(create_stacked_bar_internal(df_capital_filtered,      cat_order_rev)),
-    'box_plot':         apply_display_template(create_box_plot_internal(df_raw_filtered,             cat_order_rev)),
-    'bottleneck_chart': apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
-    'treemap':          apply_display_template(create_treemap_internal(df_raw_filtered)),
-    'scale_pies':       apply_display_template(create_scale_pies_internal(df_capital_filtered)),
-    'circle_pack':      apply_display_template(create_circle_pack_internal(df_raw_filtered)), 
-    'indicators':       calculate_indicators_internal(df_capital_filtered),
+    'time_chart':         apply_display_template(create_time_chart_internal(df_capital_filtered,       cat_order)),
+    'sankey':             apply_display_template(create_sankey_internal(df_capital_no_proj_filter,     proj_types)),
+    'stacked_bar':        apply_display_template(create_stacked_bar_internal(df_capital_filtered,      cat_order_rev)),
+    'box_plot':           apply_display_template(create_box_plot_internal(df_raw_filtered,             cat_order_rev)),
+    'bottleneck_chart':   apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
+    'treemap':            apply_display_template(create_treemap_internal(df_raw_filtered)),
+    'scale_pies':         apply_display_template(create_scale_pies_internal(df_capital_filtered)),
+    'circle_pack':        apply_display_template(create_circle_pack_internal(df_raw_filtered)),
+    'mechanism_compare':  apply_display_template(create_mechanism_compare_internal(df_raw_filtered)),  
+    'indicators':         calculate_indicators_internal(df_capital_filtered),
   }
 
 
@@ -1085,6 +1087,145 @@ def calculate_indicators_internal(df):
     }
 
   return results
+
+def create_mechanism_compare_internal(df):
+  """
+  Grouped horizontal bar chart comparing financing mechanisms currently used
+  vs. those respondents want to learn more about. Sorted by gap
+  (want_to_learn - used). Annotations mark phrases that weren't asked about
+  in one of the two questions.
+
+  Chart-specific: horizontal grouped bars, dynamic height based on phrase count,
+  legend on top, italic 'No data collected' annotations on missing bars.
+  """
+  # ── Alias map: collapses different wordings of the same concept ──
+  ALIASES = {
+    # grants
+    'grants & non-repayable contributions': 'grants & non-repayable funding',
+    'grants and non-repayable funding':     'grants & non-repayable funding',
+    # tax credits
+    'tax credits/accelerated depreciation':    'tax credits / accelerated depreciation',
+    'tax credits or accelerated depreciation': 'tax credits / accelerated depreciation',
+    # community finance
+    'community-finance models':      'community investment vehicles',
+    'community investment vehicles': 'community investment vehicles',
+    # equity
+    'equity investments': 'equity financing',
+    'equity financing':   'equity financing',
+    # internal capital
+    'internal/owner-contributed capital': 'internal / owner-contributed capital',
+    # leasing / PPAs
+    'leasing/ppa models':                   'leasing / PPA models',
+    'leasing/third-party ownership models': 'leasing / PPA models',
+    # loan guarantees
+    'loan guarantees or credit enhancements': 'loan guarantees / credit enhancements',
+    'loan guarantees/credit enhancements':    'loan guarantees / credit enhancements',
+    # public-private partnerships
+    'public-private partnership (p3)': 'public private partnership (P3)',
+    'public-private partnerships':     'public private partnership (P3)',
+    # crowdfunding
+    'crowdfunded campaigns':  'crowdfunding campaigns',
+    'crowdfunding campaigns': 'crowdfunding campaigns',
+  }
+  SKIP = {'other', 'not sure', 'other sources of capital and financial arrangements'}
+
+  if (df.empty
+      or 'all_financing_mechanisms' not in df.columns
+      or 'ux_learn' not in df.columns):
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No data available for selected filters'))
+    return fig
+
+  def count_phrases(series):
+    freqs = {}
+    for cell in series.dropna():
+      for phrase in (cell or []):
+        if not phrase:
+          continue
+        key = phrase.strip().lower()
+        key = ALIASES.get(key, key)
+        if key in SKIP:
+          continue
+        freqs[key] = freqs.get(key, 0) + 1
+    return freqs
+
+  used_freqs  = count_phrases(df['all_financing_mechanisms'])
+  learn_freqs = count_phrases(df['ux_learn'])
+
+  if not used_freqs and not learn_freqs:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No financing mechanism data available'))
+    return fig
+
+  asked_used  = set(used_freqs)
+  asked_learn = set(learn_freqs)
+  all_phrases = asked_used | asked_learn
+
+  compare = pd.DataFrame({
+    'phrase':        list(all_phrases),
+    'used':          [used_freqs.get(p, 0)  for p in all_phrases],
+    'want_to_learn': [learn_freqs.get(p, 0) for p in all_phrases],
+  })
+  compare['gap']         = compare['want_to_learn'] - compare['used']
+  compare['used_asked']  = compare['phrase'].isin(asked_used)
+  compare['learn_asked'] = compare['phrase'].isin(asked_learn)
+  plot_data = compare.sort_values('gap').reset_index(drop=True)
+
+  # ── Capitalise phrases for display labels ──
+  display_labels = [p[:1].upper() + p[1:] for p in plot_data['phrase']]
+
+  fig = go.Figure()
+  fig.add_trace(go.Bar(
+    y=display_labels,
+    x=plot_data['used'],
+    name='Currently used',
+    orientation='h',
+    marker_color=dunsparce_colors[12],
+    hovertemplate='<b>%{y}</b><br>Currently used: %{x}<extra></extra>',
+  ))
+  fig.add_trace(go.Bar(
+    y=display_labels,
+    x=plot_data['want_to_learn'],
+    name='Want to learn about',
+    orientation='h',
+    marker_color=dunsparce_colors[4],
+    hovertemplate='<b>%{y}</b><br>Want to learn: %{x}<extra></extra>',
+  ))
+
+  # ── 'No data collected' annotations for missing bars ──
+  # Use <i>...</i> rather than font.style — style is not a valid plotly font property
+  annotations = []
+  for label, (_, row) in zip(display_labels, plot_data.iterrows()):
+    if not row['used_asked']:
+      annotations.append(dict(
+        x=0, y=label,
+        text='<i>No data collected (currently used)</i>',
+        showarrow=False,
+        font=dict(family=FONT_FAMILY, size=10, color='gray'),
+        xanchor='left', yanchor='top',
+        yshift=-1,
+      ))
+    if not row['learn_asked']:
+      annotations.append(dict(
+        x=0, y=label,
+        text='<i>No data collected (want to learn)</i>',
+        showarrow=False,
+        font=dict(family=FONT_FAMILY, size=10, color='gray'),
+        xanchor='left', yanchor='bottom',
+        yshift=1,
+      ))
+
+  fig.update_layout(
+    barmode='group',
+    xaxis_title='Number of responses',
+    yaxis_title='',
+    height=max(500, 40 * len(plot_data)),
+    annotations=annotations,
+    legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
+    margin=dict(l=0, r=0, b=0),
+    title=dict(text='Financing mechanisms: in use vs. wanted'),
+  )
+  return fig
 
 
 # ==================== EXPORT CALLABLE ====================
