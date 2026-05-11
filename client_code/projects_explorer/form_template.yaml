@@ -151,7 +151,7 @@ components_by_slot:
       name: pagination_container
       properties: {}
       type: FlowPanel
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: column_panel_2
     properties:
       col_spacing: small
