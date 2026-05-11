@@ -6,7 +6,7 @@ from anvil.tables import app_tables
 import anvil.server
 import pandas as pd
 import numpy as np
-from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors, get_owner_type_colors, PROJECT_TYPE_COLORS, get_project_type_color
+from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors, PROJECT_TYPE_COLORS, get_project_type_color
 from .Global_Server_Functions import get_data
 import plotly.graph_objects as go
 import plotly.express as px

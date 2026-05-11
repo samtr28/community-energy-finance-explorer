@@ -207,23 +207,3 @@ def get_project_type_color(project_type):
   return PROJECT_TYPE_COLORS.get(project_type, '#8e9099')
 
 
-# ==================== OWNER TYPE COLOURS ====================
-
-def get_owner_type_colors(owner_types_list, palette='dunsparce'):
-  """
-  Assign colours from a palette to a list of owner types.
-
-  Args:
-    owner_types_list: list of unique owner type strings
-    palette:          'dunsparce', 'gradient', or a custom list of hex strings
-
-  Returns:
-    dict mapping each owner type to a hex colour string
-  """
-  colors = (
-    dunsparce_colors if palette == 'dunsparce' else
-    gradient_palette if palette == 'gradient'  else
-    palette          if isinstance(palette, list) else
-    dunsparce_colors
-  )
-  return {t: colors[i % len(colors)] for i, t in enumerate(sorted(owner_types_list))}
