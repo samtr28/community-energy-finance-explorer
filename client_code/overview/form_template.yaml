@@ -37,6 +37,9 @@ components_by_slot:
         name: capital_btn
         properties: {align: right, background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Capital explorer, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Link
+      - name: mechanism_compare_plot
+        properties: {}
+        type: Plot
       layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XNPYLO,ZMOTXZ'}
       name: rich_text_1
       properties:
