@@ -831,37 +831,89 @@ def create_scale_pies_internal(df):
     fig.update_layout(title=dict(text='No data available'))
     return fig
 
-  # No subplot_titles — labels live on the pie traces instead
   fig = make_subplots(
     rows=1, cols=len(scales),
     specs=[[{'type': 'domain'}] * len(scales)],
   )
 
   for i, scale in enumerate(scales):
-    sub     = df[df['project_scale'] == scale]
-    grouped = sub.groupby('category', as_index=False)['amount'].sum()
-    colors  = [COLOUR_MAPPING.get(c, '#808080') for c in grouped['category']]
-    n       = sub['record_id'].nunique()
+    sub = df[df['project_scale'] == scale]
+    n   = sub['record_id'].nunique()
 
+    # ── View A: Total $ by category (dollar-weighted, current behaviour) ──
+    total_by_cat = sub.groupby('category', as_index=False)['amount'].sum()
+
+    # ── View B: Average % per project ──
+    # For each project, work out its own breakdown across categories, then
+    # average those breakdowns. Projects that didn't use a category contribute
+    # 0% to that category's mean (via pivot fill_value=0).
+    proj_cat   = sub.groupby(['record_id', 'category'])['amount'].sum().reset_index()
+    proj_total = sub.groupby('record_id')['amount'].sum()
+    proj_cat['pct'] = proj_cat.apply(
+      lambda r: (r['amount'] / proj_total[r['record_id']] * 100)
+      if proj_total[r['record_id']] > 0 else 0,
+      axis=1,
+    )
+    avg_pct = (
+      proj_cat.pivot_table(index='record_id', columns='category', values='pct', fill_value=0)
+        .mean()
+        .reset_index()
+    )
+    avg_pct.columns = ['category', 'avg_pct']
+
+    title_style = dict(
+      text=f'{scale}<br>({n} projects)',
+      position='top center',
+      font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    )
+
+    # Trace A — Total $ (visible by default)
     fig.add_trace(go.Pie(
-      labels=grouped['category'], values=grouped['amount'], name=scale,
-      marker=dict(colors=colors),
+      labels=total_by_cat['category'],
+      values=total_by_cat['amount'],
+      name=scale,
+      marker=dict(colors=[COLOUR_MAPPING.get(c, '#808080') for c in total_by_cat['category']]),
       texttemplate='%{percent:.1%}', textposition='inside',
       textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color='white'),
       sort=False,
-      hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
-      # ── Title is relative to the pie — never overlaps regardless of screen size ──
-      title=dict(
-        text=f'{scale}<br>({n} projects)',
-        position='top center',
-        font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)
-      ),
+      hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent} of total<extra></extra>',
+      title=title_style,
+      visible=True,
     ), row=1, col=i + 1)
+
+    # Trace B — Average mix per project (hidden by default)
+    fig.add_trace(go.Pie(
+      labels=avg_pct['category'],
+      values=avg_pct['avg_pct'],
+      name=scale,
+      marker=dict(colors=[COLOUR_MAPPING.get(c, '#808080') for c in avg_pct['category']]),
+      texttemplate='%{percent:.1%}', textposition='inside',
+      textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color='white'),
+      sort=False,
+      hovertemplate='<b>%{label}</b><br>%{value:.1f}% avg per project<extra></extra>',
+      title=title_style,
+      visible=False,
+    ), row=1, col=i + 1)
+
+  # Visibility patterns: [A, B, A, B, ...] per scale
+  n_scales = len(scales)
+  vis_total = [True,  False] * n_scales
+  vis_avg   = [False, True]  * n_scales
 
   fig.update_layout(
     showlegend=True,
     legend=dict(orientation='h', y=-0.15, x=0.5, xanchor='center'),
-    margin=dict(l=0, r=0, b=0, t=0),
+    updatemenus=[dict(
+      type='buttons', direction='left',
+      buttons=[
+        dict(label='By Total Funding (Dollar weighted)',  method='update', args=[{'visible': vis_total}]),
+        dict(label='By Average Mix (Project weghted)',    method='update', args=[{'visible': vis_avg}]),
+      ],
+      pad={'r': 10, 't': 10}, showactive=True,
+      x=0.5, y=1.12, xanchor='left', yanchor='top',
+      bgcolor='rgba(255,255,255,0.8)', bordercolor='gray', borderwidth=1,
+    )],
+    margin=dict(l=0, r=0, b=0, t=40),  # extra top room for the buttons
     title=dict(text='Funding distribution by project scale'),
   )
   return fig
