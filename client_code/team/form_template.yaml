@@ -1,17 +1,126 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {grid_position: 'SHOKET,OXPAFJ'}
-      name: avatar_1
-      properties: {size: 100}
-      type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-    - layout_properties: {grid_position: 'SHOKET,PQPLRG'}
-      name: heading_1
-      properties: {scale: small, style: title}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - components:
+      - layout_properties: {grid_position: 'AFIAEX,PCXQFS'}
+        name: avatar_2
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/C5603AQHgxHpqU-GsUg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1654489293253?e=1779926400&v=beta&t=HVQnY3fvaQMjUCW9jjbOiGzJ5BVJFdp170mPZurEZm4', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'AFIAEX,ZFGCEB HQWENM,MBWAEX'}
+        name: heading_2
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Basma Majerbi}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'AFIAEX,ZFGCEB YHZZKS,IAURCR'}
+        name: text_2
+        properties: {font_size: 18, text: 'University of Victoria, Project Lead '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'AFIAEX,RVHOYB'}
+        name: avatar_1
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D4D03AQGejTOcCjpvQQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706638526156?e=1779926400&v=beta&t=jp9PV-68U7KDFf2JRED5lBT_OMTg76pWCymvEQQ_NsU', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'AFIAEX,HDSTIT SXZHLW,ZRKWUS'}
+        name: heading_1
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Sam Treacy}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'AFIAEX,HDSTIT VEPHCA,SCTRMS'}
+        name: text_1
+        properties: {font_size: 18, text: Data Analyst and Digital Platform Developer}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'GDKHDA,WOMWDG'}
+        name: avatar_3
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/C4E03AQGAc8YIfiVocw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1600730696936?e=1779926400&v=beta&t=Db4zUdiVSsfDQE7-ot_ynsuuSfMCjDqGRWUdhci4Xoo', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'GDKHDA,FYEZZE OSBRYY,EAVICT'}
+        name: heading_3
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Pavel Soriano Hernandez}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'GDKHDA,FYEZZE TLEIGZ,UNABNG'}
+        name: text_3
+        properties: {font_size: 18, text: 'PhD Candidate, Lead Researcher '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'GDKHDA,DCIJYH'}
+        name: avatar_6
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D5603AQHbSv-KracBDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1705001956058?e=1779926400&v=beta&t=gCm-VNiSu9zKsfeVDqajs9qS7C5CsNoP1-eMWXnLVso', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'GDKHDA,IQNYMP IBVNAX,FRLQVA'}
+        name: heading_6
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Tamara Krawchenko}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'GDKHDA,IQNYMP DZKZWG,YTYVDN'}
+        name: text_6
+        properties: {font_size: 18, text: 'University of Victoria, Research Committee Member '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'JWSIWY,SLIFAF'}
+        name: avatar_4
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D4E03AQF3e__h-3nbng/profile-displayphoto-crop_800_800/B4EZqZVycrGYAI-/0/1763509222454?e=1779926400&v=beta&t=MKK5rNg3UO30FD8DFt1kX95HfTyliN8wMa3mo1DDXmQ', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'JWSIWY,DMXZQN USSPAS,CKSQCR'}
+        name: heading_4
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Jeff Scanlon}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'JWSIWY,DMXZQN MHKWUK,EYLHPJ'}
+        name: text_4
+        properties: {font_size: 18, text: 'University of Victoria, Research Associate'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'JWSIWY,XUJGXZ'}
+        name: avatar_5
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D5603AQG3n8vuBerjuw/profile-displayphoto-shrink_800_800/B56ZaNF9B7G4Ac-/0/1746123870604?e=1779926400&v=beta&t=qhrCRggNsdsKATqt4uEyYir0MugzgAKMiYo3i2pXEnI', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'JWSIWY,IYSJRC YTXUWZ,GVBJRR'}
+        name: heading_5
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Julie MacArthur}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'JWSIWY,IYSJRC JLJCLH,KIOLVR'}
+        name: text_5
+        properties: {font_size: 18, text: 'Royal Roads University, Research Collaborator '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'FHSJBW,GOIEFU'}
+        name: avatar_7
+        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D5603AQHbSv-KracBDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1705001956058?e=1779926400&v=beta&t=gCm-VNiSu9zKsfeVDqajs9qS7C5CsNoP1-eMWXnLVso', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'FHSJBW,KMMKVN PTSRBO,LVDHOV'}
+        name: heading_7
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Tamara Krawchenko}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'FHSJBW,KMMKVN RCBJSP,HGGZEU'}
+        name: text_7
+        properties: {font_size: 18, text: 'University of Victoria, Research Committee Member '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'FHSJBW,GNFGGF'}
+        name: avatar_8
+        properties: {align: center, fallback_icon: 'mi:person', image: '', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'FHSJBW,FSHSYF FDOVCB,GHTRFC'}
+        name: heading_8
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Dave Atkinson}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'FHSJBW,FSHSYF DRQPYA,QKLOVP'}
+        name: text_8
+        properties: {font_size: 18, text: 'University of Victoria, Research Committee Member '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'FVDJNF,UFBCLL'}
+        name: avatar_9
+        properties: {align: center, fallback_icon: 'mi:person', image: 'https://media.licdn.com/dms/image/v2/D5603AQGwOdNRDygpsw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1698691253864?e=1779926400&v=beta&t=1a9Uq6bSWT2AUaXhx0gQG_ajUcLEUaSGgWOhB377oHw', size: 100}
+        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
+      - layout_properties: {grid_position: 'FVDJNF,FIRGQC ZKIEMX,UIJSNT'}
+        name: heading_9
+        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Laurel Sabur}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'FVDJNF,FIRGQC VPWELZ,NDXVLO'}
+        name: text_9
+        properties: {font_size: 18, text: 'University of Victoria, Research Manager  '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      - layout_properties: {grid_position: 'FVDJNF,WKIKVH'}
+        name: spacer_1
+        properties: {}
+        type: Spacer
+      layout_properties: {grid_position: 'AKAJUR,AQWKOW'}
+      name: column_panel_1
+      properties: {col_widths: '{"PCXQFS":10,"ZFGCEB":20,"WOMWDG":10,"FYEZZE":20,"SLIFAF":10,"DMXZQN":20,"RVHOYB":10,"HDSTIT":20,"DCIJYH":10,"IQNYMP":20,"XUJGXZ":10,"IYSJRC":20,"GOIEFU":10,"KMMKVN":20,"GNFGGF":10,"FSHSYF":20,"UFBCLL":10,"FIRGQC":20,"WKIKVH":30}'}
+      type: ColumnPanel
     layout_properties: {}
-    name: column_panel_1
-    properties: {}
+    name: column_panel_4
+    properties: {col_widths: '{}'}
     type: ColumnPanel
   title_slot:
   - components:
