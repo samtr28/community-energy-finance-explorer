@@ -14,6 +14,29 @@ components_by_slot:
 
           Below we answer common questions about our data, methods, and how to get involved.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - components:
+          - layout_properties: {full_width_row: true, grid_position: 'RHDUIR,JRGAJK'}
+            name: heading_6
+            properties: {bold: true, font_size: 18, scale: medium, style: title, text: Territory Acknowledgment, text_color: 'theme:On Tertiary Container'}
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {grid_position: 'ISFRBL,COLVFE'}
+            name: text_6
+            properties: {font_size: 18, text: 'We acknowledge and respect the Lək̓ʷəŋən (Songhees and Xʷsepsəm/Esquimalt) Peoples on whose territory the university stands, and the Lək̓ʷəŋən and W̱SÁNEĆ Peoples whose historical relationships with the land continue to this day.', text_color: 'theme:On Tertiary Container'}
+            type: form:dep_9kcxnwm3upyjd:_Components.Text
+          layout_properties: {slot: card-content-container-slot}
+          name: column_panel_2
+          properties: {}
+          type: ColumnPanel
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_1
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'TKWJGI,IHWTBI', row_background: ''}
+      name: card_1
+      properties: {background_color: 'theme:Tertiary Overlay 1'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {col_widths: '{"ZVANVM":30}', role: equal-height}
@@ -652,11 +675,11 @@ components_by_slot:
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
     - components: []
-      layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB UYRRWF,GARFCE'}
+      layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB FUGOJB,EHBVXC'}
       name: rich_text_9
       properties: {content: 'The Community Energy Finance Navigator is a research initiative led by the Impact Investing Hub and Accelerating Community Energy Transformation (ACET) at the University of Victoria. The project is funded by the Canada First Research Excellence Fund (CFREF). ', font_size: 18, format: restricted_html}
       type: RichText
-    - layout_properties: {grid_position: 'URCEHL,IWZUKB UYRRWF,SKSRYX'}
+    - layout_properties: {grid_position: 'URCEHL,IWZUKB SHJVFF,AVGAQV'}
       name: link_3
       properties:
         align: center
@@ -665,136 +688,13 @@ components_by_slot:
         font_size: 22
         role: button-link
         spacing:
-          margin: [10%, null, null, null]
+          margin: ['0', null, null, null]
           padding: ['5', '5', '5', '5']
         text: Contact form
         text_color: theme:Tertiary
         underline: false
         url: https://www.surveymonkey.ca/r/BPBX3RC
       type: form:dep_9kcxnwm3upyjd:_Components.Link
-    - layout_properties: {grid_position: 'URCEHL,IWZUKB RMFNFL,KABSYG'}
-      name: heading_5
-      properties: {text: Meet the team}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components:
-      - layout_properties: {grid_position: 'ZMBOJQ,TJFBQU'}
-        name: avatar_3
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - components: []
-        layout_properties: {grid_position: 'ZMBOJQ,FXUSBI'}
-        name: rich_text_13
-        properties:
-          content: |-
-            <b>Basma Majerbi</b>
-            <br>Project Lead
-            <br><i>University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      - layout_properties: {grid_position: 'VGSEFN,BKCBRL'}
-        name: avatar_5
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - components: []
-        layout_properties: {grid_position: 'VGSEFN,VIYSPP'}
-        name: rich_text_15
-        properties:
-          content: |-
-            <b>Pavel Soriano Hernandez</b>
-            <br>Lead Researcher, Case Studies, Energy Justice
-            <br><i>PhD Student, University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      - layout_properties: {grid_position: 'RSUHGO,THRROX'}
-        name: avatar_7
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'RSUHGO,NAFKUL'}
-        name: rich_text_17
-        properties:
-          content: |-
-            <b>Dave Atkinson</b>
-            <br>Co-supervisor (Pavel)
-            <br><i>University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      - layout_properties: {grid_position: 'NJVQAX,LBPJRC'}
-        name: avatar_8
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - components: []
-        layout_properties: {grid_position: 'NJVQAX,IGKDRN'}
-        name: rich_text_18
-        properties:
-          content: |-
-            <b>Laurel Sabur</b>
-            <br>Research Support
-            <br><i>University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB FXFVUE,ERQCWO'}
-      name: column_panel_3
-      properties: {col_widths: '{"LBPJRC":20,"IGKDRN":40,"THRROX":20,"NAFKUL":40,"TJFBQU":20,"FXUSBI":40,"BKCBRL":20,"VIYSPP":40}', role: equal-height}
-      type: ColumnPanel
-    - components:
-      - layout_properties: {grid_position: 'FOQRTC,MAOWYY'}
-        name: avatar_12
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'FOQRTC,EZBPJO'}
-        name: rich_text_22
-        properties: {content: '<b>Samantha Treacy</b> <br>Lead Researcher, Platform Development & Data Visualization<br><i>University of Victoria</i>', font_size: 18, format: restricted_html}
-        type: RichText
-      - layout_properties: {grid_position: 'VPRIIZ,NJRBCQ'}
-        name: avatar_14
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'VPRIIZ,DZEZKK'}
-        name: rich_text_24
-        properties:
-          content: |-
-            <b>Julie MacArthur</b>
-            <br>Research Collaborator & Advisor
-            <br><i>Royal Roads University</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      - layout_properties: {grid_position: 'NLVZWF,NFWAVN'}
-        name: avatar_16
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'NLVZWF,UXKNQT'}
-        name: rich_text_26
-        properties:
-          content: |-
-            <b>Tamara Krawchenko</b>
-            <br>Committee Member (Pavel)
-            <br><i>University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      - layout_properties: {grid_position: 'JEJFNV,WXWTWK'}
-        name: avatar_18
-        properties: {align: center, size: 40, text_color: '', user_name: ''}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {grid_position: 'JEJFNV,PXJADJ'}
-        name: rich_text_28
-        properties:
-          content: |-
-            <b>Nicou Zaharia</b>
-            <br>Research Assistant
-            <br><i>University of Victoria</i>
-          font_size: 18
-          format: restricted_html
-        type: RichText
-      layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB FXFVUE,NAZTBN'}
-      name: column_panel_4
-      properties: {col_widths: '{"WXWTWK":20,"PXJADJ":40,"NFWAVN":20,"UXKNQT":40,"MAOWYY":20,"EZBPJO":40,"NJRBCQ":20,"DZEZKK":40}', role: equal-height}
-      type: ColumnPanel
     - layout_properties: {grid_position: 'URCEHL,DXUOPA'}
       name: spacer_11
       properties: {}
@@ -805,7 +705,7 @@ components_by_slot:
       background: '#ffffff'
       border: '1px solid #005493'
       col_spacing: huge
-      col_widths: '{"GARFCE":40,"IWZUKB":45,"DXUOPA":15,"SKSRYX":40}'
+      col_widths: '{"GARFCE":40,"IWZUKB":45,"DXUOPA":15}'
       spacing:
         margin: ['0', '4', 1%, '4']
         padding: [2%, 2%, 2%, 2%]

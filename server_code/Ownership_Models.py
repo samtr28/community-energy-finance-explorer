@@ -226,11 +226,6 @@ def create_ownership_treemap_internal(df_owners):
 
 
 def create_ownership_scale_pies_internal(df_owners):
-  """
-  Pie charts of ownership composition for each project scale.
-  Owner types from the same category sit adjacent in each pie
-  (sorted by CATEGORY_ORDER_OWNERS, then alphabetically within).
-  """
   SCALE_ORDER = [
     'Micro (< $100K)', 'Small ($100K-$1M)', 'Medium ($1M-$5M)',
     'Large ($5M-$25M)', 'Very Large ($25M-$100M)', 'Mega (> $100M)'
@@ -242,52 +237,152 @@ def create_ownership_scale_pies_internal(df_owners):
     return fig
 
   owner_type_colors = get_owner_type_colors_categorical(_owner_type_category_pairs(df_owners))
+  cats_present = [c for c in CATEGORY_ORDER_OWNERS if c in df_owners['owner_category'].unique()]
 
-  fig = make_subplots(
-    rows=1, cols=len(scales),
-    specs=[[{'type': 'domain'}] * len(scales)],
-  )
+  fig = go.Figure()
+  n_pies = len(scales)
 
   for i, scale in enumerate(scales):
-    sub     = df_owners[df_owners['project_scale'] == scale]
-    grouped = sub.groupby(['owner_type', 'owner_category'], as_index=False)['owner_percent'].sum()
-    n       = sub['record_id'].nunique()
+    sub = df_owners[df_owners['project_scale'] == scale]
+    n   = sub['record_id'].nunique()
 
-    # ── Sort so category groups stay adjacent ──
-    grouped['cat_order'] = grouped['owner_category'].apply(
-      lambda c: CATEGORY_ORDER_OWNERS.index(c) if c in CATEGORY_ORDER_OWNERS else 999
+    # ── View A: Typical Ownership (sum of owner_percent, project-weighted) ──
+    share_grouped = sub.groupby(['owner_type', 'owner_category'], as_index=False)['owner_percent'].sum()
+
+    # ── View B: By Dollar Value (owner_percent x total_cost, summed) ──
+    sub_val = sub.copy()
+    sub_val['ownership_value'] = (sub_val['owner_percent'] / 100) * sub_val['total_cost']
+    value_grouped = sub_val.groupby(['owner_type', 'owner_category'], as_index=False)['ownership_value'].sum()
+
+    # Sort both consistently
+    for d in (share_grouped, value_grouped):
+      d['cat_order'] = d['owner_category'].apply(
+        lambda c: CATEGORY_ORDER_OWNERS.index(c) if c in CATEGORY_ORDER_OWNERS else 999
+      )
+      d.sort_values(['cat_order', 'owner_type'], inplace=True)
+      d.reset_index(drop=True, inplace=True)
+
+    share_grouped['pct'] = (share_grouped['owner_percent'] /
+                            share_grouped['owner_percent'].sum()) * 100
+    share_grouped['text_display'] = share_grouped['pct'].apply(
+      lambda x: f'{x:.1f}%' if x >= 5 else ''
     )
-    grouped = grouped.sort_values(['cat_order', 'owner_type']).reset_index(drop=True)
-
-    total = grouped['owner_percent'].sum()
-    grouped['percentage']   = (grouped['owner_percent'] / total) * 100
-    grouped['text_display'] = grouped['percentage'].apply(
+    value_grouped['pct'] = (value_grouped['ownership_value'] /
+                            value_grouped['ownership_value'].sum()) * 100
+    value_grouped['text_display'] = value_grouped['pct'].apply(
       lambda x: f'{x:.1f}%' if x >= 5 else ''
     )
 
-    fig.add_trace(
-      go.Pie(
-        labels=grouped['owner_type'],
-        values=grouped['owner_percent'],
-        title=dict(
-          text=f"{scale}<br>({n} projects)",
-          font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-          position='top center',
-        ),
-        marker=dict(colors=[owner_type_colors[ot] for ot in grouped['owner_type']]),
-        sort=False,
-        direction='clockwise',
-        textinfo='text',
-        text=grouped['text_display'],
-        hovertemplate='<b>%{label}</b><br>%{percent}<extra></extra>',
-      ),
-      row=1, col=i + 1,
+    pad     = 0.01
+    x_start = i / n_pies + pad
+    x_end   = (i + 1) / n_pies - pad
+    domain  = dict(x=[x_start, x_end], y=[0.25, 1.0])
+
+    title_style = dict(
+      text=f"{scale}<br>({n} projects)",
+      font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+      position='top center',
     )
+
+    # Trace A — Typical Ownership (visible)
+    fig.add_trace(go.Pie(
+      labels=share_grouped['owner_type'],
+      values=share_grouped['owner_percent'],
+      domain=domain, title=title_style,
+      marker=dict(colors=[owner_type_colors[ot] for ot in share_grouped['owner_type']]),
+      sort=False, direction='clockwise',
+      textinfo='text', text=share_grouped['text_display'],
+      hovertemplate='<b>%{label}</b><br>%{percent} of ownership share<extra></extra>',
+      showlegend=False, visible=True,
+    ))
+
+    # Trace B — Dollar Value (hidden)
+    fig.add_trace(go.Pie(
+      labels=value_grouped['owner_type'],
+      values=value_grouped['ownership_value'],
+      domain=domain, title=title_style,
+      marker=dict(colors=[owner_type_colors[ot] for ot in value_grouped['owner_type']]),
+      sort=False, direction='clockwise',
+      textinfo='text', text=value_grouped['text_display'],
+      hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent} of value<extra></extra>',
+      showlegend=False, visible=False,
+    ))
+
+  # ── Compact inline legend, centred below the pies ──
+  shades_per_category = {}
+  for cat in cats_present:
+    types_in_cat = sorted(df_owners[df_owners['owner_category'] == cat]['owner_type'].unique())
+    shades_per_category[cat] = [owner_type_colors[ot] for ot in types_in_cat if ot in owner_type_colors]
+
+  shapes, annotations = [], []
+  swatch_width   = 0.04
+  swatch_height  = 0.025
+  label_padding  = 0.006
+  entry_padding  = 0.025
+  char_width_est = 0.0085
+
+  def entry_width(cat):
+    return swatch_width + label_padding + len(cat) * char_width_est
+
+  active_cats = [c for c in cats_present if shades_per_category[c]]
+  total_width = (
+    sum(entry_width(c) for c in active_cats)
+    + entry_padding * max(0, len(active_cats) - 1)
+  )
+  current_x    = (1 - total_width) / 2
+  y_center     = 0.20
+  y_swatch_bot = y_center - swatch_height / 2
+  y_swatch_top = y_center + swatch_height / 2
+
+  for cat in active_cats:
+    shades    = shades_per_category[cat]
+    seg_width = swatch_width / len(shades)
+
+    for k, shade in enumerate(shades):
+      shapes.append(dict(
+        type='rect', xref='paper', yref='paper',
+        x0=current_x + k * seg_width,
+        x1=current_x + (k + 1) * seg_width,
+        y0=y_swatch_bot, y1=y_swatch_top,
+        fillcolor=shade, line=dict(width=0),
+      ))
+    shapes.append(dict(
+      type='rect', xref='paper', yref='paper',
+      x0=current_x, x1=current_x + swatch_width,
+      y0=y_swatch_bot, y1=y_swatch_top,
+      fillcolor='rgba(0,0,0,0)', line=dict(color='lightgray', width=0.5),
+    ))
+    annotations.append(dict(
+      xref='paper', yref='paper',
+      x=current_x + swatch_width + label_padding,
+      y=y_center,
+      xanchor='left', yanchor='middle',
+      text=cat, showarrow=False,
+      font=dict(family=FONT_FAMILY, size=11, color=FONT_COLOR),
+    ))
+    current_x += entry_width(cat) + entry_padding
+
+  # ── Visibility for the two-view toggle ──
+  n_scales = len(scales)
+  vis_share = [True,  False] * n_scales
+  vis_value = [False, True]  * n_scales
 
   fig.update_layout(
     title=dict(text='Ownership composition by project scale'),
     showlegend=False,
-    margin=dict(t=0, b=0, l=0, r=0),
+    shapes=shapes,
+    annotations=annotations,
+    updatemenus=[dict(
+      type='buttons', direction='left',
+      buttons=[
+        dict(label='Typical Ownership', method='update', args=[{'visible': vis_share}]),
+        dict(label='By Dollar Value',   method='update', args=[{'visible': vis_value}]),
+      ],
+      pad={'r': 10, 't': 10}, showactive=True,
+      x=0.5, y=1.12, xanchor='left', yanchor='top',
+      bgcolor='rgba(255,255,255,0.8)', bordercolor='gray', borderwidth=1,
+    )],
+    margin=dict(t=40, b=0, l=0, r=0),
   )
   return fig
 

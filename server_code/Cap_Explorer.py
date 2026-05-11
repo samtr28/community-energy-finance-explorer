@@ -831,38 +831,107 @@ def create_scale_pies_internal(df):
     fig.update_layout(title=dict(text='No data available'))
     return fig
 
-  # No subplot_titles — labels live on the pie traces instead
-  fig = make_subplots(
-    rows=1, cols=len(scales),
-    specs=[[{'type': 'domain'}] * len(scales)],
-  )
+  all_cats = sorted(df['category'].unique())
+
+  fig = go.Figure()
+  n_pies = len(scales)
 
   for i, scale in enumerate(scales):
-    sub     = df[df['project_scale'] == scale]
-    grouped = sub.groupby('category', as_index=False)['amount'].sum()
-    colors  = [COLOUR_MAPPING.get(c, '#808080') for c in grouped['category']]
-    n       = sub['record_id'].nunique()
+    sub = df[df['project_scale'] == scale]
+    n   = sub['record_id'].nunique()
 
+    # ── View A: Total Funding (dollar-weighted — sum of amount) ──
+    total_by_cat = sub.groupby('category', as_index=False)['amount'].sum()
+    total_by_cat = total_by_cat.sort_values('category').reset_index(drop=True)
+
+    # ── View B: Typical Project (project-weighted — mean of project-level %s) ──
+    proj_cat   = sub.groupby(['record_id', 'category'])['amount'].sum().reset_index()
+    proj_total = sub.groupby('record_id')['amount'].sum()
+    proj_cat['pct'] = proj_cat.apply(
+      lambda r: (r['amount'] / proj_total[r['record_id']] * 100)
+      if proj_total[r['record_id']] > 0 else 0,
+      axis=1,
+    )
+    avg_pct = (
+      proj_cat.pivot_table(index='record_id', columns='category', values='pct', fill_value=0)
+        .mean()
+        .reset_index()
+    )
+    avg_pct.columns = ['category', 'avg_pct']
+    avg_pct = avg_pct.sort_values('category').reset_index(drop=True)
+
+    pad     = 0.01
+    x_start = i / n_pies + pad
+    x_end   = (i + 1) / n_pies - pad
+    domain  = dict(x=[x_start, x_end], y=[0.0, 1.0])
+
+    title_style = dict(
+      text=f'{scale}<br>({n} projects)',
+      position='top center',
+      font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    )
+
+    # Trace A — Total Funding (visible)
     fig.add_trace(go.Pie(
-      labels=grouped['category'], values=grouped['amount'], name=scale,
-      marker=dict(colors=colors),
+      labels=total_by_cat['category'],
+      values=total_by_cat['amount'],
+      domain=domain, title=title_style,
+      marker=dict(colors=[COLOUR_MAPPING.get(c, '#808080') for c in total_by_cat['category']]),
       texttemplate='%{percent:.1%}', textposition='inside',
       textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color='white'),
       sort=False,
-      hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent}<extra></extra>',
-      # ── Title is relative to the pie — never overlaps regardless of screen size ──
-      title=dict(
-        text=f'{scale}<br>({n} projects)',
-        position='top center',
-        font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR)
-      ),
-    ), row=1, col=i + 1)
+      hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent} of total<extra></extra>',
+      showlegend=False, visible=True,
+    ))
+
+    # Trace B — Typical Project (hidden)
+    fig.add_trace(go.Pie(
+      labels=avg_pct['category'],
+      values=avg_pct['avg_pct'],
+      domain=domain, title=title_style,
+      marker=dict(colors=[COLOUR_MAPPING.get(c, '#808080') for c in avg_pct['category']]),
+      texttemplate='%{percent:.1%}', textposition='inside',
+      textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color='white'),
+      sort=False,
+      hovertemplate='<b>%{label}</b><br>%{value:.1f}% avg per project<extra></extra>',
+      showlegend=False, visible=False,
+    ))
+
+  # ── Dummy scatter traces to populate the standard plotly legend ──
+  # Pie traces have showlegend=False to avoid duplicates across scales.
+  # These invisible traces carry the legend entries instead.
+  for cat in all_cats:
+    fig.add_trace(go.Scatter(
+      x=[None], y=[None],
+      mode='markers',
+      marker=dict(size=10, color=COLOUR_MAPPING.get(cat, '#808080'), symbol='square'),
+      name=cat,
+      showlegend=True,
+      hoverinfo='skip',
+    ))
+
+  # ── Visibility: pie traces toggle; legend traces stay visible always ──
+  n_legend      = len(all_cats)
+  vis_total     = [True,  False] * n_pies + [True] * n_legend
+  vis_avg       = [False, True]  * n_pies + [True] * n_legend
 
   fig.update_layout(
+    title=dict(text='Funding distribution by project scale'),
     showlegend=True,
     legend=dict(orientation='h', y=-0.15, x=0.5, xanchor='center'),
-    margin=dict(l=0, r=0, b=0, t=0),
-    title=dict(text='Funding distribution by project scale'),
+    xaxis=dict(visible=False),
+    yaxis=dict(visible=False),
+    updatemenus=[dict(
+      type='buttons', direction='left',
+      buttons=[
+        dict(label='Total Funding',   method='update', args=[{'visible': vis_total}]),
+        dict(label='Typical Project', method='update', args=[{'visible': vis_avg}]),
+      ],
+      pad={'r': 10, 't': 10}, showactive=True,
+      x=0.5, y=1.12, xanchor='left', yanchor='top',
+      bgcolor='rgba(255,255,255,0.8)', bordercolor='gray', borderwidth=1,
+    )],
+    margin=dict(l=0, r=0, b=80, t=40),
   )
   return fig
 

@@ -198,6 +198,20 @@ components_by_slot:
         height: 45vh
         margin: ['8', null, '4', null]
       type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'WRUGTS,PNLVSM'}
+      name: text_3
+      properties:
+        text: |-
+          Total Funding
+          Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'WRUGTS,NMSJXK'}
+      name: text_4
+      properties:
+        text: |-
+          Typical Project
+          For each project, calculates what percentage of its own funding came from each category, then averages those percentages across all projects in the scale band. Every project counts equally regardless of size, so a $500K project has the same influence on the result as a $5M one. Best for understanding what a typical project at this scale actually looks like.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - event_bindings: {click: download_pies_btn_click}
       layout_properties: {full_width_row: true, grid_position: 'SINLER,LXTODE'}
       name: download_pies_btn
