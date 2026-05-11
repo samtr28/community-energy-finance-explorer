@@ -1,3 +1,20 @@
+components_by_slot:
+  content_slot: []
+  title_slot:
+  - components:
+    - layout_properties: {expand: false, width: 788}
+      name: title
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Meet our Team}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    layout_properties: {}
+    name: title_panel
+    properties:
+      align: left
+      gap: huge
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+    type: FlowPanel
 is_package: true
 layout:
   form_event_bindings: {show: form_show}

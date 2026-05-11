@@ -151,6 +151,7 @@ class capital_explorer(capital_explorerTemplate):
     self.bubble_plot.figure       = all_charts['treemap']
     self.scale_pies_plot.figure   = all_charts['scale_pies']
     self.circle_pack_plot.figure = all_charts['circle_pack']
+    self.mechanism_compare_plot.figure = all_charts['mechanism_compare']
 
     # ── Indicators ──
     indicators = all_charts['indicators']
@@ -220,3 +221,6 @@ class capital_explorer(capital_explorerTemplate):
 
   def download_circle_pack_btn_click(self, **event_args):
     self._download_chart('circle_pack', button=self.download_circle_pack_btn)
+
+  def download_mechanism_compare_btn_click(self, **event_args):
+    self._download_chart('mechanism_compare', button=self.download_mechanism_compare_btn)
