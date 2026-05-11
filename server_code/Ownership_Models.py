@@ -6,7 +6,10 @@ from anvil.tables import app_tables
 import anvil.server
 import pandas as pd
 import numpy as np
-from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors, get_owner_type_colors
+from .config import (
+COLOUR_MAPPING, gradient_palette, dunsparce_colors,
+get_owner_type_colors_categorical,
+)
 from .Global_Server_Functions import get_data
 import plotly.graph_objects as go
 import plotly.express as px
@@ -123,7 +126,7 @@ def create_ownership_treemap_internal(df_owners):
   value_data['percentage'] = (value_data['ownership_value'] / value_data['ownership_value'].sum()) * 100
 
   # Get consistent colors
-  colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_colors)
+  colors = get_owner_type_colors_categorical(df_owners['owner_type'].unique())
 
   # Helper function to create treemap trace
   def make_treemap(data, value_col, visible=True):
@@ -204,7 +207,7 @@ def create_ownership_scale_pies_internal(df_owners):
     fig = go.Figure()
     fig.update_layout(title='No data available for selected filters')
     return fig
-  owner_type_colors = get_owner_type_colors(df_owners['owner_type'].unique(), palette=dunsparce_colors)
+  owner_type_colors = get_owner_type_colors_categorical(df_owners['owner_type'].unique())
   fig = make_subplots(
     rows=1, 
     cols=len(scales_in_data),
