@@ -6,6 +6,7 @@ import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from ..chart_export import download_chart
 
 
 class overview(overviewTemplate):
@@ -55,3 +56,29 @@ class overview(overviewTemplate):
 
   def proj_btn_click(self, **event_args):
     open_form('projects_explorer')
+
+  # ==================== CHART DOWNLOAD ====================
+
+  def _get_plot_component(self, chart_key):
+    """Maps a chart key string to the corresponding plot component."""
+    return {
+      'mechanism_compare': self.mechanism_compare_plot,
+      'province_map':      self.province_map,
+    }[chart_key]
+
+  def _get_active_filters(self):
+    """Overview has no filters — returns empty dict."""
+    return {}
+
+  def _download_chart(self, chart_key, button=None):
+    """Capture and download any chart by key."""
+    download_chart(
+      plot_component=self._get_plot_component(chart_key),
+      chart_key=chart_key,
+      active_filters=self._get_active_filters(),
+      server_callable='export_overview_chart',
+      button=button,
+    )
+
+  def download_mechanism_btn_click(self, **event_args):
+    self._download_chart('mechanism_compare', button=self.download_mechanism_btn)

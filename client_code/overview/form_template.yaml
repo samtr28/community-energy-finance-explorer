@@ -37,9 +37,21 @@ components_by_slot:
         name: capital_btn
         properties: {align: right, background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Capital explorer, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Link
-      - name: mechanism_compare_plot
-        properties: {}
-        type: Plot
+      - event_bindings: {click: download_mechanism_btn_click}
+        name: download_mechanism_btn
+        properties:
+          align: right
+          background_color: theme:Primary Overlay 3
+          font_size: 14
+          icon: mi:download
+          icon_color: theme:On Primary Container
+          icon_size: 16
+          spacing:
+            margin: ['2', null, '0', null]
+            padding: [null, '16', null, null]
+          text: Download
+          text_color: theme:On Primary Container
+        type: form:dep_9kcxnwm3upyjd:_Components.Button
       layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XNPYLO,ZMOTXZ'}
       name: rich_text_1
       properties:
@@ -138,6 +150,54 @@ components_by_slot:
       name: column_panel_5
       properties: {}
       type: ColumnPanel
+    - components:
+      - components:
+        - components:
+          - layout_properties: {full_width_row: true, grid_position: 'DFHHLZ,GUTHPQ'}
+            name: card_header_3
+            properties:
+              font_family: serif
+              scale: small
+              spacing:
+                margin: [null, null, '0', null]
+                padding: [null, null, '', null]
+              style: headline
+              text: Partner with us (associations and networks)
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
+            name: rich_text_7
+            properties: {content: '<b>Become a platform enabler.</b> Help expand the database, increase participation across your network, and shape the next features and insights so the Navigator serves your members’ real needs.', font_size: 16, format: restricted_html}
+            type: RichText
+          - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
+            name: survey_link_2
+            properties:
+              align: center
+              background_color: theme:On Primary Container
+              bold: true
+              border: ''
+              font_size: 25
+              icon: mi:forum
+              role: button-link
+              spacing:
+                margin: ['16', null, null, null]
+                padding: ['4', '16', '4', '16']
+              text: 'Partner with us '
+              text_color: theme:On Primary
+              underline: false
+              url: ''
+            type: form:dep_9kcxnwm3upyjd:_Components.Link
+          layout_properties: {slot: card-content-container-slot}
+          name: column_panel_4
+          properties: {}
+          type: ColumnPanel
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_3
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'IZDOGX,DCBHVQ AUXLIY,NYAOYC'}
+      name: card_3
+      properties: {background_color: 'theme:Primary Overlay 3'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -291,54 +351,10 @@ components_by_slot:
       name: card_2
       properties: {background_color: 'theme:Tertiary Overlay 1'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - components:
-      - components:
-        - components:
-          - layout_properties: {full_width_row: true, grid_position: 'DFHHLZ,GUTHPQ'}
-            name: card_header_3
-            properties:
-              font_family: serif
-              scale: small
-              spacing:
-                margin: [null, null, '0', null]
-                padding: [null, null, '', null]
-              style: headline
-              text: Partner with us (associations and networks)
-            type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
-            name: rich_text_7
-            properties: {content: '<b>Become a platform enabler.</b> Help expand the database, increase participation across your network, and shape the next features and insights so the Navigator serves your members’ real needs.', font_size: 16, format: restricted_html}
-            type: RichText
-          - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
-            name: survey_link_2
-            properties:
-              align: center
-              background_color: theme:On Primary Container
-              bold: true
-              border: ''
-              font_size: 25
-              icon: mi:forum
-              role: button-link
-              spacing:
-                margin: ['16', null, null, null]
-                padding: ['4', '16', '4', '16']
-              text: 'Partner with us '
-              text_color: theme:On Primary
-              underline: false
-              url: ''
-            type: form:dep_9kcxnwm3upyjd:_Components.Link
-          layout_properties: {slot: card-content-container-slot}
-          name: column_panel_4
-          properties: {}
-          type: ColumnPanel
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_3
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX BPAGAF,SGFFCK'}
-      name: card_3
-      properties: {background_color: 'theme:Primary Overlay 3'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {grid_position: 'IZDOGX,ANKGAX ODKLCI,RWHCOZ'}
+      name: mechanism_compare_plot
+      properties: {height: 65vh}
+      type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX UXUDWH,HBJUHE'}
       name: heading_5
       properties: {bold: true, font_family: ser, italic: false, scale: large, style: title, text: Trust & Transparency}
