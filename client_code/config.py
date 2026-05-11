@@ -90,11 +90,99 @@ COLOUR_MAPPING = {
   'Other':                                      '#8e9099',
 }
 
+
+
 # Default category display order
 CATEGORY_ORDER = [
   'Crowdfunding', 'Community finance', 'Grants', 'Debt', 'Equity', 'Internal capital'
 ]
 
+# ==================== OWNER TYPE CATEGORIES ====================
+# Groups the 24 owner types into 6 colour categories.
+# Used by get_owner_type_colors_categorical() — see below.
+
+
+
+# Base + (optional) secondary colour per category.
+# When secondary is set, shades interpolate from base → secondary;
+# otherwise shades scale around the base hue.
+CATEGORY_COLOUR_SCHEME = {
+  'Community':  {'base': dunsparce_colors[1], 'secondary': dunsparce_colors[7]},   # teal → dark teal
+  'Indigenous': {'base': dunsparce_colors[11], 'secondary': dunsparce_colors[4]},  # amber → dark brown
+  'Private':    {'base': dunsparce_colors[8], 'secondary': None},                  # red
+  'Public':     {'base': dunsparce_colors[12], 'secondary': dunsparce_colors[0]},                  # dark blue
+  'Non-profit': {'base': dunsparce_colors[9], 'secondary': None},                  # purple
+  'Other':      {'base': dunsparce_colors[19],'secondary': None},                  # grey
+}
+
+
+def _hex_to_rgb(h):
+  h = h.lstrip('#')
+  return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+def _rgb_to_hex(r, g, b):
+  return f'#{max(0,min(255,int(r))):02x}{max(0,min(255,int(g))):02x}{max(0,min(255,int(b))):02x}'
+
+def _generate_category_shades(base_hex, secondary_hex=None, n=1):
+  """Return n hex shades for a category.
+
+  If secondary_hex is given, shades interpolate from base → secondary.
+  Otherwise shades scale around the base (0.75x to 1.35x brightness).
+  """
+  if n <= 0:
+    return []
+  if n == 1:
+    return [base_hex]
+
+  r1, g1, b1 = _hex_to_rgb(base_hex)
+  if secondary_hex:
+    r2, g2, b2 = _hex_to_rgb(secondary_hex)
+    return [
+      _rgb_to_hex(
+        r1 + (r2 - r1) * i / (n - 1),
+        g1 + (g2 - g1) * i / (n - 1),
+        b1 + (b2 - b1) * i / (n - 1),
+      )
+      for i in range(n)
+    ]
+  # No secondary: shade-shift around the base
+  return [
+    _rgb_to_hex(
+      r1 * (0.75 + 0.6 * i / (n - 1)),
+      g1 * (0.75 + 0.6 * i / (n - 1)),
+      b1 * (0.75 + 0.6 * i / (n - 1)),
+    )
+    for i in range(n)
+  ]
+
+
+def get_owner_type_colors_categorical(type_category_pairs):
+  """
+  Assign hex colours to owner types grouped by category.
+  Types in the same category get shades of the same base colour.
+
+  Args:
+    type_category_pairs: iterable of (owner_type, owner_category) tuples
+
+  Returns: dict {owner_type: hex_color}
+  """
+  by_category = {}
+  for ot, cat in type_category_pairs:
+    cat = cat if cat else 'Other'
+    by_category.setdefault(cat, []).append(ot)
+
+  result = {}
+  for cat, types in by_category.items():
+    scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other'])
+    unique_types = sorted(set(types))
+    shades = _generate_category_shades(scheme['base'], scheme.get('secondary'), len(unique_types))
+    for t, shade in zip(unique_types, shades):
+      result[t] = shade
+  return result
+
+# Display order for owner-type categories (used to keep types from the same
+# category adjacent in pies, treemaps, and legends).
+CATEGORY_ORDER_OWNERS = ['Community', 'Indigenous', 'Private', 'Public', 'Non-profit', 'Other']
 
 # ==================== PROJECT TYPE COLOURS ====================
 
@@ -119,23 +207,3 @@ def get_project_type_color(project_type):
   return PROJECT_TYPE_COLORS.get(project_type, '#8e9099')
 
 
-# ==================== OWNER TYPE COLOURS ====================
-
-def get_owner_type_colors(owner_types_list, palette='dunsparce'):
-  """
-  Assign colours from a palette to a list of owner types.
-
-  Args:
-    owner_types_list: list of unique owner type strings
-    palette:          'dunsparce', 'gradient', or a custom list of hex strings
-
-  Returns:
-    dict mapping each owner type to a hex colour string
-  """
-  colors = (
-    dunsparce_colors if palette == 'dunsparce' else
-    gradient_palette if palette == 'gradient'  else
-    palette          if isinstance(palette, list) else
-    dunsparce_colors
-  )
-  return {t: colors[i % len(colors)] for i, t in enumerate(sorted(owner_types_list))}

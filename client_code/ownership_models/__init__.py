@@ -7,143 +7,179 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import config
+from ..chart_export import download_chart
+
 
 class ownership_models(ownership_modelsTemplate):
+
+  # ==================== INITIALISATION ====================
+
   def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    # Flag to prevent filter triggers during setup
+    # Prevent filter events firing during setup
     self._initializing = True
-    self._filters_loaded = False  # ← Add this flag
+    self._filters_loaded = False
 
-    self.project_scale_dd.selected = ["Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)", "Large ($5M-$25M)", "Very Large ($25M-$100M)"]
+    # Default project scale selection
+    self.project_scale_dd.selected = [
+      "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
+      "Large ($5M-$25M)", "Very Large ($25M-$100M)"
+    ]
 
-    # Done initializing
     self._initializing = False
 
-  def schedule_filter_update(self):
-    """Schedule a filter update with debouncing - waits 1s after last change"""
-    # Don't schedule updates during initialization
-    if getattr(self, '_initializing', False):
-      return
-  
-    self.filter_timer.interval = 1
-
-  def apply_filters(self):
-    """Apply filters and update all charts with ONE server call"""
-    # Read current filter selections
-    provinces = self.provinces_dd.selected
-    proj_types = self.proj_types_dd.selected
-    stages = self.stages_dd.selected
-    indigenous_ownership = self.indig_owners_dd.selected
-    project_scale = self.project_scale_dd.selected
-
-  
-    # Build kwargs with only set filters
-    kwargs = {}
-    if provinces:
-      kwargs["provinces"] = provinces
-    if proj_types:
-      kwargs["proj_types"] = proj_types
-    if stages:
-      kwargs["stages"] = stages
-    if indigenous_ownership:
-      kwargs["indigenous_ownership"] = indigenous_ownership
-    if project_scale:
-      kwargs["project_scale"] = project_scale
-  
-      # UPDATE CHIPS - Build chip data from selections
-    chips = []
-    
-    if provinces:
-      for p in provinces:
-        chips.append({'text': f'Province: {p}', 'tag': ('provinces', p)})
-    if proj_types:
-      for pt in proj_types:
-        chips.append({'text': f'Project Type: {pt}', 'tag': ('proj_types', pt)})
-    if stages:
-      for s in stages:
-        chips.append({'text': f'Stage: {s}', 'tag': ('stages', s)})
-    if indigenous_ownership:
-      for io in indigenous_ownership:
-        chips.append({'text': f'Indigenous: {io}', 'tag': ('indigenous_ownership', io)})
-    if project_scale:
-      for ps in project_scale:
-        chips.append({'text': f'Scale: {ps}', 'tag': ('project_scale', ps)})
-  
-      # Update the repeating panel
-    self.filter_chips_panel.items = chips
-  
-    all_charts = anvil.server.call('get_all_ownership_charts', **kwargs)
-  
-    self.ownership_treemap.figure = all_charts['ownership_treemap']
-    self.scale_pies_plot.figure =all_charts['scale_pies']
-    self.indig_ownership_plot.figure = all_charts['indigenous_pie']
-    self.lollipop_chart.figure = all_charts['lollipop_chart']
-    self.funnel_plot.figure = all_charts['funnel_chart']
-
-  def remove_filter(self, filter_type, value):
-    """Remove a specific filter value and refresh"""
-    # Remove the value from the appropriate dropdown
-    if filter_type == 'provinces':
-      current = list(self.provinces_dd.selected)
-      current.remove(value)
-      self.provinces_dd.selected = current
-    elif filter_type == 'proj_types':
-      current = list(self.proj_types_dd.selected)
-      current.remove(value)
-      self.proj_types_dd.selected = current
-    elif filter_type == 'stages':
-      current = list(self.stages_dd.selected)
-      current.remove(value)
-      self.stages_dd.selected = current
-    elif filter_type == 'indigenous_ownership':
-      current = list(self.indig_owners_dd.selected)
-      current.remove(value)
-      self.indig_owners_dd.selected = current
-    elif filter_type == 'project_scale':
-      current = list(self.project_scale_dd.selected)
-      current.remove(value)
-      self.project_scale_dd.selected = current
-
-      # Schedule update with debouncing
-    self.schedule_filter_update()
-
-  def provinces_dd_change(self, **event_args):
-    """This method is called when the selected values change"""
-    self.schedule_filter_update()
-
-  def proj_types_dd_change(self, **event_args):
-    """This method is called when the selected values change"""
-    self.schedule_filter_update()
-
-  def stages_dd_change(self, **event_args):
-    """This method is called when the selected values change"""
-    self.schedule_filter_update()
-
-  def indig_owners_dd_change(self, **event_args):
-    """This method is called when the selected values change"""
-    self.schedule_filter_update()
-
-  def project_scale_dd_change(self, **event_args):
-    """This method is called when the selected values change"""
-    self.schedule_filter_update()
-
   def form_show(self, **event_args):
-    """This method is called when the form is shown on the page"""
+    """Load data once on first show, and highlight the nav link."""
     self.layout.reset_links()
     self.layout.ownership_nav.role = 'selected'
 
-    # Only load data once on first show
     if not self._filters_loaded:
       self._filters_loaded = True
       self.apply_filters()
 
-        
+
+  # ==================== FILTER MANAGEMENT ====================
+
+  def schedule_filter_update(self):
+    """Debounce filter changes — waits 1s after the last change before reloading."""
+    if getattr(self, '_initializing', False):
+      return
+    self.filter_timer.interval = 1
+
   def filter_timer_tick(self, **event_args):
-    """This method is called when the timer fires"""
-    # Stop the timer so it doesn't repeat
+    """Fires after the debounce delay — stops the timer and applies filters."""
     self.filter_timer.interval = 0
-    # Apply the filters
     self.apply_filters()
+
+  # Filter change handlers — all route through the debounce timer
+  def provinces_dd_change(self, **event_args):
+    self.schedule_filter_update()
+
+  def proj_types_dd_change(self, **event_args):
+    self.schedule_filter_update()
+
+  def stages_dd_change(self, **event_args):
+    self.schedule_filter_update()
+
+  def indig_owners_dd_change(self, **event_args):
+    self.schedule_filter_update()
+
+  def project_scale_dd_change(self, **event_args):
+    self.schedule_filter_update()
+
+  def remove_filter(self, filter_type, value):
+    """Remove a single filter chip value and trigger a refresh."""
+    targets = {
+      'provinces':            self.provinces_dd,
+      'proj_types':           self.proj_types_dd,
+      'stages':               self.stages_dd,
+      'indigenous_ownership': self.indig_owners_dd,
+      'project_scale':        self.project_scale_dd,
+    }
+    if filter_type in targets:
+      current = list(targets[filter_type].selected)
+      current.remove(value)
+      targets[filter_type].selected = current
+    self.schedule_filter_update()
+
+
+  # ==================== FILTER HELPERS ====================
+
+  def _get_filter_kwargs(self):
+    """Returns only the filters that have values set, as server kwargs."""
+    kwargs = {}
+    if self.provinces_dd.selected:
+      kwargs['provinces'] = self.provinces_dd.selected
+    if self.proj_types_dd.selected:
+      kwargs['proj_types'] = self.proj_types_dd.selected
+    if self.stages_dd.selected:
+      kwargs['stages'] = self.stages_dd.selected
+    if self.indig_owners_dd.selected:
+      kwargs['indigenous_ownership'] = self.indig_owners_dd.selected
+    if self.project_scale_dd.selected:
+      kwargs['project_scale'] = self.project_scale_dd.selected
+    return kwargs
+
+  def _get_active_filters(self):
+    """Returns human-readable filter labels for export annotations."""
+    def fmt(selected):
+      return ", ".join(selected) if selected else "All"
+    return {
+      "Provinces":     fmt(self.provinces_dd.selected),
+      "Project Types": fmt(self.proj_types_dd.selected),
+      "Stages":        fmt(self.stages_dd.selected),
+      "Indigenous":    fmt(self.indig_owners_dd.selected),
+      "Project Scale": fmt(self.project_scale_dd.selected),
+    }
+
+  def _build_filter_chips(self):
+    """Build chip data from current filter selections for the repeating panel."""
+    chips = []
+    mappings = [
+      (self.provinces_dd.selected,     'provinces',           'Province'),
+      (self.proj_types_dd.selected,    'proj_types',          'Project Type'),
+      (self.stages_dd.selected,        'stages',              'Stage'),
+      (self.indig_owners_dd.selected,  'indigenous_ownership','Indigenous'),
+      (self.project_scale_dd.selected, 'project_scale',       'Scale'),
+    ]
+    for selected, filter_type, label in mappings:
+      for value in (selected or []):
+        chips.append({'text': f'{label}: {value}', 'tag': (filter_type, value)})
+    return chips
+
+
+  # ==================== CHART LOADING ====================
+
+  def apply_filters(self):
+    """Single server call that reloads all charts based on current filter state."""
+    self.filter_chips_panel.items = self._build_filter_chips()
+
+    all_charts = anvil.server.call('get_all_ownership_charts', **self._get_filter_kwargs())
+
+    self.ownership_treemap.figure    = all_charts['ownership_treemap']
+    self.scale_pies_plot.figure      = all_charts['scale_pies']
+    self.indig_ownership_plot.figure = all_charts['indigenous_pie']
+    self.lollipop_chart.figure       = all_charts['lollipop_chart']
+    self.funnel_plot.figure          = all_charts['funnel_chart']
+
+
+  # ==================== CHART DOWNLOAD ====================
+
+  def _get_plot_component(self, chart_key):
+    """Maps a chart key string to the corresponding plot component."""
+    return {
+      'ownership_treemap': self.ownership_treemap,
+      'scale_pies':        self.scale_pies_plot,
+      'indigenous_pie':    self.indig_ownership_plot,
+      'lollipop_chart':    self.lollipop_chart,
+      'funnel_chart':      self.funnel_plot,
+    }[chart_key]
+
+  def _download_chart(self, chart_key, button=None):
+    """Capture and download any chart by key."""
+    download_chart(
+      plot_component=self._get_plot_component(chart_key),
+      chart_key=chart_key,
+      active_filters=self._get_active_filters(),
+      server_callable='export_ownership_chart',
+      button=button,
+    )
+
+  # ── Wire one handler per download button. Add buttons in the designer first,
+  #    then create the matching method here. Examples (uncomment when buttons exist):
+  #
+  # def download_treemap_btn_click(self, **event_args):
+  #   self._download_chart('ownership_treemap', button=self.download_treemap_btn)
+  #
+  # def download_pies_btn_click(self, **event_args):
+  #   self._download_chart('scale_pies', button=self.download_pies_btn)
+  #
+  # def download_indigenous_btn_click(self, **event_args):
+  #   self._download_chart('indigenous_pie', button=self.download_indigenous_btn)
+  #
+  # def download_bottleneck_btn_click(self, **event_args):
+  #   self._download_chart('lollipop_chart', button=self.download_bottleneck_btn)
+  #
+  # def download_funnel_btn_click(self, **event_args):
+  #   self._download_chart('funnel_chart', button=self.download_funnel_btn)
