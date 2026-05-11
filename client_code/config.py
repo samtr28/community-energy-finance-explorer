@@ -101,52 +101,16 @@ CATEGORY_ORDER = [
 # Groups the 24 owner types into 6 colour categories.
 # Used by get_owner_type_colors_categorical() — see below.
 
-OWNER_TYPE_CATEGORIES = {
-  # ── Community & Cooperative (teal family) ──
-  'Benefit company (BC)':                                            'Community',
-  'Community contribution company (BC)':                             'Community',
-  'Community corporation':                                           'Community',
-  'Cooperative association':                                         'Community',
-  'Direct individual ownership from community members':              'Community',
 
-  # ── Indigenous (amber/brown family) ──
-  'Tribal Council/Regional First Nations, Métis or Inuit Government': 'Indigenous',
-  'Indigenous coalition':                                             'Indigenous',
-  'Indigenous energy corporation/utility':                            'Indigenous',
-  'Community-held through Band Council or Indigenous community trust':'Indigenous',
-  'Indigenous development corporation':                               'Indigenous',
-
-  # ── Private / Investor (red family) ──
-  'Bank':                                                            'Private',
-  'Individual investor (outside community)':                         'Private',
-  'For profit business entity':                                      'Private',
-  'Insurer':                                                         'Private',
-  'Loan corporation or trust corporation':                           'Private',
-
-  # ── Public / Government (dark blue family) ──
-  'Municipal energy corporation/utility (e.g., ENMAX, Nelson Hydro)': 'Public',
-  'Municipality':                                                     'Public',
-  'Sector-specific public organization (e.g., school board, irrigation district, public health)': 'Public',
-  'Crown corporation (e.g., BC Hydro)':                               'Public',
-
-  # ── Non-for-profit / Civil Society (purple family) ──
-  'Non-for-profit organization/society':                             'Non-profit',
-  'Registered charity':                                              'Non-profit',
-  'Religious society':                                               'Non-profit',
-
-  # ── Other / Unknown (grey) ──
-  "Don't know":              'Other',
-  'Other (Please specify)':  'Other',
-}
 
 # Base + (optional) secondary colour per category.
 # When secondary is set, shades interpolate from base → secondary;
 # otherwise shades scale around the base hue.
 CATEGORY_COLOUR_SCHEME = {
-  'Community':  {'base': dunsparce_colors[1], 'secondary': dunsparce_colors[5]},   # teal → dark teal
-  'Indigenous': {'base': dunsparce_colors[4], 'secondary': dunsparce_colors[11]},  # amber → dark brown
+  'Community':  {'base': dunsparce_colors[1], 'secondary': dunsparce_colors[7]},   # teal → dark teal
+  'Indigenous': {'base': dunsparce_colors[11], 'secondary': dunsparce_colors[4]},  # amber → dark brown
   'Private':    {'base': dunsparce_colors[8], 'secondary': None},                  # red
-  'Public':     {'base': dunsparce_colors[0], 'secondary': None},                  # dark blue
+  'Public':     {'base': dunsparce_colors[12], 'secondary': dunsparce_colors[0]},                  # dark blue
   'Non-profit': {'base': dunsparce_colors[9], 'secondary': None},                  # purple
   'Other':      {'base': dunsparce_colors[19],'secondary': None},                  # grey
 }
@@ -192,25 +156,33 @@ def _generate_category_shades(base_hex, secondary_hex=None, n=1):
   ]
 
 
-def get_owner_type_colors_categorical(owner_types_list):
+def get_owner_type_colors_categorical(type_category_pairs):
   """
   Assign hex colours to owner types grouped by category.
   Types in the same category get shades of the same base colour.
 
+  Args:
+    type_category_pairs: iterable of (owner_type, owner_category) tuples
+
   Returns: dict {owner_type: hex_color}
   """
   by_category = {}
-  for ot in owner_types_list:
-    cat = OWNER_TYPE_CATEGORIES.get(ot, 'Other')
+  for ot, cat in type_category_pairs:
+    cat = cat if cat else 'Other'
     by_category.setdefault(cat, []).append(ot)
 
   result = {}
   for cat, types in by_category.items():
     scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other'])
-    shades = _generate_category_shades(scheme['base'], scheme.get('secondary'), len(types))
-    for t, shade in zip(sorted(types), shades):
+    unique_types = sorted(set(types))
+    shades = _generate_category_shades(scheme['base'], scheme.get('secondary'), len(unique_types))
+    for t, shade in zip(unique_types, shades):
       result[t] = shade
   return result
+
+# Display order for owner-type categories (used to keep types from the same
+# category adjacent in pies, treemaps, and legends).
+CATEGORY_ORDER_OWNERS = ['Community', 'Indigenous', 'Private', 'Public', 'Non-profit', 'Other']
 
 # ==================== PROJECT TYPE COLOURS ====================
 
