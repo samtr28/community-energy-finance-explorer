@@ -219,14 +219,28 @@ components_by_slot:
         height: 45vh
         margin: ['0', null, '0', null]
       type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'SUKSJO,HQNAXQ'}
+      name: scale_pies_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'NSLNNN,SSVAPW'}
+      name: text_1_copy_2
+      properties:
+        text: |
+          Typical Ownership
+           Sums each owner type's ownership percentage across all projects in the scale band, then displays each type's share of that combined total -equivalent to averaging the ownership breakdown across projects, since each project's ownership sums to 100%. A small co-op project carries the same weight as a large utility-owned one. Best for understanding what kinds of ownership models are most common across projects at this scale.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'NSLNNN,SBVZFN'}
+      name: text_3
+      properties:
+        text: |-
+          By Dollar Value
+          Multiplies each owner's percentage stake by their project's total cost to convert ownership share into a dollar figure, sums those figures by owner type, then displays each type's share of the combined dollar total. Larger projects dominate the picture, so a 100% stake in a $50M project counts far more than a 100% stake in a $50K one. Best for understanding where the financial value is concentrated.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
     properties: {col_spacing: large, col_widths: '{"UTPVPF":20,"BVWRHW":40,"ITZKFE":38,"FRWSFJ":20,"CEROQY":40,"HETGSG":40,"ZUVYPB":20,"XBRBEG":20}'}
     type: ColumnPanel
-  - layout_properties: {full_width_row: true}
-    name: scale_pies_plot
-    properties: {height: 45vh}
-    type: Plot
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
     name: filter_timer
