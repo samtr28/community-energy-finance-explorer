@@ -283,34 +283,26 @@ components_by_slot:
         text: How does a project's size affect its capital stack?
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,OYCAXX'}
+    - layout_properties: {full_width_row: true, grid_position: 'AJRTFL,YUFUIT'}
       name: text_2
       properties:
         font_size: 16
-        text: |
-          This section shows how financing mixes vary across projects of different cost ranges. Project cost is used here as a practical way to understand scale (instead of capacity by MW) because it applies across many kinds of community energy projects, including generation, storage, efficiency, and heating projects.
-
-          Use this view to explore whether smaller, medium, and larger projects tend to rely on different combinations of grants, debt, community financing, equity, or internal capital. This can help project teams understand what financing patterns appear in projects at a similar scale and can help funders see where different types of capital may be most important.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'MZAOOB,DJPDPH'}
-      name: text_6
-      properties:
-        font_size: 16
-        text: |
-          This section shows how financing mixes vary across projects of different cost ranges. Project cost is used here as a practical way to understand scale (instead of capacity by MW) because it applies across many kinds of community energy projects, including generation, storage, efficiency, and heating projects.
-
-          Use this view to explore whether smaller, medium, and larger projects tend to rely on different combinations of grants, debt, community financing, equity, or internal capital. This can help project teams understand what financing patterns appear in projects at a similar scale and can help funders see where different types of capital may be most important.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'MZAOOB,TWQNLB XXGKNZ,TJOUVY'}
-      name: text_3
-      properties:
-        font_size: 12
         text: |-
-          Total Funding
-          Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
-        text_color: theme:Error
+          This section shows how financing mixes vary across projects of different cost ranges. Project cost is used here as a practical way to understand scale (instead of capacity by MW) because it applies across many kinds of community energy projects, including generation, storage, efficiency, and heating projects.
+
+          Use this view to explore whether smaller, medium, and larger projects tend to rely on different combinations of grants, debt, community financing, equity, or internal capital. This can help project teams understand what financing patterns appear in projects at a similar scale and can help funders see where different types of capital may be most important.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,TWQNLB TWKCOX,SWHHLK'}
+    - layout_properties: {grid_position: 'AJRTFL,HWNEMY'}
+      name: image_1
+      properties: {display_mode: fill_width, source: _/theme/temp_art.png}
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'FAPPMP,MGPCJP'}
+      name: scale_pies_plot
+      properties:
+        height: 45vh
+        margin: ['8', null, '4', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'LYKNCK,QAVVXI'}
       name: text_4
       properties:
         font_size: 12
@@ -321,12 +313,15 @@ components_by_slot:
           For each project, calculates what percentage of its own funding came from each category, then averages those percentages across all projects in the scale band. Every project counts equally regardless of size, so a $500K project has the same influence on the result as a $5M one. Best for understanding what a typical project at this scale actually looks like.
         text_color: theme:Error
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'FAPPMP,MGPCJP'}
-      name: scale_pies_plot
+    - layout_properties: {full_width_row: true, grid_position: 'LYKNCK,NZABHR'}
+      name: text_3
       properties:
-        height: 45vh
-        margin: ['8', null, '4', null]
-      type: Plot
+        font_size: 12
+        text: |-
+          Total Funding
+          Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
+        text_color: theme:Error
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - event_bindings: {click: download_pies_btn_click}
       layout_properties: {full_width_row: true, grid_position: 'SINLER,LXTODE'}
       name: download_pies_btn
@@ -584,7 +579,7 @@ components_by_slot:
     name: column_panel_1
     properties:
       col_spacing: large
-      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"PWAGAM":40,"JGWTSW":20,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"CMBKUS":45,"EBSGWX":15,"TMICZW":45,"UKQJNA":15,"VSNBFN":30,"GAZZYX":30,"YDSMDU":23,"WPOENU":37,"OYCAXX":20,"DJPDPH":20,"TWQNLB":20}'
+      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"PWAGAM":40,"JGWTSW":20,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"CMBKUS":45,"EBSGWX":15,"TMICZW":45,"UKQJNA":15,"VSNBFN":30,"GAZZYX":30,"YDSMDU":23,"WPOENU":37,"YUFUIT":24,"HWNEMY":36}'
       spacing:
         padding: ['0', null, null, null]
       spacing_above: medium
