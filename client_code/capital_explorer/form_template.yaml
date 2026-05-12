@@ -282,16 +282,25 @@ components_by_slot:
 
           Use this view to explore whether smaller, medium, and larger projects tend to rely on different combinations of grants, debt, community financing, equity, or internal capital. This can help project teams understand what financing patterns appear in projects at a similar scale and can help funders see where different types of capital may be most important.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'MZAOOB,TWQNLB ZHXCZE,EDIZXE'}
-      name: spacer_1
-      properties: {}
-      type: Spacer
     - layout_properties: {grid_position: 'MZAOOB,TWQNLB XXGKNZ,TJOUVY'}
       name: text_3
       properties:
+        font_size: 12
         text: |-
           Total Funding
           Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
+        text_color: theme:Error
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,TWQNLB TWKCOX,SWHHLK'}
+      name: text_4
+      properties:
+        font_size: 12
+        spacing:
+          margin: ['10', null, null, null]
+        text: |-
+          Typical Project
+          For each project, calculates what percentage of its own funding came from each category, then averages those percentages across all projects in the scale band. Every project counts equally regardless of size, so a $500K project has the same influence on the result as a $5M one. Best for understanding what a typical project at this scale actually looks like.
+        text_color: theme:Error
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'FAPPMP,MGPCJP'}
       name: scale_pies_plot
@@ -299,13 +308,6 @@ components_by_slot:
         height: 45vh
         margin: ['8', null, '4', null]
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'WRUGTS,NMSJXK'}
-      name: text_4
-      properties:
-        text: |-
-          Typical Project
-          For each project, calculates what percentage of its own funding came from each category, then averages those percentages across all projects in the scale band. Every project counts equally regardless of size, so a $500K project has the same influence on the result as a $5M one. Best for understanding what a typical project at this scale actually looks like.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - event_bindings: {click: download_pies_btn_click}
       layout_properties: {full_width_row: true, grid_position: 'SINLER,LXTODE'}
       name: download_pies_btn
