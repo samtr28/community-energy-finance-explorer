@@ -24,7 +24,7 @@ dependencies:
   version: {version_tag: v1.2.6}
 - dep_id: dep_ar2wlcmlppsllr
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {version_tag: v3.5.0}
+  version: {version_tag: v3.6.3}
 metadata: {description: Community Energy Finance Navigator, logo_img: 'asset:IIH-Logo-Full-Colour.png', title: Community Energy Finance Navigator}
 name: Comunity Energy Finance Navigator
 native_deps:
@@ -61,5 +61,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/files.yml
-startup: {module: overview, type: form}
+startup: {module: capital_explorer, type: form}
 startup_form: null

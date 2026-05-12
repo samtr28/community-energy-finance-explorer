@@ -21,6 +21,9 @@ class capital_explorer(capital_explorerTemplate):
     self._initializing = True
     self._filters_loaded = False
 
+
+    self._setup_dropdown_formatters()  # before pre-selecting
+
     # Set default project scale selection
     self.project_scale_dd.selected = [
       "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
@@ -32,13 +35,27 @@ class capital_explorer(capital_explorerTemplate):
   def form_show(self, **event_args):
     """Load data once on first show, and highlight the nav link."""
     self.layout.reset_links()
+    self._setup_dropdown_formatters()
     self.layout.capital_nav.role = 'selected'
-
+    
     if not self._filters_loaded:
       self._filters_loaded = True
       self.apply_filters()
 
-
+    #=====================DROPDOWN SETUP=========================
+  def _setup_dropdown_formatters(self):
+    for dd in (
+      self.provinces_dd,
+      self.proj_types_dd,
+      self.stages_dd,
+      self.indig_owners_dd,
+      self.project_scale_dd,
+    ):
+      def make_formatter(label):
+        def format_selected_text(count, total):
+          return label
+        return format_selected_text
+      dd.format_selected_text = make_formatter(dd.placeholder)
   # ==================== FILTER MANAGEMENT ====================
 
   def schedule_filter_update(self):
@@ -87,7 +104,6 @@ class capital_explorer(capital_explorerTemplate):
   # ==================== FILTER HELPERS ====================
 
   def _get_filter_kwargs(self):
-    """Returns only the filters that have values set, as server kwargs."""
     kwargs = {}
     if self.provinces_dd.selected:
       kwargs['provinces'] = self.provinces_dd.selected
@@ -96,7 +112,21 @@ class capital_explorer(capital_explorerTemplate):
     if self.stages_dd.selected:
       kwargs['stages'] = self.stages_dd.selected
     if self.indig_owners_dd.selected:
-      kwargs['indigenous_ownership'] = self.indig_owners_dd.selected
+      INDIG_MAP = {
+        'Majority owned (51-100%)': [
+          'Wholly Indigenous owned (100%)',
+          'Majority Indigenous owned (51-99%)',
+        ],
+        'Minority owned (1-50%)': [
+          'Half Indigenous owned (50%)',
+          'Minority Indigenous owned (1-49%)',
+        ],
+        'No Indigenous ownership': ['No Indigenous ownership'],
+      }
+      expanded = []
+      for selection in self.indig_owners_dd.selected:
+        expanded.extend(INDIG_MAP.get(selection, [selection]))
+      kwargs['indigenous_ownership'] = expanded
     if self.project_scale_dd.selected:
       kwargs['project_scale'] = self.project_scale_dd.selected
     return kwargs
@@ -118,15 +148,17 @@ class capital_explorer(capital_explorerTemplate):
     chips = []
     mappings = [
       (self.provinces_dd.selected,       'provinces',           'Province'),
-      (self.proj_types_dd.selected,      'proj_types',          'Project Type'),
+      (self.proj_types_dd.selected,      'proj_types',          'Technology'),
       (self.stages_dd.selected,          'stages',              'Stage'),
-      (self.indig_owners_dd.selected,    'indigenous_ownership','Indigenous'),
+      (self.indig_owners_dd.selected,    'indigenous_ownership','Indigenous Ownership'),
       (self.project_scale_dd.selected,   'project_scale',       'Scale'),
     ]
     for selected, filter_type, label in mappings:
       for value in (selected or []):
         chips.append({'text': f'{label}: {value}', 'tag': (filter_type, value)})
     return chips
+
+
 
 
   # ==================== CHART LOADING ====================

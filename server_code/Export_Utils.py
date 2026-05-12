@@ -107,7 +107,7 @@ BANNER_BG_COLOR     = '#f0f0f0'
 LEFT_MARGIN         = 30           # px from left edge
 BANNER_TOP_PAD      = 24           # px from top of banner to first line
 LINE_SPACING        = 12           # px between each text line
-BANNER_BOTTOM_PAD   = 20           # px below last line before chart padding
+BANNER_BOTTOM_PAD   = 30           # px below last line before chart padding
 
 # ── Chart title ──
 TITLE_TEXT_SIZE     = 45           # pt
@@ -122,7 +122,7 @@ SUBTITLE_COLOR      = '#444444'
 # If the full line exceeds the available width it wraps:
 #   Line 1: "Filters applied —"
 #   Line 2+: each filter on its own indented line
-FILTER_SIZE         = 18           # pt
+FILTER_SIZE         = 26           # pt
 FILTER_TEXT_COLOR   = '#1a1a1a'
 FILTER_SEPARATOR    = '   |   '    # separator between entries on the same line
 
@@ -133,7 +133,7 @@ STRIP_PADDING       = 20           # px inside strip
 BOTTOM_STRIP_HEIGHT = LOGO_MAX_HEIGHT + STRIP_PADDING * 2
 
 SOURCE_TEXT         = 'Source: Community Energy Finance Navigator, University of Victoria'
-SOURCE_TEXT_SIZE    = 20           # pt
+SOURCE_TEXT_SIZE    = 26           # pt
 SOURCE_TEXT_COLOR   = '#444444'
 
 
@@ -333,7 +333,7 @@ def add_logo_and_filters_pil(img_bytes, active_filters, chart_title=''):
   today_str = f"{today.strftime('%B')} {today.day}, {today.year}"
   draw.text(
     (LEFT_MARGIN, cursor_y),
-    f'Survey-based data downloaded on {today_str}',
+    f'Survey-based data downloaded on {today_str}. All amounts in CAD.',
     fill=SUBTITLE_COLOR,
     font=font_subtitle
   )

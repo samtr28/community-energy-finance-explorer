@@ -1,7 +1,7 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {width: 35.1}
+    - layout_properties: {width: 65.1}
       name: filter_heading
       properties: {bold: true, scale: small, style: title, text: 'Filter by:'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
@@ -12,7 +12,7 @@ components_by_slot:
         background: ''
         foreground: ''
         items: [Biofuel/Biogas, Biomass, Building efficiency upgrades, Electro-mobility, Energy storage, Geothermal, Hydro, Hydrogen, Microgrid, Solar, Tidal/wave, Waste to energy, Wind]
-        placeholder: Project Type
+        placeholder: Technology
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
     - event_bindings: {change: provinces_dd_change}
       layout_properties: {}
@@ -39,7 +39,7 @@ components_by_slot:
       layout_properties: {expand: false, width: null}
       name: indig_owners_dd
       properties:
-        items: [Wholly Indigenous owned (100%), Majority Indigenous owned (51-99%), Half Indigenous owned (50%), Minority Indigenous owned (1-49%), No Indigenous ownership]
+        items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
         placeholder: Indigenous Ownership
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
     - data_bindings: []
@@ -58,16 +58,10 @@ components_by_slot:
         margin: [null, null, 1.5%, '0']
     type: FlowPanel
   - components:
-    - layout_properties: {width: null}
-      name: filter_heading_copy
-      properties:
-        bold: true
-        scale: small
-        spacing:
-          margin: [null, 0.1%, null, null]
-        style: title
-        text: 'Selected: '
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {}
+      name: text_7
+      properties: {scale: small, text: 'Selected:'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {expand: true, width: null}
       name: filter_chips_panel
       properties:
@@ -77,7 +71,10 @@ components_by_slot:
       type: RepeatingPanel
     layout_properties: {full_width_row: true}
     name: flow_panel_1
-    properties: {}
+    properties:
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
     type: FlowPanel
   - components:
     - components:
