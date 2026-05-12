@@ -18,7 +18,7 @@ components_by_slot:
         background: ''
         foreground: ''
         items: [Biofuel/Biogas, Biomass, Building efficiency upgrades, Electro-mobility, Energy storage, Geothermal, Hydro, Hydrogen, Microgrid, Solar, Tidal/wave, Waste to energy, Wind]
-        placeholder: Project Type
+        placeholder: Technology
         width: 170px
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
     - event_bindings: {change: provinces_dd_change}

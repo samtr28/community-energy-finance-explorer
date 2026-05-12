@@ -32,13 +32,27 @@ class capital_explorer(capital_explorerTemplate):
   def form_show(self, **event_args):
     """Load data once on first show, and highlight the nav link."""
     self.layout.reset_links()
+    self._setup_dropdown_formatters()
     self.layout.capital_nav.role = 'selected'
-
+    
     if not self._filters_loaded:
       self._filters_loaded = True
       self.apply_filters()
 
-
+  #=====================DROPDOWN SETUP=========================
+  def _setup_dropdown_formatters(self):
+    for dd in (
+      self.provinces_dd,
+      self.proj_types_dd,
+      self.stages_dd,
+      self.indig_owners_dd,
+      self.project_scale_dd,
+    ):
+      def make_formatter(label):
+        def format_selected_text(count, total):
+          return "TEST"  # hardcoded to confirm it's being called
+        return format_selected_text
+      dd.format_selected_text = make_formatter("TEST")
   # ==================== FILTER MANAGEMENT ====================
 
   def schedule_filter_update(self):
