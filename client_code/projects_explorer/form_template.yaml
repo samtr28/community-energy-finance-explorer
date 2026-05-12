@@ -45,7 +45,7 @@ components_by_slot:
         layout_properties: {expand: false, width: null}
         name: indig_owners_dd
         properties:
-          items: [Wholly Indigenous owned (100%), Majority Indigenous owned (51-99%), Half Indigenous owned (50%), Minority Indigenous owned (1-49%), No Indigenous ownership]
+          items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
           placeholder: Indigenous Ownership
         type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
       - data_bindings: []

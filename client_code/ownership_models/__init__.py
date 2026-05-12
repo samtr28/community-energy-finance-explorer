@@ -103,7 +103,6 @@ class ownership_models(ownership_modelsTemplate):
   # ==================== FILTER HELPERS ====================
 
   def _get_filter_kwargs(self):
-    """Returns only the filters that have values set, as server kwargs."""
     kwargs = {}
     if self.provinces_dd.selected:
       kwargs['provinces'] = self.provinces_dd.selected
@@ -112,7 +111,21 @@ class ownership_models(ownership_modelsTemplate):
     if self.stages_dd.selected:
       kwargs['stages'] = self.stages_dd.selected
     if self.indig_owners_dd.selected:
-      kwargs['indigenous_ownership'] = self.indig_owners_dd.selected
+      INDIG_MAP = {
+        'Majority owned (51-100%)': [
+          'Wholly Indigenous owned (100%)',
+          'Majority Indigenous owned (51-99%)',
+        ],
+        'Minority owned (1-50%)': [
+          'Half Indigenous owned (50%)',
+          'Minority Indigenous owned (1-49%)',
+        ],
+        'No Indigenous ownership': ['No Indigenous ownership'],
+      }
+      expanded = []
+      for selection in self.indig_owners_dd.selected:
+        expanded.extend(INDIG_MAP.get(selection, [selection]))
+      kwargs['indigenous_ownership'] = expanded
     if self.project_scale_dd.selected:
       kwargs['project_scale'] = self.project_scale_dd.selected
     return kwargs
