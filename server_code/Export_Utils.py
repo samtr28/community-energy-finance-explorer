@@ -107,7 +107,7 @@ BANNER_BG_COLOR     = '#f0f0f0'
 LEFT_MARGIN         = 30           # px from left edge
 BANNER_TOP_PAD      = 24           # px from top of banner to first line
 LINE_SPACING        = 12           # px between each text line
-BANNER_BOTTOM_PAD   = 20           # px below last line before chart padding
+BANNER_BOTTOM_PAD   = 30           # px below last line before chart padding
 
 # ── Chart title ──
 TITLE_TEXT_SIZE     = 45           # pt
@@ -333,7 +333,7 @@ def add_logo_and_filters_pil(img_bytes, active_filters, chart_title=''):
   today_str = f"{today.strftime('%B')} {today.day}, {today.year}"
   draw.text(
     (LEFT_MARGIN, cursor_y),
-    f'Survey-based data downloaded on {today_str}',
+    f'Survey-based data downloaded on {today_str}. All amounts in CAD.',
     fill=SUBTITLE_COLOR,
     font=font_subtitle
   )
