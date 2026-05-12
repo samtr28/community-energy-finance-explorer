@@ -101,10 +101,14 @@ components_by_slot:
         text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'OGQWNK,UKQJNA'}
+    - layout_properties: {grid_position: 'OGQWNK,UKQJNA ROLAJL,QVEOWJ'}
       name: spacer_1
       properties: {}
       type: Spacer
+    - layout_properties: {full_width_row: true, grid_position: 'OGQWNK,UKQJNA MKRZNG,XKYRWN'}
+      name: button_1
+      properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - components: []
       layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS XVIDZN,VSNBFN'}
       name: rich_text_1
