@@ -644,6 +644,12 @@ def create_bottleneck_lollipop_internal(df):
   counts_df = (counts_df[counts_df['bottleneck'].isin(BOTTLENECKS_TO_SHOW)]
     .sort_values('count', ascending=True))
 
+  # ── Guard: no bottleneck data for current filters ──
+  if counts_df.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No data available for selected filters'))
+    return fig
+
   bottlenecks = counts_df['bottleneck'].tolist()
   counts      = counts_df['count'].tolist()
   y_pos       = list(range(len(bottlenecks)))

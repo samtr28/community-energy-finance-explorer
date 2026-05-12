@@ -82,9 +82,10 @@ components_by_slot:
         margin: ['0', null, '0', null]
         role: 'horizontal-repeater '
       type: RepeatingPanel
-    layout_properties: {full_width_row: true}
-    name: flow_panel_1
-    properties: {}
+    data_bindings: []
+    layout_properties: {full_width_row: true, row_background: ''}
+    name: selected_panel
+    properties: {visible: true}
     type: FlowPanel
   - components:
     - layout_properties: {full_width_row: true, grid_position: 'FBOOFI,SRCHLZ'}

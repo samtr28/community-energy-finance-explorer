@@ -21,6 +21,9 @@ class capital_explorer(capital_explorerTemplate):
     self._initializing = True
     self._filters_loaded = False
 
+
+    self._setup_dropdown_formatters()  # before pre-selecting
+
     # Set default project scale selection
     self.project_scale_dd.selected = [
       "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
@@ -39,7 +42,7 @@ class capital_explorer(capital_explorerTemplate):
       self._filters_loaded = True
       self.apply_filters()
 
-  #=====================DROPDOWN SETUP=========================
+    #=====================DROPDOWN SETUP=========================
   def _setup_dropdown_formatters(self):
     for dd in (
       self.provinces_dd,
@@ -50,9 +53,9 @@ class capital_explorer(capital_explorerTemplate):
     ):
       def make_formatter(label):
         def format_selected_text(count, total):
-          return "TEST"  # hardcoded to confirm it's being called
+          return label
         return format_selected_text
-      dd.format_selected_text = make_formatter("TEST")
+      dd.format_selected_text = make_formatter(dd.placeholder)
   # ==================== FILTER MANAGEMENT ====================
 
   def schedule_filter_update(self):
@@ -132,15 +135,17 @@ class capital_explorer(capital_explorerTemplate):
     chips = []
     mappings = [
       (self.provinces_dd.selected,       'provinces',           'Province'),
-      (self.proj_types_dd.selected,      'proj_types',          'Project Type'),
+      (self.proj_types_dd.selected,      'proj_types',          'Technology'),
       (self.stages_dd.selected,          'stages',              'Stage'),
-      (self.indig_owners_dd.selected,    'indigenous_ownership','Indigenous'),
+      (self.indig_owners_dd.selected,    'indigenous_ownership','Indigenous Ownership'),
       (self.project_scale_dd.selected,   'project_scale',       'Scale'),
     ]
     for selected, filter_type, label in mappings:
       for value in (selected or []):
         chips.append({'text': f'{label}: {value}', 'tag': (filter_type, value)})
     return chips
+
+
 
 
   # ==================== CHART LOADING ====================
