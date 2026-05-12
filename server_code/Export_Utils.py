@@ -122,7 +122,7 @@ SUBTITLE_COLOR      = '#444444'
 # If the full line exceeds the available width it wraps:
 #   Line 1: "Filters applied —"
 #   Line 2+: each filter on its own indented line
-FILTER_SIZE         = 18           # pt
+FILTER_SIZE         = 26           # pt
 FILTER_TEXT_COLOR   = '#1a1a1a'
 FILTER_SEPARATOR    = '   |   '    # separator between entries on the same line
 
@@ -133,7 +133,7 @@ STRIP_PADDING       = 20           # px inside strip
 BOTTOM_STRIP_HEIGHT = LOGO_MAX_HEIGHT + STRIP_PADDING * 2
 
 SOURCE_TEXT         = 'Source: Community Energy Finance Navigator, University of Victoria'
-SOURCE_TEXT_SIZE    = 20           # pt
+SOURCE_TEXT_SIZE    = 26           # pt
 SOURCE_TEXT_COLOR   = '#444444'
 
 

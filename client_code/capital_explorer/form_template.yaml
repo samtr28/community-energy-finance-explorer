@@ -1,7 +1,7 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {width: null}
+    - layout_properties: {width: 67.1}
       name: filter_heading
       properties:
         bold: true
@@ -72,18 +72,10 @@ components_by_slot:
     properties: {}
     type: Timer
   - components:
-    - layout_properties: {width: null}
-      name: filter_heading_copy
-      properties:
-        bold: false
-        font_size: 12
-        italic: false
-        scale: small
-        spacing:
-          margin: [null, 0.1%, null, null]
-        style: title
-        text: 'Selected: '
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {}
+      name: text_5
+      properties: {scale: small, text: 'Selected:'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {expand: false, width: null}
       name: filter_chips_panel
       properties:
@@ -93,20 +85,61 @@ components_by_slot:
       type: RepeatingPanel
     layout_properties: {full_width_row: true, row_background: ''}
     name: flow_panel_1
-    properties: {}
+    properties:
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
     type: FlowPanel
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'FQORXB,CCHLQW'}
-      name: heading_1
+    - layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS YVMKWW,SDCPWU'}
+      name: heading_4
       properties:
         background_color: ''
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: How is capital flowing into community energy?
+        text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'YVVNEY,DCCOIC'}
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS LDVOWP,VCFBUS'}
+      name: rich_text_1
+      properties:
+        content: |-
+          <p>Community energy projects often rely on more than one source of capital. A project may combine grants, loans, community investment, owner contributions, partner funding, and other financing mechanisms to reach full project cost. These combinations are often hard to see because financing information is scattered across announcements, reports, funding programs, and project documents.</p>
+
+          <p>The Capital Explorer makes this information easier to understand by showing the <b>capital stacks</b> behind community energy projects in the current dataset. Use this page to explore what sources of capital are being used, how financing mixes vary across different kinds of projects, and where common financing challenges appear.</p>
+
+          <p><b>Use the filters</b> to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. The charts update as you filter, helping you explore patterns that are most relevant to your community, organization, or research question.</p>
+        font_size: 18
+        format: restricted_html
+      type: RichText
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: heading_6
+          properties: {bold: true, scale: medium, style: title, text: Key terms used on this page}
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_2
+          properties:
+            content: |-
+              <p><strong>Capital stack:</strong> the mix of funding sources that add up to the total project cost.</p>
+              <p><strong>Capital source:</strong> where the money comes from, such as government programs, bank or non-bank lenders, investors, community members, owners, or partners.</p>
+              <p><strong>Financing category:</strong> a broad grouping of capital, such as grants, debt, community financing, external equity, or internal capital.</p>
+              <p><strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.</p>
+              <p><strong>Total project cost:</strong> the full capital cost of the project deployed through the construction phase until the project becomes operational. This is different from annual operating costs.</p>
+            format: restricted_html
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_2
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'AFATQN,EBSGWX'}
+      name: card_2
+      properties: {background_color: 'theme:Tertiary Overlay 1'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'OBBGHT,BGQROO'}
       name: image_1
       properties:
         height: 1vh
@@ -114,43 +147,27 @@ components_by_slot:
         margin: ['0', null, '4', null]
         source: ' _/theme/dots.png'
       type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,YDSMDU CLEADG,BSSISH'}
-      name: text_1
-      properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: lollipop_chart
-          properties: {height: 30vh}
-          type: Plot
-        - event_bindings: {click: download_bottleneck_btn_click}
-          layout_properties: {slot: card-content-container-slot}
-          name: download_bottleneck_btn
-          properties:
-            align: right
-            background_color: theme:Primary Overlay 3
-            font_size: 14
-            icon: mi:download
-            icon_color: theme:On Primary Container
-            icon_size: 16
-            spacing:
-              margin: ['2', null, '0', null]
-              padding: [null, '16', null, null]
-            text: Download
-            text_color: theme:On Primary Container
-          type: form:dep_9kcxnwm3upyjd:_Components.Button
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_1
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'JDUVTD,YDSMDU SRQTND,VEBNBB'}
-      name: card_1
+    - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,YDSMDU LZMJGC,OZUFAD'}
+      name: heading_1
       properties:
-        background_color: theme:Secondary Overlay
+        background_color: ''
+        font_family: serif
         spacing:
-          margin: ['20', null, null, null]
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
+          margin: ['', null, null, null]
+        text: What types of capital are enabling community energy projects?
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,YDSMDU NOXRZV,XHPZWX'}
+      name: sankey_text
+      properties:
+        font_size: 16
+        text: |-
+          This chart shows how specific sources of capital flow to various energy technologies through different categories of financial instruments and other funding mechanisms. It helps reveal the pathways through which projects in the current filtered view are being financed.
+
+          The left side shows where capital comes from, such as government grants, commercial banks, community bond issuances, co-op shares, owner contributions, or partner investments. The middle groups those sources into broader financing categories, such as grants and non-repayable contributions, debt financing, community financing, etc. The right side shows the technologies supported by those financing categories.
+
+          The width of each connection represents the relative amount of capital in the current filtered view. Use this chart to see which sources and categories are playing the largest role for the projects you are exploring. Keep in mind the landscape of capital flows will shift as you apply various filters.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,WPOENU KHHXJQ,KAKWQQ'}
       name: capital_flow_plot
       properties:
@@ -173,6 +190,80 @@ components_by_slot:
         text: Download
         text_color: theme:On Primary Container
       type: form:dep_9kcxnwm3upyjd:_Components.Button
+    - layout_properties: {full_width_row: true, grid_position: 'ARJUBF,ETAEMC'}
+      name: image_6
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['0', null, '4', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'NIBPDH,UAOITW AARJWO,EHLVLC'}
+      name: heading_5
+      properties:
+        background_color: ''
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: What financing challenges are projects facing?
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'NIBPDH,UAOITW NPKFRS,RRGCKI'}
+      name: text_1
+      properties:
+        font_size: 16
+        text: |-
+          This panel shows common financing challenges reported by project teams in the current filtered view. These bottlenecks can help communities prepare for early conversations with funders and partners. They can also help policymakers, lenders, and intermediaries identify where better support may be needed.
+
+          Note: These are self-reported signals from participating projects and will evolve as the dataset grows.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: lollipop_chart
+          properties:
+            height: 30vh
+            margin: ['0', null, '0', null]
+          type: Plot
+        - event_bindings: {click: download_bottleneck_btn_click}
+          layout_properties: {slot: card-content-container-slot}
+          name: download_bottleneck_btn
+          properties:
+            align: right
+            background_color: theme:Primary Overlay 3
+            font_size: 14
+            icon: mi:download
+            icon_color: theme:On Primary Container
+            icon_size: 16
+            spacing:
+              margin: ['2', null, '0', null]
+              padding: [null, '16', null, null]
+            text: Download
+            text_color: theme:On Primary Container
+          type: form:dep_9kcxnwm3upyjd:_Components.Button
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_1
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'NIBPDH,JDOFXB'}
+      name: card_1
+      properties:
+        background_color: theme:Secondary Overlay
+        spacing:
+          margin: ['8', null, null, null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'NIBPDH,SHLDIL'}
+      name: spacer_2
+      properties: {}
+      type: Spacer
+    - layout_properties: {full_width_row: true, grid_position: 'WOTYEE,NYQLFQ'}
+      name: image_2
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['0', null, '8', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'CMUXYT,KJAPDR'}
       name: heading_3
       properties:
@@ -182,35 +273,32 @@ components_by_slot:
         text: How does a project's size affect its capital stack?
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,OYCAXX FULAPL,LYCMCX'}
-      name: image_2
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['0', null, '8', null]
-        source: ' _/theme/dots.png'
-      type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,OYCAXX RXFAGM,RQVHMT'}
+    - layout_properties: {full_width_row: true, grid_position: 'MZAOOB,OYCAXX'}
       name: text_2
-      properties: {text: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'}
+      properties:
+        font_size: 16
+        text: |
+          This section shows how financing mixes vary across projects of different cost ranges. Project cost is used here as a practical way to understand scale (instead of capacity by MW) because it applies across many kinds of community energy projects, including generation, storage, efficiency, and heating projects.
+
+          Use this view to explore whether smaller, medium, and larger projects tend to rely on different combinations of grants, debt, community financing, equity, or internal capital. This can help project teams understand what financing patterns appear in projects at a similar scale and can help funders see where different types of capital may be most important.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'MZAOOB,TWQNLB'}
+    - layout_properties: {grid_position: 'MZAOOB,TWQNLB ZHXCZE,EDIZXE'}
       name: spacer_1
       properties: {}
       type: Spacer
-    - layout_properties: {full_width_row: true, grid_position: 'FAPPMP,MGPCJP'}
-      name: scale_pies_plot
-      properties:
-        height: 45vh
-        margin: ['8', null, '4', null]
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'WRUGTS,PNLVSM'}
+    - layout_properties: {grid_position: 'MZAOOB,TWQNLB XXGKNZ,TJOUVY'}
       name: text_3
       properties:
         text: |-
           Total Funding
           Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'FAPPMP,MGPCJP'}
+      name: scale_pies_plot
+      properties:
+        height: 45vh
+        margin: ['8', null, '4', null]
+      type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'WRUGTS,NMSJXK'}
       name: text_4
       properties:
@@ -471,11 +559,11 @@ components_by_slot:
         text: Download
         text_color: theme:On Primary Container
       type: form:dep_9kcxnwm3upyjd:_Components.Button
-    layout_properties: {full_width_row: true}
+    layout_properties: {}
     name: column_panel_1
     properties:
       col_spacing: large
-      col_widths: '{"YDSMDU":20,"WPOENU":40,"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"PWAGAM":40,"JGWTSW":20,"ZHQPHM":25,"OYCAXX":40,"TWQNLB":20}'
+      col_widths: '{"YDSMDU":20,"WPOENU":40,"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"PWAGAM":40,"JGWTSW":20,"ZHQPHM":25,"OYCAXX":40,"TWQNLB":20,"UAOITW":25,"SHLDIL":20,"JDOFXB":35,"CMBKUS":35,"EBSGWX":25}'
       spacing:
         padding: ['0', null, null, null]
       spacing_above: medium

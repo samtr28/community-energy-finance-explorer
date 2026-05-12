@@ -1391,3 +1391,8 @@ footer a, .footer .anvil-component {
 html {
   overflow-y: scroll;
 }
+
+.ae-chip {
+  font-size: 12px !important;
+  height: 25px !important;
+}

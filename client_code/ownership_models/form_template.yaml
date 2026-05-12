@@ -1,7 +1,7 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {width: null}
+    - layout_properties: {width: 64.1}
       name: filter_heading_copy_2
       properties:
         bold: true
@@ -65,16 +65,10 @@ components_by_slot:
         margin: [null, null, '0', null]
     type: FlowPanel
   - components:
-    - layout_properties: {width: 49.1333}
-      name: filter_heading_copy
-      properties:
-        bold: true
-        scale: small
-        spacing:
-          margin: [null, 0.1%, null, null]
-        style: title
-        text: 'Selected: '
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {}
+      name: text_5
+      properties: {scale: small, text: 'Selected:'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {expand: true, width: null}
       name: filter_chips_panel
       properties:
@@ -85,7 +79,11 @@ components_by_slot:
     data_bindings: []
     layout_properties: {full_width_row: true, row_background: ''}
     name: selected_panel
-    properties: {visible: true}
+    properties:
+      spacing:
+        margin: ['0', null, '0', null]
+      vertical_align: middle
+      visible: true
     type: FlowPanel
   - components:
     - layout_properties: {full_width_row: true, grid_position: 'FBOOFI,SRCHLZ'}

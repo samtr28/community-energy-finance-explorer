@@ -348,10 +348,13 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   cat_order     = get_category_order(df_capital_filtered)
   cat_order_rev = list(reversed(cat_order))
 
-  # ── Build all charts and apply the display template to each ──
+    # ── Build all charts and apply the display template to each ──
+  sankey_fig = apply_display_template(create_sankey_internal(df_capital_no_proj_filter, proj_types))
+  sankey_fig.update_layout(margin=dict(t=80)) 
+
   return {
     'time_chart':         apply_display_template(create_time_chart_internal(df_capital_filtered,       cat_order)),
-    'sankey':             apply_display_template(create_sankey_internal(df_capital_no_proj_filter,     proj_types)),
+    'sankey':             sankey_fig,
     'stacked_bar':        apply_display_template(create_stacked_bar_internal(df_capital_filtered,      cat_order_rev)),
     'box_plot':           apply_display_template(create_box_plot_internal(df_raw_filtered,             cat_order_rev)),
     'bottleneck_chart':   apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
@@ -545,8 +548,40 @@ def create_sankey_internal(df, proj_types=None):
     textfont=dict(color=FONT_COLOR, family=FONT_FAMILY, size=FONT_SIZE, weight='bold')
   )])
   fig.update_layout(
-    margin=dict(l=0, r=0, b=10),
-    title=dict(text='Capital flow: Source → Category → Project type'),
+    margin=dict(l=0, r=0, b=10, t=0),  # increase t to make room for headers
+    title=dict(
+      text='The Landscape of Community Energy Finance in Canada',
+      x=0,        # 0=left, 0.5=center, 1=right
+      y=1,     # 0=bottom, 1=top — adjust this to move up/down
+      xanchor='left',
+      yanchor='top',
+    ),
+    annotations=[
+      dict(
+        text='<u>SOURCES & INTERMEDIARIES</u>',
+        x=0, y=1.02,
+        xref='paper', yref='paper',
+        xanchor='left', yanchor='bottom',
+        showarrow=False,
+        font=dict(family=FONT_FAMILY, size=13, color='#888888', weight='bold'),
+      ),
+      dict(
+        text='<u>INSTRUMENTS/MECHANISMS</u>',
+        x=0.5, y=1.02,
+        xref='paper', yref='paper',
+        xanchor='center', yanchor='bottom',
+        showarrow=False,
+        font=dict(family=FONT_FAMILY, size=13, color='#888888', weight='bold'),
+      ),
+      dict(
+        text='<u>ENERGY TECHNOLOGIES</u>',
+        x=1, y=1.02,
+        xref='paper', yref='paper',
+        xanchor='right', yanchor='bottom',
+        showarrow=False,
+        font=dict(family=FONT_FAMILY, size=13, color='#888888', weight='bold'),
+      ),
+    ],
   )
   return fig
 
