@@ -182,25 +182,7 @@ class capital_explorer(capital_explorerTemplate):
     self.lollipop_chart.figure    = all_charts['bottleneck_chart']
     self.bubble_plot.figure       = all_charts['treemap']
     self.scale_pies_plot.figure   = all_charts['scale_pies']
-    self.circle_pack_plot.figure = all_charts['circle_pack']
-
-    # ── Indicators ──
-    indicators = all_charts['indicators']
-
-    self.debt_interest.text  = indicators['debt']['interest']
-    self.debt_repayment.text = indicators['debt']['repayment']
-    self.debt_type.text      = indicators['debt']['type']
-    self.debt_source.text    = indicators['debt']['source']
-
-    # Uncomment when equity/grants/community/crowdfunding cards are added:
-    # self.equity_type.text          = indicators['equity']['type']
-    # self.equity_source.text        = indicators['equity']['source']
-    # self.grants_type.text          = indicators['grants']['type']
-    # self.grants_source.text        = indicators['grants']['source']
-    # self.community_type.text       = indicators['community_finance']['type']
-    # self.community_source.text     = indicators['community_finance']['source']
-    # self.crowdfund_type.text       = indicators['crowdfunding']['type']
-    # self.crowdfund_source.text     = indicators['crowdfunding']['source']
+    self.alt_financing_bar_plot.figure = all_charts['alt_financing_bar']
 
 
   # ==================== CHART DOWNLOAD ====================
@@ -215,7 +197,7 @@ class capital_explorer(capital_explorerTemplate):
       'bottleneck_chart': self.lollipop_chart,
       'treemap':          self.bubble_plot,
       'scale_pies':       self.scale_pies_plot,
-      'circle_pack':      self.circle_pack_plot
+      'alt_financing_bar': self.alt_financing_bar_plot,
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):
@@ -250,5 +232,9 @@ class capital_explorer(capital_explorerTemplate):
   def download_pies_btn_click(self, **event_args):
     self._download_chart('scale_pies', button=self.download_pies_btn)
 
-  def download_circle_pack_btn_click(self, **event_args):
-    self._download_chart('circle_pack', button=self.download_circle_pack_btn)
+  def download_alt_financing_bar_btn_click(self, **event_args):
+    self._download_chart('alt_financing_bar', button=self.download_alt_financing_bar_btn)
+
+  def info_btn_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass
