@@ -332,17 +332,10 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   if df_capital_filtered.empty:
     empty_fig = go.Figure()
     empty_fig.update_layout(title=dict(text='No data available for selected filters'))
-    empty_ind = {
-      'equity':           {'type': 'N/A', 'source': 'N/A'},
-      'debt':             {'interest': 'N/A', 'repayment': 'N/A', 'type': 'N/A', 'source': 'N/A'},
-      'grants':           {'type': 'N/A', 'source': 'N/A'},
-      'community_finance':{'type': 'N/A', 'source': 'N/A'},
-      'crowdfunding':     {'type': 'N/A', 'source': 'N/A'},
-    }
     return {k: empty_fig for k in [
       'box_plot', 'sankey', 'time_chart', 'stacked_bar',
-      'bottleneck_chart', 'treemap', 'scale_pies', 'circle_pack',
-    ]} | {'indicators': empty_ind}
+      'bottleneck_chart', 'treemap', 'scale_pies', 'alt_financing_bar',
+    ]}
 
   # ── Category order — computed once, reused across charts ──
   cat_order     = get_category_order(df_capital_filtered)
@@ -360,8 +353,7 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     'bottleneck_chart':   apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
     'treemap':            apply_display_template(create_treemap_internal(df_raw_filtered)),
     'scale_pies':         apply_display_template(create_scale_pies_internal(df_capital_filtered)),
-    'circle_pack':        apply_display_template(create_circle_pack_internal(df_raw_filtered)), 
-    'indicators':         calculate_indicators_internal(df_capital_filtered),
+    'alt_financing_bar': apply_display_template(create_alt_financing_bar_internal(df_raw_filtered)),
   }
 
 
@@ -402,7 +394,7 @@ def create_box_plot_internal(df, category_order):
     xaxis=dict(tickangle=20, linecolor='grey', showline=True),
     yaxis=dict(ticksuffix='%', linecolor='grey', showline=True),
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Average contribution of each financing source to total project costs'),
+    title=dict(text='Typical Share of Project Costs by Capital Source'),
   )
   return fig
 
@@ -430,7 +422,7 @@ def create_time_chart_internal(df, category_order):
     xaxis=dict(visible=False),
     yaxis=dict(showticklabels=False),
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Average time to funding'),
+    title=dict(text='Average Time to Secure Funding'),
   )
   return fig
 
@@ -651,7 +643,7 @@ def create_stacked_bar_internal(df, category_order):
     xaxis=dict(visible=False),
     yaxis=dict(categoryorder='array', categoryarray=list(reversed(group_order))),
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Funding sources by category'),
+    title=dict(text='Sources of Capital Within Each Financing Category'),
   )
   return fig
 
@@ -832,7 +824,7 @@ def create_treemap_internal(df):
 
   fig.update_layout(
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Use of funding & financing mechanisms'),
+    title=dict(text='Common Financing Mechanisms in the Dataset'),
     updatemenus=[dict(
       type='buttons',
       direction='left',
@@ -977,13 +969,37 @@ def create_scale_pies_internal(df):
   return fig
 
 
-def create_circle_pack_internal(df):
+def create_alt_financing_bar_internal(df):
   """
-    Circle packing of alternative financing structures and support instruments.
-    Outer rings removed — source bubbles only, with floating category labels.
-    Pulled from financing_mech, filtered to two specific parent buckets.
-    """
-  import circlify  # local import — only needed for this chart
+  Horizontal stacked bar chart: project count per grouped financing category,
+  stacked by individual source/mechanism within each group.
+  Each data `category` is mapped to one of four display groups (so all
+  sources — including 'Other' and 'Don't know' — are included). Group base
+  colours come from COLOUR_MAPPING; subsegments within a group are shades of
+  that base colour. Source labels appear directly below each segment.
+  """
+  # Map each data category → display group (no more keyword matching on source)
+  CATEGORY_TO_GROUP = {
+    'Feed-in tariffs/power purchase agreements': 'Revenue support mechanisms',
+    'Loan guarantees/credit enhancements':       'Risk reduction & credit enhancement',
+    'Tax credits/accelerated depreciation':      'Tax & cost reduction incentives',
+    'Leasing/third-party ownership models':      'Delivery & ownership structures',
+    'Public Private Partnership (P3)':           'Delivery & ownership structures',
+  }
+
+  GROUP_TO_COLOUR_KEY = {
+    'Revenue support mechanisms':          'Feed-in tariffs/power purchase agreements',
+    'Risk reduction & credit enhancement': 'Loan guarantees/credit enhancements',
+    'Tax & cost reduction incentives':     'Tax credits/accelerated depreciation',
+    'Delivery & ownership structures':     'Leasing/third-party ownership models',
+  }
+
+  GROUP_ORDER = [
+    'Revenue support mechanisms',
+    'Risk reduction & credit enhancement',
+    'Tax & cost reduction incentives',
+    'Delivery & ownership structures',
+  ]
 
   if df.empty or 'financing_mech' not in df.columns:
     fig = go.Figure()
@@ -1000,204 +1016,100 @@ def create_circle_pack_internal(df):
     'Alternative financing structures and partnership models',
     'Financial support instruments',
   ]
-  sub = flat[flat['parent'].isin(parents_of_interest)]
+  sub = flat[flat['parent'].isin(parents_of_interest)].copy()
   if sub.empty:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No data for selected filters'))
     return fig
 
-  df_grouped = sub.groupby(['category', 'source'], as_index=False)['count'].sum()
+  # ── Map each row to a group based on its category ──
+  sub['group'] = sub['category'].map(CATEGORY_TO_GROUP)
+  sub = sub[sub['group'].notna()]
 
-  hierarchy = [{
-    'id': 'All',
-    'datum': df_grouped['count'].sum(),
-    'children': [
-      {
-        'id': cat,
-        'datum': g['count'].sum(),
-        'children': [{'id': r['source'], 'datum': r['count']} for _, r in g.iterrows()],
-      }
-      for cat, g in df_grouped.groupby('category')
-    ],
-  }]
+  # ── Drop "Don't know" sources ──
+  sub = sub[~sub['source'].astype(str).str.strip().str.lower().eq("don't know")]
 
-  circles = circlify.circlify(
-    hierarchy,
-    show_enclosure=False,
-    target_enclosure=circlify.Circle(x=0, y=0, r=1.7),
-  )
-
-  fallback_palette = ['#8dd3c7', '#ffffb3', '#bebada', '#fb8072', '#80b1d3',
-                      '#fdb462', '#b3de69', '#fccde5', '#d9d9d9', '#bc80bd']
-  cats = list(df_grouped['category'].unique())
-  category_colors = {
-    cat: COLOUR_MAPPING.get(cat, fallback_palette[i % len(fallback_palette)])
-    for i, cat in enumerate(cats)
-  }
-
-  SHRINK_INNER, LABEL_OFFSET = 0.75, 0.02
-  fig = go.Figure()
-
-  # Level 2 — category labels only (radially positioned, no background ring)
-  for circle in circles:
-    if circle.level != 2:
-      continue
-    category = circle.ex['id']
-
-    dx, dy = circle.x, circle.y
-    distance = math.sqrt(dx**2 + dy**2)
-    if distance < 0.01:
-      label_x, label_y, textposition = circle.x, circle.y + circle.r, 'top center'
-    else:
-      offset = circle.r + LABEL_OFFSET
-      label_x = circle.x + (dx / distance) * offset
-      label_y = circle.y + (dy / distance) * offset
-      angle = math.degrees(math.atan2(dy, dx))
-      if -22.5 <= angle < 22.5:               textposition = 'middle right'
-      elif 22.5 <= angle < 67.5:              textposition = 'top right'
-      elif 67.5 <= angle < 112.5:             textposition = 'top center'
-      elif 112.5 <= angle < 157.5:            textposition = 'top left'
-      elif angle >= 157.5 or angle < -157.5:  textposition = 'middle left'
-      elif -157.5 <= angle < -112.5:          textposition = 'bottom left'
-      elif -112.5 <= angle < -67.5:           textposition = 'bottom center'
-      else:                                    textposition = 'bottom right'
-
-    fig.add_trace(go.Scatter(
-      x=[label_x], y=[label_y],
-      mode='text',
-      text=f"<b>{wrap_text(category, width=20)}</b>",
-      textposition=textposition,
-      textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-      showlegend=False,
-      hoverinfo='skip',
-    ))
-
-  # Level 3 — source bubbles
-  for circle in circles:
-    if circle.level != 3:
-      continue
-    source = circle.ex['id']
-    count = circle.ex['datum']
-
-    parent_category = None
-    for c in circles:
-      if c.level == 2:
-        dist = ((circle.x - c.x)**2 + (circle.y - c.y)**2) ** 0.5
-        if dist < c.r:
-          parent_category = c.ex['id']
-          break
-
-    color = category_colors.get(parent_category, '#fdb462')
-    size = ((circle.r * SHRINK_INNER) ** 1.1) * 450
-
-    wrapped = wrap_text(source, width=15) if circle.r > 0.03 else ''
-    display_text = f"<b>{wrapped}<br>({count})</b>" if wrapped else ''
-
-    if circle.r > 0.25:   font_size = 14
-    elif circle.r > 0.2:  font_size = 12
-    elif circle.r > 0.15: font_size = 10
-    else:                 font_size = 9
-
-    # Always black text with white outline — readable on every bubble colour
-    fig.add_trace(go.Scatter(
-      x=[circle.x], y=[circle.y],
-      mode='markers+text',
-      marker=dict(size=size, color=color, opacity=0.9,
-                  line=dict(color='white', width=2)),
-      text=display_text,
-      textfont=dict(
-        family=FONT_FAMILY,
-        size=font_size,
-        color='black',
-        shadow='1px 1px 0 white, -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white',
-      ),
-      customdata=[[source, parent_category, count]],
-      hovertemplate='<br>'.join([
-        '<b>Mechanism:</b> %{customdata[0]}',
-        '<b>Category:</b> %{customdata[1]}',
-        '<b>Count:</b> %{customdata[2]}',
-      ]) + '<extra></extra>',
-      showlegend=False,
-    ))
-
-  fig.update_layout(
-    showlegend=False,
-    hovermode='closest',
-    margin=dict(l=0, r=0, b=0),
-    title=dict(text='Alternative financing structures & support instruments'),
-  )
-  fig.update_xaxes(visible=False, range=[-2.0, 2.0])
-  fig.update_yaxes(visible=False, scaleanchor='x', scaleratio=1, range=[-2.0, 2.0])
-  return fig
-
-# ==================== INDICATORS CALCULATION ====================
-
-def _top_source_and_mechanism(df, category_name):
-  """
-  Return the most common source and item_type for a given category
-  as '(X% of projects)' strings.
-  """
-  sub = df[df['category'] == category_name]
   if sub.empty:
-    return {'type': 'N/A', 'source': 'N/A'}
-  n           = sub['record_id'].nunique()
-  src_counts  = sub.groupby('source')['record_id'].nunique()
-  mech_counts = sub.groupby('item_type')['record_id'].nunique()
-  return {
-    'type':   f"{mech_counts.idxmax()} ({mech_counts.max() / n * 100:.0f}% projects)" if not mech_counts.empty else 'N/A',
-    'source': f"{src_counts.idxmax()} ({src_counts.max()   / n * 100:.0f}% projects)" if not src_counts.empty  else 'N/A',
-  }
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No data for selected filters'))
+    return fig
 
+  # Keep category in the aggregation so segments from different categories
+  # within the same group stay distinct (e.g. P3's "Other" vs Leasing's "Other")
+  df_grouped = sub.groupby(['group', 'category', 'source'], as_index=False)['count'].sum()
 
-def calculate_indicators_internal(df):
-  """
-  Calculate summary indicators for each financing category.
-  Debt additionally includes average interest rate and most common repayment period.
-  """
-  results = {
-    'equity':           _top_source_and_mechanism(df, 'External equity investments'),
-    'grants':           _top_source_and_mechanism(df, 'Grants & non-repayable contributions'),
-    'community_finance':_top_source_and_mechanism(df, 'Community financing'),
-    'crowdfunding':     _top_source_and_mechanism(df, 'Crowdfunding'),
-  }
+  # ── Shades start at base colour and lighten toward white; single segment keeps base ──
+  def generate_shades(base_color, n):
+    if not base_color or not base_color.startswith('#'):
+      base_color = '#808080'
+    if n == 1:
+      return [base_color]
+    r, g, b = int(base_color[1:3],16), int(base_color[3:5],16), int(base_color[5:7],16)
+    shades = []
+    for i in range(n):
+      # i=0 → base colour, i=n-1 → lightened by ~55% toward white
+      amount = 0.55 * i / (n - 1)
+      nr = int(r + (255 - r) * amount)
+      ng = int(g + (255 - g) * amount)
+      nb = int(b + (255 - b) * amount)
+      shades.append(f'#{nr:02x}{ng:02x}{nb:02x}')
+    return shades
 
-  debt_df = df[df['category'] == 'Debt financing']
-  if debt_df.empty:
-    results['debt'] = {'interest': 'N/A', 'repayment': 'N/A', 'type': 'N/A', 'source': 'N/A'}
-  else:
-    n = debt_df['record_id'].nunique()
+  groups_with_data = [g for g in GROUP_ORDER if g in df_grouped['group'].values]
 
-    def parse_rate(s):
-      if pd.isna(s): return np.nan
-      s = str(s).strip().replace('%', '')
-      if '-' in s:
-        try: return sum(float(x) for x in s.split('-')) / 2
-        except: return np.nan
-      try: return float(s)
-      except: return np.nan
+  traces = []
+  annotations = []
 
-    rates        = debt_df[debt_df['debt_interest'].notna()]['debt_interest'].apply(parse_rate).dropna()
-    avg_interest = f'{rates.mean():.1f}%' if not rates.empty else 'N/A'
+  for grp in groups_with_data:
+    grp_data = df_grouped[df_grouped['group'] == grp].sort_values('count', ascending=False)
 
-    rep = debt_df[debt_df['repayment_period'].notna()]
-    if rep.empty:
-      repayment_text = 'N/A'
-    else:
-      rep_counts     = rep.groupby('repayment_period')['record_id'].nunique()
-      repayment_text = f"{rep_counts.idxmax()} ({rep_counts.max() / n * 100:.0f}% projects)"
+    colour_key = GROUP_TO_COLOUR_KEY.get(grp, grp)
+    base       = COLOUR_MAPPING.get(colour_key, '#808080')
+    shades     = generate_shades(base, len(grp_data))
 
-    debt_base       = _top_source_and_mechanism(df, 'Debt financing')
-    results['debt'] = {
-      'interest':  avg_interest,
-      'repayment': repayment_text,
-      'type':      debt_base['type'],
-      'source':    debt_base['source'],
-    }
+    cumulative = 0
+    for i, (_, row) in enumerate(grp_data.iterrows()):
+      color    = shades[i]
+      x_middle = cumulative + row['count'] / 2
+      cumulative += row['count']
 
-  return results
+      # Include category in hover so 'Other' (which can appear in multiple categories) is disambiguated
+      hover = (f"<b>{row['source']}</b>"
+               f"<br>Category: {row['category']}"
+               f"<br>Count: %{{x}}<extra></extra>")
 
+      traces.append(go.Bar(
+        name=row['source'],
+        y=[grp],
+        x=[row['count']],
+        orientation='h',
+        marker=dict(color=color),
+        hovertemplate=hover,
+        showlegend=False,
+      ))
 
+      # Source label directly below the segment
+      annotations.append(dict(
+        x=x_middle, y=grp,
+        yshift=-22,
+        text=wrap_text(row['source'], width=20),
+        showarrow=False,
+        xanchor='center', yanchor='top',
+        font=dict(family=FONT_FAMILY, size=10, color=FONT_COLOR),
+      ))
 
+  fig = go.Figure(data=traces)
+  fig.update_layout(
+    barmode='stack',
+    bargap=0.45,
+    showlegend=False,
+    annotations=annotations,
+    xaxis=dict(title='Number of projects', linecolor='grey', showline=True, tickformat='d'),
+    yaxis=dict(categoryorder='array', categoryarray=list(reversed(groups_with_data))),
+    margin=dict(l=0, r=0, b=40, t=40),
+    title=dict(text='Alternative structures and support mechanisms reported by projects'),
+  )
+  return fig
 # ==================== EXPORT CALLABLE ====================
 
 @anvil.server.callable
