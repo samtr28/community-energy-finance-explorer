@@ -6,28 +6,19 @@ components_by_slot:
     properties: {}
     type: Timer
   - components:
-    - components:
-      - layout_properties: {width: null, x: 2.23333740234375, y: 0}
-        name: heading_4
-        properties:
-          background_color: ''
-          bold: true
-          font_family: serif
-          spacing:
-            margin: ['', null, null, null]
-          text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
-          text_color: ''
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {width: null, x: 211.33331298828125, y: 70.03335571289062}
-        name: image_1
-        properties: {display_mode: fill_width, height: 156.95001220703125, horizontal_align: right, source: _/theme/Graphics/IM-Banner-Illustration-1-Cropped.png}
-        type: Image
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS WOBXFV,SXELGS'}
-      name: graphic_panel
-      properties: {align: right, height: 189.1500244140625, role: null, width: null}
-      type: XYPanel
+    - layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS UILTEY,SMWCRF'}
+      name: heading_4
+      properties:
+        background_color: ''
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
+        text_color: ''
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components: []
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS LUHOMI,ABNTGU'}
+      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS UIQHTK,YGQCOV'}
       name: rich_text_1
       properties:
         content: |-
