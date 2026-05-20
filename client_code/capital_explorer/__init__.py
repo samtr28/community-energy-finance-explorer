@@ -42,6 +42,7 @@ class capital_explorer(capital_explorerTemplate):
       self._filters_loaded = True
       self.apply_filters()
 
+
     #=====================DROPDOWN SETUP=========================
   def _setup_dropdown_formatters(self):
     for dd in (

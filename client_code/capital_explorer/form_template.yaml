@@ -6,28 +6,28 @@ components_by_slot:
     properties: {}
     type: Timer
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'OGQWNK,TMICZW'}
-      name: heading_4
-      properties:
-        background_color: ''
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-        text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
-        text_color: ''
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'OGQWNK,UKQJNA ROLAJL,QVEOWJ'}
-      name: spacer_1
-      properties: {}
-      type: Spacer
-    - event_bindings: {}
-      layout_properties: {full_width_row: true, grid_position: 'OGQWNK,UKQJNA MKRZNG,XKYRWN'}
-      name: info_btn
-      properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Button
+    - components:
+      - layout_properties: {width: null, x: 2.23333740234375, y: 0}
+        name: heading_4
+        properties:
+          background_color: ''
+          bold: true
+          font_family: serif
+          spacing:
+            margin: ['', null, null, null]
+          text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
+          text_color: ''
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {width: null, x: 211.33331298828125, y: 70.03335571289062}
+        name: image_1
+        properties: {display_mode: fill_width, height: 156.95001220703125, horizontal_align: right, source: _/theme/Graphics/IM-Banner-Illustration-1-Cropped.png}
+        type: Image
+      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS WOBXFV,SXELGS'}
+      name: graphic_panel
+      properties: {align: right, height: 189.1500244140625, role: null, width: null}
+      type: XYPanel
     - components: []
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS'}
+      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS LUHOMI,ABNTGU'}
       name: rich_text_1
       properties:
         content: |-
@@ -37,6 +37,11 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
+    - event_bindings: {}
+      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX XAOOCW,JUDLEU'}
+      name: info_btn
+      properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -58,7 +63,7 @@ components_by_slot:
         name: card_content_container_2
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX'}
+      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX QKJDGK,CAGCBM'}
       name: card_2
       properties: {background_color: 'theme:Tertiary Overlay 1'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
@@ -560,11 +565,12 @@ components_by_slot:
     name: column_panel_1
     properties:
       col_spacing: large
-      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"CMBKUS":45,"EBSGWX":15,"TMICZW":45,"UKQJNA":15,"VSNBFN":30,"YDSMDU":23,"WPOENU":37,"YUFUIT":39,"HWNEMY":21,"GZOTWK":23,"EVBZRG":37,"HHCXEE":22,"RBQUVN":38}'
+      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"CMBKUS":40,"EBSGWX":20,"YDSMDU":23,"WPOENU":37,"YUFUIT":39,"HWNEMY":21,"GZOTWK":23,"EVBZRG":37,"HHCXEE":22,"RBQUVN":38}'
       spacing:
         padding: ['0', null, null, null]
       spacing_above: medium
       spacing_below: medium
+      wrap_on: tablet
     type: ColumnPanel
   title_slot:
   - components:
