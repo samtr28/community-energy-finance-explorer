@@ -75,7 +75,7 @@ def apply_display_template(fig):
 # ==================== EXPORT DECORATION ====================
 
 # ── Theme asset filenames (must match files in your Assets section) ──
-LOGO_ASSET     = 'Horizontal-IIH-Logomark-Full%20Colour-University-of-Victoria.png'
+LOGO_ASSET     = 'Horizontal-IIH-Acet-Lockup-Full-Colour.png'
 FONT_REGULAR   = 'DejaVuSans.ttf'
 FONT_BOLD_FILE = 'DejaVuSans-Bold.ttf'
 
@@ -128,7 +128,7 @@ FILTER_SEPARATOR    = '   |   '    # separator between entries on the same line
 
 # ── Bottom strip ──
 LOGO_MAX_HEIGHT     = 150          # px
-LOGO_MAX_WIDTH      = 500          # px
+LOGO_MAX_WIDTH      = 800          # px
 STRIP_PADDING       = 20           # px inside strip
 BOTTOM_STRIP_HEIGHT = LOGO_MAX_HEIGHT + STRIP_PADDING * 2
 
