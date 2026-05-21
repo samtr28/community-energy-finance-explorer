@@ -824,13 +824,13 @@ def create_treemap_internal(df):
 
   fig.update_layout(
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Common Financing Mechanisms in the Dataset'),
+    title=dict(text='Common Financing Mechanisms used by Survey Respondents'),
     updatemenus=[dict(
       type='buttons',
       direction='left',
       buttons=[
         dict(
-          label='By Project Count',
+          label='By Response Count',
           method='update',
           args=[{'visible': [True, False]}],
         ),
@@ -842,7 +842,7 @@ def create_treemap_internal(df):
       ],
       pad={'r': 10, 't': 10},
       showactive=True,
-      x=0.5, y=1.07,
+      x=0.65, y=1.07,
       xanchor='left', yanchor='top',
       bgcolor='rgba(255, 255, 255, 0.8)',
       bordercolor='gray',
@@ -1097,7 +1097,7 @@ def create_alt_financing_bar_internal(df):
     xaxis=dict(title='Number of projects', linecolor='grey', showline=True, tickformat='d'),
     yaxis=dict(categoryorder='array', categoryarray=list(reversed(groups_with_data))),
     margin=dict(l=0, r=0, b=20, t=40),
-    title=dict(text='Alternative structures and support mechanisms reported by projects'),
+    title=dict(text='Alternative structures and support mechanisms reported by respondents'),
   )
   return fig
 # ==================== EXPORT CALLABLE ====================
