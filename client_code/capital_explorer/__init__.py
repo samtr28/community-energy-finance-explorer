@@ -225,17 +225,12 @@ class capital_explorer(capital_explorerTemplate):
   def download_stacked_btn_click(self, **event_args):
     self._download_chart('stacked_bar', button=self.download_stacked_btn)
 
-  def download_bottleneck_btn_click(self, **event_args):
-    self._download_chart('bottleneck_chart', button=self.download_bottleneck_btn)
-
   def download_treemap_btn_click(self, **event_args):
     self._download_chart('treemap', button=self.download_treemap_btn)
 
   def download_pies_btn_click(self, **event_args):
     self._download_chart('scale_pies', button=self.download_pies_btn)
 
-  def download_alt_financing_bar_btn_click(self, **event_args):
-    self._download_chart('alt_financing_bar', button=self.download_alt_financing_bar_btn)
 
   def info_btn_click(self, **event_args):
     alert(
