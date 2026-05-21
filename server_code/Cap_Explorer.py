@@ -973,12 +973,9 @@ def create_alt_financing_bar_internal(df):
   """
   Horizontal stacked bar chart: project count per grouped financing category,
   stacked by individual source/mechanism within each group.
-  Each data `category` is mapped to one of four display groups (so all
-  sources — including 'Other' and 'Don't know' — are included). Group base
-  colours come from COLOUR_MAPPING; subsegments within a group are shades of
-  that base colour. Source labels appear directly below each segment.
+  Source labels render INSIDE each segment, wrapped to a fixed width; Plotly
+  then shrinks each label's font as needed so it fits its segment.
   """
-  # Map each data category → display group (no more keyword matching on source)
   CATEGORY_TO_GROUP = {
     'Feed-in tariffs/power purchase agreements': 'Revenue support mechanisms',
     'Loan guarantees/credit enhancements':       'Risk reduction & credit enhancement',
@@ -1022,11 +1019,8 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No data for selected filters'))
     return fig
 
-  # ── Map each row to a group based on its category ──
   sub['group'] = sub['category'].map(CATEGORY_TO_GROUP)
   sub = sub[sub['group'].notna()]
-
-  # ── Drop "Don't know" sources ──
   sub = sub[~sub['source'].astype(str).str.strip().str.lower().eq("don't know")]
 
   if sub.empty:
@@ -1034,11 +1028,8 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No data for selected filters'))
     return fig
 
-  # Keep category in the aggregation so segments from different categories
-  # within the same group stay distinct (e.g. P3's "Other" vs Leasing's "Other")
   df_grouped = sub.groupby(['group', 'category', 'source'], as_index=False)['count'].sum()
 
-  # ── Shades start at base colour and lighten toward white; single segment keeps base ──
   def generate_shades(base_color, n):
     if not base_color or not base_color.startswith('#'):
       base_color = '#808080'
@@ -1047,7 +1038,6 @@ def create_alt_financing_bar_internal(df):
     r, g, b = int(base_color[1:3],16), int(base_color[3:5],16), int(base_color[5:7],16)
     shades = []
     for i in range(n):
-      # i=0 → base colour, i=n-1 → lightened by ~55% toward white
       amount = 0.55 * i / (n - 1)
       nr = int(r + (255 - r) * amount)
       ng = int(g + (255 - g) * amount)
@@ -1055,11 +1045,19 @@ def create_alt_financing_bar_internal(df):
       shades.append(f'#{nr:02x}{ng:02x}{nb:02x}')
     return shades
 
+  def text_color_for(bg):
+    if not bg or not bg.startswith('#') or len(bg) < 7:
+      return '#000000'
+    r, g, b = int(bg[1:3],16), int(bg[3:5],16), int(bg[5:7],16)
+    luminance = 0.299 * r + 0.587 * g + 0.114 * b
+    return '#000000' if luminance > 150 else '#ffffff'
+
+  WRAP_WIDTH    = 14   # chars per line before wrapping (lower = more lines, larger font)
+  MAX_FONT_SIZE = 11   # starting size; Plotly shrinks from here to fit each segment
+
   groups_with_data = [g for g in GROUP_ORDER if g in df_grouped['group'].values]
 
   traces = []
-  annotations = []
-
   for grp in groups_with_data:
     grp_data = df_grouped[df_grouped['group'] == grp].sort_values('count', ascending=False)
 
@@ -1067,46 +1065,38 @@ def create_alt_financing_bar_internal(df):
     base       = COLOUR_MAPPING.get(colour_key, '#808080')
     shades     = generate_shades(base, len(grp_data))
 
-    cumulative = 0
     for i, (_, row) in enumerate(grp_data.iterrows()):
-      color    = shades[i]
-      x_middle = cumulative + row['count'] / 2
-      cumulative += row['count']
-
-      # Include category in hover so 'Other' (which can appear in multiple categories) is disambiguated
-      hover = (f"<b>{row['source']}</b>"
+      color = shades[i]
+      label = str(row['source'])
+      hover = (f"<b>{label}</b>"
                f"<br>Category: {row['category']}"
                f"<br>Count: %{{x}}<extra></extra>")
 
       traces.append(go.Bar(
-        name=row['source'],
+        name=label,
         y=[grp],
         x=[row['count']],
         orientation='h',
         marker=dict(color=color),
+        text=[wrap_text(label, width=WRAP_WIDTH)],
+        textposition='inside',
+        insidetextanchor='middle',
+        textangle=0,
+        constraintext='inside',     # shrink the label until it fits the segment
+        textfont=dict(family=FONT_FAMILY, size=MAX_FONT_SIZE, color=text_color_for(color)),
+        cliponaxis=False,
         hovertemplate=hover,
         showlegend=False,
-      ))
-
-      # Source label directly below the segment
-      annotations.append(dict(
-        x=x_middle, y=grp,
-        yshift=-22,
-        text=wrap_text(row['source'], width=20),
-        showarrow=False,
-        xanchor='center', yanchor='top',
-        font=dict(family=FONT_FAMILY, size=10, color=FONT_COLOR),
       ))
 
   fig = go.Figure(data=traces)
   fig.update_layout(
     barmode='stack',
-    bargap=0.45,
+    bargap=0.3,                     # taller bars = more vertical room = less shrinking
     showlegend=False,
-    annotations=annotations,
     xaxis=dict(title='Number of projects', linecolor='grey', showline=True, tickformat='d'),
     yaxis=dict(categoryorder='array', categoryarray=list(reversed(groups_with_data))),
-    margin=dict(l=0, r=0, b=40, t=40),
+    margin=dict(l=0, r=0, b=20, t=40),
     title=dict(text='Alternative structures and support mechanisms reported by projects'),
   )
   return fig

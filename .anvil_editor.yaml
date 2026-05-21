@@ -2,20 +2,22 @@ unique_ids:
   assets:
     DejaVuSans-Bold.ttf: '1777400753398373431716214.19666'
     DejaVuSans.ttf: '1777400740871340629690505.54535'
+    Graphics/.gitkeep: '1779295512426892375986595.3403'
+    Graphics/IM-Banner-Illustration-1-Cropped.png: '1779296589823362173751280.6799'
+    Graphics/IM-Banner-Illustration-1.png: '1779295547576228792668830.17114'
+    Graphics/IM-Banner-Illustration-2.png: '1779295556054547836090040.5679'
     Horizontal-IIH-Acet-Lockup-Full-Colour.png: '1770245699254140603233951.65796'
     Horizontal-IIH-Acet-Lockup-White.png: '1769112185971346020264990.6624'
     Horizontal-IIH-Logomark-Full Colour-University-of-Victoria.png: '1770248284061702468159622.2123'
     IIH-Logo-Full-Colour.png: '1769112913235107641138577.76625'
-    Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.jpg: '1770245821155623140851643.5996'
     Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.png: '1770245844165411634824895.68805'
     dots.png: '177750414279021197585278.63147'
     standard-page.html: AMRQPGN4FKJZSMF6IUKABS4PVWYQMRPN
-    temp_art.png: '1778615921880446269160451.93854'
-    temp_art1.png: '1778616655107462500877141.4779'
-    temp_art2.png: '1778622526170300078339161.15625'
     theme.css: RYJFBYC54SIFDOZOH4XE3WTHBNC2BN6R
   forms:
     Base: '1759257303177766465849800.5405'
+    InfoPopupCE: '1779385614107334816082553.2089'
+    InfoPopupOM: '177938916808432256991874.407448'
     capital_explorer: '1759257382142461333667580.44147'
     capital_explorer.FilterChip: '1763180691940860921476140.9812'
     case_studies: '1759257432947164284923829.942'

@@ -8,6 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import config
 from ..chart_export import download_chart
+from ..InfoPopupOM import InfoPopupOM
 
 
 class ownership_models(ownership_modelsTemplate):
@@ -195,6 +196,14 @@ class ownership_models(ownership_modelsTemplate):
       active_filters=self._get_active_filters(),
       server_callable='export_ownership_chart',
       button=button,
+    )
+
+  def info_btn_click(self, **event_args):
+    alert(
+      content=InfoPopupOM(),
+      title="How to use this page",
+      large=True,                     # wider modal — good for lots of text
+      buttons=[("Close", None)],      # single Close button
     )
 
   # ── Wire one handler per download button. Add buttons in the designer first,
