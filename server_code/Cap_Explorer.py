@@ -153,6 +153,7 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
   df[source_col] = df.apply(relabel, axis=1)
   return df
 
+
 # ==================== DATA FILTERING ====================
 
 def apply_filters(df, provinces=None, proj_types=None, stages=None,
