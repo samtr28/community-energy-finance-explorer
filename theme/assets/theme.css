@@ -637,7 +637,7 @@ body>div[data-notify="container"].alert-warning>span[data-notify="title"]{
 }
 
 button.close > span, button.close {
-  color:%color:On Background%;
+  color:%color:On Secondary Container%;
   text-shadow: 0 1px 0 %color:Background%;
 }
 

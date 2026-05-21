@@ -8,6 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .. import config
 from ..chart_export import download_chart
+from ..InfoPopupCE import InfoPopupCE
 
 
 class capital_explorer(capital_explorerTemplate):
@@ -237,5 +238,9 @@ class capital_explorer(capital_explorerTemplate):
     self._download_chart('alt_financing_bar', button=self.download_alt_financing_bar_btn)
 
   def info_btn_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    pass
+    alert(
+      content=InfoPopupCE(),
+      title="How to use this page",
+      large=True,                     # wider modal — good for lots of text
+      buttons=[("Close", None)],      # single Close button
+    )

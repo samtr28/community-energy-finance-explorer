@@ -1,0 +1,25 @@
+components:
+- layout_properties: {grid_position: 'FVHIDA,IUDDKC'}
+  name: rich_text_1
+  properties:
+    content: |-
+      <p><strong>Start with the filters</strong></p>
+      <p>The landing page gives you a good overview of project financing sources nationally, based on the current dataset. Use the filters to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. Every chart on this page updates based on your selections.</p>
+
+      <p><strong>Read the charts as a set</strong></p>
+      <p>Each chart shows the financing story from a different angle. Start with the big-picture capital pathways, then scroll down to see how financing mixes vary by project cost, which financing mechanisms appear most often, who provides capital within each category, how long funding takes, and how much each source typically contributes.</p>
+
+      <p><strong>Remember the default view</strong></p>
+      <p>Mega projects over $100M are excluded by default, because a small number of very large projects can dominate the totals and make other patterns harder to see. You can include them using the Project Cost filter — or, even better, check all other project types and look at mega projects as a separate category.</p>
+
+      <p><strong>Use this for learning, not ranking</strong></p>
+      <p>The charts are designed to help you explore patterns and ask better questions, such as: What financing mixes are common for projects like mine? What role do grants or community investment tend to play? Where might new financing mechanisms or partnerships be needed?</p>
+      <p>The visuals should not be read as a ranking of projects, technologies, communities, or financing sources.</p>
+
+      <p><strong>Interpret results as a pilot dataset</strong></p>
+      <p>Results reflect the projects currently included in the Navigator. As more project teams contribute data, the patterns may shift as they become more complete and more representative.</p>
+    font_size: 16
+    format: restricted_html
+  type: RichText
+container: {type: ColumnPanel}
+is_package: false

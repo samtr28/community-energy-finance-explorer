@@ -29,7 +29,7 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
-    - event_bindings: {}
+    - event_bindings: {click: info_btn_click}
       layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
       name: info_btn
       properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
