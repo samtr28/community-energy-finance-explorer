@@ -14,6 +14,19 @@ Structure:
 Display template is applied centrally in get_all_capital_charts() via
 apply_display_template() from Export_Utils. Individual chart functions
 only set chart-specific properties.
+
+PROJECT-WEIGHTED COUNTING
+-------------------------
+Every survey response represents `num_projects_response` projects. All
+project-count metrics and project-level averages are therefore weighted by
+that column, and any total that rolls up across things a project can belong
+to more than once (sources within a category/group) splits each project's
+weight so it is counted exactly once. Dollar figures are never weighted —
+the reported amounts already cover the whole portfolio.
+
+`num_projects_response` is expected to arrive (numeric, fully populated) from
+get_data(); if get_data() projects an explicit column list, make sure that
+column is included.
 """
 
 import anvil.files
@@ -88,9 +101,18 @@ CATEGORY_SHORT_LABELS = {
 def group_small_sources(df, by='amount', threshold=None, min_count=None,
                         category_col='category', source_col='source',
                         amount_col='amount', record_col='record_id',
+                        weight_col='num_projects_response',
                         force_group=None, omit_categories=None):
   """
-  ...
+  Collapse small sources within each category into an "Other {category}" bucket.
+
+  by='count' is project-weighted: a source's size is the number of distinct
+  projects (sum of `weight_col` over distinct records that used it), so a
+  one-off source carried by a large portfolio is not treated as "small".
+  by='amount' and by='pct_within_category' are dollar-based and unweighted.
+
+  weight_col:      column holding the per-response project count. If absent,
+                   by='count' falls back to counting distinct records.
   omit_categories: optional list of category names to skip entirely.
                    Sources in these categories are never grouped — useful for
                    sparse categories (e.g. Crowdfunding) where the user wants
@@ -126,7 +148,13 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
     elif by == 'count':
       if min_count is None:
         raise ValueError("`min_count` is required when by='count'")
-      counts = df_for_grouping.groupby([category_col, source_col])[record_col].nunique()
+      # Weighted distinct-project count: each project counted once per
+      # (category, source), weighted by how many projects the response covers.
+      distinct = df_for_grouping.drop_duplicates([category_col, source_col, record_col])
+      if weight_col in distinct.columns:
+        counts = distinct.groupby([category_col, source_col])[weight_col].sum()
+      else:
+        counts = distinct.groupby([category_col, source_col])[record_col].nunique()
       small_mask = counts < min_count
 
     else:
@@ -193,6 +221,7 @@ def process_capital_mix_data(df):
       rows.append({
         'record_id':                row.get('record_id'),
         'total_cost':               row.get('total_cost'),
+        'num_projects_response':    row.get('num_projects_response'),
         'name':                     item.get('name'),
         'source':                   item.get('source'),
         'category':                 item.get('category'),
@@ -214,9 +243,10 @@ def process_capital_mix_data(df):
   df_long = pd.DataFrame(rows)
   if df_long.empty:
     return pd.DataFrame(columns=[
-      'record_id', 'total_cost', 'name', 'source', 'category', 'item_type',
-      'amount', 'project_type', 'stage', 'province', 'project_scale',
-      'indigenous_ownership', 'all_financing_mechanisms', 'time_to_funding'
+      'record_id', 'total_cost', 'num_projects_response', 'name', 'source',
+      'category', 'item_type', 'amount', 'project_type', 'stage', 'province',
+      'project_scale', 'indigenous_ownership', 'all_financing_mechanisms',
+      'time_to_funding'
     ])
 
   # Step 2 — Explode debt list
@@ -341,7 +371,7 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   cat_order     = get_category_order(df_capital_filtered)
   cat_order_rev = list(reversed(cat_order))
 
-    # ── Build all charts and apply the display template to each ──
+  # ── Build all charts and apply the display template to each ──
   sankey_fig = apply_display_template(create_sankey_internal(df_capital_no_proj_filter, proj_types))
   sankey_fig.update_layout(margin=dict(t=80)) 
 
@@ -368,6 +398,9 @@ def create_box_plot_internal(df, category_order):
   Box plot: each financing category's percentage share of total project costs.
   Individual data points overlaid on boxes.
   Chart-specific: x-axis tick angle, y-axis % suffix, axis lines, no legend.
+
+  Not project-weighted: this shows the distribution of percentage shares, not
+  a project count, and each point is one survey response.
   """
   relevant_columns = [
     'total_percent_grants', 'total_percent_equity', 'total_percent_debts',
@@ -404,9 +437,17 @@ def create_time_chart_internal(df, category_order):
   Horizontal bar chart: average time-to-funding per financing category.
   Internal capital excluded. Bar labels include category name and value.
   Chart-specific: hidden axes, bar colours, auto-contrasted text colours.
+
+  Project-weighted: each project is averaged once per category (one row per
+  record-category), weighted by num_projects_response.
   """
   df          = df[df['category'] != 'Internal capital']
-  averages    = df.groupby('category')['time_to_funding'].mean().reindex(category_order)
+  dd          = df.dropna(subset=['time_to_funding']).drop_duplicates(['record_id', 'category'])
+
+  def _wavg(g):
+    return np.average(g['time_to_funding'], weights=g['num_projects_response']) if len(g) else np.nan
+
+  averages    = dd.groupby('category').apply(_wavg).reindex(category_order)
   bar_colors  = [COLOUR_MAPPING.get(c, '#808080') for c in averages.index]
   text_colors = [get_contrast_color(c) for c in bar_colors]
 
@@ -434,6 +475,8 @@ def create_sankey_internal(df, proj_types=None):
   Links are semi-transparent versions of the category colour.
   Chart-specific: node/link colours, bold node labels.
   Note: proj_type filter excluded from input df — all project types appear.
+
+  Dollar-based: not project-weighted.
   """
   df = df.copy()
   for col in ['project_type', 'amount', 'category', 'source']:
@@ -444,12 +487,10 @@ def create_sankey_internal(df, proj_types=None):
     lambda x: x if isinstance(x, list) else ([] if pd.isna(x) else [x])
   )
   df['amount'] = pd.to_numeric(df['amount'], errors='coerce').fillna(0)
-  
+
   # ── Group small sources to reduce Sankey node clutter ──
   df = group_small_sources(df, by='pct_within_category', threshold=0.03)
-  
-  # Split amount evenly across project types
-  df['pt_count'] = df['project_type'].apply(len).replace(0, 1)
+
   # Split amount evenly across project types
   df['pt_count'] = df['project_type'].apply(len).replace(0, 1)
   df['amount']   = df['amount'] / df['pt_count']
@@ -584,10 +625,12 @@ def create_stacked_bar_internal(df, category_order):
   Excludes Internal capital and Other.
   Shades generated per category; labels shown for segments >=5%.
   Chart-specific: barmode stack, hidden x-axis, y-axis category order, bar text colours.
+
+  Dollar-based (percentage of category $): not project-weighted.
   """
   df = df[~df['category'].isin(['Internal capital', 'Other'])]
 
-  # ── Collapse sources contributing < 3% of category total ──
+  # ── Collapse sources contributing < 5% of category total ──
   df = group_small_sources(df, by='pct_within_category', threshold=0.05)
 
   df_grouped = df.groupby(['category', 'source'])['amount'].sum().reset_index()
@@ -656,6 +699,9 @@ def create_bottleneck_lollipop_internal(df):
   Annotation fonts are set explicitly so apply_display_template skips them:
     - count dots: white size 16 (readable on coloured dot)
     - category labels: dark teal size 14
+
+  Project-weighted: each bar is the number of distinct projects citing that
+  bottleneck (each project counted once, weighted by num_projects_response).
   """
   BOTTLENECKS_TO_SHOW = [
     'Difficulty securing up-front capital',
@@ -664,9 +710,10 @@ def create_bottleneck_lollipop_internal(df):
     'Limited investor interest in community-led projects',
   ]
 
-  counts_df = (df['bottlenecks'].explode().value_counts()
-    .reset_index()
-    .rename(columns={'index': 'bottleneck', 'bottlenecks': 'count'}))
+  b = (df[['record_id', 'num_projects_response', 'bottlenecks']]
+    .explode('bottlenecks').dropna(subset=['bottlenecks'])
+    .drop_duplicates(['record_id', 'bottlenecks']))
+  counts_df = b.groupby('bottlenecks')['num_projects_response'].sum().reset_index()
   counts_df.columns = ['bottleneck', 'count']
   counts_df = (counts_df[counts_df['bottleneck'].isin(BOTTLENECKS_TO_SHOW)]
     .sort_values('count', ascending=True))
@@ -696,7 +743,7 @@ def create_bottleneck_lollipop_internal(df):
     )
     # Explicit font — preserves white colour + larger size through apply_display_template
     fig.add_annotation(
-      text=f'<b>{count}</b>', x=count, y=i, xanchor='center', yanchor='middle', showarrow=False,
+      text=f'<b>{count:g}</b>', x=count, y=i, xanchor='center', yanchor='middle', showarrow=False,
       font=dict(family=FONT_FAMILY, size=16, color='white')
     )
 
@@ -722,6 +769,12 @@ def create_treemap_internal(df):
   Tile size = count or $ depending on selected mode.
   Chart-specific: per-tile text colours auto-contrasted; toggle buttons added
   to switch between the two metrics.
+
+  Count mode is project-weighted and de-double-counted: each category equals
+  its distinct project count, with each project's weight split evenly across
+  the sources it used within that category (so source tiles sum to the
+  category without inflating it). Source tile values are therefore attributed
+  shares and can be fractional. Amount mode is dollar-based (unweighted).
   """
   if df.empty or 'financing_mech' not in df.columns or 'capital_mix' not in df.columns:
     fig = go.Figure()
@@ -735,9 +788,10 @@ def create_treemap_internal(df):
       if item.get('parent') != 'Direct sources of capital':
         continue
       count_rows.append({
-        'record_id': row.get('record_id'),
-        'source':    item.get('source'),
-        'category':  standardize_category_name(item.get('category')),
+        'record_id':             row.get('record_id'),
+        'source':                item.get('source'),
+        'category':              standardize_category_name(item.get('category')),
+        'num_projects_response': int(row['num_projects_response']),
       })
 
   # ── Amount data: from capital_mix ──
@@ -767,7 +821,7 @@ def create_treemap_internal(df):
     min_count=2,
     force_group=['Other', 'Not sure', 'Aggregate total', 'Aggregate Total',
                  "Don't know", 'N/A'],
-    omit_categories=['Internal Capital'],
+    omit_categories=['Internal capital'],
   )
 
   df_amount_long = group_small_sources(
@@ -780,7 +834,13 @@ def create_treemap_internal(df):
   )
 
   # ── Aggregate to (source, category, value) shape ──
-  df_count  = df_count_long.groupby(['source', 'category']).size().reset_index(name='value')
+  # Count = distinct projects per category, split evenly across the sources a
+  # project used within that category (so multi-source projects count once).
+  dc = df_count_long.drop_duplicates(['record_id', 'source', 'category']).copy()
+  k  = dc.groupby(['record_id', 'category'])['source'].transform('nunique')
+  dc['weight'] = dc['num_projects_response'] / k
+  df_count  = (dc.groupby(['source', 'category'])['weight']
+    .sum().reset_index(name='value'))
   df_amount = df_amount_long.groupby(['source', 'category'])['amount'].sum().reset_index(name='value')
 
   # ── Helper to build one treemap trace ──
@@ -854,6 +914,14 @@ def create_treemap_internal(df):
 
 
 def create_scale_pies_internal(df):
+  """
+  Pie-per-scale view with a Total Funding / Typical Project toggle.
+
+  Project-weighted: the "(N projects)" label counts distinct projects
+  (weighted by num_projects_response), and the Typical Project view is a
+  project-weighted mean of each project's category mix. The Total Funding
+  view stays dollar-based.
+  """
   SCALE_ORDER = [
     'Micro (< $100K)', 'Small ($100K-$1M)', 'Medium ($1M-$5M)',
     'Large ($5M-$25M)', 'Very Large ($25M-$100M)', 'Mega (> $100M)'
@@ -871,7 +939,7 @@ def create_scale_pies_internal(df):
 
   for i, scale in enumerate(scales):
     sub = df[df['project_scale'] == scale]
-    n   = sub['record_id'].nunique()
+    n   = int(sub.drop_duplicates('record_id')['num_projects_response'].sum())
 
     # ── View A: Total Funding (dollar-weighted — sum of amount) ──
     total_by_cat = sub.groupby('category', as_index=False)['amount'].sum()
@@ -885,11 +953,11 @@ def create_scale_pies_internal(df):
       if proj_total[r['record_id']] > 0 else 0,
       axis=1,
     )
-    avg_pct = (
-      proj_cat.pivot_table(index='record_id', columns='category', values='pct', fill_value=0)
-        .mean()
-        .reset_index()
-    )
+    pivot   = proj_cat.pivot_table(index='record_id', columns='category',
+                                   values='pct', fill_value=0)
+    weights = (sub.drop_duplicates('record_id').set_index('record_id')['num_projects_response']
+                 .reindex(pivot.index))
+    avg_pct = (pivot.mul(weights, axis=0).sum() / weights.sum()).reset_index()
     avg_pct.columns = ['category', 'avg_pct']
     avg_pct = avg_pct.sort_values('category').reset_index(drop=True)
 
@@ -975,6 +1043,11 @@ def create_alt_financing_bar_internal(df):
   stacked by individual source/mechanism within each group.
   Source labels render INSIDE each segment, wrapped to a fixed width; Plotly
   then shrinks each label's font as needed so it fits its segment.
+
+  Project-weighted and de-double-counted: each group's bar length equals its
+  distinct project count, with each project's weight split evenly across the
+  sources it used within that group. Segment values are attributed shares and
+  can be fractional.
   """
   CATEGORY_TO_GROUP = {
     'Feed-in tariffs/power purchase agreements': 'Revenue support mechanisms',
@@ -1003,7 +1076,17 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No financing mechanism data available'))
     return fig
 
-  flat = pd.json_normalize(df['financing_mech'].explode().dropna())
+  rows = []
+  for _, r in df.iterrows():
+    for item in (r.get('financing_mech') or []):
+      rows.append({
+        'record_id':             r.get('record_id'),
+        'parent':                item.get('parent'),
+        'source':                item.get('source'),
+        'category':              item.get('category'),
+        'num_projects_response': int(r['num_projects_response']),
+      })
+  flat = pd.DataFrame(rows)
   if flat.empty:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No financing mechanism data available'))
@@ -1028,7 +1111,12 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No data for selected filters'))
     return fig
 
-  df_grouped = sub.groupby(['group', 'category', 'source'], as_index=False)['count'].sum()
+  # Count = distinct projects per group, split across the sources a project
+  # used within that group, so the group's bar length isn't double-counted.
+  sub = sub.drop_duplicates(['record_id', 'group', 'category', 'source']).copy()
+  sub['k']     = sub.groupby(['record_id', 'group'])['source'].transform('size')
+  sub['count'] = sub['num_projects_response'] / sub['k']
+  df_grouped   = sub.groupby(['group', 'category', 'source'], as_index=False)['count'].sum()
 
   def generate_shades(base_color, n):
     if not base_color or not base_color.startswith('#'):
@@ -1070,7 +1158,7 @@ def create_alt_financing_bar_internal(df):
       label = str(row['source'])
       hover = (f"<b>{label}</b>"
                f"<br>Category: {row['category']}"
-               f"<br>Count: %{{x}}<extra></extra>")
+               f"<br>Count: %{{x:.1f}}<extra></extra>")
 
       traces.append(go.Bar(
         name=label,
@@ -1094,12 +1182,14 @@ def create_alt_financing_bar_internal(df):
     barmode='stack',
     bargap=0.3,                     # taller bars = more vertical room = less shrinking
     showlegend=False,
-    xaxis=dict(title='Number of projects', linecolor='grey', showline=True, tickformat='d'),
+    xaxis=dict(title='Number of projects', linecolor='grey', showline=True),
     yaxis=dict(categoryorder='array', categoryarray=list(reversed(groups_with_data))),
     margin=dict(l=0, r=0, b=20, t=40),
     title=dict(text='Alternative structures and support mechanisms reported by projects'),
   )
   return fig
+
+
 # ==================== EXPORT CALLABLE ====================
 
 @anvil.server.callable
