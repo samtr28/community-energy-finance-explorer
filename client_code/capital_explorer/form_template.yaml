@@ -228,7 +228,7 @@ components_by_slot:
         spacing:
           margin: ['', 25%, null, null]
           padding: [null, '', null, null]
-        text: What financing challenges are projects facing?
+        text: What financing challenges are project teams facing?
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
@@ -377,9 +377,9 @@ components_by_slot:
         content: |
           <p>This chart shows which financing mechanisms appear most often in the current filtered view. These may include specific forms of funding or investment, such as government grants, term loans, internal capital, co-op shares, community bonds, equity investments, or crowdfunding.</p>
           <p>Use the toggle to switch between two views:</p>
-          <p><strong>By Project Count:</strong> shows which mechanisms are used most frequently across projects.</p>
+          <p><strong>By Response Count:</strong> shows which mechanisms are used most frequently by survey respondents.</p>
           <p><strong>By Dollar Amount:</strong> shows which mechanisms account for the largest share of financing in the current filtered view.</p>
-          <p>These two views can tell different stories. A mechanism may appear in many projects but represent a smaller dollar amount, while another may appear in fewer projects but contributes a larger share of total financing. This distinction is useful for communities, funders, and researchers trying to understand both access and scale.</p>
+          <p>These two views can tell different stories. A mechanism may appear frequently but represent a smaller dollar amount, while another may appear in fewer projects but contributes a larger share of total financing. This distinction is useful for communities, funders, and researchers trying to understand both access and scale.</p>
         font_size: 16
         format: restricted_html
         spacing:
