@@ -355,3 +355,4 @@ roles:
 - {name: sub-card-highlight}
 - {name: portfolio-toggle}
 - {name: bg-image-ce}
+- {name: bg-image-om}

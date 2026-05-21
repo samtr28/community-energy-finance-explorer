@@ -1414,3 +1414,20 @@ html {
     padding-bottom: 0;        /* remove the space it was reserving */
   }
 }
+
+.anvil-role-bg-image-om {
+  background-image:
+    linear-gradient(to bottom, #f9f9ff 0%, #f9f9ff 25%, rgba(249,249,255,0) 85%),
+    url('_/theme/Graphics/IM-Banner-Illustration-2.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position: top left, bottom left;
+  background-size: 100% 100%, 75% auto;
+  padding-bottom: clamp(50px, 10vw,  160px);   /* scales with screen width, capped */
+}
+
+@media (max-width: 1024px) {
+  .anvil-role-bg-image-om {
+    background-image: none;   /* drops the illustration entirely */
+    padding-bottom: 0;        /* remove the space it was reserving */
+  }
+}

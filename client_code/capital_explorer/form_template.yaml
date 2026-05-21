@@ -286,10 +286,28 @@ components_by_slot:
         height: 45vh
         margin: ['8', null, '4', null]
       type: Plot
+    - event_bindings: {click: download_pies_btn_click}
+      layout_properties: {full_width_row: true, grid_position: 'AYLTPR,IKMPLC'}
+      name: download_pies_btn
+      properties:
+        align: right
+        background_color: theme:Primary Overlay 3
+        font_size: 14
+        icon: mi:download
+        icon_color: theme:On Primary Container
+        icon_size: 16
+        spacing:
+          margin: ['2', null, '0', null]
+          padding: [null, '16', null, null]
+        text: Download
+        text_color: theme:On Primary Container
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - layout_properties: {full_width_row: true, grid_position: 'UQBVKY,UGEZRA'}
       name: text_2
       properties:
         font_size: 16
+        spacing:
+          margin: [null, 25%, null, null]
         text: |-
           This section shows how financing mixes vary across projects of different cost ranges. Project cost is used here as a practical way to understand scale (instead of capacity by MW) because it applies across many kinds of community energy projects, including generation, storage, efficiency, and heating projects.
 
@@ -315,22 +333,6 @@ components_by_slot:
           Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
         text_color: theme:Error
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - event_bindings: {click: download_pies_btn_click}
-      layout_properties: {full_width_row: true, grid_position: 'SINLER,LXTODE'}
-      name: download_pies_btn
-      properties:
-        align: right
-        background_color: theme:Primary Overlay 3
-        font_size: 14
-        icon: mi:download
-        icon_color: theme:On Primary Container
-        icon_size: 16
-        spacing:
-          margin: ['2', null, '0', null]
-          padding: [null, '16', null, null]
-        text: Download
-        text_color: theme:On Primary Container
-      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - layout_properties: {full_width_row: true, grid_position: 'JZRPER,ACURFX'}
       name: image_3
       properties:
