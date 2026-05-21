@@ -824,13 +824,13 @@ def create_treemap_internal(df):
 
   fig.update_layout(
     margin=dict(l=0, r=0, b=0),
-    title=dict(text='Common Financing Mechanisms used by Survey Respondents'),
+    title=dict(text='Common Financing Mechanisms used in the Dataset'),
     updatemenus=[dict(
       type='buttons',
       direction='left',
       buttons=[
         dict(
-          label='By Response Count',
+          label='By Project Count',
           method='update',
           args=[{'visible': [True, False]}],
         ),
