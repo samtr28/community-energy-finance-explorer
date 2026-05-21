@@ -194,6 +194,7 @@ def process_capital_mix_data(df):
       rows.append({
         'record_id':                row.get('record_id'),
         'total_cost':               row.get('total_cost'),
+        'num_projects_response':    row.get('num_projects_response'), 
         'name':                     item.get('name'),
         'source':                   item.get('source'),
         'category':                 item.get('category'),
@@ -739,6 +740,7 @@ def create_treemap_internal(df):
         'record_id': row.get('record_id'),
         'source':    item.get('source'),
         'category':  standardize_category_name(item.get('category')),
+        'num_projects_response': int(row['num_projects_response']),
       })
 
   # ── Amount data: from capital_mix ──
@@ -781,7 +783,8 @@ def create_treemap_internal(df):
   )
 
   # ── Aggregate to (source, category, value) shape ──
-  df_count  = df_count_long.groupby(['source', 'category']).size().reset_index(name='value')
+  df_count  = (df_count_long.groupby(['source', 'category'])['num_projects_response']
+    .sum().reset_index(name='value'))
   df_amount = df_amount_long.groupby(['source', 'category'])['amount'].sum().reset_index(name='value')
 
   # ── Helper to build one treemap trace ──
@@ -1004,7 +1007,18 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No financing mechanism data available'))
     return fig
 
-  flat = pd.json_normalize(df['financing_mech'].explode().dropna())
+  rows = []
+  for _, r in df.iterrows():
+    npr = int(r['num_projects_response'])
+    for item in (r.get('financing_mech') or []):
+      rows.append({
+        'parent':   item.get('parent'),
+        'source':   item.get('source'),
+        'category': item.get('category'),
+        'count':    (item.get('count') or 0) * npr,
+      })
+  flat = pd.DataFrame(rows)
+  
   if flat.empty:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No financing mechanism data available'))

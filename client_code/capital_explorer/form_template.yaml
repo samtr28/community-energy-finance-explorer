@@ -228,7 +228,7 @@ components_by_slot:
         spacing:
           margin: ['', 25%, null, null]
           padding: [null, '', null, null]
-        text: What financing challenges are projects facing?
+        text: What financing challenges are survey respondents facing?
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
