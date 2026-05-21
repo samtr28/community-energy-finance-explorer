@@ -354,3 +354,4 @@ roles:
 - {name: beta-pill}
 - {name: sub-card-highlight}
 - {name: portfolio-toggle}
+- {name: bg-image-ce}

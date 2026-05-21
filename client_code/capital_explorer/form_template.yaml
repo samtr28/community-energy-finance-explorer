@@ -6,7 +6,7 @@ components_by_slot:
     properties: {}
     type: Timer
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS UILTEY,SMWCRF'}
+    - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF NKJDDF,BFKKVI'}
       name: heading_4
       properties:
         background_color: ''
@@ -14,22 +14,23 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
+          padding: [null, 20%, null, null]
+        text: Explore the sources & types of capital enabling community clean energy projects across Canada.
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components: []
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS UIQHTK,YGQCOV'}
+      layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF ULHCAL,GWIGKH', row_background: 'theme:Secondary Container'}
       name: rich_text_1
       properties:
+        background: ''
         content: |-
           <p>Community energy projects often rely on more than one source of capital. A project may combine grants, loans, community investment, owner contributions, partner funding, and other financing mechanisms to reach full project cost. These combinations are often hard to see because financing information is scattered across announcements, reports, funding programs, and project documents.</p>
           <p>The Capital Explorer makes this information easier to understand by showing the <b>capital stacks</b> behind community energy projects in the current dataset. Use this page to explore what sources of capital are being used, how financing mixes vary across different kinds of projects, and where common financing challenges appear.</p>
-          <p><b>Use the filters</b> to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. The charts update as you filter, helping you explore patterns that are most relevant to your community, organization, or research question.</p>
         font_size: 18
         format: restricted_html
       type: RichText
     - event_bindings: {}
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX XAOOCW,JUDLEU'}
+      layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
       name: info_btn
       properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
       type: form:dep_9kcxnwm3upyjd:_Components.Button
@@ -43,21 +44,32 @@ components_by_slot:
           name: rich_text_2
           properties:
             content: |-
-              <p><strong>Capital stack:</strong> the mix of funding sources that add up to the total project cost.</p>
-              <p><strong>Capital source:</strong> where the money comes from, such as government programs, bank or non-bank lenders, investors, community members, owners, or partners.</p>
-              <p><strong>Financing category:</strong> a broad grouping of capital, such as grants, debt, community financing, external equity, or internal capital.</p>
-              <p><strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.</p>
-              <p><strong>Total project cost:</strong> the full capital cost of the project deployed through the construction phase until the project becomes operational. This is different from annual operating costs.</p>
+              <p>
+                <strong>Capital stack:</strong> the mix of funding sources that add up to the total project cost.<br>
+                <strong>Capital source:</strong> where the money comes from, such as government programs, bank or non-bank lenders, investors, community members, owners, or partners.<br>
+                <strong>Financing category:</strong> a broad grouping of capital, such as grants, debt, community financing, external equity, or internal capital.<br>
+                <strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.<br>
+                <strong>Total project cost:</strong> the full capital cost of the project deployed through the construction phase until the project becomes operational. This is different from annual operating costs.
+              </p>
             format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
           type: RichText
         layout_properties: {slot: card-content-slot}
         name: card_content_container_2
-        properties: {}
+        properties:
+          margin: ['8', '16', '8', '16']
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX QKJDGK,CAGCBM'}
+      layout_properties: {full_width_row: true, grid_position: 'IIQWHR,BKECQL TTRDAV,RXFZCM'}
       name: card_2
       properties: {background_color: 'theme:Tertiary Overlay 1'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
+    layout_properties: {full_width_row: true}
+    name: column_panel_3
+    properties: {col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: bg-image-ce, wrap_on: tablet}
+    type: ColumnPanel
+  - components:
     - layout_properties: {full_width_row: true, grid_position: 'AUQIVZ,PCAVRV'}
       name: divider_1
       properties: {}
@@ -556,7 +568,8 @@ components_by_slot:
     name: column_panel_1
     properties:
       col_spacing: large
-      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"CMBKUS":40,"EBSGWX":20,"YDSMDU":23,"WPOENU":37,"YUFUIT":39,"HWNEMY":21,"GZOTWK":23,"EVBZRG":37,"HHCXEE":22,"RBQUVN":38}'
+      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"YDSMDU":23,"WPOENU":37,"YUFUIT":39,"HWNEMY":21,"GZOTWK":23,"EVBZRG":37,"HHCXEE":22,"RBQUVN":38}'
+      role: null
       spacing:
         padding: ['0', null, null, null]
       spacing_above: medium
