@@ -88,6 +88,7 @@ CATEGORY_SHORT_LABELS = {
 def group_small_sources(df, by='amount', threshold=None, min_count=None,
                         category_col='category', source_col='source',
                         amount_col='amount', record_col='record_id',
+                        weight_col='num_projects_response',
                         force_group=None, omit_categories=None):
   """
   ...
@@ -122,11 +123,17 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
       cat_totals    = df_for_grouping.groupby(category_col)[amount_col].sum()
       pct = source_totals / source_totals.index.get_level_values(category_col).map(cat_totals)
       small_mask = pct < threshold
-
+    
     elif by == 'count':
       if min_count is None:
         raise ValueError("`min_count` is required when by='count'")
-      counts = df_for_grouping.groupby([category_col, source_col])[record_col].nunique()
+      # Weighted distinct-project count: each project counted once per
+      # (category, source), weighted by how many projects the response covers.
+      distinct = df_for_grouping.drop_duplicates([category_col, source_col, record_col])
+      if weight_col in distinct.columns:
+        counts = distinct.groupby([category_col, source_col])[weight_col].sum()
+      else:
+        counts = distinct.groupby([category_col, source_col])[record_col].nunique()
       small_mask = counts < min_count
 
     else:
@@ -193,6 +200,7 @@ def process_capital_mix_data(df):
       rows.append({
         'record_id':                row.get('record_id'),
         'total_cost':               row.get('total_cost'),
+        'num_projects_response':    row.get('num_projects_response'),
         'name':                     item.get('name'),
         'source':                   item.get('source'),
         'category':                 item.get('category'),
@@ -406,7 +414,13 @@ def create_time_chart_internal(df, category_order):
   Chart-specific: hidden axes, bar colours, auto-contrasted text colours.
   """
   df          = df[df['category'] != 'Internal capital']
-  averages    = df.groupby('category')['time_to_funding'].mean().reindex(category_order)
+  dd          = df.dropna(subset=['time_to_funding']).drop_duplicates(['record_id', 'category'])
+
+  def _wavg(g):
+    return np.average(g['time_to_funding'], weights=g['num_projects_response']) if len(g) else np.nan
+
+  averages    = dd.groupby('category').apply(_wavg).reindex(category_order)
+  
   bar_colors  = [COLOUR_MAPPING.get(c, '#808080') for c in averages.index]
   text_colors = [get_contrast_color(c) for c in bar_colors]
 
@@ -738,6 +752,7 @@ def create_treemap_internal(df):
         'record_id': row.get('record_id'),
         'source':    item.get('source'),
         'category':  standardize_category_name(item.get('category')),
+        'num_projects_response': int(row['num_projects_response']),
       })
 
   # ── Amount data: from capital_mix ──
@@ -767,7 +782,7 @@ def create_treemap_internal(df):
     min_count=2,
     force_group=['Other', 'Not sure', 'Aggregate total', 'Aggregate Total',
                  "Don't know", 'N/A'],
-    omit_categories=['Internal Capital'],
+    omit_categories=['Internal capital'],
   )
 
   df_amount_long = group_small_sources(
@@ -780,7 +795,17 @@ def create_treemap_internal(df):
   )
 
   # ── Aggregate to (source, category, value) shape ──
-  df_count  = df_count_long.groupby(['source', 'category']).size().reset_index(name='value')
+  # Count = distinct projects per category. Split each project's weight evenly
+  # across the sources it used within a category, so a project that taps two
+  # sources in the same category counts once at the category level (its halves
+  # sum back to one) instead of being double-counted.
+  dc = df_count_long.drop_duplicates(['record_id', 'source', 'category']).copy()
+  k  = dc.groupby(['record_id', 'category'])['source'].transform('nunique')
+  dc['weight'] = dc['num_projects_response'] / k
+  df_count  = (dc.groupby(['source', 'category'])['weight']
+    .sum().reset_index(name='value'))
+
+  
   df_amount = df_amount_long.groupby(['source', 'category'])['amount'].sum().reset_index(name='value')
 
   # ── Helper to build one treemap trace ──
@@ -1003,7 +1028,18 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No financing mechanism data available'))
     return fig
 
-  flat = pd.json_normalize(df['financing_mech'].explode().dropna())
+  rows = []
+  for _, r in df.iterrows():
+    for item in (r.get('financing_mech') or []):
+      rows.append({
+        'record_id':             r.get('record_id'),
+        'parent':                item.get('parent'),
+        'source':                item.get('source'),
+        'category':              item.get('category'),
+        'num_projects_response': int(r['num_projects_response']),
+      })
+  flat = pd.DataFrame(rows)
+  
   if flat.empty:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No financing mechanism data available'))
@@ -1028,7 +1064,12 @@ def create_alt_financing_bar_internal(df):
     fig.update_layout(title=dict(text='No data for selected filters'))
     return fig
 
-  df_grouped = sub.groupby(['group', 'category', 'source'], as_index=False)['count'].sum()
+  # Count = distinct projects per group, split across the sources a project
+  # used within that group, so the group's bar length isn't double-counted.
+  sub = sub.drop_duplicates(['record_id', 'group', 'category', 'source']).copy()
+  sub['k']     = sub.groupby(['record_id', 'group'])['source'].transform('size')
+  sub['count'] = sub['num_projects_response'] / sub['k']
+  df_grouped   = sub.groupby(['group', 'category', 'source'], as_index=False)['count'].sum()
 
   def generate_shades(base_color, n):
     if not base_color or not base_color.startswith('#'):
