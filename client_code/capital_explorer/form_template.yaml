@@ -6,7 +6,7 @@ components_by_slot:
     properties: {}
     type: Timer
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS UILTEY,SMWCRF'}
+    - layout_properties: {full_width_row: true, grid_position: 'IPOEFH,ZEKUGM DGTGLU,MATWZS'}
       name: heading_4
       properties:
         background_color: ''
@@ -17,19 +17,8 @@ components_by_slot:
         text: Explore the sources, categories, and mechanisms of capital enabling community-led clean energy projects across Canada.
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,CMBKUS UIQHTK,YGQCOV'}
-      name: rich_text_1
-      properties:
-        content: |-
-          <p>Community energy projects often rely on more than one source of capital. A project may combine grants, loans, community investment, owner contributions, partner funding, and other financing mechanisms to reach full project cost. These combinations are often hard to see because financing information is scattered across announcements, reports, funding programs, and project documents.</p>
-          <p>The Capital Explorer makes this information easier to understand by showing the <b>capital stacks</b> behind community energy projects in the current dataset. Use this page to explore what sources of capital are being used, how financing mixes vary across different kinds of projects, and where common financing challenges appear.</p>
-          <p><b>Use the filters</b> to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. The charts update as you filter, helping you explore patterns that are most relevant to your community, organization, or research question.</p>
-        font_size: 18
-        format: restricted_html
-      type: RichText
     - event_bindings: {}
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX XAOOCW,JUDLEU'}
+      layout_properties: {full_width_row: true, grid_position: 'IPOEFH,WLFWUN OUTCUJ,SUWYJJ'}
       name: info_btn
       properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
       type: form:dep_9kcxnwm3upyjd:_Components.Button
@@ -54,10 +43,30 @@ components_by_slot:
         name: card_content_container_2
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'AFATQN,EBSGWX QKJDGK,CAGCBM'}
+      layout_properties: {full_width_row: true, grid_position: 'IPOEFH,WLFWUN NDRBML,BDJMPK'}
       name: card_2
       properties: {background_color: 'theme:Tertiary Overlay 1'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - components:
+      - components: []
+        layout_properties: {grid_position: 'ASJDRV,KAFOVD'}
+        name: rich_text_1
+        properties:
+          content: |-
+            <p>Community energy projects often rely on more than one source of capital. A project may combine grants, loans, community investment, owner contributions, partner funding, and other financing mechanisms to reach full project cost. These combinations are often hard to see because financing information is scattered across announcements, reports, funding programs, and project documents.</p>
+            <p>The Capital Explorer makes this information easier to understand by showing the <b>capital stacks</b> behind community energy projects in the current dataset. Use this page to explore what sources of capital are being used, how financing mixes vary across different kinds of projects, and where common financing challenges appear.</p>
+          font_size: 18
+          format: restricted_html
+        type: RichText
+      layout_properties: {grid_position: 'IPOEFH,ZEKUGM QQLLAT,BPIESO'}
+      name: column_panel_4
+      properties: {}
+      type: ColumnPanel
+    layout_properties: {full_width_row: true}
+    name: column_panel_3
+    properties: {col_widths: '{"ZEKUGM":40,"WLFWUN":20}', role: bg-image}
+    type: ColumnPanel
+  - components:
     - layout_properties: {full_width_row: true, grid_position: 'AUQIVZ,PCAVRV'}
       name: divider_1
       properties: {}
@@ -556,7 +565,7 @@ components_by_slot:
     name: column_panel_1
     properties:
       col_spacing: large
-      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"CMBKUS":40,"EBSGWX":20,"YDSMDU":23,"WPOENU":37,"YUFUIT":39,"HWNEMY":21,"GZOTWK":23,"EVBZRG":37,"HHCXEE":22,"RBQUVN":38}'
+      col_widths: '{"OFQLVY":40,"WAMEZI":20,"LXTUMR":45,"ZHQPHM":25,"UAOITW":31,"SHLDIL":10,"JDOFXB":39,"YDSMDU":23,"WPOENU":37,"YUFUIT":39,"HWNEMY":21,"GZOTWK":23,"EVBZRG":37,"HHCXEE":22,"RBQUVN":38}'
       spacing:
         padding: ['0', null, null, null]
       spacing_above: medium

@@ -1396,3 +1396,24 @@ html {
   font-size: 12px !important;
   height: 25px !important;
 }
+
+
+/* the panel holding your heading + paragraphs */
+.anvil-role-intro-text {
+  position: relative;
+  z-index: 1;            /* keeps text in front of the band */
+}
+
+/* the full-width band panel below it */
+.anvil-role-intro-band {
+  position: relative;
+  z-index: 0;            /* sits BEHIND the text */
+  margin-top: -78px;     /* the overlap — more negative = more overlap */
+  background-image: url('_/theme/Graphics/IM-Banner-Illustration-1-Cropped.png');
+  background-size: 100% auto;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  height: 320px;         /* a bit taller to absorb the pull-up */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 46%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 46%);
+}
