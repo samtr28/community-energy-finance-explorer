@@ -171,14 +171,6 @@ components_by_slot:
       name: text_2
       properties: {text: 'This view shows project ownership weighted by investment amount. A $10 million project counts 10× more than a $1 million project. This reveals who has the largest financial stakes in community energy and which owner types undertake higher-cost projects. Note: this doesn''t account for differences in typical project size across owner types.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'XHUPAC,UTPVPF WCCKNW,RZNRYY'}
-      name: heading_2_copy
-      properties: {bold: true, scale: small, style: title, text: By Project Count}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'XHUPAC,UTPVPF TSPVGW,ARSDYQ'}
-      name: text_2_copy
-      properties: {text: 'This view shows project ownership by number of projects. Each project counts equally, regardless of size or cost. This reveals who owns the most projects and shows the breadth of participation across owner types.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'XHUPAC,BVWRHW'}
       name: ownership_treemap
       properties:
@@ -201,11 +193,13 @@ components_by_slot:
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'DDAZWJ,CEROQY'}
-      name: funnel_plot
-      properties:
-        height: 50vh
-        margin: ['0', null, '0', null]
+    - layout_properties: {grid_position: 'DDAZWJ,CEROQY BYFYIX,UUBRBX'}
+      name: ownership_financing_bubble
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {grid_position: 'DDAZWJ,CEROQY IAEVHD,HRJSPK'}
+      name: all_financing_heatmap
+      properties: {height: 50vh}
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'SHXSIN,GDUOTK'}
       name: heading_1_copy_copy_copy
@@ -229,7 +223,7 @@ components_by_slot:
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: lollipop_chart
-          properties: {height: 20vh}
+          properties: {height: 30vh}
           type: Plot
         - layout_properties: {slot: card-content-container-slot}
           name: button_1
@@ -287,13 +281,6 @@ components_by_slot:
       name: scale_pies_plot
       properties: {height: 50vh}
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'NSLNNN,SSVAPW'}
-      name: text_1_copy_2
-      properties:
-        text: |
-          Typical Ownership
-           Sums each owner type's ownership percentage across all projects in the scale band, then displays each type's share of that combined total -equivalent to averaging the ownership breakdown across projects, since each project's ownership sums to 100%. A small co-op project carries the same weight as a large utility-owned one. Best for understanding what kinds of ownership models are most common across projects at this scale.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {grid_position: 'NSLNNN,SBVZFN'}
       name: text_3
       properties:

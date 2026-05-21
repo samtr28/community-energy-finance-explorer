@@ -10,9 +10,33 @@ Structure:
   6. Chart creation functions  — one per chart
   7. Export callable
 
-Display template is applied centrally in get_all_ownership_charts() via
-apply_display_template() from Export_Utils. Individual chart functions
-only set chart-specific properties.
+Charts and what each calculates
+--------------------------------
+ownership_treemap     : Dollar value of ownership by type — (owner % × project cost),
+                        summed across all projects. Shows total ownership value, not
+                        number of projects.
+
+scale_pies            : Same dollar-value calculation broken down by project scale.
+                        Each slice = (owner % × project cost) summed per owner type
+                        within that scale bucket.
+
+indigenous_pie        : Count of survey responses at each level of Indigenous ownership.
+                        One response per project or portfolio; a portfolio counts once.
+
+lollipop_chart        : Count of survey responses reporting each ownership-related
+                        challenge. One response per project or portfolio.
+
+bubble_chart          : Ownership value × direct financing source. Bubble size =
+                        sum of (owner % × project cost) for projects where that owner
+                        category used that source. Direct capital sources only.
+
+heatmap               : Same ownership-value calculation as the bubble chart, shown
+                        as a colour grid. Darker = higher total ownership value.
+                        Direct capital sources only.
+
+all_financing_heatmap : Count of survey responses where that owner category and
+                        financing mechanism appear together. Includes ALL mechanism
+                        types. Counted by response — a portfolio counts once.
 """
 
 import anvil.files
@@ -40,15 +64,10 @@ from .Export_Utils import apply_display_template, export_figure_from_bytes
 # ==================== UTILITY FUNCTIONS ====================
 
 def wrap_text(text, width=15):
-  """Wrap long strings with <br> tags for display inside Plotly visualisations."""
   return '<br>'.join(textwrap.wrap(str(text), width=width))
 
 
 def get_contrast_color(hex_color):
-  """
-  Return 'white' or 'black' based on which gives better contrast
-  against the given hex background colour (ITU-R BT.601 luminance).
-  """
   if not hex_color or not hex_color.startswith('#'):
     return 'white'
   hex_color = hex_color.lstrip('#')
@@ -57,7 +76,6 @@ def get_contrast_color(hex_color):
 
 
 def _owner_type_category_pairs(df_owners):
-  """Return unique (owner_type, owner_category) tuples for colour lookup."""
   return list(
     df_owners[['owner_type', 'owner_category']]
       .drop_duplicates()
@@ -65,11 +83,25 @@ def _owner_type_category_pairs(df_owners):
   )
 
 
+def _subtitle(fig, text):
+  """
+  Add a small grey subtitle annotation just below the plot area top edge.
+  Set margin.t to at least 75 on any chart that uses this.
+  """
+  fig.add_annotation(
+    text=text,
+    xref='paper', yref='paper',
+    x=0, y=1.0,
+    xanchor='left', yanchor='top',
+    showarrow=False,
+    font=dict(family=FONT_FAMILY, size=10, color='#888888'),
+  )
+
+
 # ==================== DATA FILTERING ====================
 
 def apply_filters(df, provinces=None, proj_types=None, stages=None,
                   indigenous_ownership=None, project_scale=None):
-  """Apply user-selected filters to a dataframe. Returns a filtered copy."""
   if df.empty:
     return df
   df = df.copy()
@@ -91,11 +123,6 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
 # ==================== DATA PROCESSING ====================
 
 def process_owners_data(df):
-  """
-  Convert a dataframe with an 'owners' list column into long format.
-  Each row represents one owner with their type, category, and project context.
-  The owner_category field is read directly from the cleaned data.
-  """
   rows = []
   for _, row in df.iterrows():
     owners = row.get('owners') or []
@@ -117,115 +144,148 @@ def process_owners_data(df):
   return pd.DataFrame(rows)
 
 
+def _build_ownership_financing_pairs(df, direct_only=True):
+  """
+  Returns one row per (record_id, owner_category, finance_category) with:
+
+    owner_dollar = (sum of ownership % for all owners of that category in the
+                    project / 100) × total project cost.
+
+  This is the dollar value that owner category's combined stake represents
+  in the project. Summing owner_dollar across projects gives the total
+  ownership value for any (owner_category, finance_category) cell.
+
+  direct_only=True  — only 'Direct sources of capital' (grants, debt, equity,
+                       community finance, crowdfunding). Dollar scaling is
+                       meaningful here because these map directly to project funding.
+  direct_only=False — all financing mechanisms. Dollar scaling is NOT applied
+                       for this mode; only count (record_id.nunique) is used.
+  """
+  pairs = []
+  for _, row in df.iterrows():
+    owners    = row.get('owners') or []
+    financing = row.get('financing_mech') or []
+    if not owners or not financing:
+      continue
+
+    total_cost = pd.to_numeric(row.get('total_cost'), errors='coerce') or 0
+    rid        = row.get('record_id')
+
+    # Sum ownership % per category (handles multiple owners of same category)
+    cat_percents = {}
+    for o in owners:
+      cat = o.get('owner_category') or 'Unknown'
+      pct = pd.to_numeric(o.get('owner_percent'), errors='coerce') or 0
+      cat_percents[cat] = cat_percents.get(cat, 0) + pct
+
+    if direct_only:
+      fin_items = [f for f in financing
+                   if f.get('parent') == 'Direct sources of capital' and f.get('category')]
+    else:
+      fin_items = [f for f in financing if f.get('category')]
+
+    finance_cats = list({f.get('category') for f in fin_items})
+    if not finance_cats:
+      continue
+
+    for oc, pct_sum in cat_percents.items():
+      for fc in finance_cats:
+        pairs.append({
+          'record_id':        rid,
+          'owner_category':   oc,
+          'finance_category': fc,
+          'owner_dollar':     (pct_sum / 100) * total_cost,
+        })
+
+  if not pairs:
+    return pd.DataFrame()
+  return pd.DataFrame(pairs)
+
+
 # ==================== MAIN CALLABLE ====================
 
 @anvil.server.callable
 def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
                              indigenous_ownership=None, project_scale=None):
-  """
-  Single server call returning all ownership chart figures.
-  Data is loaded and processed once, shared across all chart builders.
-  apply_display_template() is called here on every figure.
-  """
-  # ── Load and process data once ──
   df_raw    = get_data()
   df_owners = process_owners_data(df_raw)
 
-  # ── Filter both views ──
   df_raw_filtered    = apply_filters(df_raw,    provinces, proj_types, stages, indigenous_ownership, project_scale)
   df_owners_filtered = apply_filters(df_owners, provinces, proj_types, stages, indigenous_ownership, project_scale)
 
-  # ── Guard: empty result ──
   if df_owners_filtered.empty:
     empty_fig = go.Figure()
     empty_fig.update_layout(title=dict(text='No data available for selected filters'))
     return {k: empty_fig for k in [
       'ownership_treemap', 'scale_pies', 'indigenous_pie',
-      'lollipop_chart', 'funnel_chart',
+      'lollipop_chart', 'bubble_chart', 'heatmap', 'all_financing_heatmap',
     ]}
 
-  # ── Build all charts with display template applied centrally ──
   return {
-    'ownership_treemap': apply_display_template(create_ownership_treemap_internal(df_owners_filtered)),
-    'scale_pies':        apply_display_template(create_ownership_scale_pies_internal(df_owners_filtered)),
-    'indigenous_pie':    apply_display_template(create_indigenous_ownership_stacked_internal(df_owners_filtered)),
-    'lollipop_chart':    apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
-    'funnel_chart':      apply_display_template(create_ownership_financing_funnel_internal(df_raw_filtered)),
+    'ownership_treemap':     apply_display_template(create_ownership_treemap_internal(df_owners_filtered)),
+    'scale_pies':            apply_display_template(create_ownership_scale_pies_internal(df_owners_filtered)),
+    'indigenous_pie':        apply_display_template(create_indigenous_ownership_stacked_internal(df_owners_filtered)),
+    'lollipop_chart':        apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
+    'bubble_chart':          apply_display_template(create_ownership_financing_bubble_internal(df_raw_filtered)),
+    'heatmap':               apply_display_template(create_ownership_financing_heatmap_internal(df_raw_filtered)),
+    'all_financing_heatmap': apply_display_template(create_ownership_all_financing_heatmap_internal(df_raw_filtered)),
   }
 
 
 # ==================== CHART CREATION ====================
-# Each function sets only chart-specific properties.
-# Generic styling is handled by apply_display_template() above.
 
 def create_ownership_treemap_internal(df_owners):
   """
-  Hierarchical treemap with owner-type categories as parent nodes.
-  Categories form the outer boxes (coloured with the base hue); owner types
-  sit inside, coloured with shades of the parent. Toggle between dollar
-  value and project count.
+  WHAT IT CALCULATES:
+  For every owner type, sums (ownership stake % ÷ 100 × total project cost)
+  across every project that owner type appears in. The result is the total
+  dollar value that owner type collectively holds across the dataset. Tile
+  size and the % label both reflect this dollar value as a share of the grand
+  total — not a count of projects or responses.
   """
-  # ── Aggregate for both views ──
-  project_data = df_owners.groupby(['owner_type', 'owner_category'], as_index=False)['owner_percent'].sum()
-  project_data['value'] = project_data['owner_percent']
-
   df_val = df_owners.copy()
   df_val['ownership_value'] = (df_val['owner_percent'] / 100) * df_val['total_cost']
   value_data = df_val.groupby(['owner_type', 'owner_category'], as_index=False)['ownership_value'].sum()
   value_data['value'] = value_data['ownership_value']
 
   owner_colors = get_owner_type_colors_categorical(_owner_type_category_pairs(df_owners))
+  cat_totals   = value_data.groupby('owner_category')['value'].sum()
+  labels, parents, values, colors_list = [], [], [], []
 
-  def make_treemap(data, visible=True):
-    cat_totals = data.groupby('owner_category')['value'].sum()
-    labels, parents, values, colors_list = [], [], [], []
+  for cat, total in cat_totals.items():
+    scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other'])
+    labels.append(cat); parents.append(''); values.append(total)
+    colors_list.append(scheme['base'])
 
-    # Category-level (parent) nodes — base hue
-    for cat, total in cat_totals.items():
-      scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other'])
-      labels.append(cat)
-      parents.append('')
-      values.append(total)
-      colors_list.append(scheme['base'])
+  for _, row in value_data.iterrows():
+    labels.append(wrap_text(row['owner_type'], width=20))
+    parents.append(row['owner_category']); values.append(row['value'])
+    colors_list.append(owner_colors.get(row['owner_type'], '#808080'))
 
-    # Owner-type (child) nodes — shaded
-    for _, row in data.iterrows():
-      labels.append(wrap_text(row['owner_type'], width=20))
-      parents.append(row['owner_category'])
-      values.append(row['value'])
-      colors_list.append(owner_colors.get(row['owner_type'], '#808080'))
-
-    return go.Treemap(
-      labels=labels, parents=parents, values=values,
-      branchvalues='total',
-      textinfo='label+percent parent',
-      hovertemplate='<b>%{label}</b><br>%{value:,.0f}<extra></extra>',
-      visible=visible,
-      marker=dict(colors=colors_list, line=dict(width=2, color='white')),
-    )
-
-  fig = go.Figure()
-  fig.add_trace(make_treemap(value_data,   visible=True))
-  fig.add_trace(make_treemap(project_data, visible=False))
-
+  fig = go.Figure(go.Treemap(
+    labels=labels, parents=parents, values=values,
+    branchvalues='total',
+    texttemplate='<b>%{label}</b><br>%{percentRoot:.1%}',
+    hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<extra></extra>',
+    marker=dict(colors=colors_list, line=dict(width=2, color='white')),
+  ))
   fig.update_layout(
     title=dict(text='Ownership composition of community energy projects'),
-    updatemenus=[dict(
-      type='buttons', direction='left',
-      buttons=[
-        dict(label='By Dollar Amount', method='update', args=[{'visible': [True, False]}]),
-        dict(label='By Project Count', method='update', args=[{'visible': [False, True]}]),
-      ],
-      pad={'r': 10, 't': 10}, showactive=True,
-      x=0.5, y=1.07, xanchor='left', yanchor='top',
-      bgcolor='rgba(255,255,255,0.8)', bordercolor='gray', borderwidth=1,
-    )],
-    margin=dict(t=0, b=0, l=0, r=0),
+    margin=dict(t=75, b=0, l=0, r=0),
   )
+  _subtitle(fig,
+            'Tile size = sum of (ownership % × project cost) for each owner type across all projects — '
+            'shows total dollar value of ownership, not number of projects')
   return fig
 
 
 def create_ownership_scale_pies_internal(df_owners):
+  """
+  WHAT IT CALCULATES:
+  For each project scale bucket, sums (ownership % ÷ 100 × total project cost)
+  per owner type. Slice size reflects the total dollar value of that owner type's
+  combined stake in projects of that scale — not how many projects it appears in.
+  """
   SCALE_ORDER = [
     'Micro (< $100K)', 'Small ($100K-$1M)', 'Medium ($1M-$5M)',
     'Large ($5M-$25M)', 'Very Large ($25M-$100M)', 'Mega (> $100M)'
@@ -238,303 +298,380 @@ def create_ownership_scale_pies_internal(df_owners):
 
   owner_type_colors = get_owner_type_colors_categorical(_owner_type_category_pairs(df_owners))
   cats_present = [c for c in CATEGORY_ORDER_OWNERS if c in df_owners['owner_category'].unique()]
-
-  fig = go.Figure()
+  fig    = go.Figure()
   n_pies = len(scales)
 
   for i, scale in enumerate(scales):
-    sub = df_owners[df_owners['project_scale'] == scale]
-    n   = sub['record_id'].nunique()
-
-    # ── View A: Typical Ownership (sum of owner_percent, project-weighted) ──
-    share_grouped = sub.groupby(['owner_type', 'owner_category'], as_index=False)['owner_percent'].sum()
-
-    # ── View B: By Dollar Value (owner_percent x total_cost, summed) ──
+    sub   = df_owners[df_owners['project_scale'] == scale]
+    n     = sub['record_id'].nunique()
     sub_val = sub.copy()
     sub_val['ownership_value'] = (sub_val['owner_percent'] / 100) * sub_val['total_cost']
     value_grouped = sub_val.groupby(['owner_type', 'owner_category'], as_index=False)['ownership_value'].sum()
-
-    # Sort both consistently
-    for d in (share_grouped, value_grouped):
-      d['cat_order'] = d['owner_category'].apply(
-        lambda c: CATEGORY_ORDER_OWNERS.index(c) if c in CATEGORY_ORDER_OWNERS else 999
-      )
-      d.sort_values(['cat_order', 'owner_type'], inplace=True)
-      d.reset_index(drop=True, inplace=True)
-
-    share_grouped['pct'] = (share_grouped['owner_percent'] /
-                            share_grouped['owner_percent'].sum()) * 100
-    share_grouped['text_display'] = share_grouped['pct'].apply(
-      lambda x: f'{x:.1f}%' if x >= 5 else ''
-    )
-    value_grouped['pct'] = (value_grouped['ownership_value'] /
-                            value_grouped['ownership_value'].sum()) * 100
-    value_grouped['text_display'] = value_grouped['pct'].apply(
-      lambda x: f'{x:.1f}%' if x >= 5 else ''
-    )
+    value_grouped['cat_order'] = value_grouped['owner_category'].apply(
+      lambda c: CATEGORY_ORDER_OWNERS.index(c) if c in CATEGORY_ORDER_OWNERS else 999)
+    value_grouped.sort_values(['cat_order', 'owner_type'], inplace=True)
+    value_grouped.reset_index(drop=True, inplace=True)
+    value_grouped['pct'] = (value_grouped['ownership_value'] / value_grouped['ownership_value'].sum()) * 100
+    value_grouped['text_display'] = value_grouped['pct'].apply(lambda x: f'{x:.1f}%' if x >= 5 else '')
 
     pad     = 0.01
     x_start = i / n_pies + pad
     x_end   = (i + 1) / n_pies - pad
     domain  = dict(x=[x_start, x_end], y=[0.25, 1.0])
-
     title_style = dict(
       text=f"{scale}<br>({n} projects)",
       font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
       position='top center',
     )
-
-    # Trace A — Typical Ownership (visible)
     fig.add_trace(go.Pie(
-      labels=share_grouped['owner_type'],
-      values=share_grouped['owner_percent'],
-      domain=domain, title=title_style,
-      marker=dict(colors=[owner_type_colors[ot] for ot in share_grouped['owner_type']]),
-      sort=False, direction='clockwise',
-      textinfo='text', text=share_grouped['text_display'],
-      hovertemplate='<b>%{label}</b><br>%{percent} of ownership share<extra></extra>',
-      showlegend=False, visible=True,
-    ))
-
-    # Trace B — Dollar Value (hidden)
-    fig.add_trace(go.Pie(
-      labels=value_grouped['owner_type'],
-      values=value_grouped['ownership_value'],
+      labels=value_grouped['owner_type'], values=value_grouped['ownership_value'],
       domain=domain, title=title_style,
       marker=dict(colors=[owner_type_colors[ot] for ot in value_grouped['owner_type']]),
       sort=False, direction='clockwise',
       textinfo='text', text=value_grouped['text_display'],
       hovertemplate='<b>%{label}</b><br>$%{value:,.0f}<br>%{percent} of value<extra></extra>',
-      showlegend=False, visible=False,
+      showlegend=False, visible=True,
     ))
 
-  # ── Compact inline legend, centred below the pies ──
   shades_per_category = {}
   for cat in cats_present:
     types_in_cat = sorted(df_owners[df_owners['owner_category'] == cat]['owner_type'].unique())
     shades_per_category[cat] = [owner_type_colors[ot] for ot in types_in_cat if ot in owner_type_colors]
 
   shapes, annotations = [], []
-  swatch_width   = 0.04
-  swatch_height  = 0.025
-  label_padding  = 0.006
-  entry_padding  = 0.025
-  char_width_est = 0.0085
+  swatch_width = 0.04; swatch_height = 0.025
+  label_padding = 0.006; entry_padding = 0.025; char_width_est = 0.0085
 
   def entry_width(cat):
     return swatch_width + label_padding + len(cat) * char_width_est
 
   active_cats = [c for c in cats_present if shades_per_category[c]]
-  total_width = (
-    sum(entry_width(c) for c in active_cats)
-    + entry_padding * max(0, len(active_cats) - 1)
-  )
-  current_x    = (1 - total_width) / 2
-  y_center     = 0.20
+  total_width = sum(entry_width(c) for c in active_cats) + entry_padding * max(0, len(active_cats) - 1)
+  current_x   = (1 - total_width) / 2
+  y_center    = 0.20
   y_swatch_bot = y_center - swatch_height / 2
   y_swatch_top = y_center + swatch_height / 2
 
   for cat in active_cats:
     shades    = shades_per_category[cat]
     seg_width = swatch_width / len(shades)
-
     for k, shade in enumerate(shades):
-      shapes.append(dict(
-        type='rect', xref='paper', yref='paper',
-        x0=current_x + k * seg_width,
-        x1=current_x + (k + 1) * seg_width,
-        y0=y_swatch_bot, y1=y_swatch_top,
-        fillcolor=shade, line=dict(width=0),
-      ))
-    shapes.append(dict(
-      type='rect', xref='paper', yref='paper',
-      x0=current_x, x1=current_x + swatch_width,
-      y0=y_swatch_bot, y1=y_swatch_top,
-      fillcolor='rgba(0,0,0,0)', line=dict(color='lightgray', width=0.5),
-    ))
-    annotations.append(dict(
-      xref='paper', yref='paper',
-      x=current_x + swatch_width + label_padding,
-      y=y_center,
-      xanchor='left', yanchor='middle',
-      text=cat, showarrow=False,
-      font=dict(family=FONT_FAMILY, size=11, color=FONT_COLOR),
-    ))
+      shapes.append(dict(type='rect', xref='paper', yref='paper',
+                         x0=current_x + k * seg_width, x1=current_x + (k + 1) * seg_width,
+                         y0=y_swatch_bot, y1=y_swatch_top, fillcolor=shade, line=dict(width=0)))
+    shapes.append(dict(type='rect', xref='paper', yref='paper',
+                       x0=current_x, x1=current_x + swatch_width,
+                       y0=y_swatch_bot, y1=y_swatch_top,
+                       fillcolor='rgba(0,0,0,0)', line=dict(color='lightgray', width=0.5)))
+    annotations.append(dict(xref='paper', yref='paper',
+                            x=current_x + swatch_width + label_padding, y=y_center,
+                            xanchor='left', yanchor='middle', text=cat, showarrow=False,
+                            font=dict(family=FONT_FAMILY, size=11, color=FONT_COLOR)))
     current_x += entry_width(cat) + entry_padding
-
-  # ── Visibility for the two-view toggle ──
-  n_scales = len(scales)
-  vis_share = [True,  False] * n_scales
-  vis_value = [False, True]  * n_scales
 
   fig.update_layout(
     title=dict(text='Ownership composition by project scale'),
-    showlegend=False,
-    shapes=shapes,
-    annotations=annotations,
-    updatemenus=[dict(
-      type='buttons', direction='left',
-      buttons=[
-        dict(label='Typical Ownership', method='update', args=[{'visible': vis_share}]),
-        dict(label='By Dollar Value',   method='update', args=[{'visible': vis_value}]),
-      ],
-      pad={'r': 10, 't': 10}, showactive=True,
-      x=0.5, y=1.12, xanchor='left', yanchor='top',
-      bgcolor='rgba(255,255,255,0.8)', bordercolor='gray', borderwidth=1,
-    )],
-    margin=dict(t=40, b=0, l=0, r=0),
+    showlegend=False, shapes=shapes, annotations=annotations,
+    margin=dict(t=75, b=0, l=0, r=0),
   )
+  _subtitle(fig,
+            'Slice size = sum of (ownership % × project cost) per owner type at each scale — '
+            'reflects dollar value of ownership stake, not number of projects')
   return fig
 
 
 def create_indigenous_ownership_stacked_internal(df_owners):
   """
-  Single stacked bar showing distribution of Indigenous ownership level
-  across projects. Uses every-second gradient palette colour (reversed).
+  WHAT IT CALCULATES:
+  Counts how many distinct survey responses fall into each level of Indigenous
+  ownership. One response represents one project or portfolio — a portfolio
+  response covering multiple projects still counts as one. The % shown is each
+  level's share of the total response count.
   """
   ownership_counts = df_owners.groupby('indigenous_ownership')['record_id'].nunique().reset_index()
   ownership_counts.columns = ['Category', 'Count']
   total = ownership_counts['Count'].sum()
   ownership_counts['Percentage'] = (ownership_counts['Count'] / total) * 100
-
   order = [
-    'Not sure',
-    'No Indigenous ownership',
-    'Minority Indigenous owned (1-49%)',
-    'Half Indigenous owned (50%)',
-    'Majority Indigenous owned (51-99%)',
-    'Wholly Indigenous owned (100%)',
+    'Not sure', 'No Indigenous ownership',
+    'Minority Indigenous owned (1-49%)', 'Half Indigenous owned (50%)',
+    'Majority Indigenous owned (51-99%)', 'Wholly Indigenous owned (100%)',
   ]
   ownership_counts['Category'] = pd.Categorical(ownership_counts['Category'], categories=order, ordered=True)
   ownership_counts = ownership_counts.sort_values('Category').reset_index(drop=True)
-
   colors = [gradient_palette[i * 2] for i in range(len(ownership_counts))][::-1]
 
   fig = go.Figure()
   for i, row in ownership_counts.iterrows():
     fig.add_trace(go.Bar(
-      x=[''], y=[row['Count']],
-      name=row['Category'],
-      orientation='v',
+      x=[''], y=[row['Count']], name=row['Category'], orientation='v',
       text=f"<b>{row['Percentage']:.1f}%  -  {row['Category']}</b>",
-      textposition='inside',
-      marker=dict(color=colors[i]),
-      hovertemplate=f"<b>{row['Category']}</b><br>Projects: {row['Count']}<br>{row['Percentage']:.1f}%<extra></extra>",
+      textposition='inside', marker=dict(color=colors[i]),
+      hovertemplate=f"<b>{row['Category']}</b><br>Responses: {row['Count']}<br>{row['Percentage']:.1f}%<extra></extra>",
     ))
-
   fig.update_layout(
     title=dict(text='Indigenous project ownership'),
-    barmode='stack',
-    showlegend=False,
-    xaxis=dict(visible=False),
-    yaxis=dict(visible=False),
-    margin=dict(t=40, b=0, l=0, r=0),
+    barmode='stack', showlegend=False,
+    xaxis=dict(visible=False), yaxis=dict(visible=False),
+    margin=dict(t=75, b=0, l=0, r=0),
   )
+  _subtitle(fig,
+            'Count of survey responses at each level of Indigenous ownership — '
+            'counted by response, not individual projects (a portfolio counts once)')
   return fig
 
 
 def create_bottleneck_lollipop_internal(df):
   """
-  Lollipop chart of ownership-related bottlenecks.
-  Pre-selected key bottlenecks only. Single colour from dunsparce palette.
+  WHAT IT CALCULATES:
+  Counts how many distinct survey responses reported experiencing each
+  ownership-related challenge. One response per project or portfolio —
+  a portfolio covering multiple projects counts as one response.
   """
   KEEP = [
     'Challenges with project governance or decision-making',
     'Conflicts among stakeholders or partners',
     'Limited community engagement or support',
   ]
-
   counts_df = (df['bottlenecks'].explode().value_counts()
-    .reset_index()
-    .rename(columns={'index': 'bottleneck', 'bottlenecks': 'count'}))
+    .reset_index().rename(columns={'index': 'bottleneck', 'bottlenecks': 'count'}))
   counts_df.columns = ['bottleneck', 'count']
-  counts_df = (counts_df[counts_df['bottleneck'].isin(KEEP)]
-    .sort_values('count', ascending=True))
+  counts_df = counts_df[counts_df['bottleneck'].isin(KEEP)].sort_values('count', ascending=True)
 
   bottlenecks = counts_df['bottleneck'].tolist()
   counts      = counts_df['count'].tolist()
   y_pos       = list(range(len(bottlenecks)))
   color       = dunsparce_colors[11]
-
-  fig = make_subplots()
+  fig         = make_subplots()
 
   for i, (label, count) in enumerate(zip(bottlenecks, counts)):
-    fig.add_scatter(
-      x=[0, count], y=[i, i], mode='lines',
-      line=dict(color=color, width=6), showlegend=False, hoverinfo='skip',
-    )
-    fig.add_annotation(
-      text=label, x=0, y=i + 0.37, xanchor='left', yanchor='middle',
-      showarrow=False,
-      font=dict(family=FONT_FAMILY, size=13, color='#392000'),
-    )
-    fig.add_annotation(
-      text=f'<b>{count}</b>', x=count, y=i, xanchor='center', yanchor='middle',
-      showarrow=False,
-      font=dict(family=FONT_FAMILY, size=16, color='white'),
-    )
+    fig.add_scatter(x=[0, count], y=[i, i], mode='lines',
+                    line=dict(color=color, width=6), showlegend=False, hoverinfo='skip')
+    fig.add_annotation(text=label, x=0, y=i + 0.37, xanchor='left', yanchor='middle',
+                       showarrow=False, font=dict(family=FONT_FAMILY, size=13, color='#392000'))
+    fig.add_annotation(text=f'<b>{count}</b>', x=count, y=i,
+                       xanchor='center', yanchor='middle', showarrow=False,
+                       font=dict(family=FONT_FAMILY, size=16, color='white'))
 
-  fig.add_scatter(
-    x=counts, y=y_pos, mode='markers',
-    marker=dict(size=30, color=color), showlegend=False,
-    hovertemplate='<b>%{text}</b><br>Count: %{x}<extra></extra>',
-    text=bottlenecks,
-  )
-
+  fig.add_scatter(x=counts, y=y_pos, mode='markers',
+                  marker=dict(size=30, color=color), showlegend=False,
+                  hovertemplate='<b>%{text}</b><br>Responses: %{x}<extra></extra>', text=bottlenecks)
   fig.update_xaxes(visible=False, range=[0, max(counts) * 1.15] if counts else [0, 10], showgrid=False)
   fig.update_yaxes(visible=False, showgrid=False)
   fig.update_layout(
-    margin=dict(l=0, r=0, t=35, b=0),
     title=dict(text='Ownership bottlenecks'),
+    margin=dict(l=0, r=0, t=75, b=0),
   )
+  _subtitle(fig,
+            'Count of survey responses reporting each challenge — '
+            'counted by response, not individual projects (a portfolio counts once)')
   return fig
 
 
-def create_ownership_financing_funnel_internal(df):
+def create_ownership_financing_bubble_internal(df):
   """
-  Funnel chart of top 10 (owner type -> financing category) combinations.
-  Coloured by rank using the gradient palette.
+  WHAT IT CALCULATES:
+  For each (owner category, direct financing source) pair, sums the ownership
+  value across all projects where that combination appears. Ownership value per
+  project = (combined % stake held by that owner category ÷ 100) × total project
+  cost. Only 'Direct sources of capital' are included — grants, debt, equity,
+  community finance, and crowdfunding. Alternative structures and tax incentives
+  are excluded because their dollar value cannot be meaningfully scaled by
+  ownership percentage.
   """
-  pairs = []
-  for _, row in df.iterrows():
-    owners    = row.get('owners') or []
-    financing = row.get('financing_mech') or []
-    if not owners or not financing:
-      continue
-    for o in owners:
-      for f in financing:
-        pairs.append({
-          'Owner':   o.get('owner_type', 'Unknown'),
-          'Finance': f.get('category', 'Unknown'),
-        })
-
-  if not pairs:
+  pairs_df = _build_ownership_financing_pairs(df, direct_only=True)
+  if pairs_df.empty:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No ownership-financing data available'))
     return fig
 
-  pairs_df = pd.DataFrame(pairs)
-  combo_counts = (pairs_df.groupby(['Owner', 'Finance'])
-    .size().reset_index(name='Count'))
-  combo_counts['Label'] = combo_counts['Owner'] + ' -> ' + combo_counts['Finance']
-  combo_counts = combo_counts.sort_values('Count', ascending=False).head(10).reset_index(drop=True)
+  dollar_data = (pairs_df.groupby(['owner_category', 'finance_category'])['owner_dollar']
+    .sum().reset_index(name='amount'))
+  dollar_data['amount_millions'] = dollar_data['amount'] / 1_000_000
 
-  combo_counts['Label_wrapped'] = combo_counts['Label'].apply(lambda x: wrap_text(x, width=50))
+  owner_order   = dollar_data.groupby('owner_category')['amount'].sum().sort_values(ascending=False).index.tolist()
+  finance_order = dollar_data.groupby('finance_category')['amount'].sum().sort_values(ascending=False).index.tolist()
 
-  fig = go.Figure(go.Funnel(
-    y=combo_counts['Label_wrapped'],
-    x=combo_counts['Count'],
-    textposition='inside',
-    marker=dict(color=gradient_palette[:len(combo_counts)], line=dict(width=0)),
-    customdata=combo_counts['Label'],
-    hovertemplate='<b>%{customdata}</b><br>Count: %{x}<extra></extra>',
+  finance_wrap_map = {f: wrap_text(f, width=35) for f in finance_order}
+  finance_order_w  = [finance_wrap_map[f] for f in finance_order]
+  dollar_data['finance_w'] = dollar_data['finance_category'].map(finance_wrap_map)
+
+  def owner_color(cat):
+    scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME.get('Other', {}))
+    return scheme.get('base', '#808080')
+
+  def normalize_size(values, min_size=12, max_size=50):
+    if values.max() == values.min(): return [30] * len(values)
+    return ((values - values.min()) / (values.max() - values.min()) * (max_size - min_size) + min_size).tolist()
+
+  def format_amount(x):
+    if x >= 1000: return f'{x / 1000:.1f}B'
+    if x >= 1:    return f'{x:.1f}M'
+    return f'{x * 1000:.0f}K'
+
+  fig = go.Figure()
+  fig.add_trace(go.Scatter(
+    x=dollar_data['owner_category'],
+    y=dollar_data['finance_w'],
+    mode='markers+text',
+    marker=dict(
+      size=normalize_size(dollar_data['amount_millions']),
+      color=[owner_color(c) for c in dollar_data['owner_category']],
+    ),
+    text=dollar_data['amount_millions'].apply(format_amount),
+    textposition='middle center',
+    textfont=dict(size=9, color='white', family=FONT_FAMILY),
+    hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Ownership value: $%{text}<extra></extra>',
   ))
-
   fig.update_layout(
-    title=dict(text='Top 10 ownership-financing combinations'),
-    yaxis=dict(side='left'),
-    margin=dict(t=50, b=30, l=20, r=30),
+    title=dict(text='Ownership value by direct financing source', x=0, xanchor='left'),
+    margin=dict(l=0, b=0, t=75, r=0),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    xaxis=dict(
+      title='', tickangle=-20, showgrid=False, linecolor='#e0e0e0',
+      categoryorder='array', categoryarray=owner_order,
+      range=[-0.5, len(owner_order) - 0.5],
+    ),
+    yaxis=dict(
+      title='', showgrid=True, gridcolor='#f0f0f0', gridwidth=1,
+      linecolor='#e0e0e0', categoryorder='array',
+      categoryarray=finance_order_w[::-1], range=[-0.8, len(finance_order_w)],
+    ),
+    showlegend=False,
   )
+  _subtitle(fig,
+            'Bubble size = sum of (ownership % × project cost) for projects where that owner category '
+            'used that source. Direct capital sources only (grants, debt, equity, etc.)')
+  return fig
+
+
+def create_ownership_financing_heatmap_internal(df):
+  """
+  WHAT IT CALCULATES:
+  Identical calculation to the bubble chart above, shown as a colour grid
+  for easier comparison across cells. For each (owner category, direct
+  financing source) pair: sum of (combined ownership % ÷ 100 × total project
+  cost) across all projects where that combination occurs. Darker cells = higher
+  total ownership value. Direct capital sources only.
+  """
+  pairs_df = _build_ownership_financing_pairs(df, direct_only=True)
+  if pairs_df.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No ownership-financing data available'))
+    return fig
+
+  dollar_data = (pairs_df.groupby(['owner_category', 'finance_category'])['owner_dollar']
+    .sum().reset_index(name='amount'))
+  dollar_data['amount_millions'] = dollar_data['amount'] / 1_000_000
+
+  owner_order   = dollar_data.groupby('owner_category')['amount'].sum().sort_values(ascending=False).index.tolist()
+  finance_order = dollar_data.groupby('finance_category')['amount'].sum().sort_values(ascending=False).index.tolist()
+
+  finance_wrap_map = {f: wrap_text(f, width=35) for f in finance_order}
+  finance_order_w  = [finance_wrap_map[f] for f in finance_order]
+  dollar_data['finance_w'] = dollar_data['finance_category'].map(finance_wrap_map)
+
+  dollar_pivot = (dollar_data
+    .pivot_table(index='finance_w', columns='owner_category', values='amount_millions', fill_value=0)
+    .reindex(index=finance_order_w, columns=owner_order, fill_value=0))
+
+  max_val = dollar_pivot.values.max() or 1
+  annotations = []
+  for fi, row_label in enumerate(dollar_pivot.index):
+    for oi, col_label in enumerate(dollar_pivot.columns):
+      val = dollar_pivot.iloc[fi, oi]
+      if val <= 0: continue
+      label = f'${val:.1f}M' if val >= 1 else f'${val * 1000:.0f}K'
+      annotations.append(dict(
+        x=col_label, y=row_label, text=f'<b>{label}</b>',
+        showarrow=False, xref='x', yref='y',
+        font=dict(family=FONT_FAMILY, size=10,
+                  color='white' if val > max_val * 0.5 else FONT_COLOR),
+      ))
+
+  fig = go.Figure(go.Heatmap(
+    z=dollar_pivot.values, x=owner_order, y=finance_order_w,
+    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[1]]],
+    showscale=False, xgap=2, ygap=2,
+    hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Ownership value: $%{z:.1f}M<extra></extra>',
+  ))
+  fig.update_layout(
+    title=dict(text='Ownership value by direct financing source (heatmap)', x=0, xanchor='left'),
+    annotations=annotations,
+    margin=dict(l=0, b=0, t=75, r=0),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    xaxis=dict(title='', tickangle=-20, side='bottom'),
+    yaxis=dict(title='', autorange='reversed'),
+  )
+  _subtitle(fig,
+            'Cell value = sum of (ownership % × project cost) across matching projects. '
+            'Darker = higher total ownership value. Direct capital sources only.')
+  return fig
+
+
+def create_ownership_all_financing_heatmap_internal(df):
+  """
+  WHAT IT CALCULATES:
+  For every (owner category, financing mechanism) combination, counts how many
+  distinct survey responses had both that owner category and that financing
+  mechanism in the same project. Includes ALL mechanism types — not just direct
+  capital sources. Dollar values are not shown because many mechanisms (tax
+  credits, leasing, PPPs) do not represent a direct capital contribution that
+  can be scaled by ownership percentage.
+
+  IMPORTANT — counted by response, not individual projects: a single portfolio
+  response representing 51 projects counts as 1, not 51. This prevents large
+  portfolio responses from dominating the counts.
+  """
+  pairs_df = _build_ownership_financing_pairs(df, direct_only=False)
+  if pairs_df.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No ownership-financing data available'))
+    return fig
+
+  count_data = (pairs_df.groupby(['owner_category', 'finance_category'])['record_id']
+    .nunique().reset_index(name='count'))
+
+  owner_order   = count_data.groupby('owner_category')['count'].sum().sort_values(ascending=False).index.tolist()
+  finance_order = count_data.groupby('finance_category')['count'].sum().sort_values(ascending=False).index.tolist()
+  finance_wrap_map = {f: wrap_text(f, width=35) for f in finance_order}
+  finance_order_w  = [finance_wrap_map[f] for f in finance_order]
+
+  count_data['finance_w'] = count_data['finance_category'].map(finance_wrap_map)
+  count_pivot = (count_data
+    .pivot_table(index='finance_w', columns='owner_category', values='count', fill_value=0)
+    .reindex(index=finance_order_w, columns=owner_order, fill_value=0))
+
+  max_val = count_pivot.values.max() or 1
+  annotations = []
+  for fi, row_label in enumerate(count_pivot.index):
+    for oi, col_label in enumerate(count_pivot.columns):
+      val = count_pivot.iloc[fi, oi]
+      if val <= 0: continue
+      annotations.append(dict(
+        x=col_label, y=row_label, text=f'<b>{int(val)}</b>',
+        showarrow=False, xref='x', yref='y',
+        font=dict(family=FONT_FAMILY, size=10,
+                  color='white' if val > max_val * 0.5 else FONT_COLOR),
+      ))
+
+  fig = go.Figure(go.Heatmap(
+    z=count_pivot.values, x=owner_order, y=finance_order_w,
+    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[1]]],
+    showscale=False, xgap=2, ygap=2,
+    hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
+  ))
+  fig.update_layout(
+    title=dict(text='All financing mechanisms by ownership category', x=0, xanchor='left'),
+    annotations=annotations,
+    margin=dict(l=0, b=0, t=75, r=0),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    xaxis=dict(title='', tickangle=-20, side='bottom'),
+    yaxis=dict(title='', autorange='reversed'),
+  )
+  _subtitle(fig,
+            'Count of survey responses where that owner category and financing mechanism co-occur — '
+            'counted by response, not projects (a portfolio response counts once regardless of size)')
   return fig
 
 
@@ -543,8 +680,7 @@ def create_ownership_financing_funnel_internal(df):
 @anvil.server.callable
 def export_ownership_chart(chart_key, img_b64, active_filters, chart_title=''):
   return export_figure_from_bytes(
-    img_b64,
-    active_filters,
+    img_b64, active_filters,
     filename=f'{chart_key}_export.png',
     chart_title=chart_title,
   )
