@@ -144,62 +144,6 @@ def process_owners_data(df):
   return pd.DataFrame(rows)
 
 
-def _build_ownership_financing_pairs(df, direct_only=True):
-  """
-  Returns one row per (record_id, owner_category, finance_category) with:
-
-    owner_dollar = (sum of ownership % for all owners of that category in the
-                    project / 100) × total project cost.
-
-  This is the dollar value that owner category's combined stake represents
-  in the project. Summing owner_dollar across projects gives the total
-  ownership value for any (owner_category, finance_category) cell.
-
-  direct_only=True  — only 'Direct sources of capital' (grants, debt, equity,
-                       community finance, crowdfunding). Dollar scaling is
-                       meaningful here because these map directly to project funding.
-  direct_only=False — all financing mechanisms. Dollar scaling is NOT applied
-                       for this mode; only count (record_id.nunique) is used.
-  """
-  pairs = []
-  for _, row in df.iterrows():
-    owners    = row.get('owners') or []
-    financing = row.get('financing_mech') or []
-    if not owners or not financing:
-      continue
-
-    total_cost = pd.to_numeric(row.get('total_cost'), errors='coerce') or 0
-    rid        = row.get('record_id')
-
-    # Sum ownership % per category (handles multiple owners of same category)
-    cat_percents = {}
-    for o in owners:
-      cat = o.get('owner_category') or 'Unknown'
-      pct = pd.to_numeric(o.get('owner_percent'), errors='coerce') or 0
-      cat_percents[cat] = cat_percents.get(cat, 0) + pct
-
-    if direct_only:
-      fin_items = [f for f in financing
-                   if f.get('parent') == 'Direct sources of capital' and f.get('category')]
-    else:
-      fin_items = [f for f in financing if f.get('category')]
-
-    finance_cats = list({f.get('category') for f in fin_items})
-    if not finance_cats:
-      continue
-
-    for oc, pct_sum in cat_percents.items():
-      for fc in finance_cats:
-        pairs.append({
-          'record_id':        rid,
-          'owner_category':   oc,
-          'finance_category': fc,
-          'owner_dollar':     (pct_sum / 100) * total_cost,
-        })
-
-  if not pairs:
-    return pd.DataFrame()
-  return pd.DataFrame(pairs)
 
 
 # ==================== MAIN CALLABLE ====================
@@ -227,7 +171,6 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     'indigenous_pie':        apply_display_template(create_indigenous_ownership_stacked_internal(df_owners_filtered)),
     'lollipop_chart':        apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
     'bubble_chart':          apply_display_template(create_ownership_financing_bubble_internal(df_raw_filtered)),
-    'heatmap':               apply_display_template(create_ownership_financing_heatmap_internal(df_raw_filtered)),
     'all_financing_heatmap': apply_display_template(create_ownership_all_financing_heatmap_internal(df_raw_filtered)),
   }
 
@@ -468,16 +411,58 @@ def create_bottleneck_lollipop_internal(df):
   return fig
 
 
+def _build_ownership_financing_pairs(df, direct_only=True):
+  """
+  One row per (record_id, owner_category, finance_category) with
+  owner_dollar = (combined ownership % for that category / 100) × total_cost.
+  direct_only=True  → 'Direct sources of capital' only (for dollar scaling).
+  direct_only=False → all financing mechanisms (for response counts).
+  """
+  pairs = []
+  for _, row in df.iterrows():
+    owners    = row.get('owners') or []
+    financing = row.get('financing_mech') or []
+    if not owners or not financing:
+      continue
+
+    total_cost = pd.to_numeric(row.get('total_cost'), errors='coerce') or 0
+    rid        = row.get('record_id')
+
+    cat_percents = {}
+    for o in owners:
+      cat = o.get('owner_category') or 'Unknown'
+      pct = pd.to_numeric(o.get('owner_percent'), errors='coerce') or 0
+      cat_percents[cat] = cat_percents.get(cat, 0) + pct
+
+    if direct_only:
+      fin_items = [f for f in financing
+                   if f.get('parent') == 'Direct sources of capital' and f.get('category')]
+    else:
+      fin_items = [f for f in financing if f.get('category')]
+
+    finance_cats = list({f.get('category') for f in fin_items})
+    if not finance_cats:
+      continue
+
+    for oc, pct_sum in cat_percents.items():
+      for fc in finance_cats:
+        pairs.append({
+          'record_id':        rid,
+          'owner_category':   oc,
+          'finance_category': fc,
+          'owner_dollar':     (pct_sum / 100) * total_cost,
+        })
+
+  if not pairs:
+    return pd.DataFrame()
+  return pd.DataFrame(pairs)
+
+
 def create_ownership_financing_bubble_internal(df):
   """
-  WHAT IT CALCULATES:
-  For each (owner category, direct financing source) pair, sums the ownership
-  value across all projects where that combination appears. Ownership value per
-  project = (combined % stake held by that owner category ÷ 100) × total project
-  cost. Only 'Direct sources of capital' are included — grants, debt, equity,
-  community finance, and crowdfunding. Alternative structures and tax incentives
-  are excluded because their dollar value cannot be meaningfully scaled by
-  ownership percentage.
+  Bubble chart: owner categories (x) vs direct financing sources (y).
+  Bubble size = sum of (ownership % × project cost) across projects where that
+  owner category used that source. Direct capital sources only.
   """
   pairs_df = _build_ownership_financing_pairs(df, direct_only=True)
   if pairs_df.empty:
@@ -525,7 +510,7 @@ def create_ownership_financing_bubble_internal(df):
   ))
   fig.update_layout(
     title=dict(text='Ownership value by direct financing source', x=0, xanchor='left'),
-    margin=dict(l=0, b=0, t=75, r=0),
+    margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
     xaxis=dict(
       title='', tickangle=-20, showgrid=False, linecolor='#e0e0e0',
@@ -539,89 +524,14 @@ def create_ownership_financing_bubble_internal(df):
     ),
     showlegend=False,
   )
-  _subtitle(fig,
-            'Bubble size = sum of (ownership % × project cost) for projects where that owner category '
-            'used that source. Direct capital sources only (grants, debt, equity, etc.)')
-  return fig
-
-
-def create_ownership_financing_heatmap_internal(df):
-  """
-  WHAT IT CALCULATES:
-  Identical calculation to the bubble chart above, shown as a colour grid
-  for easier comparison across cells. For each (owner category, direct
-  financing source) pair: sum of (combined ownership % ÷ 100 × total project
-  cost) across all projects where that combination occurs. Darker cells = higher
-  total ownership value. Direct capital sources only.
-  """
-  pairs_df = _build_ownership_financing_pairs(df, direct_only=True)
-  if pairs_df.empty:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No ownership-financing data available'))
-    return fig
-
-  dollar_data = (pairs_df.groupby(['owner_category', 'finance_category'])['owner_dollar']
-    .sum().reset_index(name='amount'))
-  dollar_data['amount_millions'] = dollar_data['amount'] / 1_000_000
-
-  owner_order   = dollar_data.groupby('owner_category')['amount'].sum().sort_values(ascending=False).index.tolist()
-  finance_order = dollar_data.groupby('finance_category')['amount'].sum().sort_values(ascending=False).index.tolist()
-
-  finance_wrap_map = {f: wrap_text(f, width=35) for f in finance_order}
-  finance_order_w  = [finance_wrap_map[f] for f in finance_order]
-  dollar_data['finance_w'] = dollar_data['finance_category'].map(finance_wrap_map)
-
-  dollar_pivot = (dollar_data
-    .pivot_table(index='finance_w', columns='owner_category', values='amount_millions', fill_value=0)
-    .reindex(index=finance_order_w, columns=owner_order, fill_value=0))
-
-  max_val = dollar_pivot.values.max() or 1
-  annotations = []
-  for fi, row_label in enumerate(dollar_pivot.index):
-    for oi, col_label in enumerate(dollar_pivot.columns):
-      val = dollar_pivot.iloc[fi, oi]
-      if val <= 0: continue
-      label = f'${val:.1f}M' if val >= 1 else f'${val * 1000:.0f}K'
-      annotations.append(dict(
-        x=col_label, y=row_label, text=f'<b>{label}</b>',
-        showarrow=False, xref='x', yref='y',
-        font=dict(family=FONT_FAMILY, size=10,
-                  color='white' if val > max_val * 0.5 else FONT_COLOR),
-      ))
-
-  fig = go.Figure(go.Heatmap(
-    z=dollar_pivot.values, x=owner_order, y=finance_order_w,
-    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[1]]],
-    showscale=False, xgap=2, ygap=2,
-    hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Ownership value: $%{z:.1f}M<extra></extra>',
-  ))
-  fig.update_layout(
-    title=dict(text='Ownership value by direct financing source (heatmap)', x=0, xanchor='left'),
-    annotations=annotations,
-    margin=dict(l=0, b=0, t=75, r=0),
-    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-    xaxis=dict(title='', tickangle=-20, side='bottom'),
-    yaxis=dict(title='', autorange='reversed'),
-  )
-  _subtitle(fig,
-            'Cell value = sum of (ownership % × project cost) across matching projects. '
-            'Darker = higher total ownership value. Direct capital sources only.')
   return fig
 
 
 def create_ownership_all_financing_heatmap_internal(df):
   """
-  WHAT IT CALCULATES:
-  For every (owner category, financing mechanism) combination, counts how many
-  distinct survey responses had both that owner category and that financing
-  mechanism in the same project. Includes ALL mechanism types — not just direct
-  capital sources. Dollar values are not shown because many mechanisms (tax
-  credits, leasing, PPPs) do not represent a direct capital contribution that
-  can be scaled by ownership percentage.
-
-  IMPORTANT — counted by response, not individual projects: a single portfolio
-  response representing 51 projects counts as 1, not 51. This prevents large
-  portfolio responses from dominating the counts.
+  Heatmap: owner categories (x) vs all financing mechanisms (y).
+  Cell value = count of survey responses where that owner category and financing
+  mechanism co-occur. Counted by response, not individual projects.
   """
   pairs_df = _build_ownership_financing_pairs(df, direct_only=False)
   if pairs_df.empty:
@@ -664,14 +574,11 @@ def create_ownership_all_financing_heatmap_internal(df):
   fig.update_layout(
     title=dict(text='All financing mechanisms by ownership category', x=0, xanchor='left'),
     annotations=annotations,
-    margin=dict(l=0, b=0, t=75, r=0),
+    margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
     xaxis=dict(title='', tickangle=-20, side='bottom'),
     yaxis=dict(title='', autorange='reversed'),
   )
-  _subtitle(fig,
-            'Count of survey responses where that owner category and financing mechanism co-occur — '
-            'counted by response, not projects (a portfolio response counts once regardless of size)')
   return fig
 
 

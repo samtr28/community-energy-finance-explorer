@@ -135,7 +135,6 @@ class ownership_models(ownership_modelsTemplate):
     self.lollipop_chart.figure             = all_charts['lollipop_chart']
     self.ownership_financing_bubble.figure = all_charts['bubble_chart']
     # NOTE: ensure a Plot component named 'ownership_financing_heatmap' exists in the designer
-    self.ownership_financing_heatmap.figure = all_charts['heatmap']
     # NOTE: ensure a Plot component named 'all_financing_heatmap_plot' exists in the designer
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
 
@@ -148,7 +147,6 @@ class ownership_models(ownership_modelsTemplate):
       'indigenous_pie':        self.indig_ownership_plot,
       'lollipop_chart':        self.lollipop_chart,
       'bubble_chart':          self.ownership_financing_bubble,
-      'heatmap':               self.ownership_financing_heatmap,
       'all_financing_heatmap': self.all_financing_heatmap_plot,
     }[chart_key]
 

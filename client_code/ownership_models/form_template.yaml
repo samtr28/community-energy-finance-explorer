@@ -10,7 +10,7 @@ components_by_slot:
         spacing:
           margin: ['', null, null, null]
           padding: [null, 20%, null, null]
-        text: Who ownes community energy projects?
+        text: Who owns community energy projects?
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF ULHCAL,GWIGKH', row_background: 'theme:Secondary Container'}
@@ -18,7 +18,7 @@ components_by_slot:
       properties:
         background: ''
         content: |-
-          <p>Community energy projects can be owned in many different ways. A project may involve a single community organization, or it may share ownership across multiple partners — including municipalities, Indigenous nations, cooperatives, non-profits, and private developers. These arrangements shape who benefits, who decides, and how value flows back into communities.</p>
+          <p>Community energy projects can be owned in many different ways. A project may involve a single community organization, or it may share ownership across multiple partners - including municipalities, Indigenous nations, cooperatives, non-profits, and private developers. These arrangements shape who benefits, who decides, and how value flows back into communities.</p>
 
           <p>The Ownership Explorer makes these structures easier to understand by showing the <b>ownership models</b> behind community energy projects in the current dataset. Use this page to explore who owns what, how ownership is distributed across project types and regions, and where community control is strongest.</p>
         font_size: 18
@@ -198,7 +198,7 @@ components_by_slot:
       properties: {height: 50vh}
       type: Plot
     - layout_properties: {grid_position: 'DDAZWJ,CEROQY IAEVHD,HRJSPK'}
-      name: all_financing_heatmap
+      name: all_financing_heatmap_plot
       properties: {height: 50vh}
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'SHXSIN,GDUOTK'}
