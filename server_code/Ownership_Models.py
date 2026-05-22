@@ -733,16 +733,20 @@ def create_single_owner_breakdown_internal(df):
 
 
 def create_multi_owner_semicircles_internal(df):
-  """
-  One semicircle per project with 2+ owners.
-  Each slice = one owner, sized by ownership %, coloured by owner_type
-  (a shade of its owner_category colour).
-
-  Threshold: sum > 90 (lenient — handles partial/rounded ownership data).
-  The stricter 95–105 range used in an earlier refactor was silently
-  dropping valid projects and has been reverted.
-  """
+  # ── DEBUG: show exactly what's happening ──────────────────
   KNOWN = set(CATEGORY_COLOUR_SCHEME.keys())
+  print(f"[semicircles] KNOWN keys: {KNOWN}")
+  print(f"[semicircles] df has {len(df)} rows")
+  for _, row in df.iterrows():
+    owners = row.get('owners') or []
+    if len(owners) < 2:
+      continue
+    print(f"  record {row.get('record_id')} — {len(owners)} owners:")
+    for o in owners:
+      cat = o.get('owner_category')
+      pct = o.get('owner_percent')
+      print(f"    cat={cat!r}  pct={pct!r}  cat_in_KNOWN={cat in KNOWN}")
+  # ── END DEBUG ──────────────────────────────────────────────
 
   pair_set = set()
   for _, row in df.iterrows():
@@ -756,20 +760,19 @@ def create_multi_owner_semicircles_internal(df):
   projects = []
   for _, row in df.iterrows():
     owners = row.get('owners') or []
-    valid  = [
-      o for o in owners
-      if (o.get('owner_percent') or 0) > 0
-      and (o.get('owner_category') or 'Other') in KNOWN
-    ]
+    # NO KNOWN filter, NO threshold — accept any owner with a positive percent
+    valid = [o for o in owners if (o.get('owner_percent') or 0) > 0]
     if len(valid) < 2:
       continue
     values = [float(o['owner_percent']) for o in valid]
-    if sum(values) <= 90:
-      continue
+    print(f"  [semicircles] record {row.get('record_id')} ACCEPTED: "
+          f"n={len(valid)}, sum={sum(values):.0f}")
     projects.append({
       'types':  [o.get('owner_type') or 'Unknown' for o in valid],
       'values': values,
     })
+
+  print(f"[semicircles] total projects built: {len(projects)}")
 
   n = len(projects)
   if n == 0:
@@ -790,25 +793,20 @@ def create_multi_owner_semicircles_internal(df):
   for i, p in enumerate(projects):
     r, c  = i // cols + 1, i % cols + 1
     total = sum(p['values'])
-
     labels      = p['types'] + ['']
-    vals        = p['values'] + [total]          # invisible back-half slice
+    vals        = p['values'] + [total]
     text_labels = [f'{v / total * 100:.0f}%' for v in p['values']] + ['']
-    hover_types = p['types'] + ['']
     colors      = [owner_type_colors.get(t, '#808080') for t in p['types']] + ['rgba(0,0,0,0)']
-
     for t in p['types']:
       if t not in types_used:
         types_used.append(t)
-
     fig.add_trace(go.Pie(
       labels=labels, values=vals,
       marker=dict(colors=colors, line=dict(color='white', width=1)),
       hole=0.5, rotation=270, direction='clockwise', sort=False,
       showlegend=False,
-      customdata=hover_types,
       text=text_labels, textinfo='text', textposition='inside',
-      hovertemplate='<b>%{customdata}</b><br>%{value}%<extra></extra>',
+      hovertemplate='<b>%{label}</b><br>%{value}%<extra></extra>',
     ), row=r, col=c)
 
   for t in types_used:
@@ -827,6 +825,8 @@ def create_multi_owner_semicircles_internal(df):
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
   )
   return fig
+
+
 
 
 # ==================== EXPORT CALLABLE ====================
