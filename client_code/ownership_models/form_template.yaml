@@ -241,7 +241,7 @@ components_by_slot:
           margin: [10%, null, null, null]
         text: The majority of projects in our dataset are owned solely by one organization, as seen in this chart.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'WOJSGA,PCXLAQ'}
+    - layout_properties: {full_width_row: true, grid_position: 'WOJSGA,PCXLAQ'}
       name: heading_1_copy_copy
       properties:
         bold: true
@@ -250,7 +250,7 @@ components_by_slot:
           margin: ['', null, null, null]
         text: What does partnership look like?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'YTJWRX,CCZEWA'}
+    - layout_properties: {full_width_row: true, grid_position: 'YTJWRX,CCZEWA'}
       name: semicircles_plot
       properties: {height: 90vh}
       type: Plot

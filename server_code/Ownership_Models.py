@@ -645,6 +645,7 @@ def create_ownership_all_financing_heatmap_internal(df):
 
 
 
+
 def create_collaboration_heatmap_internal(df):
   all_cats = set()
   project_cat_sets = []
@@ -757,19 +758,12 @@ def create_single_owner_breakdown_internal(df):
   )
   return fig
 
-
-
 def create_multi_owner_semicircles_internal(df):
-  """
-      One semicircle per project (3 cols), coloured by owner_category.
-      Horizontal category legend at bottom (mirrors scale_pies style).
-      apply_display_template is intentionally NOT called on this figure —
-      see get_all_ownership_charts.
-      """
-  # Flat category → colour map derived from config
+  # Derive category colours from config, matching the original CAT_COLORS approach
   CAT_COLORS = {cat: scheme['base'] for cat, scheme in CATEGORY_COLOUR_SCHEME.items()}
+  # Fallback for any category not in the scheme
   CAT_COLORS.setdefault('Other', '#808080')
-  
+
   projects = []
   for _, row in df.iterrows():
     owners = row.get('owners') or []
@@ -784,39 +778,38 @@ def create_multi_owner_semicircles_internal(df):
     if sum(values) <= 90:
       continue
     projects.append({
-      'labels': [o['owner_category']              for o in owners_valid],
+      'labels': [o['owner_category']          for o in owners_valid],
       'values': values,
       'types':  [o.get('owner_type') or 'Unknown' for o in owners_valid],
     })
-  
-    n = len(projects)
+
+  n = len(projects)
   if n == 0:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No multi-owner projects for selected filters'))
     return fig
-  
-    cols   = 3
+
+  cols   = 2
   rows_n = math.ceil(n / cols)
   fig = make_subplots(
     rows=rows_n, cols=cols,
     specs=[[{'type': 'domain'}] * cols for _ in range(rows_n)],
     subplot_titles=[f'Project {i + 1}' for i in range(n)],
-    vertical_spacing=0.03,
-    horizontal_spacing=0.01,
+    vertical_spacing=0.06, horizontal_spacing=0.02,
   )
-  
+
   cats_used = set()
   for i, p in enumerate(projects):
     r, c  = i // cols + 1, i % cols + 1
     total = sum(p['values'])
     cats_used.update(p['labels'])
-  
+
     labels      = p['labels'] + ['']
-    vals        = p['values'] + [total]           # invisible back-half
+    vals        = p['values'] + [total]
     text_labels = [f'{v / total * 100:.0f}%' for v in p['values']] + ['']
     hovertypes  = p['types'] + ['']
-    colors      = [CAT_COLORS.get(c, '#808080') for c in p['labels']] + ['rgba(0,0,0,0)']
-  
+    colors      = [CAT_COLORS[cat] for cat in p['labels']] + ['rgba(0,0,0,0)']
+
     fig.add_trace(go.Pie(
       labels=labels, values=vals,
       marker=dict(colors=colors),
@@ -826,38 +819,28 @@ def create_multi_owner_semicircles_internal(df):
       text=text_labels, textinfo='text', textposition='inside',
       hovertemplate='<b>%{label}</b><br>%{customdata}<br>%{value}%<extra></extra>',
     ), row=r, col=c)
-  
-    # Horizontal legend — one square marker per category (mirrors scale_pies)
-    for cat, color in CAT_COLORS.items():
-      if cat in cats_used:
-        fig.add_trace(go.Scatter(
-          x=[None], y=[None], mode='markers',
-          marker=dict(size=12, color=color, symbol='square'),
-          name=cat, showlegend=True,
-        ))
-  
-      fig.update_layout(
-        title=f'Ownership breakdown — multi-owner projects (n={n})',
-        height=max(300, 220 * rows_n),
-        margin=dict(l=0, r=0, t=70, b=50),
-        paper_bgcolor='white',
-        plot_bgcolor='rgba(0,0,0,0)',
-        legend=dict(
-          orientation='h',
-          yanchor='bottom', y=-0.25,
-          xanchor='center', x=0.5,
-          font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-        ),
-        xaxis=dict(visible=False),
-        yaxis=dict(visible=False),
-        font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-      )
+
+    # Legend — one scatter per category actually used
+  for cat, color in CAT_COLORS.items():
+    if cat in cats_used:
+      fig.add_trace(go.Scatter(
+        x=[None], y=[None], mode='markers',
+        marker=dict(size=11, color=color),
+        name=cat, showlegend=True,
+      ))
+
+  fig.update_layout(
+    title=f'Ownership breakdown — multi-owner projects (n={n})',
+    height=250 * rows_n,
+    margin=dict(t=70, b=10, l=0, r=0),
+    paper_bgcolor='white',
+    plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(visible=False),
+    yaxis=dict(visible=False),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+  )
   fig.update_annotations(font_size=12)
   return fig
-
-
-
-
 
 # ==================== EXPORT CALLABLE ====================
 
