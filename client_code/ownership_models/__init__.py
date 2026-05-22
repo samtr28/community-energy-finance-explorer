@@ -134,9 +134,9 @@ class ownership_models(ownership_modelsTemplate):
     self.indig_ownership_plot.figure       = all_charts['indigenous_pie']
     self.lollipop_chart.figure             = all_charts['lollipop_chart']
     self.ownership_financing_bubble.figure = all_charts['bubble_chart']
-    # NOTE: ensure a Plot component named 'ownership_financing_heatmap' exists in the designer
-    # NOTE: ensure a Plot component named 'all_financing_heatmap_plot' exists in the designer
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
+    self.ownership_boxplot_plot.figure     = all_charts['ownership_boxplot']
+    self.ownership_tiers_histogram.figure = all_charts['ownership_tiers_histogram']
 
   # ==================== CHART DOWNLOAD ====================
 
@@ -148,6 +148,8 @@ class ownership_models(ownership_modelsTemplate):
       'lollipop_chart':        self.lollipop_chart,
       'bubble_chart':          self.ownership_financing_bubble,
       'all_financing_heatmap': self.all_financing_heatmap_plot,
+      'ownership_boxplot':     self.ownership_boxplot_plot,  # NEW
+      'ownership_tiers_histogram': self.ownership_tiers_histogram
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):
@@ -189,3 +191,9 @@ class ownership_models(ownership_modelsTemplate):
   #
   # def download_all_financing_btn_click(self, **event_args):
   #   self._download_chart('all_financing_heatmap', button=self.download_all_financing_btn)
+
+  # def download_boxplot_btn_click(self, **event_args):
+  #   self._download_chart('ownership_boxplot', button=self.download_boxplot_btn)
+
+    # def download_histogram_btn_click(self, **event_args):
+  #   self._download_chart('ownership_tiers_histogram', button=self.download_boxplot_btn)

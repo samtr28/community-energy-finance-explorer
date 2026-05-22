@@ -163,6 +163,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     return {k: empty_fig for k in [
       'ownership_treemap', 'scale_pies', 'indigenous_pie',
       'lollipop_chart', 'bubble_chart', 'heatmap', 'all_financing_heatmap',
+      'ownership_boxplot', 'ownership_tier_histogram'
     ]}
 
   return {
@@ -172,7 +173,12 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     'lollipop_chart':        apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
     'bubble_chart':          apply_display_template(create_ownership_financing_bubble_internal(df_raw_filtered)),
     'all_financing_heatmap': apply_display_template(create_ownership_all_financing_heatmap_internal(df_raw_filtered)),
+    # Box plot (current)
+    'ownership_boxplot': apply_display_template(create_ownership_boxplot_internal(df_owners_filtered)),
+    #  histogram tiers
+    'ownership_tiers_histogram': apply_display_template(create_ownership_tiers_histogram_internal(df_owners_filtered)),
   }
+
 
 
 # ==================== CHART CREATION ====================
@@ -323,6 +329,125 @@ def create_ownership_scale_pies_internal(df_owners):
   return fig
 
 
+def create_ownership_boxplot_internal(df_owners):
+  df_plot = df_owners[df_owners['owner_percent'] > 0].copy()
+  if df_plot.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No ownership data available'))
+    return fig
+
+  type_order = (
+    df_plot.groupby('owner_category')['owner_percent']   # changed
+      .median()
+      .sort_values(ascending=False)
+      .index.tolist()
+  )
+
+  # Use category-level base colours instead of per-type colours
+  color_map = {
+    cat: CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other'])['base']
+    for cat in type_order
+  }
+
+  fig = px.box(
+    df_plot,
+    x='owner_category',                                   # changed
+    y='owner_percent',
+    points='all',
+    color='owner_category',                               # changed
+    color_discrete_map=color_map,
+    category_orders={'owner_category': type_order},       # changed
+    hover_data=['project_name', 'owner_type'],            # owner_type now in hover
+  )
+
+  
+  fig.update_layout(
+    showlegend=False,
+    yaxis_title='', xaxis_title='',
+    xaxis=dict(tickangle=20, linecolor='grey', showline=True),
+    yaxis=dict(ticksuffix='%', linecolor='grey', showline=True),
+    margin=dict(l=0, r=0, b=0, t=75),
+    title=dict(text='Typical ownership stake by owner category'),
+  )
+  _subtitle(fig,
+            'Each point = one owner entry on one project — '
+            'shows spread of ownership %, not dollar value')
+  return fig
+
+def create_ownership_tiers_histogram_internal(df_owners):
+  """
+  WHAT IT CALCULATES:
+  One mini bar chart per owner category showing how many owner entries
+  fall into each ownership stake bracket.
+  """
+  TIERS = ['<25%', '25–50%', '51–74%', '75–99%', '100%']
+  TIER_COLORS = {
+    '<25%':   '#c9e4ca',
+    '25–50%': '#87bba2',
+    '51–74%': '#55828b',
+    '75–99%': '#3b6064',
+    '100%':   '#27474e',
+  }
+
+  def assign_tier(pct):
+    if pct < 25:  return '<25%'
+    if pct <= 50: return '25–50%'
+    if pct <= 74: return '51–74%'
+    if pct <= 99: return '75–99%'
+    return '100%'
+
+  df_plot = df_owners[df_owners['owner_percent'] > 0].copy()
+  df_plot['tier'] = df_plot['owner_percent'].apply(assign_tier)
+
+  cat_order = (df_plot.groupby('owner_category')['owner_percent']
+    .median().sort_values(ascending=False).index.tolist())
+
+  n_cats = len(cat_order)
+  fig = make_subplots(
+    rows=1, cols=n_cats,
+    shared_yaxes=True,
+    subplot_titles=cat_order,
+    horizontal_spacing=0.04,
+  )
+
+  for col_i, cat in enumerate(cat_order, start=1):
+    sub = df_plot[df_plot['owner_category'] == cat]
+    tier_counts = sub['tier'].value_counts().reindex(TIERS, fill_value=0)
+
+    for tier in TIERS:
+      count = tier_counts[tier]
+      fig.add_trace(go.Bar(
+        x=[tier],
+        y=[count],
+        name=tier,
+        marker_color=TIER_COLORS[tier],
+        showlegend=(col_i == 1),  # legend only from first subplot
+        hovertemplate=f'<b>{cat}</b><br>{tier}: {count}<extra></extra>',
+      ), row=1, col=col_i)
+
+    fig.update_xaxes(
+      tickangle=45,
+      tickfont=dict(size=9),
+      showticklabels=True,
+      row=1, col=col_i,
+    )
+
+  fig.update_yaxes(
+    title_text='Owner entries', col=1,
+    showgrid=True, gridcolor='#f0f0f0',
+  )
+  fig.update_layout(
+    barmode='group',
+    title=dict(text='Ownership stake distribution by category'),
+    legend=dict(title='Stake bracket', traceorder='normal'),
+    margin=dict(l=0, r=0, b=0, t=75),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+  )
+  _subtitle(fig, 'Each panel = one owner category — bars show count of entries per stake bracket')
+  return fig
+
+
+
 def create_indigenous_ownership_stacked_internal(df_owners):
   """
   WHAT IT CALCULATES:
@@ -402,7 +527,7 @@ def create_bottleneck_lollipop_internal(df):
   fig.update_xaxes(visible=False, range=[0, max(counts) * 1.15] if counts else [0, 10], showgrid=False)
   fig.update_yaxes(visible=False, showgrid=False)
   fig.update_layout(
-    title=dict(text='Ownership bottlenecks'),
+    title=dict(text='Governance bottlenecks'),
     margin=dict(l=0, r=0, t=75, b=0),
   )
   _subtitle(fig,

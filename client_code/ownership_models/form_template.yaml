@@ -154,56 +154,82 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'FBOOFI,SRCHLZ'}
       name: heading_1
       properties:
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-        text: Who owns community energy projects?
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'XHUPAC,UTPVPF SIONUB,YDYLWX'}
-      name: text_1
-      properties: {text: 'Community energy projects involve different ownership models, each with distinct implications for community control, financing capacity, and local benefits. Cooperatives, municipalities, non-profits, and other ownership types bring unique strengths to developing renewable energy infrastructure. This visualization examines who owns these projects from two angles: the number of projects controlled by each owner type, and the total capital invested across those projects. These perspectives reveal both the breadth of participation and the concentration of financial resources in the sector.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'XHUPAC,UTPVPF BJBGMJ,LRFAGP'}
-      name: heading_2
-      properties: {bold: true, scale: small, style: title, text: By Dollar Amount}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'XHUPAC,UTPVPF IXBHYH,QFJDYO'}
-      name: text_2
-      properties: {text: 'This view shows project ownership weighted by investment amount. A $10 million project counts 10× more than a $1 million project. This reveals who has the largest financial stakes in community energy and which owner types undertake higher-cost projects. Note: this doesn''t account for differences in typical project size across owner types.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'XHUPAC,BVWRHW'}
-      name: ownership_treemap
-      properties:
-        height: 55vh
-        margin: ['0', null, '0', null]
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'AFQMYM,FDVABP'}
-      name: heading_1_copy_copy
-      properties:
+        bold: true
         font_family: serif
         spacing:
           margin: ['', null, null, null]
         text: Another title
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FRWSFJ'}
+    - layout_properties: {full_width_row: true, grid_position: 'SIONUB,SCDLYW'}
+      name: ownership_treemap
+      properties:
+        height: 55vh
+        margin: ['0', null, '0', null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'SIONUB,YDYLWX FHSDSN,NRLWVK'}
+      name: text_1
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: 'Community energy projects involve different ownership models, each with distinct implications for community control, financing capacity, and local benefits. Cooperatives, municipalities, non-profits, and other ownership types bring unique strengths to developing renewable energy infrastructure. This visualization examines who owns these projects from two angles: the number of projects controlled by each owner type, and the total capital invested across those projects. These perspectives reveal both the breadth of participation and the concentration of financial resources in the sector.'
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'SIONUB,YDYLWX IESQQE,VPBGSG'}
+      name: heading_2
+      properties: {bold: true, scale: small, style: title, text: By Dollar Amount}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'SIONUB,YDYLWX KUHATT,NTEDBM'}
+      name: text_2
+      properties: {text: 'This view shows project ownership weighted by investment amount. A $10 million project counts 10× more than a $1 million project. This reveals who has the largest financial stakes in community energy and which owner types undertake higher-cost projects. Note: this doesn''t account for differences in typical project size across owner types.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'QOROPM,BVJDGR'}
+      name: image_6
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'AFQMYM,FDVABP'}
+      name: heading_1_copy_copy
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Another title
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG CXCBEW,WRVPSV'}
+      name: ownership_financing_bubble
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG HVDDFK,ZIQIUS'}
+      name: all_financing_heatmap_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,YPNZXR'}
       name: text_1_copy_copy
       properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
         text: |-
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'DDAZWJ,CEROQY BYFYIX,UUBRBX'}
-      name: ownership_financing_bubble
-      properties: {height: 50vh}
-      type: Plot
-    - layout_properties: {grid_position: 'DDAZWJ,CEROQY IAEVHD,HRJSPK'}
-      name: all_financing_heatmap_plot
-      properties: {height: 50vh}
-      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'ALXOHF,RSUFQA'}
+      name: image_9
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'SHXSIN,GDUOTK'}
       name: heading_1_copy_copy_copy
       properties:
+        bold: true
         font_family: serif
         spacing:
           margin: ['', null, null, null]
@@ -250,47 +276,102 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'UAHZKB,ZUVYPB'}
       name: text_1_copy_copy_copy
       properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
         text: |-
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'DESCUK,UFCECJ'}
+      name: image_10
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'IAKNCN,AHLUZI'}
+      name: heading_1_copy_4
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Another Title
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'ZJHILT,MUMZPX'}
+      name: ownership_boxplot_plot
+      properties: {}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'ZJHILT,TEPDUI'}
+      name: ownership_tiers_histogram
+      properties: {}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'GRDYTJ,SPVRLF'}
+      name: image_8
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'PTOZCX,BHFQQO'}
       name: heading_1_copy
       properties:
+        bold: true
         font_family: serif
         spacing:
           margin: ['', null, null, null]
         text: Indigenous participation in community energy
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,XBRBEG'}
-      name: text_1_copy
-      properties:
-        text: |-
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,ITZKFE'}
+    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,FKMOZV'}
       name: indig_ownership_plot
       properties:
         height: 45vh
         margin: ['0', null, '0', null]
       type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,XXLSUV'}
+      name: text_1_copy
+      properties:
+        font_size: 16
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'VPIQRQ,MMBLBC'}
+      name: image_7
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'LQYVFX,SUUOPE'}
+      name: heading_1_copy_3
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: 'Another Title '
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'SUKSJO,HQNAXQ'}
       name: scale_pies_plot
       properties: {height: 50vh}
       type: Plot
-    - layout_properties: {grid_position: 'NSLNNN,SBVZFN'}
+    - layout_properties: {full_width_row: true, grid_position: 'NSLNNN,SBVZFN'}
       name: text_3
       properties:
         text: |-
           By Dollar Value
           Multiplies each owner's percentage stake by their project's total cost to convert ownership share into a dollar figure, sums those figures by owner type, then displays each type's share of the combined dollar total. Larger projects dominate the picture, so a 100% stake in a $50M project counts far more than a 100% stake in a $50K one. Best for understanding where the financial value is concentrated.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    layout_properties: {full_width_row: true}
+    layout_properties: {}
     name: column_panel_1
-    properties: {col_spacing: large, col_widths: '{"UTPVPF":20,"BVWRHW":40,"ITZKFE":38,"FRWSFJ":20,"CEROQY":40,"HETGSG":40,"ZUVYPB":20,"XBRBEG":20}'}
+    properties: {col_spacing: huge, col_widths: '{"HETGSG":40,"ZUVYPB":20,"FVMCOG":23,"YPNZXR":11,"SCDLYW":40,"YDYLWX":20,"FKMOZV":40,"XXLSUV":20}'}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
