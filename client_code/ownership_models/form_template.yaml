@@ -111,7 +111,8 @@ components_by_slot:
         items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
         placeholder: Indigenous Ownership
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - event_bindings: {change: project_scale_dd_change}
+    - data_bindings: []
+      event_bindings: {change: project_scale_dd_change}
       layout_properties: {width: null}
       name: project_scale_dd
       properties:
@@ -199,11 +200,7 @@ components_by_slot:
           margin: ['', null, null, null]
         text: Another title
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG CXCBEW,WRVPSV'}
-      name: ownership_financing_bubble
-      properties: {height: 50vh}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG HVDDFK,ZIQIUS'}
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG'}
       name: all_financing_heatmap_plot
       properties: {height: 50vh}
       type: Plot
@@ -311,7 +308,7 @@ components_by_slot:
       type: Plot
     - layout_properties: {grid_position: 'UHXLOA,OICDKG'}
       name: multi_owner_semicircles_plot
-      properties: {}
+      properties: {height: 90vh}
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'GRDYTJ,SPVRLF'}
       name: image_8
@@ -373,6 +370,14 @@ components_by_slot:
           By Dollar Value
           Multiplies each owner's percentage stake by their project's total cost to convert ownership share into a dollar figure, sums those figures by owner type, then displays each type's share of the combined dollar total. Larger projects dominate the picture, so a 100% stake in a $50M project counts far more than a 100% stake in a $50K one. Best for understanding where the financial value is concentrated.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'NSLNNN,MIQZSL'}
+      name: collaboration_heatmap_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {grid_position: ''}
+      name: single_owner_breakdown_plot
+      properties: {height: 50vh}
+      type: Plot
     layout_properties: {}
     name: column_panel_1
     properties: {col_spacing: huge, col_widths: '{"HETGSG":40,"ZUVYPB":20,"FVMCOG":23,"YPNZXR":11,"SCDLYW":40,"YDYLWX":20,"FKMOZV":40,"XXLSUV":20}'}

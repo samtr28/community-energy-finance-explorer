@@ -125,33 +125,33 @@ class ownership_models(ownership_modelsTemplate):
 
   def apply_filters(self):
     self.filter_chips_panel.items = self._build_filter_chips()
-    self.selected_panel.visible   = len(self.filter_chips_panel.items) > 0
+    #self.selected_panel.visible   = len(self.filter_chips_panel.items) > 0
 
     all_charts = anvil.server.call('get_all_ownership_charts', **self._get_filter_kwargs())
 
     self.ownership_treemap.figure          = all_charts['ownership_treemap']
     self.scale_pies_plot.figure            = all_charts['scale_pies']
     self.indig_ownership_plot.figure       = all_charts['indigenous_pie']
-    self.lollipop_chart.figure             = all_charts['lollipop_chart']
-    self.ownership_financing_bubble.figure = all_charts['bubble_chart']
+    self.lollipop_chart.figure              = all_charts['lollipop_chart']   # now governance bottlenecks
+    # self.ownership_financing_bubble.figure = all_charts['bubble_chart']    # REMOVED
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
-    self.ownership_boxplot_plot.figure     = all_charts['ownership_boxplot']
-    self.ownership_tiers_histogram.figure = all_charts['ownership_tiers_histogram']
-    self.multi_owner_semicircles_plot.figure = all_charts['multi_owner_semicircles']
-
+    self.ownership_boxplot_plot.figure      = all_charts['ownership_boxplot']
+    self.ownership_tiers_histogram.figure   = all_charts['ownership_tiers_histogram']
+    self.collaboration_heatmap_plot.figure  = all_charts['collaboration_heatmap']    # NEW
+    self.single_owner_breakdown_plot.figure = all_charts['single_owner_breakdown']   # NEW
   # ==================== CHART DOWNLOAD ====================
 
   def _get_plot_component(self, chart_key):
     return {
-      'ownership_treemap':     self.ownership_treemap,
-      'scale_pies':            self.scale_pies_plot,
-      'indigenous_pie':        self.indig_ownership_plot,
-      'lollipop_chart':        self.lollipop_chart,
-      'bubble_chart':          self.ownership_financing_bubble,
-      'all_financing_heatmap': self.all_financing_heatmap_plot,
-      'ownership_boxplot':     self.ownership_boxplot_plot,  # NEW
+      'ownership_treemap':         self.ownership_treemap,
+      'scale_pies':                self.scale_pies_plot,
+      'indigenous_pie':            self.indig_ownership_plot,
+      'lollipop_chart':            self.lollipop_chart,
+      'all_financing_heatmap':     self.all_financing_heatmap_plot,
+      'ownership_boxplot':         self.ownership_boxplot_plot,
       'ownership_tiers_histogram': self.ownership_tiers_histogram,
-      'multi_owner_semicircles':   self.multi_owner_semicircles_plot  # NEW
+      'collaboration_heatmap':     self.collaboration_heatmap_plot,    # NEW
+      'single_owner_breakdown':    self.single_owner_breakdown_plot,   # NEW
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):
