@@ -164,7 +164,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'SIONUB,SCDLYW'}
       name: ownership_treemap
       properties:
-        height: 55vh
+        height: 60vh
         margin: ['0', null, '0', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'SIONUB,YDYLWX FHSDSN,NRLWVK'}
@@ -183,39 +183,7 @@ components_by_slot:
       name: text_2
       properties: {text: 'This view shows project ownership weighted by investment amount. A $10 million project counts 10× more than a $1 million project. This reveals who has the largest financial stakes in community energy and which owner types undertake higher-cost projects. Note: this doesn''t account for differences in typical project size across owner types.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'QOROPM,BVJDGR'}
-      name: image_6
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['16', null, '16', null]
-        source: ' _/theme/dots.png'
-      type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'AFQMYM,FDVABP'}
-      name: heading_1_copy_copy
-      properties:
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-        text: Another title
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG'}
-      name: all_financing_heatmap_plot
-      properties: {height: 50vh}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,YPNZXR'}
-      name: text_1_copy_copy
-      properties:
-        font_size: 16
-        spacing:
-          margin: [10%, null, null, null]
-        text: |-
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'ALXOHF,RSUFQA'}
+    - layout_properties: {full_width_row: true, grid_position: 'NVYGUM,PYJVGL'}
       name: image_9
       properties:
         height: 1vh
@@ -223,55 +191,75 @@ components_by_slot:
         margin: ['16', null, '16', null]
         source: ' _/theme/dots.png'
       type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'SHXSIN,GDUOTK'}
+    - layout_properties: {full_width_row: true, grid_position: 'EKORXM,WVFFMF'}
       name: heading_1_copy_copy_copy
       properties:
         bold: true
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: Guidance on Ownership Structures
+        text: Where do projects face governance challenges?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: heading_1_copy_2
-          properties:
-            scale: large
-            spacing:
-              margin: ['', null, null, null]
-            style: title
-            text: Where do projects face challenges?
-            text_color: ''
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - layout_properties: {slot: card-content-container-slot}
-          name: lollipop_chart
-          properties: {height: 30vh}
-          type: Plot
-        - layout_properties: {slot: card-content-container-slot}
-          name: button_1
-          properties:
-            align: center
-            background_color: theme:On Tertiary Container
-            bold: true
-            font_size: 14
-            icon: mi:question_exchange
-            icon_color: '#0db0ba'
-            icon_size: 25
-            spacing:
-              padding: [null, '16', null, null]
-            text: How can I get help for my project?
-          type: form:dep_9kcxnwm3upyjd:_Components.Button
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_1
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'UAHZKB,HETGSG'}
-      name: card_1
-      properties: {background_color: 'theme:Tertiary Container'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - layout_properties: {full_width_row: true, grid_position: 'UAHZKB,ZUVYPB'}
+    - layout_properties: {full_width_row: true, grid_position: ',AYLFWL'}
+      name: lollipop_chart
+      properties: {height: 30vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: ',undefined'}
       name: text_1_copy_copy_copy
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'ULHNHM,NNPXAX'}
+      name: image_6
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'ULRAFE,SLBFAB'}
+      name: heading_1_copy_copy_2
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: How many projects are owned only by one organization?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'DWGUIM,NPXQGL'}
+      name: single_owner_breakdown_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DWGUIM,UVOTIU'}
+      name: text_1_copy_copy_2
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: The majority of projects in our dataset are owned solely by one organization, as seen in this chart.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'WOJSGA,PCXLAQ'}
+      name: heading_1_copy_copy
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: What does partnership look like?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'YTJWRX,CCZEWA'}
+      name: semicircles_plot
+      properties: {height: 90vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG'}
+      name: all_financing_heatmap_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,YPNZXR'}
+      name: text_1_copy_copy
       properties:
         font_size: 16
         spacing:
@@ -305,10 +293,6 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'ZJHILT,TEPDUI'}
       name: ownership_tiers_histogram
       properties: {}
-      type: Plot
-    - layout_properties: {grid_position: 'UHXLOA,OICDKG'}
-      name: multi_owner_semicircles_plot
-      properties: {height: 90vh}
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'GRDYTJ,SPVRLF'}
       name: image_8
@@ -374,13 +358,9 @@ components_by_slot:
       name: collaboration_heatmap_plot
       properties: {height: 50vh}
       type: Plot
-    - layout_properties: {grid_position: ''}
-      name: single_owner_breakdown_plot
-      properties: {height: 50vh}
-      type: Plot
     layout_properties: {}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"HETGSG":40,"ZUVYPB":20,"FVMCOG":23,"YPNZXR":11,"SCDLYW":40,"YDYLWX":20,"FKMOZV":40,"XXLSUV":20}'}
+    properties: {col_spacing: huge, col_widths: '{"FVMCOG":23,"YPNZXR":11,"SCDLYW":40,"YDYLWX":20,"FKMOZV":40,"XXLSUV":20}'}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}

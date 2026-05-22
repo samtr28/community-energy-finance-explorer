@@ -200,18 +200,20 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     'multi_owner_semicircles':   _build('multi_owner_semicircles',   lambda: create_multi_owner_semicircles_internal(df_raw_filtered),       df_raw_filtered),
   }
 
-  return {k: apply_display_template(v) for k, v in charts.items()}
+  # Apply display template to all charts except semicircles, which uses a
+  # mixed pie+scatter layout that apply_display_template breaks.
+  result = {}
+  for k, v in charts.items():
+    if k == 'multi_owner_semicircles':
+      result[k] = v   # no template — figure manages its own styling
+    else:
+      result[k] = apply_display_template(v)
+  return result
 
 
 # ==================== CHART CREATION ====================
 
 def create_ownership_treemap_internal(df_owners):
-  """
-  Treemap: dollar value of ownership by type (owner % × project cost).
-
-  Fix: CATEGORY_COLOUR_SCHEME['Other'] direct key access replaced with _cat_colour()
-  so projects with owner_category='Other' no longer raise a KeyError.
-  """
   df_val = df_owners.copy()
   df_val['owner_percent'] = pd.to_numeric(df_val['owner_percent'], errors='coerce')
   df_val['total_cost']    = pd.to_numeric(df_val['total_cost'],    errors='coerce')
@@ -223,28 +225,30 @@ def create_ownership_treemap_internal(df_owners):
     fig.update_layout(title=dict(text='No ownership value data available'))
     return fig
 
-  value_data = df_val.groupby(
-    ['owner_type', 'owner_category'], as_index=False
-  )['ownership_value'].sum()
-
+  value_data   = df_val.groupby(['owner_type', 'owner_category'], as_index=False)['ownership_value'].sum()
   owner_colors = get_owner_type_colors_categorical(_owner_type_category_pairs(df_owners))
   cat_totals   = value_data.groupby('owner_category')['ownership_value'].sum()
 
-  labels, parents, values, colors_list = [], [], [], []
+  ids_list, labels, parents, values, colors_list = [], [], [], [], []
 
+  # Category (root) nodes — ID prefixed so 'Other' category ≠ 'Other' type
   for cat, total in cat_totals.items():
+    ids_list.append(f'cat::{cat}')
     labels.append(cat)
     parents.append('')
     values.append(total)
-    colors_list.append(_cat_colour(cat))          # ← safe, never KeyError
+    colors_list.append(_cat_colour(cat))
 
+    # Owner-type (leaf) nodes — parent references the category ID above
   for _, row in value_data.iterrows():
+    ids_list.append(f'type::{row["owner_category"]}::{row["owner_type"]}')
     labels.append(wrap_text(row['owner_type'], width=20))
-    parents.append(row['owner_category'])
+    parents.append(f'cat::{row["owner_category"]}')
     values.append(row['ownership_value'])
     colors_list.append(owner_colors.get(row['owner_type'], '#808080'))
 
   fig = go.Figure(go.Treemap(
+    ids=ids_list,
     labels=labels, parents=parents, values=values,
     branchvalues='total',
     texttemplate='<b>%{label}</b><br>%{percentRoot:.1%}',
@@ -579,6 +583,7 @@ def _build_ownership_financing_pairs(df, direct_only=True):
 
 
 def create_ownership_all_financing_heatmap_internal(df):
+  """Heatmap: owner category × financing mechanism co-occurrence. Blue palette."""
   pairs_df = _build_ownership_financing_pairs(df, direct_only=False)
   if pairs_df.empty:
     fig = go.Figure()
@@ -622,7 +627,7 @@ def create_ownership_all_financing_heatmap_internal(df):
 
   fig = go.Figure(go.Heatmap(
     z=count_pivot.values, x=owner_order, y=finance_order_w,
-    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[1]]],
+    colorscale=[[0, '#f7f9fc'], [1, '#005694']],   # ← blue
     showscale=False, xgap=2, ygap=2,
     hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
   ))
@@ -635,6 +640,9 @@ def create_ownership_all_financing_heatmap_internal(df):
     yaxis=dict(title='', autorange='reversed'),
   )
   return fig
+
+
+
 
 
 def create_collaboration_heatmap_internal(df):
@@ -695,6 +703,10 @@ def create_collaboration_heatmap_internal(df):
 
 
 def create_single_owner_breakdown_internal(df):
+  """
+    Stacked bar: single-owner projects by owner category, coloured by owner type.
+    Wrapped owner-type label shown inside each segment when it fits.
+    """
   rows = []
   for _, row in df.iterrows():
     owners = row.get('owners') or []
@@ -713,8 +725,10 @@ def create_single_owner_breakdown_internal(df):
 
   df_single  = pd.DataFrame(rows)
   counts     = df_single.groupby(['owner_category', 'owner_type']).size().reset_index(name='count')
-  cat_order  = (counts.groupby('owner_category')['count'].sum()
-    .sort_values(ascending=False).index.tolist())
+  cat_order  = (
+    counts.groupby('owner_category')['count'].sum()
+      .sort_values(ascending=False).index.tolist()
+  )
   owner_type_colors = get_owner_type_colors_categorical(_owner_type_category_pairs(df_single))
 
   fig = px.bar(
@@ -723,7 +737,19 @@ def create_single_owner_breakdown_internal(df):
     category_orders={'owner_category': cat_order},
     color_discrete_map=owner_type_colors,
   )
-  fig.update_traces(textposition='none')
+
+  # Add wrapped owner-type label inside each segment; constraintext hides it
+  # automatically if the segment is too narrow to fit
+  for trace in fig.data:
+    wrapped = wrap_text(trace.name, width=14)
+    trace.update(
+      text=[wrapped if (v or 0) > 0 else '' for v in (trace.y or [])],
+      textposition='inside',
+      insidetextanchor='middle',
+      constraintext='inside',
+      textfont=dict(size=9, family=FONT_FAMILY, color='white'),
+    )
+
   fig.update_layout(
     title=dict(text=f'Single-owner projects by owner type ({len(df_single)} projects)'),
     showlegend=False,
@@ -732,99 +758,103 @@ def create_single_owner_breakdown_internal(df):
   return fig
 
 
+
 def create_multi_owner_semicircles_internal(df):
-  # ── DEBUG: show exactly what's happening ──────────────────
-  KNOWN = set(CATEGORY_COLOUR_SCHEME.keys())
-  print(f"[semicircles] KNOWN keys: {KNOWN}")
-  print(f"[semicircles] df has {len(df)} rows")
-  for _, row in df.iterrows():
-    owners = row.get('owners') or []
-    if len(owners) < 2:
-      continue
-    print(f"  record {row.get('record_id')} — {len(owners)} owners:")
-    for o in owners:
-      cat = o.get('owner_category')
-      pct = o.get('owner_percent')
-      print(f"    cat={cat!r}  pct={pct!r}  cat_in_KNOWN={cat in KNOWN}")
-  # ── END DEBUG ──────────────────────────────────────────────
-
-  pair_set = set()
-  for _, row in df.iterrows():
-    for o in (row.get('owners') or []):
-      ot = o.get('owner_type')
-      oc = o.get('owner_category') or 'Other'
-      if ot is not None:
-        pair_set.add((ot, oc))
-  owner_type_colors = get_owner_type_colors_categorical(list(pair_set))
-
+  """
+      One semicircle per project (3 cols), coloured by owner_category.
+      Horizontal category legend at bottom (mirrors scale_pies style).
+      apply_display_template is intentionally NOT called on this figure —
+      see get_all_ownership_charts.
+      """
+  # Flat category → colour map derived from config
+  CAT_COLORS = {cat: scheme['base'] for cat, scheme in CATEGORY_COLOUR_SCHEME.items()}
+  CAT_COLORS.setdefault('Other', '#808080')
+  
   projects = []
   for _, row in df.iterrows():
     owners = row.get('owners') or []
-    # NO KNOWN filter, NO threshold — accept any owner with a positive percent
-    valid = [o for o in owners if (o.get('owner_percent') or 0) > 0]
-    if len(valid) < 2:
+    owners_valid = [
+      o for o in owners
+      if (o.get('owner_percent') or 0) > 0
+      and o.get('owner_category') in CAT_COLORS
+    ]
+    if len(owners_valid) < 2:
       continue
-    values = [float(o['owner_percent']) for o in valid]
-    print(f"  [semicircles] record {row.get('record_id')} ACCEPTED: "
-          f"n={len(valid)}, sum={sum(values):.0f}")
+    values = [o['owner_percent'] for o in owners_valid]
+    if sum(values) <= 90:
+      continue
     projects.append({
-      'types':  [o.get('owner_type') or 'Unknown' for o in valid],
+      'labels': [o['owner_category']              for o in owners_valid],
       'values': values,
+      'types':  [o.get('owner_type') or 'Unknown' for o in owners_valid],
     })
-
-  print(f"[semicircles] total projects built: {len(projects)}")
-
-  n = len(projects)
+  
+    n = len(projects)
   if n == 0:
     fig = go.Figure()
     fig.update_layout(title=dict(text='No multi-owner projects for selected filters'))
     return fig
-
-  cols   = 2
+  
+    cols   = 3
   rows_n = math.ceil(n / cols)
   fig = make_subplots(
     rows=rows_n, cols=cols,
     specs=[[{'type': 'domain'}] * cols for _ in range(rows_n)],
     subplot_titles=[f'Project {i + 1}' for i in range(n)],
-    vertical_spacing=0.06, horizontal_spacing=0.02,
+    vertical_spacing=0.03,
+    horizontal_spacing=0.01,
   )
-
-  types_used = []
+  
+  cats_used = set()
   for i, p in enumerate(projects):
     r, c  = i // cols + 1, i % cols + 1
     total = sum(p['values'])
-    labels      = p['types'] + ['']
-    vals        = p['values'] + [total]
+    cats_used.update(p['labels'])
+  
+    labels      = p['labels'] + ['']
+    vals        = p['values'] + [total]           # invisible back-half
     text_labels = [f'{v / total * 100:.0f}%' for v in p['values']] + ['']
-    colors      = [owner_type_colors.get(t, '#808080') for t in p['types']] + ['rgba(0,0,0,0)']
-    for t in p['types']:
-      if t not in types_used:
-        types_used.append(t)
+    hovertypes  = p['types'] + ['']
+    colors      = [CAT_COLORS.get(c, '#808080') for c in p['labels']] + ['rgba(0,0,0,0)']
+  
     fig.add_trace(go.Pie(
       labels=labels, values=vals,
-      marker=dict(colors=colors, line=dict(color='white', width=1)),
+      marker=dict(colors=colors),
       hole=0.5, rotation=270, direction='clockwise', sort=False,
       showlegend=False,
+      customdata=hovertypes,
       text=text_labels, textinfo='text', textposition='inside',
-      hovertemplate='<b>%{label}</b><br>%{value}%<extra></extra>',
+      hovertemplate='<b>%{label}</b><br>%{customdata}<br>%{value}%<extra></extra>',
     ), row=r, col=c)
-
-  for t in types_used:
-    fig.add_trace(go.Scatter(
-      x=[None], y=[None], mode='markers',
-      marker=dict(size=11, color=owner_type_colors.get(t, '#808080')),
-      name=wrap_text(t, 25), showlegend=True,
-    ))
-
-  fig.update_layout(
-    title=dict(text=f'Ownership breakdown — multi-owner projects (n={n})'),
-    height=250 * rows_n,
-    margin=dict(l=0, r=0, t=75, b=10),
-    paper_bgcolor='white', plot_bgcolor='rgba(0,0,0,0)',
-    xaxis=dict(visible=False), yaxis=dict(visible=False),
-    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-  )
+  
+    # Horizontal legend — one square marker per category (mirrors scale_pies)
+    for cat, color in CAT_COLORS.items():
+      if cat in cats_used:
+        fig.add_trace(go.Scatter(
+          x=[None], y=[None], mode='markers',
+          marker=dict(size=12, color=color, symbol='square'),
+          name=cat, showlegend=True,
+        ))
+  
+      fig.update_layout(
+        title=f'Ownership breakdown — multi-owner projects (n={n})',
+        height=max(300, 220 * rows_n),
+        margin=dict(l=0, r=0, t=70, b=50),
+        paper_bgcolor='white',
+        plot_bgcolor='rgba(0,0,0,0)',
+        legend=dict(
+          orientation='h',
+          yanchor='bottom', y=-0.25,
+          xanchor='center', x=0.5,
+          font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+        ),
+        xaxis=dict(visible=False),
+        yaxis=dict(visible=False),
+        font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+      )
+  fig.update_annotations(font_size=12)
   return fig
+
 
 
 

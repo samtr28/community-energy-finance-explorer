@@ -20,10 +20,7 @@ class ownership_models(ownership_modelsTemplate):
     self._initializing   = True
     self._filters_loaded = False
     self._setup_dropdown_formatters()
-    self.project_scale_dd.selected = [
-      "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
-      "Large ($5M-$25M)", "Very Large ($25M-$100M)"
-    ]
+
     self._initializing = False
 
   def form_show(self, **event_args):
@@ -139,6 +136,7 @@ class ownership_models(ownership_modelsTemplate):
     self.ownership_tiers_histogram.figure   = all_charts['ownership_tiers_histogram']
     self.collaboration_heatmap_plot.figure  = all_charts['collaboration_heatmap']    # NEW
     self.single_owner_breakdown_plot.figure = all_charts['single_owner_breakdown']   # NEW
+    self.semicircles_plot.figure = all_charts['multi_owner_semicircles']
   # ==================== CHART DOWNLOAD ====================
 
   def _get_plot_component(self, chart_key):
@@ -152,6 +150,7 @@ class ownership_models(ownership_modelsTemplate):
       'ownership_tiers_histogram': self.ownership_tiers_histogram,
       'collaboration_heatmap':     self.collaboration_heatmap_plot,    # NEW
       'single_owner_breakdown':    self.single_owner_breakdown_plot,   # NEW
+      'multi_owner_semicircles': self.semicircles_plot,
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):
