@@ -163,7 +163,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     return {k: empty_fig for k in [
       'ownership_treemap', 'scale_pies', 'indigenous_pie',
       'lollipop_chart', 'bubble_chart', 'heatmap', 'all_financing_heatmap',
-      'ownership_boxplot', 'ownership_tier_histogram'
+      'ownership_boxplot', 'ownership_tier_histogram', 'multi_owner_semicircles'
     ]}
 
   return {
@@ -177,6 +177,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     'ownership_boxplot': apply_display_template(create_ownership_boxplot_internal(df_owners_filtered)),
     #  histogram tiers
     'ownership_tiers_histogram': apply_display_template(create_ownership_tiers_histogram_internal(df_owners_filtered)),
+    'multi_owner_semicircles':   apply_display_template(create_multi_owner_semicircles_internal(df_raw_filtered)),  # NEW
   }
 
 
@@ -651,6 +652,102 @@ def create_ownership_financing_bubble_internal(df):
   )
   return fig
 
+def create_multi_owner_semicircles_internal(df):
+  """
+  WHAT IT CALCULATES:
+  One semicircle per project that has 2+ owners with a real, known stake.
+  Each slice = one owner, sized by its ownership %, coloured by owner_type
+  (a shade of its owner_category colour). Projects whose stated ownership
+  doesn't sum to ~100% are excluded. Anonymised as Project 1..N.
+  """
+  KNOWN = set(CATEGORY_COLOUR_SCHEME.keys())  # includes 'Other'
+
+  # owner_type -> shade colour, derived from all (type, category) pairs in df
+  pair_set = set()
+  for _, row in df.iterrows():
+    for o in (row.get('owners') or []):
+      ot, oc = o.get('owner_type'), o.get('owner_category') or 'Other'
+      if ot is not None:
+        pair_set.add((ot, oc))
+  owner_type_colors = get_owner_type_colors_categorical(list(pair_set))
+
+  # Build the per-project owner lists, applying the filters
+  projects = []
+  for _, row in df.iterrows():
+    owners = row.get('owners') or []
+    valid = [o for o in owners
+             if (pd.to_numeric(o.get('owner_percent'), errors='coerce') or 0) > 0
+             and (o.get('owner_category') or 'Other') in KNOWN]
+    if len(valid) < 2:                       # genuinely multi-owner
+      continue
+    values = [float(o['owner_percent']) for o in valid]
+    if not (95 <= sum(values) <= 105):       # ownership must add up to ~100%
+      continue
+    projects.append({
+      'types':  [o.get('owner_type') or 'Unknown' for o in valid],
+      'values': values,
+    })
+
+  n = len(projects)
+  if n == 0:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No multi-owner projects for selected filters'))
+    return fig
+
+  cols   = 2
+  rows_n = (n + cols - 1) // cols
+  fig = make_subplots(
+    rows=rows_n, cols=cols,
+    specs=[[{'type': 'domain'}] * cols for _ in range(rows_n)],
+    subplot_titles=[f'Project {i+1}' for i in range(n)],
+    vertical_spacing=0.06, horizontal_spacing=0.02,
+  )
+
+  types_used = []
+  for i, p in enumerate(projects):
+    r, c  = i // cols + 1, i % cols + 1
+    total = sum(p['values'])
+
+    text_labels = [f'{v/total*100:.0f}%' for v in p['values']] + ['']
+    hover_types = p['types'] + ['']
+    labels = p['types'] + ['']                                  # '' dummy won't merge
+    vals   = p['values'] + [total]                              # transparent bottom half
+    colors = [owner_type_colors.get(t, '#808080') for t in p['types']] + ['rgba(0,0,0,0)']
+
+    for t in p['types']:
+      if t not in types_used:
+        types_used.append(t)
+
+    fig.add_trace(go.Pie(
+      labels=labels, values=vals,
+      marker=dict(colors=colors, line=dict(color='white', width=1)),  # white separator
+      hole=0.5, rotation=270, direction='clockwise', sort=False,
+      showlegend=False,
+      customdata=hover_types,
+      text=text_labels, textinfo='text', textposition='inside',
+      hovertemplate='<b>%{customdata}</b><br>%{value}%<extra></extra>',
+    ), row=r, col=c)
+
+  # Manual legend: one entry per owner_type used (its shade)
+  for t in types_used:
+    fig.add_trace(go.Scatter(
+      x=[None], y=[None], mode='markers',
+      marker=dict(size=11, color=owner_type_colors.get(t, '#808080')),
+      name=wrap_text(t, 25), showlegend=True,
+    ))
+
+  fig.update_layout(
+    title=dict(text='Ownership breakdown — multi-owner projects'),
+    height=250 * rows_n,
+    margin=dict(l=0, r=0, t=75, b=10),
+    paper_bgcolor='white', plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(visible=False), yaxis=dict(visible=False),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+  )
+  _subtitle(fig,
+            'Each semicircle = one project with 2+ owners; slice = one owner sized by stake, '
+            'shaded by owner type within its category')
+  return fig
 
 def create_ownership_all_financing_heatmap_internal(df):
   """

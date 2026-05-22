@@ -309,6 +309,10 @@ components_by_slot:
       name: ownership_tiers_histogram
       properties: {}
       type: Plot
+    - layout_properties: {grid_position: 'UHXLOA,OICDKG'}
+      name: multi_owner_semicircles_plot
+      properties: {}
+      type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'GRDYTJ,SPVRLF'}
       name: image_8
       properties:

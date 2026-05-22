@@ -137,6 +137,7 @@ class ownership_models(ownership_modelsTemplate):
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
     self.ownership_boxplot_plot.figure     = all_charts['ownership_boxplot']
     self.ownership_tiers_histogram.figure = all_charts['ownership_tiers_histogram']
+    self.multi_owner_semicircles_plot.figure = all_charts['multi_owner_semicircles']
 
   # ==================== CHART DOWNLOAD ====================
 
@@ -149,7 +150,8 @@ class ownership_models(ownership_modelsTemplate):
       'bubble_chart':          self.ownership_financing_bubble,
       'all_financing_heatmap': self.all_financing_heatmap_plot,
       'ownership_boxplot':     self.ownership_boxplot_plot,  # NEW
-      'ownership_tiers_histogram': self.ownership_tiers_histogram
+      'ownership_tiers_histogram': self.ownership_tiers_histogram,
+      'multi_owner_semicircles':   self.multi_owner_semicircles_plot  # NEW
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):
@@ -197,3 +199,6 @@ class ownership_models(ownership_modelsTemplate):
 
     # def download_histogram_btn_click(self, **event_args):
   #   self._download_chart('ownership_tiers_histogram', button=self.download_boxplot_btn)
+
+  # def download_semicircles_btn_click(self, **event_args):
+  #   self._download_chart('multi_owner_semicircles', button=self.download_semicircles_btn)
