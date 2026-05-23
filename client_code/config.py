@@ -109,7 +109,7 @@ CATEGORY_ORDER = [
 CATEGORY_COLOUR_SCHEME = {
   'Community':  {'base': dunsparce_colors[1], 'secondary': dunsparce_colors[7]},   # teal → dark teal
   'Indigenous': {'base': dunsparce_colors[11], 'secondary': dunsparce_colors[4]},  # amber → dark brown
-  'Private':    {'base': dunsparce_colors[8], 'secondary': None},                  # red
+  'Private':    {'base': dunsparce_colors[8], 'secondary': dunsparce_colors[17]},                  # red
   'Public':     {'base': dunsparce_colors[12], 'secondary': dunsparce_colors[0]},                  # dark blue
   'Non-profit': {'base': dunsparce_colors[9], 'secondary': None},                  # purple
   'Other':      {'base': dunsparce_colors[19],'secondary': None},                  # grey
