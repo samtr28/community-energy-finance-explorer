@@ -164,7 +164,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'SIONUB,SCDLYW'}
       name: ownership_treemap
       properties:
-        height: 60vh
+        height: 65vh
         margin: ['0', null, '0', null]
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'SIONUB,YDYLWX FHSDSN,NRLWVK'}
@@ -212,7 +212,7 @@ components_by_slot:
           margin: [10%, null, null, null]
         text: At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'ULHNHM,NNPXAX'}
+    - layout_properties: {full_width_row: true, grid_position: 'ULHNHM,NNPXAX'}
       name: image_6
       properties:
         height: 1vh
@@ -239,8 +239,48 @@ components_by_slot:
         font_size: 16
         spacing:
           margin: [10%, null, null, null]
-        text: The majority of projects in our dataset are owned solely by one organization, as seen in this chart.
+        text: "The majority of projects in our dataset are owned solely by one organization, as seen in this chart.\nOwners of project portfolios are only counted once "
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'ZSVVOJ,DUOUZU'}
+      name: image_12
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'DCLBZV,MXYQTX'}
+      name: heading_1_copy_copy_3
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: How are ownership stakes for each group distributed?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,IVDJCB'}
+      name: ownership_tiers_histogram
+      properties: {}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,KEWIUF'}
+      name: text_1_copy_copy_3
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'FHAKHB,VRBJEF'}
+      name: image_11
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'WOJSGA,PCXLAQ'}
       name: heading_1_copy_copy
       properties:
@@ -248,15 +288,72 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: What does partnership look like?
+        text: What does working together look like?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'YTJWRX,CCZEWA'}
+    - layout_properties: {full_width_row: true, grid_position: 'DIXHOW,RFRGIP'}
       name: semicircles_plot
-      properties: {height: 90vh}
+      properties: {height: 50vh}
       type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DIXHOW,DJEVJG NHTCPA,UNPGEA'}
+      name: collaboration_heatmap_plot
+      properties: {height: 25vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'DIXHOW,DJEVJG BKRLYG,RRDNQU'}
+      name: text_1_copy
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'PDHQVT,IHSUHI'}
+      name: image_10
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'ROUSMS,DMYAHF'}
+      name: heading_1_copy_3
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Who owns projects at different scales?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'RNRCYL,IGLZBI'}
+      name: scale_pies_plot
+      properties: {height: 50vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'FNIXLO,FQEJRO'}
+      name: text_3
+      properties:
+        text: |-
+          By Dollar Value
+          Multiplies each owner's percentage stake by their project's total cost to convert ownership share into a dollar figure, sums those figures by owner type, then displays each type's share of the combined dollar total. Larger projects dominate the picture, so a 100% stake in a $50M project counts far more than a 100% stake in a $50K one. Best for understanding where the financial value is concentrated.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'PRJYSZ,WVUYQJ'}
+      name: image_7
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'KNORTV,ZOQMMU'}
+      name: heading_1_copy_4
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Which financing mechanisms are used by owner types?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG'}
       name: all_financing_heatmap_plot
-      properties: {height: 50vh}
+      properties: {height: 60vh}
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,YPNZXR'}
       name: text_1_copy_copy
@@ -269,98 +366,9 @@ components_by_slot:
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'DESCUK,UFCECJ'}
-      name: image_10
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['16', null, '16', null]
-        source: ' _/theme/dots.png'
-      type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'IAKNCN,AHLUZI'}
-      name: heading_1_copy_4
-      properties:
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-        text: Another Title
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'ZJHILT,MUMZPX'}
-      name: ownership_boxplot_plot
-      properties: {}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'ZJHILT,TEPDUI'}
-      name: ownership_tiers_histogram
-      properties: {}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'GRDYTJ,SPVRLF'}
-      name: image_8
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['16', null, '16', null]
-        source: ' _/theme/dots.png'
-      type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'PTOZCX,BHFQQO'}
-      name: heading_1_copy
-      properties:
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-        text: Indigenous participation in community energy
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,FKMOZV'}
-      name: indig_ownership_plot
-      properties:
-        height: 45vh
-        margin: ['0', null, '0', null]
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'ZIVNWM,XXLSUV'}
-      name: text_1_copy
-      properties:
-        font_size: 16
-        text: |-
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-
-          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'VPIQRQ,MMBLBC'}
-      name: image_7
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['16', null, '16', null]
-        source: ' _/theme/dots.png'
-      type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'LQYVFX,SUUOPE'}
-      name: heading_1_copy_3
-      properties:
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-        text: 'Another Title '
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'SUKSJO,HQNAXQ'}
-      name: scale_pies_plot
-      properties: {height: 50vh}
-      type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'NSLNNN,SBVZFN'}
-      name: text_3
-      properties:
-        text: |-
-          By Dollar Value
-          Multiplies each owner's percentage stake by their project's total cost to convert ownership share into a dollar figure, sums those figures by owner type, then displays each type's share of the combined dollar total. Larger projects dominate the picture, so a 100% stake in a $50M project counts far more than a 100% stake in a $50K one. Best for understanding where the financial value is concentrated.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'NSLNNN,MIQZSL'}
-      name: collaboration_heatmap_plot
-      properties: {height: 50vh}
-      type: Plot
-    layout_properties: {}
+    layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"FVMCOG":23,"YPNZXR":11,"SCDLYW":40,"YDYLWX":20,"FKMOZV":40,"XXLSUV":20}'}
+    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"AYLFWL":40,"undefined":20,"NPXQGL":40,"UVOTIU":20,"RFRGIP":40,"DJEVJG":20,"IVDJCB":40,"KEWIUF":20}'}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}

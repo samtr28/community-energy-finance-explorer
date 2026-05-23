@@ -50,6 +50,7 @@ from plotly.subplots import make_subplots
 from .config import (
 COLOUR_MAPPING, gradient_palette, dunsparce_colors,
 FONT_FAMILY, FONT_SIZE, FONT_COLOR,
+TITLE_FONT_FAMILY, TITLE_SIZE, TITLE_PAD_B,   # ← add these
 get_owner_type_colors_categorical, CATEGORY_COLOUR_SCHEME, CATEGORY_ORDER_OWNERS,
 )
 from .Global_Server_Functions import get_data
@@ -189,11 +190,11 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     # ── Charts that use the flat owners frame ──
     'ownership_treemap':         _build('ownership_treemap',         lambda: create_ownership_treemap_internal(df_owners_filtered),         df_owners_filtered),
     'scale_pies':                _build('scale_pies',                lambda: create_ownership_scale_pies_internal(df_owners_filtered),      df_owners_filtered),
-    'indigenous_pie':            _build('indigenous_pie',            lambda: create_indigenous_ownership_stacked_internal(df_owners_filtered), df_owners_filtered),
+    #'indigenous_pie':            _build('indigenous_pie',            lambda: create_indigenous_ownership_stacked_internal(df_owners_filtered), df_owners_filtered),
     'ownership_boxplot':         _build('ownership_boxplot',         lambda: create_ownership_boxplot_internal(df_owners_filtered),          df_owners_filtered),
     'ownership_tiers_histogram': _build('ownership_tiers_histogram', lambda: create_ownership_tiers_histogram_internal(df_owners_filtered),  df_owners_filtered),
     # ── Charts that use the raw per-response frame ──
-    'lollipop_chart':            _build('lollipop_chart',            lambda: create_governance_bottlenecks_internal(df_raw_filtered),        df_raw_filtered),
+    'bottleneck_chart':            _build('bottleneck_chart',            lambda: create_governance_bottlenecks_internal(df_raw_filtered),        df_raw_filtered),
     'all_financing_heatmap':     _build('all_financing_heatmap',     lambda: create_ownership_all_financing_heatmap_internal(df_raw_filtered), df_raw_filtered),
     'collaboration_heatmap':     _build('collaboration_heatmap',     lambda: create_collaboration_heatmap_internal(df_raw_filtered),         df_raw_filtered),
     'single_owner_breakdown':    _build('single_owner_breakdown',    lambda: create_single_owner_breakdown_internal(df_raw_filtered),        df_raw_filtered),
@@ -375,41 +376,9 @@ def create_ownership_scale_pies_internal(df_owners):
   return fig
 
 
-def create_ownership_boxplot_internal(df_owners):
-  df_plot = df_owners[df_owners['owner_percent'] > 0].copy()
-  if df_plot.empty:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No ownership data available'))
-    return fig
-
-  type_order = (
-    df_plot.groupby('owner_category')['owner_percent']
-      .median().sort_values(ascending=False).index.tolist()
-  )
-  color_map = {cat: _cat_colour(cat) for cat in type_order}
-
-  fig = px.box(
-    df_plot, x='owner_category', y='owner_percent', points='all',
-    color='owner_category', color_discrete_map=color_map,
-    category_orders={'owner_category': type_order},
-    hover_data=['project_name', 'owner_type'],
-  )
-  fig.update_layout(
-    showlegend=False, yaxis_title='', xaxis_title='',
-    xaxis=dict(tickangle=20, linecolor='grey', showline=True),
-    yaxis=dict(ticksuffix='%', linecolor='grey', showline=True),
-    margin=dict(l=0, r=0, b=0, t=50),
-    title=dict(text='Typical ownership stake by owner category'),
-  )
-  return fig
-
 
 def create_ownership_tiers_histogram_internal(df_owners):
   TIERS = ['<25%', '25–50%', '51–74%', '75–99%', '100%']
-  TIER_COLORS = {
-    '<25%':  '#c9e4ca', '25–50%': '#87bba2', '51–74%': '#55828b',
-    '75–99%':'#3b6064', '100%':   '#27474e',
-  }
 
   def assign_tier(pct):
     if pct < 25:  return '<25%'
@@ -417,6 +386,20 @@ def create_ownership_tiers_histogram_internal(df_owners):
     if pct <= 74: return '51–74%'
     if pct <= 99: return '75–99%'
     return '100%'
+
+  def shades_of(base_hex, n):
+    """Light → dark shades of base_hex; the last shade equals the base."""
+    if not base_hex or not base_hex.startswith('#'):
+      base_hex = '#808080'
+    r, g, b = int(base_hex[1:3], 16), int(base_hex[3:5], 16), int(base_hex[5:7], 16)
+    out = []
+    for i in range(n):
+      amount = 0.70 * (n - 1 - i) / max(n - 1, 1)   # i=0 lightest → i=n-1 base
+      nr = int(r + (255 - r) * amount)
+      ng = int(g + (255 - g) * amount)
+      nb = int(b + (255 - b) * amount)
+      out.append(f'#{nr:02x}{ng:02x}{nb:02x}')
+    return out
 
   df_plot = df_owners[df_owners['owner_percent'] > 0].copy()
   if df_plot.empty:
@@ -439,68 +422,41 @@ def create_ownership_tiers_histogram_internal(df_owners):
   for col_i, cat in enumerate(cat_order, start=1):
     sub         = df_plot[df_plot['owner_category'] == cat]
     tier_counts = sub['tier'].value_counts().reindex(TIERS, fill_value=0)
-    for tier in TIERS:
+    cat_shades  = shades_of(_cat_colour(cat), len(TIERS))   # 5 shades of this category
+
+    for t_i, tier in enumerate(TIERS):
       count = tier_counts[tier]
       fig.add_trace(go.Bar(
-        x=[tier], y=[count], name=tier, marker_color=TIER_COLORS[tier],
-        showlegend=(col_i == 1),
+        x=[tier], y=[count],
+        marker_color=cat_shades[t_i],
+        showlegend=False,
         hovertemplate=f'<b>{cat}</b><br>{tier}: {count}<extra></extra>',
       ), row=1, col=col_i)
-    fig.update_xaxes(tickangle=45, tickfont=dict(size=9), row=1, col=col_i)
 
-  fig.update_yaxes(title_text='Owner entries', col=1, showgrid=True, gridcolor='#f0f0f0')
+      fig.update_yaxes(gridcolor='#f0f0f0')
+
+  fig.update_xaxes(
+    tickangle=45,
+    tickfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+  )
+  fig.update_yaxes(
+    tickfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+  )
+  fig.update_yaxes(title_text='Number of owners', col=1, showgrid=True, gridcolor='#f0f0f0', )
+
+  # Lower the subplot titles slightly
+  for ann in fig.layout.annotations:
+    ann.y = ann.y - 0.03
+
   fig.update_layout(
     barmode='group',
-    title=dict(text='Ownership stake distribution by category'),
-    legend=dict(title='Stake bracket', traceorder='normal'),
+    showlegend=False,
+    title=dict(text='Distribution of ownership stake sizes by category'),
     margin=dict(l=0, r=0, b=0, t=75),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
   )
   return fig
 
-
-def create_indigenous_ownership_stacked_internal(df_owners):
-  ownership_counts = (
-    df_owners.groupby('indigenous_ownership')['record_id']
-      .nunique().reset_index()
-  )
-  ownership_counts.columns = ['Category', 'Count']
-  total = ownership_counts['Count'].sum()
-  if not total:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No data available'))
-    return fig
-
-  ownership_counts['Percentage'] = (ownership_counts['Count'] / total) * 100
-  order = [
-    'Not sure', 'No Indigenous ownership',
-    'Minority Indigenous owned (1-49%)', 'Half Indigenous owned (50%)',
-    'Majority Indigenous owned (51-99%)', 'Wholly Indigenous owned (100%)',
-  ]
-  ownership_counts['Category'] = pd.Categorical(
-    ownership_counts['Category'], categories=order, ordered=True
-  )
-  ownership_counts = ownership_counts.sort_values('Category').reset_index(drop=True)
-  colors = [gradient_palette[i * 2] for i in range(len(ownership_counts))][::-1]
-
-  fig = go.Figure()
-  for i, row in ownership_counts.iterrows():
-    fig.add_trace(go.Bar(
-      x=[''], y=[row['Count']], name=row['Category'], orientation='v',
-      text=f"<b>{row['Percentage']:.1f}%  -  {row['Category']}</b>",
-      textposition='inside', marker=dict(color=colors[i]),
-      hovertemplate=(
-        f"<b>{row['Category']}</b><br>"
-        f"Responses: {row['Count']}<br>{row['Percentage']:.1f}%<extra></extra>"
-      ),
-    ))
-  fig.update_layout(
-    title=dict(text='Indigenous project ownership'),
-    barmode='stack', showlegend=False,
-    xaxis=dict(visible=False), yaxis=dict(visible=False),
-    margin=dict(t=50, b=0, l=0, r=0),
-  )
-  return fig
 
 
 def create_governance_bottlenecks_internal(df):
@@ -540,7 +496,7 @@ def create_governance_bottlenecks_internal(df):
   fig.update_yaxes(automargin=True, tickmode='linear')
   fig.update_layout(
     title=dict(text='Governance bottlenecks'),
-    legend=dict(orientation='h', yanchor='bottom', y=-0.3, xanchor='center', x=0.5),
+    legend=dict(orientation='h', yanchor='bottom', y=-0.7, xanchor='center', x=0.5),
     margin=dict(l=0, r=0, t=50, b=0),
   )
   return fig
@@ -600,7 +556,7 @@ def create_ownership_all_financing_heatmap_internal(df):
   finance_order = (count_data.groupby('finance_category')['count'].sum()
     .sort_values(ascending=False).index.tolist())
 
-  finance_wrap_map = {f: wrap_text(f, width=35) for f in finance_order}
+  finance_wrap_map = {f: wrap_text(f, width=45) for f in finance_order}
   finance_order_w  = [finance_wrap_map[f] for f in finance_order]
   count_data['finance_w'] = count_data['finance_category'].map(finance_wrap_map)
 
@@ -632,7 +588,7 @@ def create_ownership_all_financing_heatmap_internal(df):
     hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
   ))
   fig.update_layout(
-    title=dict(text='All financing mechanisms by ownership category', x=0, xanchor='left'),
+    title=dict(text='Co-occurence of owner type and use of financing mechanism', x=0, xanchor='left'),
     annotations=annotations,
     margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
@@ -689,12 +645,12 @@ def create_collaboration_heatmap_internal(df):
 
   fig = go.Figure(go.Heatmap(
     z=matrix.values, x=ordered, y=ordered,
-    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[1]]],
+    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[3]]],
     showscale=False, xgap=3, ygap=3,
     hovertemplate='%{y} + %{x}<br>Projects: %{z}<extra></extra>',
   ))
   fig.update_layout(
-    title=dict(text=f'Owner category collaboration ({len(project_cat_sets)} multi-owner projects)'),
+    title=dict(text=f'Owner type category collaboration (n ={len(project_cat_sets)})'),
     annotations=annotations,
     margin=dict(l=0, r=0, t=50, b=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
@@ -742,13 +698,13 @@ def create_single_owner_breakdown_internal(df):
   # Add wrapped owner-type label inside each segment; constraintext hides it
   # automatically if the segment is too narrow to fit
   for trace in fig.data:
-    wrapped = wrap_text(trace.name, width=14)
+    wrapped = wrap_text(trace.name, width=20)
     trace.update(
       text=[wrapped if (v or 0) > 0 else '' for v in (trace.y or [])],
       textposition='inside',
       insidetextanchor='middle',
       constraintext='inside',
-      textfont=dict(size=9, family=FONT_FAMILY, color='white'),
+      textfont=dict(size=12, family=FONT_FAMILY, color='white'),
     )
 
   fig.update_layout(
@@ -759,28 +715,44 @@ def create_single_owner_breakdown_internal(df):
   return fig
 
 def create_multi_owner_semicircles_internal(df):
-  # Derive category colours from config, matching the original CAT_COLORS approach
-  CAT_COLORS = {cat: scheme['base'] for cat, scheme in CATEGORY_COLOUR_SCHEME.items()}
-  # Fallback for any category not in the scheme
-  CAT_COLORS.setdefault('Other', '#808080')
+  """
+    One semicircle per project, each slice = one owner sized by ownership %,
+    coloured by owner_type (a shade of its owner_category's base colour).
+    Repeats of the same type within a project are lightened so they stay
+    distinguishable, and labels are made internally unique so go.Pie won't
+    merge same-type sectors. apply_display_template is NOT applied to this figure.
+    """
+  def _lighten(hex_color, amount):
+    if not hex_color or not hex_color.startswith('#'):
+      return hex_color
+    r, g, b = int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)
+    r = int(r + (255 - r) * amount)
+    g = int(g + (255 - g) * amount)
+    b = int(b + (255 - b) * amount)
+    return f'#{r:02x}{g:02x}{b:02x}'
+
+  pair_set = set()
+  for _, row in df.iterrows():
+    for o in (row.get('owners') or []):
+      ot = o.get('owner_type')
+      oc = o.get('owner_category') or 'Other'
+      if ot is not None:
+        pair_set.add((ot, oc))
+  owner_type_colors = get_owner_type_colors_categorical(list(pair_set))
 
   projects = []
   for _, row in df.iterrows():
     owners = row.get('owners') or []
-    owners_valid = [
-      o for o in owners
-      if (o.get('owner_percent') or 0) > 0
-      and o.get('owner_category') in CAT_COLORS
-    ]
-    if len(owners_valid) < 2:
+    valid  = [o for o in owners if (o.get('owner_percent') or 0) > 0]
+    if len(valid) < 2:
       continue
-    values = [o['owner_percent'] for o in owners_valid]
+    values = [float(o['owner_percent']) for o in valid]
     if sum(values) <= 90:
       continue
     projects.append({
-      'labels': [o['owner_category']          for o in owners_valid],
-      'values': values,
-      'types':  [o.get('owner_type') or 'Unknown' for o in owners_valid],
+      'types':      [o.get('owner_type') or 'Unknown'  for o in valid],
+      'categories': [o.get('owner_category') or 'Other' for o in valid],
+      'values':     values,
     })
 
   n = len(projects)
@@ -789,57 +761,105 @@ def create_multi_owner_semicircles_internal(df):
     fig.update_layout(title=dict(text='No multi-owner projects for selected filters'))
     return fig
 
-  cols   = 2
+  cols   = 4
   rows_n = math.ceil(n / cols)
   fig = make_subplots(
     rows=rows_n, cols=cols,
     specs=[[{'type': 'domain'}] * cols for _ in range(rows_n)],
     subplot_titles=[f'Project {i + 1}' for i in range(n)],
-    vertical_spacing=0.06, horizontal_spacing=0.02,
+    vertical_spacing=0.02,
+    horizontal_spacing=0.01,
   )
 
-  cats_used = set()
+  cats_in_use = {}   # category → ordered owner_types present (for the legend)
   for i, p in enumerate(projects):
     r, c  = i // cols + 1, i % cols + 1
     total = sum(p['values'])
-    cats_used.update(p['labels'])
 
-    labels      = p['labels'] + ['']
+    # Unique labels (zero-width spaces) so go.Pie won't merge same-type sectors,
+    # and lighten each repeat of a type so duplicates stay distinguishable.
+    seen, uniq_labels, slice_colors = {}, [], []
+    for t in p['types']:
+      k = seen.get(t, 0)
+      seen[t] = k + 1
+      uniq_labels.append(t + '\u200b' * k)                 # visually identical, internally unique
+      base = owner_type_colors.get(t, '#808080')
+      slice_colors.append(base if k == 0 else _lighten(base, 0.28 * k))
+
+    labels      = uniq_labels + ['']
     vals        = p['values'] + [total]
     text_labels = [f'{v / total * 100:.0f}%' for v in p['values']] + ['']
-    hovertypes  = p['types'] + ['']
-    colors      = [CAT_COLORS[cat] for cat in p['labels']] + ['rgba(0,0,0,0)']
+    customdata  = p['categories'] + ['']
+    colors      = slice_colors + ['rgba(0,0,0,0)']
+
+    for t, cat in zip(p['types'], p['categories']):
+      cats_in_use.setdefault(cat, [])
+      if t not in cats_in_use[cat]:
+        cats_in_use[cat].append(t)
 
     fig.add_trace(go.Pie(
       labels=labels, values=vals,
-      marker=dict(colors=colors),
+      marker=dict(colors=colors, line=dict(color='white', width=1)),
       hole=0.5, rotation=270, direction='clockwise', sort=False,
       showlegend=False,
-      customdata=hovertypes,
+      customdata=customdata,
       text=text_labels, textinfo='text', textposition='inside',
       hovertemplate='<b>%{label}</b><br>%{customdata}<br>%{value}%<extra></extra>',
     ), row=r, col=c)
 
-    # Legend — one scatter per category actually used
-  for cat, color in CAT_COLORS.items():
-    if cat in cats_used:
-      fig.add_trace(go.Scatter(
-        x=[None], y=[None], mode='markers',
-        marker=dict(size=11, color=color),
-        name=cat, showlegend=True,
-      ))
+    # ── Swatch legend below the chart (mirrors scale_pies) ──
+  swatch_w  = 0.04;  swatch_h  = 0.022
+  lbl_pad   = 0.006; entry_pad = 0.025; char_w = 0.0085
+
+  def entry_width(cat):
+    return swatch_w + lbl_pad + len(cat) * char_w
+
+  active_cats = [c for c in cats_in_use if cats_in_use[c]]
+  total_w     = sum(entry_width(c) for c in active_cats) + entry_pad * max(0, len(active_cats) - 1)
+  cur_x       = (1 - total_w) / 2
+  y_center    = -0.03                       # bottom margin, below the pies
+  y_bot       = y_center - swatch_h / 2
+  y_top       = y_center + swatch_h / 2
+
+  for cat in active_cats:
+    shades = [owner_type_colors.get(t, '#808080') for t in cats_in_use[cat]]
+    seg_w  = swatch_w / len(shades)
+    for k, shade in enumerate(shades):
+      fig.add_shape(
+        type='rect', xref='paper', yref='paper',
+        x0=cur_x + k * seg_w, x1=cur_x + (k + 1) * seg_w,
+        y0=y_bot, y1=y_top, fillcolor=shade, line=dict(width=0),
+      )
+    fig.add_shape(
+      type='rect', xref='paper', yref='paper',
+      x0=cur_x, x1=cur_x + swatch_w, y0=y_bot, y1=y_top,
+      fillcolor='rgba(0,0,0,0)', line=dict(color='lightgray', width=0.5),
+    )
+    fig.add_annotation(
+      xref='paper', yref='paper',
+      x=cur_x + swatch_w + lbl_pad, y=y_center,
+      xanchor='left', yanchor='middle', text=cat, showarrow=False,
+      font=dict(family=FONT_FAMILY, size=11, color=FONT_COLOR),
+    )
+    cur_x += entry_width(cat) + entry_pad
 
   fig.update_layout(
-    title=f'Ownership breakdown — multi-owner projects (n={n})',
-    height=250 * rows_n,
-    margin=dict(t=70, b=10, l=0, r=0),
-    paper_bgcolor='white',
+    title=dict(
+      text=f'Ownership of multi-owner projects (n={n})',
+      font=dict(family=TITLE_FONT_FAMILY, size=TITLE_SIZE, color=FONT_COLOR),
+      x=0.01, xanchor='left',
+      y=0.98, yanchor='top',
+      pad=dict(b=TITLE_PAD_B),
+    ),
+    height=max(380, 300 * rows_n) + 40,    # +40 reserves room for legend
+    margin=dict(l=0, r=0, t=70, b=55),      # bottom margin holds the legend
+    paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
+    showlegend=False,
     xaxis=dict(visible=False),
     yaxis=dict(visible=False),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
   )
-  fig.update_annotations(font_size=12)
   return fig
 
 # ==================== EXPORT CALLABLE ====================
@@ -851,3 +871,75 @@ def export_ownership_chart(chart_key, img_b64, active_filters, chart_title=''):
     filename=f'{chart_key}_export.png',
     chart_title=chart_title,
   )
+# =======================UNUSED===============================
+
+def create_ownership_boxplot_internal(df_owners):
+  df_plot = df_owners[df_owners['owner_percent'] > 0].copy()
+  if df_plot.empty:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No ownership data available'))
+    return fig
+
+  type_order = (
+    df_plot.groupby('owner_category')['owner_percent']
+      .median().sort_values(ascending=False).index.tolist()
+  )
+  color_map = {cat: _cat_colour(cat) for cat in type_order}
+
+  fig = px.box(
+    df_plot, x='owner_category', y='owner_percent', points='all',
+    color='owner_category', color_discrete_map=color_map,
+    category_orders={'owner_category': type_order},
+    hover_data=['project_name', 'owner_type'],
+  )
+  fig.update_layout(
+    showlegend=False, yaxis_title='', xaxis_title='',
+    xaxis=dict(tickangle=20, linecolor='grey', showline=True),
+    yaxis=dict(ticksuffix='%', linecolor='grey', showline=True),
+    margin=dict(l=0, r=0, b=0, t=50),
+    title=dict(text='Typical ownership stake by owner category'),
+  )
+  return fig
+
+def create_indigenous_ownership_stacked_internal(df_owners):
+  ownership_counts = (
+    df_owners.groupby('indigenous_ownership')['record_id']
+      .nunique().reset_index()
+  )
+  ownership_counts.columns = ['Category', 'Count']
+  total = ownership_counts['Count'].sum()
+  if not total:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No data available'))
+    return fig
+
+  ownership_counts['Percentage'] = (ownership_counts['Count'] / total) * 100
+  order = [
+    'Not sure', 'No Indigenous ownership',
+    'Minority Indigenous owned (1-49%)', 'Half Indigenous owned (50%)',
+    'Majority Indigenous owned (51-99%)', 'Wholly Indigenous owned (100%)',
+  ]
+  ownership_counts['Category'] = pd.Categorical(
+    ownership_counts['Category'], categories=order, ordered=True
+  )
+  ownership_counts = ownership_counts.sort_values('Category').reset_index(drop=True)
+  colors = [gradient_palette[i * 2] for i in range(len(ownership_counts))][::-1]
+
+  fig = go.Figure()
+  for i, row in ownership_counts.iterrows():
+    fig.add_trace(go.Bar(
+      x=[''], y=[row['Count']], name=row['Category'], orientation='v',
+      text=f"<b>{row['Percentage']:.1f}%  -  {row['Category']}</b>",
+      textposition='inside', marker=dict(color=colors[i]),
+      hovertemplate=(
+        f"<b>{row['Category']}</b><br>"
+        f"Responses: {row['Count']}<br>{row['Percentage']:.1f}%<extra></extra>"
+      ),
+    ))
+  fig.update_layout(
+    title=dict(text='Indigenous project ownership'),
+    barmode='stack', showlegend=False,
+    xaxis=dict(visible=False), yaxis=dict(visible=False),
+    margin=dict(t=50, b=0, l=0, r=0),
+  )
+  return fig

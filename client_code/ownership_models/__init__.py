@@ -128,11 +128,11 @@ class ownership_models(ownership_modelsTemplate):
 
     self.ownership_treemap.figure          = all_charts['ownership_treemap']
     self.scale_pies_plot.figure            = all_charts['scale_pies']
-    self.indig_ownership_plot.figure       = all_charts['indigenous_pie']
-    self.lollipop_chart.figure              = all_charts['lollipop_chart']   # now governance bottlenecks
+    #self.indig_ownership_plot.figure       = all_charts['indigenous_pie']
+    self.lollipop_chart.figure              = all_charts['bottleneck_chart']   # now governance bottlenecks
     # self.ownership_financing_bubble.figure = all_charts['bubble_chart']    # REMOVED
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
-    self.ownership_boxplot_plot.figure      = all_charts['ownership_boxplot']
+    #self.ownership_boxplot_plot.figure      = all_charts['ownership_boxplot']
     self.ownership_tiers_histogram.figure   = all_charts['ownership_tiers_histogram']
     self.collaboration_heatmap_plot.figure  = all_charts['collaboration_heatmap']    # NEW
     self.single_owner_breakdown_plot.figure = all_charts['single_owner_breakdown']   # NEW
@@ -143,10 +143,10 @@ class ownership_models(ownership_modelsTemplate):
     return {
       'ownership_treemap':         self.ownership_treemap,
       'scale_pies':                self.scale_pies_plot,
-      'indigenous_pie':            self.indig_ownership_plot,
-      'lollipop_chart':            self.lollipop_chart,
+      #'indigenous_pie':            self.indig_ownership_plot,
+      'bottleneck_chart':            self.lollipop_chart,
       'all_financing_heatmap':     self.all_financing_heatmap_plot,
-      'ownership_boxplot':         self.ownership_boxplot_plot,
+      #'ownership_boxplot':         self.ownership_boxplot_plot,
       'ownership_tiers_histogram': self.ownership_tiers_histogram,
       'collaboration_heatmap':     self.collaboration_heatmap_plot,    # NEW
       'single_owner_breakdown':    self.single_owner_breakdown_plot,   # NEW
