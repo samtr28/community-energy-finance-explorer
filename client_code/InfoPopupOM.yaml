@@ -4,17 +4,25 @@ components:
   properties:
     content: |-
       <p><strong>Start with the filters</strong></p>
-      <p>The landing page gives you a good overview of project financing sources nationally, based on the current dataset. Use the filters to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. Every chart on this page updates based on your selections.</p>
+      <p>The default view gives you a broad picture of ownership structures in the current dataset. Use the filters to focus on projects by technology, province or territory, project stage, project scale, and Indigenous ownership. Every chart on this page updates based on your selections.</p>
 
       <p><strong>Read the charts as a set</strong></p>
       <p>Each chart shows the financing story from a different angle. Start with the big-picture capital pathways, then scroll down to see how financing mixes vary by project cost, which financing mechanisms appear most often, who provides capital within each category, how long funding takes, and how much each source typically contributes.</p>
 
+      <p><strong>Read ownership as a structure, not a full governance map</strong></p>
+      <p>This page shows ownership stakes reported by project teams, including percentage ownership and, where available, dollar-value ownership. Ownership can show who has a financial stake in a project and who may share in project value, but it does not fully describe governance arrangements, voting rights, board structures, or decision-making authority.</p>
+
+      <p><strong>Look at both percentage and dollar-value ownership</strong></p>
+      <p>Percentage ownership shows how project ownership is divided among different owner types. Dollar-value ownership helps show the scale of that participation. Both views matter because a small ownership percentage in a very large project may still represent a significant financial stake.</p>
+
       <p><strong>Use this for learning, not ranking</strong></p>
-      <p>The charts are designed to help you explore patterns and ask better questions, such as: What financing mixes are common for projects like mine? What role do grants or community investment tend to play? Where might new financing mechanisms or partnerships be needed?</p>
-      <p>The visuals should not be read as a ranking of projects, technologies, communities, or financing sources.</p>
+      <p>The charts are designed to help users explore ownership patterns and ask better questions, such as: Who holds ownership stakes in projects like mine? How does ownership vary by technology, region, or project scale? Where do Indigenous, community, public, private, or partnership-based ownership structures appear? The visuals should not be read as a ranking of projects, communities, ownership models, or owner types.</p>
 
       <p><strong>Interpret results as a pilot dataset</strong></p>
-      <p>Results reflect the projects currently included in the Navigator. As more project teams contribute data, the patterns may shift as they become more complete and more representative.</p>
+      <p>Results reflect the projects currently included in the Navigator. As more project teams contribute data, the ownership patterns may shift as they become more complete and more representative.</p>
+
+      <p><strong>Use case studies for deeper governance stories</strong></p>
+      <p>The dashboard focuses on ownership structures that can be summarized across projects. More detailed questions about governance, decision-making, benefit sharing, and partnership arrangements are explored in the Navigator's case studies, where individual project stories can be described in more context (coming soon).</p>
     font_size: 16
     format: restricted_html
   type: RichText

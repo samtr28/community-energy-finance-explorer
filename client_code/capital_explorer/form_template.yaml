@@ -45,10 +45,10 @@ components_by_slot:
           properties:
             content: |-
               <p>
-                <strong>Capital stack:</strong> the mix of funding sources that add up to the total project cost.<br>
-                <strong>Capital source:</strong> where the money comes from, such as government programs, bank or non-bank lenders, investors, community members, owners, or partners.<br>
-                <strong>Financing category:</strong> a broad grouping of capital, such as grants, debt, community financing, external equity, or internal capital.<br>
-                <strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.<br>
+                <strong>Capital stack:</strong> the mix of funding sources that add up to the total project cost.<br><br>
+                <strong>Capital source:</strong> where the money comes from, such as government programs, bank or non-bank lenders, investors, community members, owners, or partners.<br><br>
+                <strong>Financing category:</strong> a broad grouping of capital, such as grants, debt, community financing, external equity, or internal capital.<br><br>
+                <strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.<br><br>
                 <strong>Total project cost:</strong> the full capital cost of the project deployed through the construction phase until the project becomes operational. This is different from annual operating costs.
               </p>
             format: restricted_html
@@ -70,7 +70,30 @@ components_by_slot:
     properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: bg-image-ce, wrap_on: tablet}
     type: ColumnPanel
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'AUQIVZ,PCAVRV'}
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_4
+          properties:
+            content: <p><b>Use the filters</b> to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. The charts update as you filter, helping you explore patterns that are most relevant to your community, organization, or research question.</p>
+            font_size: 16
+            format: restricted_html
+            spacing:
+              margin: ['0', '0', '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_3
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'KESETV,TIKZEK'}
+      name: card_3
+      properties:
+        background_color: theme:Secondary Overlay
+        spacing:
+          margin: [null, 25%, null, null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - layout_properties: {full_width_row: true, grid_position: 'IWDKGO,GJHQXH'}
       name: divider_1
       properties: {}
       type: form:dep_9kcxnwm3upyjd:_Components.Divider

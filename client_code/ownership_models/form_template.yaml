@@ -10,20 +10,33 @@ components_by_slot:
         spacing:
           margin: ['', null, null, null]
           padding: [null, 20%, null, null]
-        text: Who owns community energy projects?
+        text: Explore ownership structures and patterns across community energy projects.
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF ULHCAL,GWIGKH', row_background: 'theme:Secondary Container'}
+    - components: []
+      layout_properties: {grid_position: 'IIQWHR,IUGVIF EBFGMK,IKRGXR'}
       name: rich_text_1
-      properties:
-        background: ''
-        content: |-
-          <p>Community energy projects can be owned in many different ways. A project may involve a single community organization, or it may share ownership across multiple partners - including municipalities, Indigenous nations, cooperatives, non-profits, and private developers. These arrangements shape who benefits, who decides, and how value flows back into communities.</p>
-
-          <p>The Ownership Explorer makes these structures easier to understand by showing the <b>ownership models</b> behind community energy projects in the current dataset. Use this page to explore who owns what, how ownership is distributed across project types and regions, and where community control is strongest.</p>
-        font_size: 18
-        format: restricted_html
+      properties: {background: '', content: '<p>Community energy projects can be owned in many different ways. A project may involve a single community organization, or it may share ownership across multiple partners - including municipalities, Indigenous nations, cooperatives, non-profits, and private developers. These arrangements shape who benefits, who decides, and how value flows back into communities.</p>', font_size: 18, format: restricted_html}
       type: RichText
+    - layout_properties: {grid_position: 'IIQWHR,IUGVIF XVFKRQ,SJSDMB'}
+      name: rich_text_3
+      properties: {background: '', content: '<p>The Ownership Explorer makes these structures easier to understand by showing the <b>ownership models</b> behind community energy projects in the current dataset. Use this page to explore who owns what, how ownership is distributed across project types and regions, and where community control is strongest.</p>', font_size: 18, format: restricted_html}
+      type: RichText
+    - layout_properties: {grid_position: 'IIQWHR,IUGVIF TVSYED,DGZHIG'}
+      name: column_panel_2
+      properties: {role: bg-image-om}
+      type: ColumnPanel
+    - layout_properties: {grid_position: 'IIQWHR,IUGVIF CAMBPF,MAFEMQ'}
+      name: text_4
+      properties:
+        text: |
+          Community-based ownership: ownership held by community-rooted entities or members, including cooperatives, community corporations, benefit companies, community contribution companies, and direct ownership by community members.
+          Indigenous ownership: ownership held through Indigenous governments, coalitions, trusts, corporations, or utilities. In the Survey, response options include Tribal Council / Regional First Nations, Métis or Inuit Government, Indigenous coalition, Indigenous energy corporation / utility, community-held through Band Council or Indigenous community trust, and Indigenous development corporation.
+          Private sector ownership: ownership held by private market actors, such as for-profit businesses, banks, insurers, loan or trust corporations, individual investors outside the community, or other private investors.
+          Public sector ownership: ownership held by public-sector entities, including municipalities, municipal energy corporations or utilities, Crown corporations, and other public organizations.
+          Non-profit ownership: ownership held by not-for-profit organizations / societies, registered charities, religious societies, or similar mission-driven organizations that are not structured primarily for private profit.
+          Other / unknown ownership: ownership reported as “Other” or “Don’t know.” This category is used when the owner type reported does not clearly fit one of the main categories or when the respondent did not have enough information to classify it.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     - event_bindings: {click: info_btn_click}
       layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
       name: info_btn
@@ -38,7 +51,7 @@ components_by_slot:
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
           properties:
-            content: insert here
+            content: "<p>\n  <strong>Ownership structure:</strong> how ownership of a project is divided among different owners or owner types. In the Navigator, ownership is shown using project-reported ownership shares and, where available, dollar-value ownership stakes.<br><br>\n  <strong>Ownership share:</strong> the percentage of a project owned by a given owner or owner type. For example, if a cooperative owns 40 percent of a project, its ownership share is 40 percent.<br><br>\n  <strong>Dollar-value ownership stake:</strong> the estimated dollar value of an ownership share, based on the reported project value or total project cost. This helps show the scale of ownership participation, since a small percentage in a very large project may still represent a significant financial stake.<br><br>\n  <strong>Owner type:</strong> the kind of organization or entity that holds an ownership stake in a project. Survey responses included many owner types (27), which we grouped into broader categories to make the dashboard easier to read.<br><br>\n  <strong>Ownership category:</strong> a simplified grouping of owner types used for visualization. "
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -55,8 +68,31 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_3
-    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: bg-image-om, wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: null, wrap_on: tablet}
     type: ColumnPanel
+  - components:
+    - components:
+      - layout_properties: {slot: card-content-container-slot}
+        name: rich_text_4
+        properties:
+          content: <p><b>Use the filters</b> to explore ownership patterns by technology, province or territory, project size, and when Indigenous ownership is part of the mix. The charts update as you filter, helping you explore structures relevant to your community project or research question.</p>
+          font_size: 16
+          format: restricted_html
+          spacing:
+            margin: ['0', '0', '0', null]
+            padding: ['0', null, '0', null]
+        type: RichText
+      layout_properties: {slot: card-content-slot}
+      name: card_content_container_3
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+    layout_properties: {}
+    name: card_3
+    properties:
+      background_color: theme:Secondary Overlay
+      spacing:
+        margin: [null, '0', null, null]
+    type: form:dep_9kcxnwm3upyjd:_Components.Card
   - layout_properties: {full_width_row: true}
     name: divider_1
     properties: {}
@@ -379,7 +415,7 @@ components_by_slot:
   - components:
     - layout_properties: {}
       name: title_copy
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Models}
+      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Explorer}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel
