@@ -45,7 +45,7 @@ components:
       role: null
       spacing:
         margin: ['4', null, '4', null]
-      text: Ownership Models
+      text: Ownership Explorer
     type: Link
   - components: []
     event_bindings: {click: outcomes_nav_click}

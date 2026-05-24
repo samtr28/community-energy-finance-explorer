@@ -1405,7 +1405,7 @@ html {
   background-repeat: no-repeat, no-repeat;
   background-position: top left, bottom left;
   background-size: 100% 100%, 75% auto;
-  padding-bottom: clamp(50px, 10vw,  160px);   /* scales with screen width, capped */
+  padding-bottom: clamp(25px, 10vw,  160px);   /* scales with screen width, capped */
 }
 
 @media (max-width: 1024px) {
@@ -1416,18 +1416,16 @@ html {
 }
 
 .anvil-role-bg-image-om {
-  background-image:
-    linear-gradient(to bottom, #f9f9ff 0%, #f9f9ff 25%, rgba(249,249,255,0) 85%),
-    url('_/theme/Graphics/IM-Banner-Illustration-2.png');
-  background-repeat: no-repeat, no-repeat;
-  background-position: top left, bottom left;
-  background-size: 100% 100%, 75% auto;
-  padding-bottom: clamp(50px, 10vw,  160px);   /* scales with screen width, capped */
+  background-image: url('_/theme/Graphics/IM-CommunityDiscussion.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: auto 100%;
+  height: 250px;
 }
 
-@media (max-width: 1024px) {
-  .anvil-role-bg-image-om {
-    background-image: none;   /* drops the illustration entirely */
-    padding-bottom: 0;        /* remove the space it was reserving */
-  }
+.anvil-role-sticky-btn {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 1000;
 }

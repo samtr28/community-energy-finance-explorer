@@ -356,3 +356,4 @@ roles:
 - {name: portfolio-toggle}
 - {name: bg-image-ce}
 - {name: bg-image-om}
+- {name: sticky-btn}

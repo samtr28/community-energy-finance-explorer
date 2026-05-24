@@ -5,7 +5,9 @@ unique_ids:
     Graphics/.gitkeep: '1779295512426892375986595.3403'
     Graphics/IM-Banner-Illustration-1-Cropped.png: '1779296589823362173751280.6799'
     Graphics/IM-Banner-Illustration-1.png: '1779295547576228792668830.17114'
+    Graphics/IM-Banner-Illustration-2-Cropped.png: '1779645675853504234989202.51276'
     Graphics/IM-Banner-Illustration-2.png: '1779295556054547836090040.5679'
+    Graphics/IM-CommunityDiscussion.png: '1779645809327105743292301.8935'
     Horizontal-IIH-Acet-Lockup-Full-Colour.png: '1770245699254140603233951.65796'
     Horizontal-IIH-Acet-Lockup-White.png: '1769112185971346020264990.6624'
     Horizontal-IIH-Logomark-Full Colour-University-of-Victoria.png: '1770248284061702468159622.2123'
@@ -16,6 +18,7 @@ unique_ids:
     theme.css: RYJFBYC54SIFDOZOH4XE3WTHBNC2BN6R
   forms:
     Base: '1759257303177766465849800.5405'
+    CategoryPopup: '1779649204200286627337147.7878'
     InfoPopupCE: '1779385614107334816082553.2089'
     InfoPopupOM: '177938916808432256991874.407448'
     capital_explorer: '1759257382142461333667580.44147'
