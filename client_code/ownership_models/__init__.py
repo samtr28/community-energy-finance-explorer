@@ -9,6 +9,7 @@ from anvil.tables import app_tables
 from .. import config
 from ..chart_export import download_chart
 from ..InfoPopupOM import InfoPopupOM
+from ..CategoryPopup import CategoryPopup
 
 
 class ownership_models(ownership_modelsTemplate):
@@ -170,6 +171,14 @@ class ownership_models(ownership_modelsTemplate):
       buttons=[("Close", None)],
     )
 
+  def category_button_click(self, **event_args):
+    alert(
+      content=CategoryPopup(),
+      title="Ownership Categories",
+      dismissible=True,
+      large=True
+    )
+  
   # ── Download button handlers (uncomment when buttons added in the designer) ──
   #
   # def download_treemap_btn_click(self, **event_args):

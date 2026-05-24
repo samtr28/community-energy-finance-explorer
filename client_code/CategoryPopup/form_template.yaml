@@ -1,0 +1,19 @@
+components:
+- layout_properties: {grid_position: 'KTQPYV,VYCHIG'}
+  name: rich_text_1
+  properties:
+    content: |-
+      <p>
+        <strong>Community-based:</strong> cooperatives, community corporations, benefit companies, community contribution companies, and direct ownership by community members.<br><br>
+        <strong>Indigenous:</strong> Indigenous governments, coalitions, trusts, corporations, or utilities, including Tribal Council / Regional First Nations, Métis or Inuit Government, Band Council or Indigenous community trust, and Indigenous development corporations.<br><br>
+        <strong>Private sector:</strong> for-profit businesses, banks, insurers, loan or trust corporations, individual investors outside the community, or other private investors.<br><br>
+        <strong>Public sector:</strong> municipalities, municipal energy corporations or utilities, Crown corporations, and other public organizations.<br><br>
+        <strong>Non-profit:</strong> not-for-profit organizations / societies, registered charities, religious societies, or similar mission-driven organizations.<br><br>
+        <strong>Other / unknown:</strong> ownership reported as "Other" or "Don't know," where the owner type does not clearly fit one of the main categories.<br><br>
+        <em>Note: these categories simplify diverse ownership types for visualization. Some real-world ownership structures may fit more than one description, but each reported owner type is assigned to one category for consistency.</em>
+      </p>
+    font_size: 18
+    format: restricted_html
+  type: RichText
+container: {type: ColumnPanel}
+is_package: true
