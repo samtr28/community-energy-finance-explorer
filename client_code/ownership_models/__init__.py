@@ -20,8 +20,16 @@ class ownership_models(ownership_modelsTemplate):
     self.init_components(**properties)
     self._initializing   = True
     self._filters_loaded = False
+
+    
     self._setup_dropdown_formatters()
 
+    # Set default project scale selection
+    self.project_scale_dd.selected = [
+      "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
+      "Large ($5M-$25M)", "Very Large ($25M-$100M)"
+    ]
+    
     self._initializing = False
 
   def form_show(self, **event_args):

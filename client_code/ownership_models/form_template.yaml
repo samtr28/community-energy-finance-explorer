@@ -37,19 +37,7 @@ components_by_slot:
           name: heading_6
           properties: {bold: true, font_family: ser, font_size: 18, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - components:
-          - event_bindings: {click: category_button_click}
-            layout_properties: {slot: category_slot}
-            name: category_button
-            properties:
-              align: center
-              bold: true
-              icon_align: left
-              role: outlined-button
-              spacing:
-                margin: [null, -50%, null, 50%]
-              text: Full category definitions
-            type: Button
+        - components: []
           layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
           properties:
@@ -59,17 +47,26 @@ components_by_slot:
                 <strong>Ownership share:</strong> the percentage of a project owned by a given owner or owner type. For example, if a cooperative owns 40 percent of a project, its ownership share is 40 percent.<br><br>
                 <strong>Dollar-value ownership stake:</strong> the estimated dollar value of an ownership share, based on the reported project value or total project cost. This helps show the scale of ownership participation, since a small percentage in a very large project may still represent a significant financial stake.<br><br>
                 <strong>Owner type:</strong> the kind of organization or entity that holds an ownership stake in a project. Survey responses included many owner types (27), which we grouped into broader categories to make the dashboard easier to read.<br><br>
-                <strong>Ownership category:</strong> a simplified grouping of owner types used for visualization. The main categories used in the dashboard are Community-based, Indigenous, Private sector, Public sector, Non-profit, and Other / unknown.
+                <strong>Ownership category:</strong> a simplified grouping of owner types used for visualization.
               </p>
-              <div>
-                {category_slot}
-              </div>
             font_size: 14
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
               padding: ['0', null, '0', null]
           type: RichText
+        - event_bindings: {click: category_button_click}
+          layout_properties: {slot: card-content-container-slot}
+          name: category_button
+          properties:
+            align: full
+            bold: true
+            icon_align: left
+            role: outlined-button
+            spacing:
+              margin: [null, '0', null, '0']
+            text: Full category definitions
+          type: Button
         layout_properties: {slot: card-content-slot}
         name: card_content_container_2
         properties:
@@ -81,7 +78,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_3
-    properties: {col_spacing: huge, col_widths: '{"BFKKVI":50,"IUGVIF":35,"BKECQL":25}', role: null, wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"BFKKVI":50,"IUGVIF":40,"BKECQL":20}', role: null, wrap_on: tablet}
     type: ColumnPanel
   - components:
     - components:

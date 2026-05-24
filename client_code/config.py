@@ -107,12 +107,12 @@ CATEGORY_ORDER = [
 # When secondary is set, shades interpolate from base → secondary;
 # otherwise shades scale around the base hue.
 CATEGORY_COLOUR_SCHEME = {
-  'Community':  {'base': dunsparce_colors[1], 'secondary': dunsparce_colors[7]},   # teal → dark teal
+  'Community-based':  {'base': dunsparce_colors[1], 'secondary': dunsparce_colors[7]},   # teal → dark teal
   'Indigenous': {'base': dunsparce_colors[11], 'secondary': dunsparce_colors[4]},  # amber → dark brown
-  'Private':    {'base': dunsparce_colors[8], 'secondary': dunsparce_colors[17]},                  # red
-  'Public':     {'base': dunsparce_colors[12], 'secondary': dunsparce_colors[0]},                  # dark blue
+  'Private sector':    {'base': dunsparce_colors[8], 'secondary': dunsparce_colors[17]},                  # red
+  'Public sector':     {'base': dunsparce_colors[12], 'secondary': dunsparce_colors[0]},                  # dark blue
   'Non-profit': {'base': dunsparce_colors[9], 'secondary': None},                  # purple
-  'Other':      {'base': dunsparce_colors[19],'secondary': None},                  # grey
+  'Other / Unknown':      {'base': dunsparce_colors[19],'secondary': None},                  # grey
 }
 
 
@@ -168,12 +168,12 @@ def get_owner_type_colors_categorical(type_category_pairs):
   """
   by_category = {}
   for ot, cat in type_category_pairs:
-    cat = cat if cat else 'Other'
+    cat = cat if cat else 'Other / Unknown'
     by_category.setdefault(cat, []).append(ot)
 
   result = {}
   for cat, types in by_category.items():
-    scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other'])
+    scheme = CATEGORY_COLOUR_SCHEME.get(cat, CATEGORY_COLOUR_SCHEME['Other / Unknown'])
     unique_types = sorted(set(types))
     shades = _generate_category_shades(scheme['base'], scheme.get('secondary'), len(unique_types))
     for t, shade in zip(unique_types, shades):
@@ -182,7 +182,7 @@ def get_owner_type_colors_categorical(type_category_pairs):
 
 # Display order for owner-type categories (used to keep types from the same
 # category adjacent in pies, treemaps, and legends).
-CATEGORY_ORDER_OWNERS = ['Community', 'Indigenous', 'Private', 'Public', 'Non-profit', 'Other']
+CATEGORY_ORDER_OWNERS = ['Community-based', 'Indigenous', 'Private sector', 'Public secor', 'Non-profit', 'Other / Unknown']
 
 # ==================== PROJECT TYPE COLOURS ====================
 
