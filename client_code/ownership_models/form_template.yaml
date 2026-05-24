@@ -412,9 +412,41 @@ components_by_slot:
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {grid_position: 'WCYRVN,KEHGGP'}
+      name: image_8
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {grid_position: 'FIWBXY,FMPWMO'}
+      name: heading_1_copy_5
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Do owner types differ in their key objectives?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GQCIPB,XEJFLG'}
+      name: objectives_heatmap_plot
+      properties: {height: 60vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'GQCIPB,JFIKRQ'}
+      name: text_1_copy_copy_4
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"AYLFWL":40,"undefined":20,"NPXQGL":40,"UVOTIU":20,"RFRGIP":40,"DJEVJG":20,"IVDJCB":40,"KEWIUF":20}'}
+    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"AYLFWL":40,"undefined":20,"NPXQGL":40,"UVOTIU":20,"RFRGIP":40,"DJEVJG":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20}'}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
