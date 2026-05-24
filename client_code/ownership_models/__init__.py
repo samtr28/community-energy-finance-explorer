@@ -146,6 +146,7 @@ class ownership_models(ownership_modelsTemplate):
     self.collaboration_heatmap_plot.figure  = all_charts['collaboration_heatmap']    # NEW
     self.single_owner_breakdown_plot.figure = all_charts['single_owner_breakdown']   # NEW
     self.semicircles_plot.figure = all_charts['multi_owner_semicircles']
+    self.objectives_heatmap_plot.figure = all_charts['objectives_heatmap']
   # ==================== CHART DOWNLOAD ====================
 
   def _get_plot_component(self, chart_key):
@@ -160,6 +161,7 @@ class ownership_models(ownership_modelsTemplate):
       'collaboration_heatmap':     self.collaboration_heatmap_plot,    # NEW
       'single_owner_breakdown':    self.single_owner_breakdown_plot,   # NEW
       'multi_owner_semicircles': self.semicircles_plot,
+      'objectives_heatmap':        self.objectives_heatmap_plot,
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):

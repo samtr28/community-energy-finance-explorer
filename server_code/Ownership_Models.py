@@ -199,6 +199,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     'collaboration_heatmap':     _build('collaboration_heatmap',     lambda: create_collaboration_heatmap_internal(df_raw_filtered),         df_raw_filtered),
     'single_owner_breakdown':    _build('single_owner_breakdown',    lambda: create_single_owner_breakdown_internal(df_raw_filtered),        df_raw_filtered),
     'multi_owner_semicircles':   _build('multi_owner_semicircles',   lambda: create_multi_owner_semicircles_internal(df_raw_filtered),       df_raw_filtered),
+    'objectives_heatmap': _build('objectives_heatmap', lambda: create_ownership_objectives_heatmap_internal(df_raw_filtered), df_raw_filtered),
   }
 
   # Apply display template to all charts except semicircles, which uses a
@@ -859,6 +860,80 @@ def create_multi_owner_semicircles_internal(df):
     xaxis=dict(visible=False),
     yaxis=dict(visible=False),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+  )
+  return fig
+
+def create_ownership_objectives_heatmap_internal(df):
+  """Heatmap: owner category × key objective co-occurrence."""
+  pairs = []
+  for _, row in df.iterrows():
+    owners = row.get('owners') or []
+    objectives = row.get('key_objectives') or []
+    if not owners or not objectives:
+      continue
+    cats = {o.get('owner_category') or 'Other' for o in owners}
+    for cat in cats:
+      for obj in objectives:
+        pairs.append({
+          'record_id': row.get('record_id'),
+          'owner_category': cat,
+          'objective': obj,
+        })
+
+  if not pairs:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No ownership-objectives data available'))
+    return fig
+
+  pairs_df = pd.DataFrame(pairs)
+  count_data = (
+    pairs_df.groupby(['owner_category', 'objective'])['record_id']
+      .nunique().reset_index(name='count')
+  )
+
+  owner_order = (count_data.groupby('owner_category')['count'].sum()
+    .sort_values(ascending=False).index.tolist())
+  obj_order = (count_data.groupby('objective')['count'].sum()
+    .sort_values(ascending=False).index.tolist())
+
+  obj_wrap_map = {o: wrap_text(o, width=60) for o in obj_order}
+  obj_order_w = [obj_wrap_map[o] for o in obj_order]
+  count_data['obj_w'] = count_data['objective'].map(obj_wrap_map)
+
+  count_pivot = (
+    count_data
+      .pivot_table(index='obj_w', columns='owner_category',
+                   values='count', fill_value=0)
+      .reindex(index=obj_order_w, columns=owner_order, fill_value=0)
+  )
+
+  max_val = count_pivot.values.max() or 1
+  annotations = []
+  for fi, row_label in enumerate(count_pivot.index):
+    for oi, col_label in enumerate(count_pivot.columns):
+      val = count_pivot.iloc[fi, oi]
+      if val <= 0:
+        continue
+      annotations.append(dict(
+        x=col_label, y=row_label, text=f'<b>{int(val)}</b>',
+        showarrow=False, xref='x', yref='y',
+        font=dict(family=FONT_FAMILY, size=10,
+                  color='white' if val > max_val * 0.5 else FONT_COLOR),
+      ))
+
+  fig = go.Figure(go.Heatmap(
+    z=count_pivot.values, x=owner_order, y=obj_order_w,
+    colorscale=[[0, '#f7f9fc'], [1, '#2d847b']],
+    showscale=False, xgap=2, ygap=2,
+    hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
+  ))
+  fig.update_layout(
+    title=dict(text='Co-occurrence of owner type and key objectives', x=0, xanchor='left'),
+    annotations=annotations,
+    margin=dict(l=0, b=0, t=50, r=0),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    xaxis=dict(title='', tickangle=-20, side='bottom'),
+    yaxis=dict(title='', autorange='reversed'),
   )
   return fig
 

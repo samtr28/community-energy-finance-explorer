@@ -1,7 +1,7 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF NKJDDF,BFKKVI'}
+    - layout_properties: {full_width_row: true, grid_position: 'KEHKZI,QQANVW'}
       name: heading_4
       properties:
         background_color: ''
@@ -14,18 +14,54 @@ components_by_slot:
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components: []
-      layout_properties: {grid_position: 'IIQWHR,IUGVIF EBFGMK,IKRGXR'}
+      layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF EBFGMK,IKRGXR'}
       name: rich_text_1
-      properties: {background: '', content: '<p>Community energy projects can be owned in many different ways. A project may involve a single community organization, or it may share ownership across multiple partners - including municipalities, Indigenous nations, cooperatives, non-profits, and private developers. These arrangements shape who benefits, who decides, and how value flows back into communities.</p>', font_size: 18, format: restricted_html}
-      type: RichText
-    - layout_properties: {grid_position: 'IIQWHR,IUGVIF XVFKRQ,SJSDMB'}
-      name: rich_text_3
-      properties: {background: '', content: '<p>The Ownership Explorer makes these structures easier to understand by showing the <b>ownership models</b> behind community energy projects in the current dataset. Use this page to explore who owns what, how ownership is distributed across project types and regions, and where community control is strongest.</p>', font_size: 18, format: restricted_html}
+      properties:
+        background: ''
+        content: |-
+          <p>Ownership is a key design choice in a community energy project. It helps show who has financial stake, who may share in the value created over time, and whether benefits are more likely to stay connected to local priorities. For communities, ownership can be a pathway to participating in the energy transition as partners, investors, and long-term beneficiaries, not only as hosts or customers. Ownership also matters for financing because different owner types may bring different kinds of relationships, eligibility, credibility, risk profiles, and funding pathways.</p>
+
+          <p>The Ownership Explorer shows how ownership is structured across projects in the current dataset. For simplicity, we group different types of organizations and owners into broad ownership categories (see key terms for more details). These categories make it easier to visualize ownership patterns across projects while recognizing that real-world ownership structures can be more complex. We also show ownership structures alongside capital sources to help users see how projects are being organized and financed in practice.</p>
+        font_size: 18
+        format: restricted_html
       type: RichText
     - layout_properties: {grid_position: 'IIQWHR,IUGVIF TVSYED,DGZHIG'}
       name: column_panel_2
       properties: {role: bg-image-om}
       type: ColumnPanel
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_5
+          properties:
+            content: <p><strong>Important note:</strong> Ownership is not the same as governance, although the two are related. Ownership can show who has a financial stake and who may share in project value, but it does not fully describe decision-making authority, voting rights, board structures, partnership agreements, or other governance arrangements. The Navigator explores these governance dimensions in more detail through project case studies (coming soon).</p>
+            font_size: 16
+            format: restricted_html
+            spacing:
+              margin: ['0', '0', '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_4
+          properties:
+            content: <p><b>Use the filters</b> to explore ownership patterns by technology, province or territory, project size, and when Indigenous ownership is part of the mix. The charts update as you filter, helping you explore structures relevant to your community project or research question.</p>
+            font_size: 16
+            format: restricted_html
+            spacing:
+              margin: ['0', '0', '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_4
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'IIQWHR,IUGVIF ZWKVUJ,WSSQWL'}
+      name: card_4
+      properties:
+        background_color: theme:Primary Overlay 1
+        spacing:
+          margin: [null, '8', null, null]
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
     - event_bindings: {click: info_btn_click}
       layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
       name: info_btn
@@ -49,7 +85,7 @@ components_by_slot:
                 <strong>Owner type:</strong> the kind of organization or entity that holds an ownership stake in a project. Survey responses included many owner types (27), which we grouped into broader categories to make the dashboard easier to read.<br><br>
                 <strong>Ownership category:</strong> a simplified grouping of owner types used for visualization.
               </p>
-            font_size: 14
+            font_size: 16
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -78,31 +114,8 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_3
-    properties: {col_spacing: huge, col_widths: '{"BFKKVI":50,"IUGVIF":40,"BKECQL":20}', role: null, wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20}', role: null, wrap_on: tablet}
     type: ColumnPanel
-  - components:
-    - components:
-      - layout_properties: {slot: card-content-container-slot}
-        name: rich_text_4
-        properties:
-          content: <p><b>Use the filters</b> to explore ownership patterns by technology, province or territory, project size, and when Indigenous ownership is part of the mix. The charts update as you filter, helping you explore structures relevant to your community project or research question.</p>
-          font_size: 16
-          format: restricted_html
-          spacing:
-            margin: ['0', '0', '0', null]
-            padding: ['0', null, '0', null]
-        type: RichText
-      layout_properties: {slot: card-content-slot}
-      name: card_content_container_3
-      properties: {}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-    layout_properties: {}
-    name: card_3
-    properties:
-      background_color: theme:Secondary Overlay
-      spacing:
-        margin: [null, '0', null, null]
-    type: form:dep_9kcxnwm3upyjd:_Components.Card
   - layout_properties: {full_width_row: true}
     name: divider_1
     properties: {}
@@ -412,9 +425,41 @@ components_by_slot:
 
           At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'WCYRVN,KEHGGP'}
+      name: image_8
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'FIWBXY,FMPWMO'}
+      name: heading_1_copy_5
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Do owner types differ in their key objectives?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GQCIPB,XEJFLG'}
+      name: objectives_heatmap_plot
+      properties: {height: 60vh}
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'GQCIPB,JFIKRQ'}
+      name: text_1_copy_copy_4
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: |-
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+
+          At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"AYLFWL":40,"undefined":20,"NPXQGL":40,"UVOTIU":20,"RFRGIP":40,"DJEVJG":20,"IVDJCB":40,"KEWIUF":20}'}
+    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"AYLFWL":40,"undefined":20,"NPXQGL":40,"UVOTIU":20,"RFRGIP":40,"DJEVJG":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20}', wrap_on: tablet}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
