@@ -896,7 +896,7 @@ def create_ownership_objectives_heatmap_internal(df):
   obj_order = (count_data.groupby('objective')['count'].sum()
     .sort_values(ascending=False).index.tolist())
 
-  obj_wrap_map = {o: wrap_text(o, width=45) for o in obj_order}
+  obj_wrap_map = {o: wrap_text(o, width=60) for o in obj_order}
   obj_order_w = [obj_wrap_map[o] for o in obj_order]
   count_data['obj_w'] = count_data['objective'].map(obj_wrap_map)
 
