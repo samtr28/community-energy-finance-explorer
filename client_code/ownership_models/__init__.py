@@ -138,7 +138,7 @@ class ownership_models(ownership_modelsTemplate):
     self.ownership_treemap.figure          = all_charts['ownership_treemap']
     self.scale_pies_plot.figure            = all_charts['scale_pies']
     #self.indig_ownership_plot.figure       = all_charts['indigenous_pie']
-    self.lollipop_chart.figure              = all_charts['bottleneck_chart']   # now governance bottlenecks
+    #self.lollipop_chart.figure              = all_charts['bottleneck_chart']   # now governance bottlenecks
     # self.ownership_financing_bubble.figure = all_charts['bubble_chart']    # REMOVED
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
     #self.ownership_boxplot_plot.figure      = all_charts['ownership_boxplot']
