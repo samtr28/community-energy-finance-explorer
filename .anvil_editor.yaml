@@ -2,6 +2,10 @@ unique_ids:
   assets:
     DejaVuSans-Bold.ttf: '1777400753398373431716214.19666'
     DejaVuSans.ttf: '1777400740871340629690505.54535'
+    Factsheets/.gitkeep: '1779731560166256104463027.09644'
+    Factsheets/Community_Bonds_Infographic.png: '1779731596715117321602060.06337'
+    Factsheets/Crowdfunding_Infographic.png: '1779737322586805696157876.1763'
+    Factsheets/Loan_Guarantees_Infographic.png: '1779737002249255670914171.35468'
     Graphics/.gitkeep: '1779295512426892375986595.3403'
     Graphics/IM-Banner-Illustration-1-Cropped.png: '1779296589823362173751280.6799'
     Graphics/IM-Banner-Illustration-1.png: '1779295547576228792668830.17114'
@@ -12,6 +16,8 @@ unique_ids:
     Horizontal-IIH-Acet-Lockup-White.png: '1769112185971346020264990.6624'
     Horizontal-IIH-Logomark-Full Colour-University-of-Victoria.png: '1770248284061702468159622.2123'
     IIH-Logo-Full-Colour.png: '1769112913235107641138577.76625'
+    Smaller Graphics/.gitkeep: '1779739113801735889234735.2665'
+    Smaller Graphics/IM-TreesClouds.png: '1779739126240617966274198.6447'
     Vertical-IIH-Logomark-Full-Colour-University-of-Victoria.png: '1770245844165411634824895.68805'
     dots.png: '177750414279021197585278.63147'
     standard-page.html: AMRQPGN4FKJZSMF6IUKABS4PVWYQMRPN
@@ -37,10 +43,12 @@ unique_ids:
     projects_explorer.Project_Card: '1760505559619997561065063.1948'
     projects_explorer.Project_Card.SubProjectRow: '1776286655811963906776874.5742'
     resources: '1759257439766755211398664.8079'
+    resources.factsheets_box: '1779731791730608650967340.3228'
     team: '1777318652943851611812734.6877'
   modules:
     chart_export: '1776717885549981665053013.2372'
     config: '1761843729959440190662753.931'
+    resources.factsheet_data: '1779731390884759115228048.4307'
   scripts: {}
   server_modules:
     Cap_Explorer: '1763095019811400443194487.3749'

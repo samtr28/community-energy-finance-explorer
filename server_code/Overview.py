@@ -86,7 +86,7 @@ def get_all_overview_data():
     # Province map applies its own template internally because it requires
     # post-template overrides for title positioning and margins.
     'province_map':      create_province_map_internal(df),
-    'mechanism_compare': apply_display_template(create_mechanism_compare_internal(df)),
+    #'mechanism_compare': apply_display_template(create_mechanism_compare_internal(df)),
   }
 
 

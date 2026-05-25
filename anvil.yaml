@@ -61,5 +61,5 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/anvil/files.yml
-startup: {module: ownership_models, type: form}
+startup: {module: resources, type: form}
 startup_form: null
