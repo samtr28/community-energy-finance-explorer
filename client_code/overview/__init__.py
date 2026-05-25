@@ -40,7 +40,7 @@ class overview(overviewTemplate):
 
     # ── Charts ──
     self.province_map.figure       = data['province_map']
-    self.mechanism_compare_plot.figure = data['mechanism_compare']
+    #self.mechanism_compare_plot.figure = data['mechanism_compare']
 
 
   # ==================== NAVIGATION ====================
@@ -62,7 +62,7 @@ class overview(overviewTemplate):
   def _get_plot_component(self, chart_key):
     """Maps a chart key string to the corresponding plot component."""
     return {
-      'mechanism_compare': self.mechanism_compare_plot,
+      #'mechanism_compare': self.mechanism_compare_plot,
       'province_map':      self.province_map,
     }[chart_key]
 
@@ -80,5 +80,3 @@ class overview(overviewTemplate):
       button=button,
     )
 
-  def download_mechanism_btn_click(self, **event_args):
-    self._download_chart('mechanism_compare', button=self.download_mechanism_btn)

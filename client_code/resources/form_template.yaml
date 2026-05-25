@@ -1,27 +1,37 @@
 components_by_slot:
   content_slot:
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'QQOTCW,GZSOHP'}
+    - layout_properties: {full_width_row: true, grid_position: 'SPJKYZ,FGAUXW'}
       name: heading_1
       properties:
         bold: true
         font_family: ser
         spacing:
           margin: [null, '0', null, null]
+          padding: [null, 35%, null, null]
         text: Explore guides and factsheets to help you understand the financing and ownership options available for community energy projects.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'CNHJAC,PEGHDF'}
+    - layout_properties: {full_width_row: true, grid_position: 'CNHJAC,PEGHDF'}
       name: text_1
       properties:
         font_size: 18
         spacing:
           margin: [2%, '0', 2%, null]
           padding: [null, null, null, null]
-        text: ' Practical, plain-language guides to the financial tools, funding models, and ownership structures behind community energy projects. More resources are on the way, check back regularly for updates.'
+        text: |-
+          Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.
+
+          Everything we build is shaped by what our respondents tell us they need. Rather than guessing at which topics matter most, we've drawn directly on survey responses to focus our efforts on the financing mechanisms people are most eager to understand. The chart to the right shows where that interest is concentrated:  comparing the approaches respondents are already using against the ones they most want to learn more about. These insights guide how we prioritize new guides and tools, so the resources you find here speak to the real questions and gaps facing community energy projects today.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'CNHJAC,HGIWYG'}
+      name: mechanism_compare_plot
+      properties:
+        height: 50vh
+        margin: ['8', null, null, null]
+      type: Plot
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"FACINN":35}', role: equal-height}
+    properties: {col_spacing: huge, col_widths: '{"PEGHDF":20,"HGIWYG":40,"MXFYWJ":60}', role: equal-height, wrap_on: tablet}
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: factsheets_panel
