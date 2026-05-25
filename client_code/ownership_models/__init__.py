@@ -143,7 +143,7 @@ class ownership_models(ownership_modelsTemplate):
     self.all_financing_heatmap_plot.figure  = all_charts['all_financing_heatmap']
     #self.ownership_boxplot_plot.figure      = all_charts['ownership_boxplot']
     self.ownership_tiers_histogram.figure   = all_charts['ownership_tiers_histogram']
-    self.collaboration_heatmap_plot.figure  = all_charts['collaboration_heatmap']    # NEW
+    #self.collaboration_heatmap_plot.figure  = all_charts['collaboration_heatmap']    # NEW
     self.single_owner_breakdown_plot.figure = all_charts['single_owner_breakdown']   # NEW
     self.semicircles_plot.figure = all_charts['multi_owner_semicircles']
     self.objectives_heatmap_plot.figure = all_charts['objectives_heatmap']
@@ -158,7 +158,7 @@ class ownership_models(ownership_modelsTemplate):
       'all_financing_heatmap':     self.all_financing_heatmap_plot,
       #'ownership_boxplot':         self.ownership_boxplot_plot,
       'ownership_tiers_histogram': self.ownership_tiers_histogram,
-      'collaboration_heatmap':     self.collaboration_heatmap_plot,    # NEW
+      #'collaboration_heatmap':     self.collaboration_heatmap_plot,    # NEW
       'single_owner_breakdown':    self.single_owner_breakdown_plot,   # NEW
       'multi_owner_semicircles': self.semicircles_plot,
       'objectives_heatmap':        self.objectives_heatmap_plot,
