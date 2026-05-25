@@ -5,6 +5,7 @@ import anvil.server
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from .factsheet_data import factsheets
 
 class resources(resourcesTemplate):
   def __init__(self, **properties):
@@ -14,3 +15,4 @@ class resources(resourcesTemplate):
     """This method is called when the form is shown on the page"""
     self.layout.reset_links()
     self.layout.resources_nav.role = 'selected'
+    self.factsheets_panel.items = factsheets

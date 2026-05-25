@@ -5,25 +5,34 @@ components:
       - {code: 'self.item[''image'']', property: source, writeback: false}
       layout_properties: {slot: card-content-container-slot}
       name: image
-      properties: {display_mode: fill_width, height: 168.8333282470703}
+      properties: {display_mode: original_size, height: 168.8333282470703}
       type: Image
     - data_bindings:
       - {code: 'self.item[''title'']', property: text, writeback: false}
       layout_properties: {slot: card-content-container-slot}
       name: title
-      properties: {}
+      properties: {bold: true, font_family: ser, text_color: 'theme:On Primary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - data_bindings:
       - {code: 'self.item[''summary'']', property: text, writeback: false}
       layout_properties: {slot: card-content-container-slot}
       name: summary
-      properties: {}
+      properties: {font_size: 16, scale: large, style: body}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - data_bindings:
       - {code: 'self.item[''pdf_url'']', property: url, writeback: false}
       layout_properties: {slot: card-content-container-slot}
       name: pdf_link
-      properties: {icon: 'mi:file_save', text: Open PDF}
+      properties:
+        align: right
+        bold: true
+        font_family: ser
+        font_size: 18
+        icon: mi:file_save
+        spacing:
+          margin: [2%, null, null, null]
+          padding: ['', null, null, null]
+        text: Open Factsheet
       type: form:dep_9kcxnwm3upyjd:_Components.Link
     layout_properties: {slot: card-content-slot}
     name: card_content_container_1
