@@ -194,7 +194,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     'ownership_boxplot':         _build('ownership_boxplot',         lambda: create_ownership_boxplot_internal(df_owners_filtered),          df_owners_filtered),
     'ownership_tiers_histogram': _build('ownership_tiers_histogram', lambda: create_ownership_tiers_histogram_internal(df_owners_filtered),  df_owners_filtered),
     # ── Charts that use the raw per-response frame ──
-    'bottleneck_chart':            _build('bottleneck_chart',            lambda: create_governance_bottlenecks_internal(df_raw_filtered),        df_raw_filtered),
+    #'bottleneck_chart':            _build('bottleneck_chart',            lambda: create_governance_bottlenecks_internal(df_raw_filtered),        df_raw_filtered),
     'all_financing_heatmap':     _build('all_financing_heatmap',     lambda: create_ownership_all_financing_heatmap_internal(df_raw_filtered), df_raw_filtered),
     'collaboration_heatmap':     _build('collaboration_heatmap',     lambda: create_collaboration_heatmap_internal(df_raw_filtered),         df_raw_filtered),
     'single_owner_breakdown':    _build('single_owner_breakdown',    lambda: create_single_owner_breakdown_internal(df_raw_filtered),        df_raw_filtered),
@@ -258,7 +258,7 @@ def create_ownership_treemap_internal(df_owners):
     marker=dict(colors=colors_list, line=dict(width=2, color='white')),
   ))
   fig.update_layout(
-    title=dict(text='Ownership composition of community energy projects'),
+    title=dict(text='Ownership Value by Owner Category in Canadian Community Energy Projects'),
     margin=dict(t=50, b=0, l=0, r=0),
   )
   return fig
@@ -370,7 +370,7 @@ def create_ownership_scale_pies_internal(df_owners):
     current_x += entry_width(cat) + entry_padding
 
   fig.update_layout(
-    title=dict(text='Ownership composition by project scale'),
+    title=dict(text='Ownership Value By Owner Category And Project Scale'),
     showlegend=False, shapes=shapes, annotations=annotations,
     margin=dict(t=50, b=0, l=0, r=0),
   )
@@ -452,55 +452,12 @@ def create_ownership_tiers_histogram_internal(df_owners):
   fig.update_layout(
     barmode='group',
     showlegend=False,
-    title=dict(text='Distribution of ownership stake sizes by category'),
+    title=dict(text='Distribution of Ownership Stake Sizes by Category'),
     margin=dict(l=0, r=0, b=0, t=75),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
   )
   return fig
 
-
-
-def create_governance_bottlenecks_internal(df):
-  KEEP = [
-    'Challenges with project governance or decision-making',
-    'Conflicts among stakeholders or partners',
-    'Limited community engagement or support',
-  ]
-  rows = []
-  for _, row in df.iterrows():
-    bottlenecks = row.get('bottlenecks') or []
-    owners      = row.get('owners') or []
-    cats        = {o.get('owner_category') or 'Other' for o in owners}
-    ownership_type = 'Single owner' if len(cats) <= 1 else 'Multiple owners'
-    for b in bottlenecks:
-      if b in KEEP:
-        rows.append({'bottleneck': b, 'ownership_type': ownership_type})
-
-  if not rows:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No governance bottleneck data available'))
-    return fig
-
-  grouped = (
-    pd.DataFrame(rows)
-      .groupby(['bottleneck', 'ownership_type']).size()
-      .reset_index(name='count')
-  )
-
-  fig = px.bar(
-    grouped, y='bottleneck', x='count', color='ownership_type',
-    barmode='stack', orientation='h',
-    labels={'bottleneck': '', 'count': 'Responses', 'ownership_type': ''},
-    color_discrete_map={'Single owner': '#55828b', 'Multiple owners': '#e07b3a'},
-    category_orders={'bottleneck': KEEP},
-  )
-  fig.update_yaxes(automargin=True, tickmode='linear')
-  fig.update_layout(
-    title=dict(text='Governance bottlenecks'),
-    legend=dict(orientation='h', yanchor='bottom', y=-0.7, xanchor='center', x=0.5),
-    margin=dict(l=0, r=0, t=50, b=0),
-  )
-  return fig
 
 
 def _build_ownership_financing_pairs(df, direct_only=True):
@@ -589,7 +546,7 @@ def create_ownership_all_financing_heatmap_internal(df):
     hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
   ))
   fig.update_layout(
-    title=dict(text='Co-occurence of owner type and use of financing mechanism', x=0, xanchor='left'),
+    title=dict(text='Co-Occurrence of Owner Categories and Financing Mechanisms', x=0, xanchor='left'),
     annotations=annotations,
     margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
@@ -709,7 +666,7 @@ def create_single_owner_breakdown_internal(df):
     )
 
   fig.update_layout(
-    title=dict(text=f'Single-owner projects by owner type ({len(df_single)} projects)'),
+    title=dict(text='Single-Owner Community Energy Projects by Owner Category'),
     showlegend=False,
     margin=dict(l=0, r=0, t=50, b=0),
   )
@@ -846,7 +803,7 @@ def create_multi_owner_semicircles_internal(df):
 
   fig.update_layout(
     title=dict(
-      text=f'Ownership of multi-owner projects (n={n})',
+      text='Ownership Structures in Select Multi-Owner Projects',
       font=dict(family=TITLE_FONT_FAMILY, size=TITLE_SIZE, color=FONT_COLOR),
       x=0.01, xanchor='left',
       y=0.98, yanchor='top',
@@ -928,7 +885,7 @@ def create_ownership_objectives_heatmap_internal(df):
     hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
   ))
   fig.update_layout(
-    title=dict(text='Co-occurrence of owner type and key objectives', x=0, xanchor='left'),
+    title=dict(text='Co-Occurrence of Owner Categories and Desired Outcomes', x=0, xanchor='left'),
     annotations=annotations,
     margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
@@ -1016,5 +973,47 @@ def create_indigenous_ownership_stacked_internal(df_owners):
     barmode='stack', showlegend=False,
     xaxis=dict(visible=False), yaxis=dict(visible=False),
     margin=dict(t=50, b=0, l=0, r=0),
+  )
+  return fig
+
+  def create_governance_bottlenecks_internal(df):
+    KEEP = [
+    'Challenges with project governance or decision-making',
+    'Conflicts among stakeholders or partners',
+    'Limited community engagement or support',
+  ]
+  rows = []
+  for _, row in df.iterrows():
+    bottlenecks = row.get('bottlenecks') or []
+    owners      = row.get('owners') or []
+    cats        = {o.get('owner_category') or 'Other' for o in owners}
+    ownership_type = 'Single owner' if len(cats) <= 1 else 'Multiple owners'
+    for b in bottlenecks:
+      if b in KEEP:
+        rows.append({'bottleneck': b, 'ownership_type': ownership_type})
+
+  if not rows:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No governance bottleneck data available'))
+    return fig
+
+  grouped = (
+    pd.DataFrame(rows)
+      .groupby(['bottleneck', 'ownership_type']).size()
+      .reset_index(name='count')
+  )
+
+  fig = px.bar(
+    grouped, y='bottleneck', x='count', color='ownership_type',
+    barmode='stack', orientation='h',
+    labels={'bottleneck': '', 'count': 'Responses', 'ownership_type': ''},
+    color_discrete_map={'Single owner': '#55828b', 'Multiple owners': '#e07b3a'},
+    category_orders={'bottleneck': KEEP},
+  )
+  fig.update_yaxes(automargin=True, tickmode='linear')
+  fig.update_layout(
+    title=dict(text='Governance bottlenecks'),
+    legend=dict(orientation='h', yanchor='bottom', y=-0.7, xanchor='center', x=0.5),
+    margin=dict(l=0, r=0, t=50, b=0),
   )
   return fig
