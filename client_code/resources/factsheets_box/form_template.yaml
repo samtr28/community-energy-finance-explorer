@@ -30,7 +30,7 @@ components:
         font_size: 18
         icon: mi:file_save
         spacing:
-          margin: [2%, null, null, null]
+          margin: [3%, null, null, null]
           padding: ['', null, null, null]
         text: Open Factsheet
       type: form:dep_9kcxnwm3upyjd:_Components.Link

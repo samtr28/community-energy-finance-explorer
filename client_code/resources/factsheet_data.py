@@ -24,8 +24,8 @@ factsheets = [
   },
   {  "title": "Crowdfunding",
      "summary": "Investment crowdfunding is a form of crowdfunding where people contribute money as investors, rather than as donors, to help finance a project or organization.",
-     "image": "_/theme/Factsheets/Community_Bonds_Infographic.png",  # path to your uploaded image
-     "pdf_url": "_/theme/Factsheets/Crowdfunding_Infographic.png"
+     "image": "_/theme/Factsheets/Crowdfunding_Infographic.png",  # path to your uploaded image
+     "pdf_url": "https://impactinvestinghub.ca/wp-content/uploads/2026/05/FS-Investment-Crowdfunding-May-2026.pdf"
   },
 
 ]

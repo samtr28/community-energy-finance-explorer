@@ -1,18 +1,33 @@
 components_by_slot:
   content_slot:
-  - layout_properties: {full_width_row: true}
-    name: heading_1
-    properties: {text: Explore resources about financial tools.....}
-    type: form:dep_9kcxnwm3upyjd:_Components.Heading
-  - layout_properties: {full_width_row: true}
-    name: text_1
-    properties: {text: More coming soon! (add text here)}
-    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'QQOTCW,GZSOHP'}
+      name: heading_1
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [null, '0', null, null]
+        text: Explore guides and factsheets to help you understand the financing and ownership options available for community energy projects.
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {grid_position: 'CNHJAC,PEGHDF'}
+      name: text_1
+      properties:
+        font_size: 18
+        spacing:
+          margin: [2%, '0', 2%, null]
+          padding: [null, null, null, null]
+        text: ' Practical, plain-language guides to the financial tools, funding models, and ownership structures behind community energy projects. More resources are on the way, check back regularly for updates.'
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    layout_properties: {full_width_row: true}
+    name: column_panel_1
+    properties: {col_spacing: huge, col_widths: '{"FACINN":35}', role: equal-height}
+    type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: factsheets_panel
     properties:
       item_template: resources.factsheets_box
-      role: [3-cols, equal-height]
+      role: [3-cols]
     type: RepeatingPanel
   title_slot:
   - components:
