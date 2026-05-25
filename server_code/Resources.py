@@ -133,7 +133,7 @@ def create_mechanism_compare_internal(df):
 
   # ── Capitalise first letter for display (no-op on already-capitalised labels) ──
   display_labels = [
-    '<br>'.join(textwrap.wrap(p[:1].upper() + p[1:], width=25))
+    '<br>'.join(textwrap.wrap(p[:1].upper() + p[1:], width=50))
     for p in plot_data['phrase']
   ]
 
