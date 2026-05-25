@@ -258,6 +258,15 @@ components_by_slot:
         margin: ['16', null, '16', null]
         source: ' _/theme/dots.png'
       type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'JTUJXQ,LVULVG'}
+      name: heading_1_copy_7
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: Which categories own projects without partners?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'OPDATL,PSFOTO XUSUAR,YCMMSS'}
       name: single_owner_breakdown_plot
       properties: {height: 50vh}
@@ -285,6 +294,15 @@ components_by_slot:
         margin: ['16', null, '16', null]
         source: ' _/theme/dots.png'
       type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'AHKHRG,ERHFIL'}
+      name: heading_1_copy_6
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', null, null, null]
+        text: What does working together look like?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD XOUSUT,QZHDHS'}
       name: semicircles_plot
       properties:
@@ -293,7 +311,7 @@ components_by_slot:
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD KADNCD,NWFWZP'}
       name: text_6
-      properties: {font_size: 16, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
+      properties: {font_size: 14, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,WMUBQD'}
       name: text_1_copy_copy_copy
@@ -314,11 +332,20 @@ components_by_slot:
         margin: ['16', null, '16', null]
         source: ' _/theme/dots.png'
       type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'PJTIIP,UGYCNC'}
+      name: heading_2
+      properties:
+        bold: true
+        font_family: serif
+        spacing:
+          margin: ['', 33%, null, null]
+        text: Do some owner types tend toward larger or smaller stakes?
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,IVDJCB'}
       name: ownership_tiers_histogram
       properties: {height: 45vh}
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,KEWIUF QWBAIM,SEGDJU'}
+    - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,KEWIUF'}
       name: text_1_copy_copy_3
       properties:
         font_size: 16
@@ -329,10 +356,6 @@ components_by_slot:
 
           This view helps users see whether different owner categories tend to appear as full owners, majority owners, or minority partners. It adds another layer to the ownership story by showing not only who owns projects, but how large those ownership positions tend to be.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'CTYEQH,KEWIUF ZNTOHB,CUMPMK'}
-      name: collaboration_heatmap_plot
-      properties: {height: 25vh}
-      type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'FHAKHB,VRBJEF'}
       name: image_11
       properties:
@@ -387,7 +410,7 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: How Are Ownership Structures Connected To Financing Mechanisms?
+        text: How are ownership structures connected to financing mechanisms?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'UGGXQN,SDHEFN'}
       name: text_9

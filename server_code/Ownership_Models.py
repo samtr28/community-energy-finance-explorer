@@ -196,7 +196,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
     # ── Charts that use the raw per-response frame ──
     #'bottleneck_chart':            _build('bottleneck_chart',            lambda: create_governance_bottlenecks_internal(df_raw_filtered),        df_raw_filtered),
     'all_financing_heatmap':     _build('all_financing_heatmap',     lambda: create_ownership_all_financing_heatmap_internal(df_raw_filtered), df_raw_filtered),
-    'collaboration_heatmap':     _build('collaboration_heatmap',     lambda: create_collaboration_heatmap_internal(df_raw_filtered),         df_raw_filtered),
+    #'collaboration_heatmap':     _build('collaboration_heatmap',     lambda: create_collaboration_heatmap_internal(df_raw_filtered),         df_raw_filtered),
     'single_owner_breakdown':    _build('single_owner_breakdown',    lambda: create_single_owner_breakdown_internal(df_raw_filtered),        df_raw_filtered),
     'multi_owner_semicircles':   _build('multi_owner_semicircles',   lambda: create_multi_owner_semicircles_internal(df_raw_filtered),       df_raw_filtered),
     'objectives_heatmap': _build('objectives_heatmap', lambda: create_ownership_objectives_heatmap_internal(df_raw_filtered), df_raw_filtered),
@@ -552,67 +552,6 @@ def create_ownership_all_financing_heatmap_internal(df):
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
     xaxis=dict(title='', tickangle=-20, side='bottom'),
     yaxis=dict(title='', autorange='reversed'),
-  )
-  return fig
-
-
-
-
-
-
-def create_collaboration_heatmap_internal(df):
-  all_cats = set()
-  project_cat_sets = []
-  for _, row in df.iterrows():
-    owners = row.get('owners') or []
-    if len(owners) < 2:
-      continue
-    cats = sorted({o.get('owner_category') or 'Other' for o in owners})
-    project_cat_sets.append(cats)
-    all_cats.update(cats)
-
-  if not project_cat_sets:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No multi-owner projects for selected filters'))
-    return fig
-
-  ordered  = [c for c in CATEGORY_ORDER_OWNERS if c in all_cats]
-  ordered += [c for c in sorted(all_cats) if c not in ordered]
-
-  matrix = pd.DataFrame(0, index=ordered, columns=ordered)
-  for cats in project_cat_sets:
-    for a, b in combinations(cats, 2):
-      matrix.loc[a, b] += 1
-      matrix.loc[b, a] += 1
-    if len(cats) == 1:
-      matrix.loc[cats[0], cats[0]] += 1
-
-  max_val = matrix.values.max() or 1
-  annotations = []
-  for yl in ordered:
-    for xl in ordered:
-      val = matrix.loc[yl, xl]
-      if val <= 0:
-        continue
-      annotations.append(dict(
-        x=xl, y=yl, text=f'<b>{int(val)}</b>', showarrow=False,
-        xref='x', yref='y',
-        font=dict(family=FONT_FAMILY, size=11,
-                  color='white' if val > max_val * 0.5 else FONT_COLOR),
-      ))
-
-  fig = go.Figure(go.Heatmap(
-    z=matrix.values, x=ordered, y=ordered,
-    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[3]]],
-    showscale=False, xgap=3, ygap=3,
-    hovertemplate='%{y} + %{x}<br>Projects: %{z}<extra></extra>',
-  ))
-  fig.update_layout(
-    title=dict(text=f'Owner type category collaboration (n ={len(project_cat_sets)})'),
-    annotations=annotations,
-    margin=dict(l=0, r=0, t=50, b=0),
-    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
-    yaxis=dict(autorange='reversed'),
   )
   return fig
 
@@ -1015,5 +954,61 @@ def create_indigenous_ownership_stacked_internal(df_owners):
     title=dict(text='Governance bottlenecks'),
     legend=dict(orientation='h', yanchor='bottom', y=-0.7, xanchor='center', x=0.5),
     margin=dict(l=0, r=0, t=50, b=0),
+  )
+  return fig
+
+def create_collaboration_heatmap_internal(df):
+  all_cats = set()
+  project_cat_sets = []
+  for _, row in df.iterrows():
+    owners = row.get('owners') or []
+    if len(owners) < 2:
+      continue
+    cats = sorted({o.get('owner_category') or 'Other' for o in owners})
+    project_cat_sets.append(cats)
+    all_cats.update(cats)
+
+  if not project_cat_sets:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No multi-owner projects for selected filters'))
+    return fig
+
+  ordered  = [c for c in CATEGORY_ORDER_OWNERS if c in all_cats]
+  ordered += [c for c in sorted(all_cats) if c not in ordered]
+
+  matrix = pd.DataFrame(0, index=ordered, columns=ordered)
+  for cats in project_cat_sets:
+    for a, b in combinations(cats, 2):
+      matrix.loc[a, b] += 1
+      matrix.loc[b, a] += 1
+    if len(cats) == 1:
+      matrix.loc[cats[0], cats[0]] += 1
+
+  max_val = matrix.values.max() or 1
+  annotations = []
+  for yl in ordered:
+    for xl in ordered:
+      val = matrix.loc[yl, xl]
+      if val <= 0:
+        continue
+      annotations.append(dict(
+        x=xl, y=yl, text=f'<b>{int(val)}</b>', showarrow=False,
+        xref='x', yref='y',
+        font=dict(family=FONT_FAMILY, size=11,
+                  color='white' if val > max_val * 0.5 else FONT_COLOR),
+      ))
+
+  fig = go.Figure(go.Heatmap(
+    z=matrix.values, x=ordered, y=ordered,
+    colorscale=[[0, '#f7f9fc'], [1, dunsparce_colors[3]]],
+    showscale=False, xgap=3, ygap=3,
+    hovertemplate='%{y} + %{x}<br>Projects: %{z}<extra></extra>',
+  ))
+  fig.update_layout(
+    title=dict(text=f'Owner type category collaboration (n ={len(project_cat_sets)})'),
+    annotations=annotations,
+    margin=dict(l=0, r=0, t=50, b=0),
+    font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
+    yaxis=dict(autorange='reversed'),
   )
   return fig
