@@ -223,7 +223,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'UOMFSA,HLAKXE'}
       name: rich_text_3
       properties:
-        content: <p>Ownership can be viewed in more than one way. Some charts show the scale of ownership value, while others show the number of projects or how ownership is shared among different owner categories.  Together, these views help users see both who holds financial stakes and how ownership structures are organized across projects in the current filtered view.</p>
+        content: <p>Ownership can be viewed in more than one way. Some charts show the scale of ownership value, while others show the number of projects or how ownership is shared among different owner categories.  Together, these views help users see both who holds financial stakes and how ownership structures are organized across projects in the current filtered view. </p>
         font_size: 16
         format: restricted_html
         spacing:
@@ -419,7 +419,7 @@ components_by_slot:
         spacing:
           margin: ['', 35%, null, null]
           padding: [null, null, 1%, null]
-        text: Ownership and financing are often connected. In this section we ask explore different owner categories appear alongside different financing mechanisms. This is useful for communities thinking about capital pathways, and for funders and intermediaries trying to understand how ownership structures may connect to financing options.
+        text: Ownership and financing are often connected. In this section we explore how different owner categories appear alongside different financing mechanisms. This is useful for communities thinking about capital pathways, and for funders and intermediaries trying to understand how ownership structures may connect to financing options.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,FVMCOG KLQSOC,XXLPBN'}
       name: all_financing_heatmap_plot
