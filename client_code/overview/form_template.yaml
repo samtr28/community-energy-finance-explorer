@@ -70,7 +70,7 @@ components_by_slot:
           <li>researchers and policymakers lack evidence on what supports success and community benefit
           </ul>
           The Navigator helps make this knowledge visible, comparable, and usable.
-        font_size: 16
+        font_size: 18
         format: restricted_html
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ ITKZWY,OMCXJP'}
