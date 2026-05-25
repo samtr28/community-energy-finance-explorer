@@ -2,6 +2,8 @@ unique_ids:
   assets:
     DejaVuSans-Bold.ttf: '1777400753398373431716214.19666'
     DejaVuSans.ttf: '1777400740871340629690505.54535'
+    Factsheets/.gitkeep: '1779731560166256104463027.09644'
+    Factsheets/Community_Bonds_Infographic.png: '1779731596715117321602060.06337'
     Graphics/.gitkeep: '1779295512426892375986595.3403'
     Graphics/IM-Banner-Illustration-1-Cropped.png: '1779296589823362173751280.6799'
     Graphics/IM-Banner-Illustration-1.png: '1779295547576228792668830.17114'
@@ -37,10 +39,12 @@ unique_ids:
     projects_explorer.Project_Card: '1760505559619997561065063.1948'
     projects_explorer.Project_Card.SubProjectRow: '1776286655811963906776874.5742'
     resources: '1759257439766755211398664.8079'
+    resources.ItemTemplate1: '1779731791730608650967340.3228'
     team: '1777318652943851611812734.6877'
   modules:
     chart_export: '1776717885549981665053013.2372'
     config: '1761843729959440190662753.931'
+    resources.factsheet_data: '1779731390884759115228048.4307'
   scripts: {}
   server_modules:
     Cap_Explorer: '1763095019811400443194487.3749'

@@ -1,0 +1,37 @@
+components:
+- components:
+  - components:
+    - data_bindings:
+      - {code: 'self.item[''image'']', property: source, writeback: false}
+      layout_properties: {slot: card-content-container-slot}
+      name: image
+      properties: {display_mode: fill_width, height: 168.8333282470703}
+      type: Image
+    - data_bindings:
+      - {code: 'self.item[''title'']', property: text, writeback: false}
+      layout_properties: {slot: card-content-container-slot}
+      name: title
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - data_bindings:
+      - {code: 'self.item[''summary'']', property: text, writeback: false}
+      layout_properties: {slot: card-content-container-slot}
+      name: summary
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - data_bindings:
+      - {code: 'self.item[''pdf_url'']', property: url, writeback: false}
+      layout_properties: {slot: card-content-container-slot}
+      name: pdf_link
+      properties: {icon: 'mi:file_save', text: Open PDF}
+      type: form:dep_9kcxnwm3upyjd:_Components.Link
+    layout_properties: {slot: card-content-slot}
+    name: card_content_container_1
+    properties: {}
+    type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+  layout_properties: {full_width_row: true, grid_position: 'HXFMZR,YNDPIV'}
+  name: card_1
+  properties: {background_color: 'theme:Primary Overlay 1'}
+  type: form:dep_9kcxnwm3upyjd:_Components.Card
+container: {type: ColumnPanel}
+is_package: true
