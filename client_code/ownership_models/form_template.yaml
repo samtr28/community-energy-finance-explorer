@@ -264,38 +264,9 @@ components_by_slot:
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'OPDATL,PSFOTO QJHPQK,YCUZTL'}
       name: text_4
-      properties: {italic: true, text: 'Note: This chart reflects reported ownership value in the current filtered view. It should not be interpreted as a ranking of owner types or as a measure of governance control. Keep in mind the landscape will shift as you apply various filters.'}
+      properties: {italic: true, text: 'Note on project count: Some survey responses represent a portfolio of similar projects under one reporting umbrella. In these cases, the portfolio is counted once in this chart to avoid giving disproportionate weight to a single respondent or ownership structure. As a result, the count may understate the number of individual assets represented within some owner types, such as cooperative associations.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'OPDATL,JKDSYE'}
-      name: text_1_copy_copy_copy
-      properties:
-        font_size: 16
-        spacing:
-          margin: [10%, null, null, null]
-        text: |
-          Shared ownership appears in a smaller number of projects in this pilot dataset, but these cases are especially useful for learning. They show how community-based, Indigenous, public sector, private sector, and non-profit organizations can share ownership in a single project. These structures may reflect different ways of bringing together capital, technical capacity, local knowledge, public mandates, and community relationships.
-
-          This chart helps users answer the question: How is ownership shared in multi-owner projects in the current filtered view. Each half-moon represents one shared-ownership project, and each segment shows the ownership share held by a different ownership category. In the default view, the chart shows a small number of shared-ownership projects because mega projects over $100M are excluded. You can include mega projects using the Project Scale filter to see additional shared-ownership structures.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'BMYAER,KQABOU'}
-      name: image_12
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['16', null, '16', null]
-        source: ' _/theme/dots.png'
-      type: Image
-    - layout_properties: {full_width_row: true, grid_position: 'JJXKEB,VSUBXF MXMRVP,RMRLQK'}
-      name: semicircles_plot
-      properties:
-        height: 50vh
-        margin: [null, '4', null, null]
-      type: Plot
-    - layout_properties: {grid_position: 'JJXKEB,VSUBXF CMSUYY,VGMDFJ'}
-      name: text_6
-      properties: {font_size: 16, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {grid_position: 'JJXKEB,VDNIDS'}
+    - layout_properties: {grid_position: 'OPDATL,JKDSYE'}
       name: text_1_copy_copy_copy_2
       properties:
         font_size: 16
@@ -305,6 +276,35 @@ components_by_slot:
           This chart focuses on projects that are fully owned by one owner type or one ownership category. Each bar shows the number of projects in the current filtered view that fall under that ownership category. The stacked segments show the more specific owner types within each broader category, such as cooperative associations, community corporations, municipalities, Indigenous development corporations, etc.
 
           The chart shows the breadth of participation across owner types. It complements the ownership-value chart because an ownership category may appear in many projects even if those projects are smaller in dollar terms. Together, the two views help users see both how widely different owner types participate and where larger ownership values are concentrated.
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'BMYAER,KQABOU'}
+      name: image_12
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
+    - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD XOUSUT,QZHDHS'}
+      name: semicircles_plot
+      properties:
+        height: 50vh
+        margin: [null, '4', null, null]
+      type: Plot
+    - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD KADNCD,NWFWZP'}
+      name: text_6
+      properties: {font_size: 16, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,WMUBQD'}
+      name: text_1_copy_copy_copy
+      properties:
+        font_size: 16
+        spacing:
+          margin: [10%, null, null, null]
+        text: |
+          Shared ownership appears in a smaller number of projects in this pilot dataset, but these cases are especially useful for learning. They show how community-based, Indigenous, public sector, private sector, and non-profit organizations can share ownership in a single project. These structures may reflect different ways of bringing together capital, technical capacity, local knowledge, public mandates, and community relationships.
+
+          This chart helps users answer the question: How is ownership shared in multi-owner projects in the current filtered view. Each half-moon represents one shared-ownership project, and each segment shows the ownership share held by a different ownership category. In the default view, the chart shows a small number of shared-ownership projects because mega projects over $100M are excluded. You can include mega projects using the Project Scale filter to see additional shared-ownership structures.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'ULHNHM,NNPXAX'}
       name: image_6
@@ -463,7 +463,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20,"PSFOTO":40,"JKDSYE":20,"VSUBXF":40,"VDNIDS":20}', wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20,"PSFOTO":40,"JKDSYE":20,"NIZCCD":40,"WMUBQD":20}', wrap_on: tablet}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
