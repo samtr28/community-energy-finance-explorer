@@ -452,7 +452,7 @@ def create_ownership_tiers_histogram_internal(df_owners):
   fig.update_layout(
     barmode='group',
     showlegend=False,
-    title=dict(text='Distribution of Ownership Stake Sizes by Category'),
+    title=dict(text='Distribution of Ownership Stake Sizes by Ownership Type'),
     margin=dict(l=0, r=0, b=0, t=75),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
   )
@@ -546,7 +546,7 @@ def create_ownership_all_financing_heatmap_internal(df):
     hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
   ))
   fig.update_layout(
-    title=dict(text='Co-Occurrence of Owner Categories and Financing Mechanisms', x=0, xanchor='left'),
+    title=dict(text='Co-Occurrence of Owner Types and Financing Mechanisms', x=0, xanchor='left'),
     annotations=annotations,
     margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
@@ -605,7 +605,7 @@ def create_single_owner_breakdown_internal(df):
     )
 
   fig.update_layout(
-    title=dict(text='Single-Owner Community Energy Projects by Owner Category'),
+    title=dict(text='Single-Owner Community Energy Projects by Owner Type'),
     showlegend=False,
     margin=dict(l=0, r=0, t=50, b=0),
   )
@@ -824,7 +824,7 @@ def create_ownership_objectives_heatmap_internal(df):
     hovertemplate='<b>%{y}</b><br>Owner: %{x}<br>Responses: %{z}<extra></extra>',
   ))
   fig.update_layout(
-    title=dict(text='Co-Occurrence of Owner Categories and Desired Outcomes', x=0, xanchor='left'),
+    title=dict(text='Co-Occurrence of Owner Types and Desired Outcomes', x=0, xanchor='left'),
     annotations=annotations,
     margin=dict(l=0, b=0, t=50, r=0),
     font=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),

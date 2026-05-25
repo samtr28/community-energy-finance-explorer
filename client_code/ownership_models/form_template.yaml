@@ -19,7 +19,7 @@ components_by_slot:
       properties:
         background: ''
         content: |-
-          <p>Ownership is a key design choice in a community energy project. It helps show who has financial stake, who may share in the value created over time, and whether benefits are more likely to stay connected to local priorities. For communities, ownership can be a pathway to participating in the energy transition as partners, investors, and long-term beneficiaries, not only as hosts or customers. Ownership also matters for financing because different owner types may bring different kinds of relationships, eligibility, credibility, risk profiles, and funding pathways.</p>
+          <p>Ownership is a key design choice in a community energy project. It helps show who has financial stake, who may share in the value created over time, and whether benefits are more likely to stay connected to local priorities. <strong>For communities, ownership can be a pathway to participating in the energy transition as partners, investors, and long-term beneficiaries, not only as hosts or customers.</strong> Ownership also matters for financing because different owner types may bring different kinds of relationships, eligibility, credibility, risk profiles, and funding pathways.</p>
 
           <p>The Ownership Explorer shows how ownership is structured across projects in the current dataset. For simplicity, we group different types of organizations and owners into broad ownership categories (see key terms for more details). These categories make it easier to visualize ownership patterns across projects while recognizing that real-world ownership structures can be more complex. We also show ownership structures alongside capital sources to help users see how projects are being organized and financed in practice.</p>
         font_size: 18
@@ -218,7 +218,7 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', 33%, null, null]
-        text: Who owns community energy projects?
+        text: Who owns community energy projects in Canada?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'UOMFSA,HLAKXE'}
       name: rich_text_3
@@ -235,10 +235,15 @@ components_by_slot:
         height: 65vh
         margin: ['0', null, '0', null]
       type: Plot
-    - layout_properties: {grid_position: 'SIONUB,SCDLYW JOPMQU,UWAAIE'}
-      name: text_2
-      properties: {italic: true, text: 'Note: This chart reflects reported ownership value in the current filtered view. It should not be interpreted as a ranking of owner types or as a measure of governance control. Keep in mind the landscape will shift as you apply various filters.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'SCETEZ,LZRREF'}
+        name: text_2
+        properties: {italic: true, text: 'Note: This chart reflects reported ownership value in the current filtered view. It should not be interpreted as a ranking of owner types or as a measure of governance control. Keep in mind the landscape will shift as you apply various filters.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'SIONUB,SCDLYW IZXAIT,ERFBXP'}
+      name: outlined_card_2
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'SIONUB,YDYLWX'}
       name: text_1
       properties:
@@ -265,26 +270,28 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', null, null, null]
-        text: Which categories own projects without partners?
+        text: Which owner types fully own their energy projects?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'OPDATL,PSFOTO XUSUAR,YCMMSS'}
       name: single_owner_breakdown_plot
       properties: {height: 50vh}
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'OPDATL,PSFOTO QJHPQK,YCUZTL'}
-      name: text_4
-      properties: {italic: true, text: 'Note on project count: Some survey responses represent a portfolio of similar projects under one reporting umbrella. In these cases, the portfolio is counted once in this chart to avoid giving disproportionate weight to a single respondent or ownership structure. As a result, the count may understate the number of individual assets represented within some owner types, such as cooperative associations.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'MKUWCA,BZUFQG'}
+        name: text_4
+        properties: {italic: true, text: 'Note on project count: Some survey responses represent a portfolio of similar projects under one reporting umbrella. In these cases, the portfolio is counted once in this chart to avoid giving disproportionate weight to a single respondent or ownership structure. As a result, the count may understate the number of individual assets represented within some owner types, such as cooperative associations.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'OPDATL,PSFOTO EVFZRI,ADFIBI'}
+      name: outlined_card_3
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {grid_position: 'OPDATL,JKDSYE'}
       name: text_1_copy_copy_copy_2
       properties:
         font_size: 16
         spacing:
           margin: [10%, null, null, null]
-        text: |-
-          This chart focuses on projects that are fully owned by one owner type or one ownership category. Each bar shows the number of projects in the current filtered view that fall under that ownership category. The stacked segments show the more specific owner types within each broader category, such as cooperative associations, community corporations, municipalities, Indigenous development corporations, etc.
-
-          The chart shows the breadth of participation across owner types. It complements the ownership-value chart because an ownership category may appear in many projects even if those projects are smaller in dollar terms. Together, the two views help users see both how widely different owner types participate and where larger ownership values are concentrated.
+        text: "This chart focuses on projects that are fully owned by one owner type or one ownership category. Each bar shows the number of projects in the current filtered view that fall under that ownership category. \n\nThe chart shows the breadth of participation across owner types. It complements the ownership-value chart because an ownership category may appear in many projects even if those projects are smaller in dollar terms. Together, the two views help users see both how widely different owner types participate and where larger ownership values are concentrated."
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'BMYAER,KQABOU'}
       name: image_12
@@ -309,10 +316,15 @@ components_by_slot:
         height: 50vh
         margin: [null, '4', null, null]
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD KADNCD,NWFWZP'}
-      name: text_6
-      properties: {font_size: 14, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'DPGLBP,EJQLVB'}
+        name: text_6
+        properties: {font_size: 14, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD NYPBKA,PDUMGW'}
+      name: outlined_card_4
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,WMUBQD'}
       name: text_1_copy_copy_copy
       properties:
@@ -339,7 +351,7 @@ components_by_slot:
         font_family: serif
         spacing:
           margin: ['', 33%, null, null]
-        text: Do some owner types tend toward larger or smaller stakes?
+        text: What is the range of participation in project ownership by owner type?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,IVDJCB'}
       name: ownership_tiers_histogram
@@ -377,11 +389,8 @@ components_by_slot:
       name: scale_pies_plot
       properties: {height: 50vh}
       type: Plot
-    - components:
-      - name: text_3
-        properties: {font_size: 16, italic: true, text: 'Note: If you filter the dashboard to one project scale category, the ownership percentages in that pie will match the ownership value shares shown in the first treemap chart for the same filtered view. This chart is included to show those scale categories side by side, making it easier to see how ownership value changes across project scales. In the current pilot dataset, more complex and shared ownership structures appear more often in larger projects, although this pattern may evolve as more projects are added.'}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      layout_properties: {full_width_row: true, grid_position: 'RQZOWP,DMPSPD'}
+    - components: []
+      layout_properties: {full_width_row: true, grid_position: 'PZQABG,SZTZYL'}
       name: rich_text_6
       properties:
         content: |+
@@ -393,8 +402,17 @@ components_by_slot:
         font_size: 16
         format: restricted_html
         spacing:
-          margin: [null, 35%, null, null]
+          margin: [null, '0', null, null]
       type: RichText
+    - components:
+      - layout_properties: {grid_position: 'ZWJCUF,PYLRNI'}
+        name: text_3
+        properties: {font_size: 14, italic: true, text: 'Note: If you filter the dashboard to one project scale category, the ownership percentages in that pie will match the ownership value shares shown in the first treemap chart for the same filtered view. This chart is included to show those scale categories side by side, making it easier to see how ownership value changes across project scales. In the current pilot dataset, more complex and shared ownership structures appear more often in larger projects, although this pattern may evolve as more projects are added.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {grid_position: 'PZQABG,JEAFUX'}
+      name: outlined_card_1
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'PRJYSZ,WVUYQJ'}
       name: image_7
       properties:
@@ -425,10 +443,15 @@ components_by_slot:
       name: all_financing_heatmap_plot
       properties: {height: 60vh}
       type: Plot
-    - layout_properties: {grid_position: 'DDAZWJ,FVMCOG BWOSGG,GPLMEM'}
-      name: text_7
-      properties: {font_size: 16, italic: true, text: 'Note: This chart shows co-occurrence, not causation. It does not prove that an ownership category leads to a particular financing mechanism. It shows which combinations are reported together in the current dataset. The pattern may shift as more projects are added.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {full_width_row: true, grid_position: 'ULKOWD,SHAISK'}
+        name: text_7
+        properties: {font_size: 14, italic: true, text: 'Note: This chart shows co-occurrence, not causation. It does not prove that an ownership category leads to a particular financing mechanism. It shows which combinations are reported together in the current dataset. The pattern may shift as more projects are added.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {grid_position: 'DDAZWJ,FVMCOG VAMDQY,EARVGN'}
+      name: outlined_card_5
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,YPNZXR'}
       name: text_1_copy_copy
       properties:
@@ -436,7 +459,7 @@ components_by_slot:
         spacing:
           margin: [10%, null, null, null]
         text: |-
-          This heatmap shows how often each ownership category appears alongside each financing mechanism in the current filtered view. Darker cells indicate more reported co-occurrences between an owner category and a financing mechanism.
+          This heatmap shows how often each ownership category appears alongside each financing mechanism in the current filtered view.
 
           Use this chart to explore possible relationships between ownership structures and financing pathways. For example, some owner categories may appear more often with grants, community finance models, debt financing, equity investments, or revenue-support mechanisms such as power purchase agreements. These patterns can help communities identify financing mechanisms to investigate and help funders or policymakers see where certain ownership categories may be more or less connected to available capital pathways.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -469,24 +492,26 @@ components_by_slot:
       name: objectives_heatmap_plot
       properties: {height: 60vh}
       type: Plot
-    - layout_properties: {grid_position: 'GQCIPB,XEJFLG EEUVRB,GRIMJJ'}
-      name: text_10
-      properties: {font_size: 16, italic: true, text: 'Important caution: This chart does not prove that an ownership category causes a particular outcome. It also does not necessarily measure final achieved impacts. It reflects outcomes or impact objectives reported by project teams in the current dataset, which may include intended, expected, or observed benefits depending on the project stage and available information. Patterns may shift as filters are applied and as more projects are added to the Navigator.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'ZKKIWB,TPGNAU'}
+        name: text_10
+        properties: {font_size: 14, italic: true, text: 'Important caution: This chart does not prove that an ownership category causes a particular outcome. It also does not necessarily measure final achieved impacts. It reflects outcomes or impact objectives reported by project teams in the current dataset, which may include intended, expected, or observed benefits depending on the project stage and available information. Patterns may shift as filters are applied and as more projects are added to the Navigator.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'GQCIPB,XEJFLG DWZPZV,UILPMF'}
+      name: outlined_card_6
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'GQCIPB,JFIKRQ'}
       name: text_1_copy_copy_4
       properties:
         font_size: 16
         spacing:
           margin: [10%, null, null, null]
-        text: |-
-          This heatmap shows how often each ownership category appears alongside reported project key objectives, outcomes or intended impacts in the current filtered view. Darker cells indicate more reported co-occurrences between an owner category and an outcome area.
-
-          Use this chart to explore how ownership structures appear alongside goals such as greenhouse gas reductions, reduced energy costs, community resilience, job creation, financial returns, energy sovereignty, education or training, reinvestment in community initiatives, and other benefits. This can help users ask better questions about how ownership structures, project purpose, and community benefits may be connected in practice.
+        text: "This heatmap shows how often each ownership category appears alongside reported project key objectives, outcomes or intended impacts in the current filtered view. \n\nUse this chart to explore how ownership structures appear alongside goals such as greenhouse gas reductions, reduced energy costs, community resilience, job creation, financial returns, energy sovereignty, education or training, reinvestment in community initiatives, and other benefits. This can help users ask better questions about how ownership structures, project purpose, and community benefits may be connected in practice."
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20,"PSFOTO":40,"JKDSYE":20,"NIZCCD":40,"WMUBQD":20}', wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20,"PSFOTO":40,"JKDSYE":20,"NIZCCD":40,"WMUBQD":20,"SZTZYL":40,"JEAFUX":20}', wrap_on: tablet}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
