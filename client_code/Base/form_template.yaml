@@ -9,7 +9,7 @@ components:
       align: left
       background: theme:UVic Blue Container
       border: ''
-      font_size: 16
+      font_size: 14
       icon: fa:home
       icon_align: left
       role: null
@@ -25,7 +25,7 @@ components:
     properties:
       align: left
       bold: false
-      font_size: 16
+      font_size: 14
       icon: fa:bar-chart
       icon_align: left
       role: null
@@ -39,7 +39,7 @@ components:
     name: ownership_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 14
       icon: fa:handshake-o
       icon_align: left
       role: null
@@ -53,7 +53,7 @@ components:
     name: outcomes_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 14
       icon: fa:bullseye
       icon_align: left
       role: null
@@ -68,7 +68,7 @@ components:
     properties:
       align: left
       bold: false
-      font_size: 16
+      font_size: 14
       icon: fa:map-marker
       icon_align: left
       role: null
@@ -82,7 +82,7 @@ components:
     name: case_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 14
       icon: fa:book
       icon_align: left
       role: null
@@ -96,7 +96,7 @@ components:
     name: resources_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 14
       icon: fa:briefcase
       icon_align: left
       role: null
@@ -110,7 +110,7 @@ components:
     name: methods_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 14
       icon: fa:info-circle
       icon_align: left
       role: null
@@ -124,7 +124,7 @@ components:
     name: team_nav
     properties:
       align: left
-      font_size: 16
+      font_size: 14
       icon: fa:group
       icon_align: left
       role: null

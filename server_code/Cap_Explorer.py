@@ -949,7 +949,7 @@ def create_scale_pies_internal(df):
   vis_avg       = [False, True]  * n_pies + [True] * n_legend
 
   fig.update_layout(
-    title=dict(text='Funding distribution by project scale'),
+    title=dict(text='Funding Distribution by Project Scale'),
     showlegend=True,
     legend=dict(orientation='h', y=-0.15, x=0.5, xanchor='center'),
     xaxis=dict(visible=False),
@@ -1097,7 +1097,7 @@ def create_alt_financing_bar_internal(df):
     xaxis=dict(title='Number of projects', linecolor='grey', showline=True, tickformat='d'),
     yaxis=dict(categoryorder='array', categoryarray=list(reversed(groups_with_data))),
     margin=dict(l=0, r=0, b=20, t=40),
-    title=dict(text='Alternative structures and support mechanisms reported by respondents'),
+    title=dict(text='Alternative Structures and Support Mechanisms Reported by Respondents'),
   )
   return fig
 # ==================== EXPORT CALLABLE ====================
