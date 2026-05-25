@@ -31,7 +31,7 @@ components_by_slot:
       type: Plot
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"PEGHDF":20,"HGIWYG":40,"MXFYWJ":60}', role: equal-height, wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"PEGHDF":21,"HGIWYG":39}', role: equal-height, wrap_on: tablet}
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: factsheets_panel

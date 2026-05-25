@@ -273,10 +273,15 @@ components_by_slot:
         spacing:
           margin: ['8', null, null, null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - layout_properties: {grid_position: 'NIBPDH,UAOITW BEWXGT,GLQGXO'}
-      name: text_9
-      properties: {italic: true, text: 'Note: These are self-reported signals from participating projects and will evolve as the dataset grows.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'ATHPHG,HRDMRA'}
+        name: text_9
+        properties: {italic: true, text: 'Note: These are self-reported signals from participating projects and will evolve as the dataset grows.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'NIBPDH,UAOITW PAEPZX,UUWIJE'}
+      name: outlined_card_3
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'NIBPDH,JDOFXB'}
       name: text_1
       properties:
@@ -482,15 +487,20 @@ components_by_slot:
         text: Download
         text_color: theme:On Primary Container
       type: form:dep_9kcxnwm3upyjd:_Components.Button
-    - layout_properties: {grid_position: 'ENMWCZ,WAMEZI SADLFP,HSSYWB'}
-      name: text_7
-      properties:
-        font_size: 14
-        italic: true
-        spacing:
-          margin: ['10', null, null, null]
-        text: It is worth noting that while grants typically come from governments, other grant providers reported in our dataset include utilities, foundations, or philanthropic funders. Sources of debt also vary and go beyond conventional banking institutions. They include credit unions, public lenders, community loan funds, or other types of specialized lenders. Community financing may include less familiar mechanisms such as community bonds, co-op shares, member contributions, or crowdfunding.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'VOYDOF,INSWHW'}
+        name: text_7
+        properties:
+          font_size: 14
+          italic: true
+          spacing:
+            margin: ['10', null, null, null]
+          text: It is worth noting that while grants typically come from governments, other grant providers reported in our dataset include utilities, foundations, or philanthropic funders. Sources of debt also vary and go beyond conventional banking institutions. They include credit unions, public lenders, community loan funds, or other types of specialized lenders. Community financing may include less familiar mechanisms such as community bonds, co-op shares, member contributions, or crowdfunding.
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'ENMWCZ,WAMEZI OGFTHR,DRFYJS'}
+      name: outlined_card_1
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'AMOUDR,BLMOOD'}
       name: image_4
       properties:
@@ -559,10 +569,15 @@ components_by_slot:
       name: alt_financing_bar_plot
       properties: {height: 50vh}
       type: Plot
-    - layout_properties: {grid_position: 'OGAYPN,NGQDRW STCCMR,UJBCUV'}
-      name: text_8
-      properties: {italic: true, text: 'Note: These responses are based on project team reporting and may include mechanisms that play different roles depending on the project context.'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'FJGELR,DUWRRA'}
+        name: text_8
+        properties: {italic: true, text: 'Note: These responses are based on project team reporting and may include mechanisms that play different roles depending on the project context.'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'OGAYPN,NGQDRW ORJXRD,XZXHKS'}
+      name: outlined_card_2
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {grid_position: 'OGAYPN,ODYRPF'}
       name: text_1_copy_copy_2
       properties:

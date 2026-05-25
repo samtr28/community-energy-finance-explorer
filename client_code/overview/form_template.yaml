@@ -4,6 +4,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ KHVBPR,LHDYMN'}
       name: main_heading
       properties:
+        bold: true
         font_family: ser
         scale: medium
         spacing:
@@ -12,14 +13,6 @@ components_by_slot:
         style: headline
         text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ GETEAY,ZDMMUS'}
-      name: image_1
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['0', null, '0', null]
-        source: ' _/theme/dots.png'
-      type: Image
     - components:
       - components: []
         event_bindings: {click: owner_btn_click}
@@ -37,21 +30,6 @@ components_by_slot:
         name: capital_btn
         properties: {align: right, background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Capital explorer, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Link
-      - event_bindings: {click: download_mechanism_btn_click}
-        name: download_mechanism_btn
-        properties:
-          align: right
-          background_color: theme:Primary Overlay 3
-          font_size: 14
-          icon: mi:download
-          icon_color: theme:On Primary Container
-          icon_size: 16
-          spacing:
-            margin: ['2', null, '0', null]
-            padding: [null, '16', null, null]
-          text: Download
-          text_color: theme:On Primary Container
-        type: form:dep_9kcxnwm3upyjd:_Components.Button
       layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XNPYLO,ZMOTXZ'}
       name: rich_text_1
       properties:
@@ -70,6 +48,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ HHLFSA,WMDNSO'}
       name: main_heading_2
       properties:
+        bold: true
         font_family: ser
         scale: medium
         spacing:
@@ -106,6 +85,7 @@ components_by_slot:
       - layout_properties: {full_width_row: true, grid_position: 'GIAKYW,ZDEIQT'}
         name: main_heading_3
         properties:
+          bold: true
           font_family: ser
           scale: medium
           spacing:
@@ -116,7 +96,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'RVTIBR,GEFAYA'}
         name: heading_1
-        properties: {bold: true, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: 18, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'PDXQAF,RKAMSD'}
         name: text_1
@@ -124,7 +104,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'OYSRNR,UZXZJG'}
         name: heading_2
-        properties: {bold: true, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: 18, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'UZPKAI,HKWTVH'}
         name: text_2
@@ -132,7 +112,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'QQXLEO,LASFNC'}
         name: heading_3
-        properties: {bold: true, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: 18, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'WUZEJQ,PSZWHB'}
         name: text_3
@@ -140,7 +120,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'QYPBFN,VSFCJF'}
         name: heading_4
-        properties: {bold: true, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: 18, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'DKZDBM,MDYWWN'}
         name: text_4
@@ -152,64 +132,18 @@ components_by_slot:
       type: ColumnPanel
     - components:
       - components:
-        - components:
-          - layout_properties: {full_width_row: true, grid_position: 'DFHHLZ,GUTHPQ'}
-            name: card_header_3
-            properties:
-              font_family: serif
-              scale: small
-              spacing:
-                margin: [null, null, '0', null]
-                padding: [null, null, '', null]
-              style: headline
-              text: Partner with us (associations and networks)
-            type: form:dep_9kcxnwm3upyjd:_Components.Heading
-          - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
-            name: rich_text_7
-            properties: {content: '<b>Become a platform enabler.</b> Help expand the database, increase participation across your network, and shape the next features and insights so the Navigator serves your members’ real needs.', font_size: 16, format: restricted_html}
-            type: RichText
-          - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
-            name: survey_link_2
-            properties:
-              align: center
-              background_color: theme:On Primary Container
-              bold: true
-              border: ''
-              font_size: 25
-              icon: mi:forum
-              role: button-link
-              spacing:
-                margin: ['16', null, null, null]
-                padding: ['4', '16', '4', '16']
-              text: 'Partner with us '
-              text_color: theme:On Primary
-              underline: false
-              url: mailto:samanthatreacy@uvic.ca
-            type: form:dep_9kcxnwm3upyjd:_Components.Link
-          layout_properties: {slot: card-content-container-slot}
-          name: column_panel_4
-          properties: {}
-          type: ColumnPanel
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_3
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'IZDOGX,DCBHVQ AUXLIY,NYAOYC'}
-      name: card_3
-      properties: {background_color: 'theme:Primary Overlay 3'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - components:
-      - components:
         - layout_properties: {slot: card-content-container-slot}
           name: card_header
           properties:
+            bold: true
             font_family: serif
             scale: small
             spacing:
               margin: [null, null, '0', null]
               padding: [null, null, '', null]
             style: headline
-            text: Surveying Community Energy in Canada
+            text: Tracking Community Energy Projects in Canada
+            text_color: ''
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components: []
           layout_properties: {slot: card-content-container-slot}
@@ -217,6 +151,7 @@ components_by_slot:
           properties:
             content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
             font_size: 16
+            foreground: ''
             format: restricted_html
           type: RichText
         - components:
@@ -229,7 +164,7 @@ components_by_slot:
               name: project_number_caption
               properties:
                 align: center
-                bold: false
+                bold: true
                 font_size: 18
                 scale: medium
                 spacing:
@@ -251,7 +186,7 @@ components_by_slot:
               name: total_funding_caption
               properties:
                 align: center
-                bold: false
+                bold: true
                 font_size: 18
                 scale: medium
                 spacing:
@@ -297,6 +232,7 @@ components_by_slot:
           - layout_properties: {full_width_row: true, grid_position: 'DFHHLZ,GUTHPQ'}
             name: card_header_2
             properties:
+              bold: true
               font_family: serif
               scale: small
               spacing:
@@ -351,24 +287,78 @@ components_by_slot:
       name: card_2
       properties: {background_color: 'theme:Tertiary Overlay 1'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX UXUDWH,HBJUHE'}
-      name: heading_5
-      properties: {bold: true, font_family: ser, italic: false, scale: large, style: title, text: Trust & Transparency}
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX JEVZBK,SEOBKF'}
-      name: text_5
-      properties:
-        italic: true
-        scale: large
-        text: |-
-          We aim to make the data useful without exposing sensitive information. We collect standardized, survey-based project information and present it through aggregated dashboards and project profiles. We only project names for those who consent to a non-anonymous use of the data (as per UVic Ethics #   add uvic ethics).  Where data is incomplete, it is shown transparently and updated as new projects participate.
+    - components:
+      - components:
+        - components:
+          - layout_properties: {full_width_row: true, grid_position: 'DFHHLZ,GUTHPQ'}
+            name: card_header_3
+            properties:
+              bold: true
+              font_family: serif
+              scale: small
+              spacing:
+                margin: [null, null, '0', null]
+                padding: [null, null, '', null]
+              style: headline
+              text: Partner with us (associations and networks)
+            type: form:dep_9kcxnwm3upyjd:_Components.Heading
+          - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
+            name: rich_text_7
+            properties: {content: '<b>Become a platform enabler.</b> Help expand the database, increase participation across your network, and shape the next features and insights so the Navigator serves your members’ real needs.', font_size: 16, format: restricted_html}
+            type: RichText
+          - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
+            name: survey_link_2
+            properties:
+              align: center
+              background_color: theme:Primary
+              bold: true
+              border: ''
+              font_size: 25
+              icon: mi:forum
+              role: button-link
+              spacing:
+                margin: ['16', null, null, null]
+                padding: ['4', '16', '4', '16']
+              text: 'Partner with us '
+              text_color: theme:On Primary
+              underline: false
+              url: mailto:samanthatreacy@uvic.ca
+            type: form:dep_9kcxnwm3upyjd:_Components.Link
+          layout_properties: {slot: card-content-container-slot}
+          name: column_panel_4
+          properties: {}
+          type: ColumnPanel
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_3
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX LKUDYO,TGELXB'}
+      name: card_3
+      properties: {background_color: 'theme:Primary Overlay 2'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - components:
+      - layout_properties: {grid_position: 'UTODDE,ADUOLF'}
+        name: heading_5
+        properties: {bold: true, font_family: ser, italic: false, scale: large, style: title, text: Trust & Transparency}
+        type: form:dep_9kcxnwm3upyjd:_Components.Heading
+      - layout_properties: {grid_position: 'QRKDFV,OTMWAA'}
+        name: text_5
+        properties:
+          italic: true
+          scale: large
+          text: |-
+            We aim to make the data useful without exposing sensitive information. We collect standardized, survey-based project information and present it through aggregated dashboards and project profiles. We only project names for those who consent to a non-anonymous use of the data (as per UVic Ethics #   add uvic ethics).  Where data is incomplete, it is shown transparently and updated as new projects participate.
 
-          If your project appears in the Project Explorer, you can submit an update at any time to reflect changes to your capital stack, ownership model, or outcomes, or fix any inaccuracies.
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+            If your project appears in the Project Explorer, you can submit an update at any time to reflect changes to your capital stack, ownership model, or outcomes, or fix any inaccuracies.
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,ANKGAX LGXWXL,WNRMSC'}
+      name: outlined_card_1
+      properties: {role: outlined-card}
+      type: ColumnPanel
     event_bindings: {}
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: large, col_widths: '{"DCBHVQ":30,"ANKGAX":30}'}
+    properties: {col_spacing: large, col_widths: '{"DCBHVQ":31,"ANKGAX":29}'}
     type: ColumnPanel
   slot_1: []
   slot_2: []
