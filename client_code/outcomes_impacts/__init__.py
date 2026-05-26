@@ -26,10 +26,10 @@ class outcomes_impacts(outcomes_impactsTemplate):
     self._setup_dropdown_formatters()  # before pre-selecting
 
     # Set default project scale selection
-    self.project_scale_dd.selected = [
-      "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
-      "Large ($5M-$25M)", "Very Large ($25M-$100M)"
-    ]
+    #self.project_scale_dd.selected = [
+     # "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
+      #"Large ($5M-$25M)", "Very Large ($25M-$100M)"
+   # ]
 
     self._initializing = False
 
@@ -177,6 +177,9 @@ class outcomes_impacts(outcomes_impactsTemplate):
     self.ghg_methodology_plot.figure       = all_charts['ghg_methodology']
     self.ghg_timeline_plot.figure          = all_charts['ghg_timeline']
     self.key_objectives_plot.figure        = all_charts['key_objectives']
+    self.op_expenses_plot.figure           =all_charts['op_expenses']
+    self.return_expectations_plot.figure   =all_charts['return_expectations']
+    self.end_use_plot.figure               =all_charts['end_use_composition']
 
   # ==================== CHART DOWNLOAD ====================
 
@@ -188,6 +191,8 @@ class outcomes_impacts(outcomes_impactsTemplate):
       'ghg_methodology':       self.ghg_methodology_plot,
       'ghg_timeline':          self.ghg_timeline_plot,
       'key_objectives':        self.key_objectives_plot,
+      'return_expectations':   self.return_expectations_plot,
+      'end_use_composition':   self.end_use_plot
     }[chart_key]
 
   def _download_chart(self, chart_key, button=None):

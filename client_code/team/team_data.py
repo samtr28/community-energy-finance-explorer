@@ -47,7 +47,7 @@ core_team = [
     'name': 'Tricia Laxǝlǝwǝtstnaat Thomas',
     'position': 'Research Collaborator',
     'title': 'Assistant Teaching Professor, Gustavson School of Business\n'
-    'Impact Investing Hub, University of Victoria',
+    'Research Fellow, Impact Investing Hub, University of Victoria',
     'photo': 'https://media.licdn.com/dms/image/v2/D5603AQHx74wVOBVnsg/profile-displayphoto-crop_800_800/B56ZuMiJUdHgAI-/0/1767589320537?e=1781136000&v=beta&t=eVE-zdRCq4w-nTqNCgD2bvVjrleG08XZhOXj63pm8gQ',
     'faculty_page': '',
     'linkedin': 'https://www.linkedin.com/in/salisheye/',  # URL not provided
