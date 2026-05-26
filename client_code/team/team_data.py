@@ -62,7 +62,7 @@ advisory_team = [
     'ACET Executive Director, University of Victoria',
     'photo': 'https://media.licdn.com/dms/image/v2/D5603AQG17WGZKVHncw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1692747536304?e=1781136000&v=beta&t=6EtjNq1iZSKVD_cK4L9wMmIKHYWaUavQl0mx5hngX9g',
     'faculty_page': 'https://www.uvic.ca/ecs/mechanical/faculty-staff/faculty-profiles/crawford-curran.php',
-    'linkedin': 'https://www.linkedin.com/in/currancrawford/',
+    'linkedin': 'https://www.uvic.ca/acet/_assets/images/profiles/curran-crawford_240x303.jpg',
   },
   {
     'name': 'Laurel Sabur',

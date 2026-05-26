@@ -14,6 +14,8 @@ only set chart-specific properties (title text, axis specifics, and any
 explicit fonts that must survive the template).
 """
 
+from datetime import datetime
+
 import anvil.files
 from anvil.files import data_files
 import anvil.tables as tables
@@ -63,7 +65,7 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
 
   Returns a dict with keys:
     indigenous_agreements, jobs_chart, ghg_methodology,
-    ghg_timeline, key_objectives
+    ghg_timeline, key_objectives, op_expenses
   """
   df          = get_data()
   df_filtered = apply_filters(df, provinces, proj_types, stages,
@@ -75,7 +77,7 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
     empty_fig.update_layout(title=dict(text='No data available for selected filters'))
     return {k: empty_fig for k in [
       'indigenous_agreements', 'jobs_chart', 'ghg_methodology',
-      'ghg_timeline', 'key_objectives',
+      'ghg_timeline', 'key_objectives', 'op_expenses',
     ]}
 
   # ── Build all charts and apply the display template to each ──
@@ -85,6 +87,7 @@ def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
     'ghg_methodology':       apply_display_template(create_ghg_methodology_chart(df_filtered)),
     'ghg_timeline':          apply_display_template(create_ghg_charts(df_filtered)),
     'key_objectives':        apply_display_template(create_key_objectives_bar_chart(df_filtered)),
+    'op_expenses':           apply_display_template(create_op_expenses_chart(df_filtered)),
   }
 
 
@@ -229,9 +232,8 @@ def create_ghg_methodology_chart(df):
 
 def create_ghg_charts(df):
   """
-  Two stacked subplots:
-    1. Year-by-year reduction capacity added each year (bar chart, megatonnes CO2e)
-    2. Cumulative lifetime reductions through 2050 (filled area, megatonnes CO2e)
+  Single chart: cumulative lifetime GHG reductions through 2050 (filled area,
+  megatonnes CO2e), annotated with policy milestone markers.
 
   NOTE: ghg_reduction is assumed to be stored in tonnes CO2e and is converted to
   megatonnes via TONNES_PER_MEGATONNE. Change this constant if your data uses a
@@ -249,51 +251,26 @@ def create_ghg_charts(df):
   ghg_time['year'] = pd.to_datetime(ghg_time['completion_date']).dt.year
   min_year = int(ghg_time['year'].min())
   max_year = 2050
-  years = range(min_year, max_year + 1)
+  all_years = list(range(min_year, max_year + 1))
 
-  # ── Year-by-year additions: new reduction capacity commissioned each year (Mt) ──
-  additions = ghg_time.groupby('year')['ghg_reduction'].sum() / TONNES_PER_MEGATONNE
-  counts    = ghg_time.groupby('year')['ghg_reduction'].count()
-
-  # ── Cumulative lifetime reductions through 2050 (Mt) ──
-  cumulative_lifetime = []
-  for year in years:
-    total = 0
-    for _, project in ghg_time.iterrows():
-      if project['year'] <= year:
-        years_operating = year - project['year'] + 1
-        total += project['ghg_reduction'] * years_operating
-    cumulative_lifetime.append({
-      'year': year,
-      'cumulative_reduction': total / TONNES_PER_MEGATONNE
-    })
-  lifetime_df = pd.DataFrame(cumulative_lifetime)
-
-  fig = make_subplots(
-    rows=2, cols=1,
-    subplot_titles=(
-      'Annual Reduction Capacity Added Each Year',
-      'Cumulative Lifetime Reductions (through 2050)'
-    ),
-    vertical_spacing=0.15,
+  # ── Cumulative lifetime reductions through 2050 (Mt), vectorized ──
+  # A project completed in year p reducing r tonnes/yr has accumulated
+  # r * (Y - p + 1) by year Y (>= p). Summed across projects, the
+  # year-over-year increment equals the total annual reduction capacity
+  # operating that year, so the cumulative series is the double cumulative
+  # sum of the annual capacity commissioned each year. Years beyond 2050
+  # are dropped by the reindex, matching the original loop's behaviour.
+  annual_capacity = (
+    ghg_time.groupby('year')['ghg_reduction'].sum()
+      .reindex(all_years, fill_value=0)
   )
+  cumulative_tonnes = annual_capacity.cumsum().cumsum()
+  lifetime_df = pd.DataFrame({
+    'year': all_years,
+    'cumulative_reduction': cumulative_tonnes.values / TONNES_PER_MEGATONNE,
+  })
 
-  # Subplot 1 — year-by-year additions as bars
-  fig.add_trace(
-    go.Bar(
-      x=additions.index, y=additions.values,
-      marker_color=dunsparce_colors[4],
-      showlegend=False,
-      text=[f'{v:,.2f}' for v in additions.values],
-      textposition='outside',
-      textfont=dict(family=FONT_FAMILY, size=10, color='gray'),
-      customdata=list(counts.values),
-      hovertemplate='<b>Year: %{x}</b><br>Added: %{y:,.3f} Mt CO2e<br>%{customdata} projects<extra></extra>'
-    ),
-    row=1, col=1
-  )
-
-  # Subplot 2 — cumulative lifetime reductions (filled area through 2050)
+  fig = go.Figure()
   fig.add_trace(
     go.Scatter(
       x=lifetime_df['year'], y=lifetime_df['cumulative_reduction'],
@@ -301,19 +278,40 @@ def create_ghg_charts(df):
       line=dict(color=dunsparce_colors[5], width=3, shape='spline'),
       showlegend=False,
       hovertemplate='<b>Year: %{x}</b><br>Cumulative Total: %{y:,.2f} Mt CO2e<extra></extra>'
-    ),
-    row=2, col=1
+    )
   )
 
-  fig.add_vline(x=2026, line_dash='dash', line_color='gray', row=2, col=1)
+  # ── Milestone markers ──
+  # Edit this list to taste. Each milestone is drawn only if it falls within the
+  # data range [min_year, max_year]; labels sit at the top of the plot area and
+  # are anchored inward at the chart edges so they don't clip.
+  current_year = datetime.now().year
+  milestones = [
+    (current_year, 'Today'),
+    (2030, '2030 target'),
+    (2050, 'Net-zero 2050'),
+  ]
+  for m_year, m_label in milestones:
+    if not (min_year <= m_year <= max_year):
+      continue
+    if m_year >= max_year:
+      xanchor = 'right'
+    elif m_year <= min_year:
+      xanchor = 'left'
+    else:
+      xanchor = 'center'
+    fig.add_vline(x=m_year, line_dash='dash', line_color='gray')
+    fig.add_annotation(
+      x=m_year, y=1.0, yref='paper', xanchor=xanchor,
+      text=m_label, showarrow=False, yshift=8,
+      font=dict(family=FONT_FAMILY, size=11, color='gray'),
+    )
 
-  fig.update_xaxes(title_text='', row=1, col=1)
-  fig.update_xaxes(title_text='', range=[min_year, max_year], dtick=5, row=2, col=1)
-  fig.update_yaxes(title_text='Mt CO2e / year', row=1, col=1)
-  fig.update_yaxes(title_text='Cumulative Mt CO2e', row=2, col=1)
+  fig.update_xaxes(title_text='', range=[min_year, max_year], dtick=5)
+  fig.update_yaxes(title_text='Cumulative Mt CO2e')
 
   fig.update_layout(
-    title=dict(text=f'GHG Emissions Reductions (n={len(ghg_time)} projects)'),
+    title=dict(text=f'Cumulative Lifetime GHG Reductions through 2050 (n={len(ghg_time)} projects)'),
     margin=dict(t=50, b=0, l=0, r=0),
   )
   return fig
@@ -354,6 +352,51 @@ def create_key_objectives_bar_chart(df):
     yaxis=dict(title=''),
     showlegend=False,
     margin=dict(l=0, r=0, t=50, b=0),
+  )
+  return fig
+
+
+def create_op_expenses_chart(df):
+  """
+  Donut chart: operational financial health. Shows the distribution of
+  operational-expense coverage status, with a center annotation giving the
+  headline share of projects with a positive ('Yes…') status.
+
+  Chart-specific: hole size, slice colors (dunsparce palette), and the center
+  percentage annotation (explicit font preserved through apply_display_template).
+  """
+  counts = df['op_expenses'].fillna('No data').value_counts().reset_index()
+  counts.columns = ['status', 'count']
+
+  total = counts['count'].sum()
+  if total == 0:
+    fig = go.Figure()
+    fig.update_layout(title=dict(text='No operational expenses data'))
+    return fig
+
+  # Headline: % of projects with a positive ('Yes…') status
+  covered = counts.loc[counts['status'].str.startswith('Yes', na=False), 'count'].sum()
+  pct_covered = covered / total * 100
+
+  fig = go.Figure(go.Pie(
+    labels=counts['status'],
+    values=counts['count'],
+    hole=0.55,
+    sort=False,
+    textinfo='percent',
+    marker=dict(colors=[dunsparce_colors[i % len(dunsparce_colors)] for i in range(len(counts))]),
+  ))
+
+  # Center headline — explicit font so it survives apply_display_template
+  fig.add_annotation(
+    text=f"<b>{pct_covered:.0f}%</b><br><span style='font-size:11px'>opex covered</span>",
+    x=0.5, y=0.5, showarrow=False,
+    font=dict(family=FONT_FAMILY, size=22, color=FONT_COLOR),
+  )
+
+  fig.update_layout(
+    title=dict(text='Operational Financial Health'),
+    margin=dict(t=50, b=0, l=0, r=0),
   )
   return fig
 
