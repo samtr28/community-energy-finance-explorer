@@ -5,6 +5,7 @@ import m3.components as m3
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+from .team_data import core_team, advisory_team
 
 
 class team(teamTemplate):
@@ -17,3 +18,5 @@ class team(teamTemplate):
     self.layout.reset_links()
     self.layout.team_nav.role = 'selected'
     # Any code you write here will run before the form opens.
+    self.core_team_panel.items = core_team
+    self.advisory_panel.items = advisory_team

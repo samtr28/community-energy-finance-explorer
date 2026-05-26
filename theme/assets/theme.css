@@ -1473,3 +1473,55 @@ html {
   right: 30px;
   z-index: 1000;
 }
+
+.anvil-role-2-cols > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2%; /*adjust as needed*/
+  row-gap: 16px;
+}
+
+/* Make the grid item a flex column */
+.anvil-role-2-cols > div > .column-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Stretch each wrapper layer using flex instead of height: 100% */
+.anvil-role-2-cols > div > .column-panel .anvil-panel-section,
+.anvil-role-2-cols > div > .column-panel .anvil-panel-section-container,
+.anvil-role-2-cols > div > .column-panel .anvil-panel-section-gutter,
+.anvil-role-2-cols > div > .column-panel .col-padding,
+.anvil-role-2-cols > div > .column-panel .html-templated-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* anvil-panel-row is already a flex row — just make it stretch vertically */
+.anvil-role-2-cols > div > .column-panel .anvil-panel-row {
+  flex: 1;
+}
+
+/* anvil-panel-col needs to pass height down */
+.anvil-role-2-cols > div > .column-panel .anvil-panel-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Finally stretch the M3 card and its content */
+.anvil-role-2-cols > div > .column-panel .anvil-m3-card,
+.anvil-role-2-cols > div > .column-panel .anvil-m3-card-content {
+  flex: 1;
+}
+
+/* Make card content a flex column */
+.anvil-role-2-cols .anvil-m3-card-content-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Push the link (last element) to the bottom */
+.anvil-role-2-cols .anvil-m3-card-content-container > .html-templated-panel:last-child {
+  margin-top: auto;
+}

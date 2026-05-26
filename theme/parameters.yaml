@@ -357,3 +357,4 @@ roles:
 - {name: bg-image-ce}
 - {name: bg-image-om}
 - {name: sticky-btn}
+- {name: 2-cols}

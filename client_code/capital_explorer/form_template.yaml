@@ -325,42 +325,31 @@ components_by_slot:
         icon_color: theme:On Primary Container
         icon_size: 16
         spacing:
-          margin: ['2', null, '0', null]
+          margin: ['2', null, 2%, null]
           padding: [null, '16', null, null]
         text: Download
         text_color: theme:On Primary Container
       type: form:dep_9kcxnwm3upyjd:_Components.Button
-    - layout_properties: {full_width_row: true, grid_position: 'UQBVKY,UGEZRA'}
+    - layout_properties: {full_width_row: true, grid_position: 'SYBLXX,MXHLFQ'}
       name: text_2
       properties:
         font_size: 16
         spacing:
-          margin: [null, 25%, null, null]
+          margin: [null, '0', null, null]
         text: |-
           This section shows how financing mixes vary across projects of different cost ranges. Project cost is used here as a practical way to understand scale (instead of capacity by MW) because it applies across many kinds of community energy projects, including generation, storage, efficiency, and heating projects.
 
           Use this view to explore whether smaller, medium, and larger projects tend to rely on different combinations of grants, debt, community financing, equity, or internal capital. This can help project teams understand what financing patterns appear in projects at a similar scale and can help funders see where different types of capital may be most important.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'LYKNCK,QAVVXI'}
-      name: text_4
-      properties:
-        font_size: 12
-        spacing:
-          margin: ['10', null, null, null]
-        text: |-
-          Typical Project
-          For each project, calculates what percentage of its own funding came from each category, then averages those percentages across all projects in the scale band. Every project counts equally regardless of size, so a $500K project has the same influence on the result as a $5M one. Best for understanding what a typical project at this scale actually looks like.
-        text_color: theme:Error
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'LYKNCK,NZABHR'}
-      name: text_3
-      properties:
-        font_size: 12
-        text: |-
-          Total Funding
-          Sums every dollar contributed by each funding category across all projects in the scale band, then displays each category's share of that combined total. Larger projects carry more weight, since a $5M project contributes ten times more to the totals than a $500K one. Best for understanding where the capital actually came from in aggregate across this scale.
-        text_color: theme:Error
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - components:
+      - layout_properties: {grid_position: 'BCQWIA,DCVHOQ'}
+        name: text_10
+        properties: {text: 'Note: The default view, by Total Funding, is based on the sum of every dollar contributed by each funding category across all projects in the scale band, then displays each category''s share of that combined total. You can switch to Typical Project view for average contributions per project, For each project, we calculate what percentage of its total funding came from each category, then average those percentages across all projects in the scale band. Every project counts equally regardless of size,'}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'SYBLXX,DJUBCM'}
+      name: outlined_card_4
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'JZRPER,ACURFX'}
       name: image_3
       properties:
@@ -591,7 +580,7 @@ components_by_slot:
     name: column_panel_1
     properties:
       col_spacing: huge
-      col_widths: '{"OFQLVY":40,"WAMEZI":20,"UAOITW":46,"JDOFXB":24,"YDSMDU":20,"EVBZRG":45,"YAVOBM":22,"CPIRAA":39,"OICHSS":40,"ZRSYOP":20,"NGQDRW":40,"ODYRPF":20}'
+      col_widths: '{"OFQLVY":40,"WAMEZI":20,"UAOITW":46,"JDOFXB":24,"YDSMDU":20,"EVBZRG":45,"YAVOBM":22,"CPIRAA":39,"OICHSS":40,"ZRSYOP":20,"NGQDRW":40,"ODYRPF":20,"MXHLFQ":40,"DJUBCM":20}'
       role: null
       spacing:
         padding: ['0', null, null, null]

@@ -18,10 +18,7 @@ components_by_slot:
         spacing:
           margin: [2%, '0', 2%, null]
           padding: [null, null, null, null]
-        text: |-
-          Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.
-
-          Everything we build is shaped by what our respondents tell us they need. Rather than guessing at which topics matter most, we've drawn directly on survey responses to focus our efforts on the financing mechanisms people are most eager to understand. The chart to the right shows where that interest is concentrated:  comparing the approaches respondents are already using against the ones they most want to learn more about. These insights guide how we prioritize new guides and tools, so the resources you find here speak to the real questions and gaps facing community energy projects today.
+        text: "Find tools, guides, and information to support your community energy journey. Our resources are designed to make community energy financing more accessible and easier to navigate.\n\nThe following resources draw from survey responses on what projects teams wanted to learn about. The chart to the right shows where interest in exploring new financial tools is concentrated in the current dataset. Respondents shared information on what tools they are already using and which ones they want to learn more about. These insights, combined with what we hear from community partners in various research collaboration initiatives, will guide how we prioritize the development of new guides and tools to contribute to building financial literacy and other capacity needs. "
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'CNHJAC,HGIWYG'}
       name: mechanism_compare_plot
@@ -31,7 +28,7 @@ components_by_slot:
       type: Plot
     layout_properties: {full_width_row: true}
     name: column_panel_1
-    properties: {col_spacing: huge, col_widths: '{"PEGHDF":21,"HGIWYG":39}', role: equal-height, wrap_on: tablet}
+    properties: {col_spacing: medium, col_widths: '{"PEGHDF":20,"HGIWYG":40}', role: equal-height, wrap_on: tablet}
     type: ColumnPanel
   - layout_properties: {full_width_row: true}
     name: factsheets_panel

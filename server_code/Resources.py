@@ -33,10 +33,13 @@ def get_all_resources_data():
   """
   df = get_data()
 
-  return {
-    'mechanism_compare': apply_display_template(create_mechanism_compare_internal(df)),
-  }
+  mechanism_fig = apply_display_template(create_mechanism_compare_internal(df))
+  # Re-center the title AFTER the template, otherwise the template overrides it.
+  mechanism_fig.update_layout(title=dict(x=0.5, xanchor='center'))
 
+  return {
+    'mechanism_compare': mechanism_fig,
+  }
 
 # ==================== CHART CREATION ====================
 
@@ -170,7 +173,6 @@ def create_mechanism_compare_internal(df):
     cliponaxis=False,
     hovertemplate='<b>%{y}</b><br>Currently used: %{x}<extra></extra>',
   ))
-
   fig.update_layout(
     barmode='group',
     xaxis_title='Number of responses',

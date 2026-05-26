@@ -221,7 +221,7 @@ components_by_slot:
           - event_bindings: {click: proj_btn_click}
             layout_properties: {grid_position: 'ZBRYZY,QNXAIC'}
             name: capital_btn_2
-            properties: {align: right, background_color: '', bold: true, font_size: 18, icon: 'mi:arrow_forward', icon_size: 18, text: Project Explorer, text_color: 'theme:On Secondary Container'}
+            properties: {align: right, background_color: '', bold: true, font_size: 18, icon: 'mi:arrow_forward', icon_size: 18, text: Project Explorer, text_color: 'theme:On Secondary Container', visible: false}
             type: form:dep_9kcxnwm3upyjd:_Components.Link
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2
