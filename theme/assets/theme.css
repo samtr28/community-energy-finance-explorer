@@ -1473,3 +1473,10 @@ html {
   right: 30px;
   z-index: 1000;
 }
+
+.anvil-role-2-cols > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2%; /*adjust as needed*/
+  row-gap: 16px;
+}

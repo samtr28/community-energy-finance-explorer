@@ -33,7 +33,16 @@ components_by_slot:
       layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XNPYLO,ZMOTXZ'}
       name: rich_text_1
       properties:
-        content: "Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the \"layers\" of funding that add up to the total project cost. <br>{slot}\n<br><br>\n\n<b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term.<br> {slot1}\n\n<br><br> <b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. <br>{slot2}\n\n<br><br>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources. \n\n<br><br>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. \n"
+        content: |-
+          <p>Communities everywhere in Canada are building solar, wind, storage, efficiency, and other clean energy projects, but the <b><i>financing story</b></i> is often invisible or hard to find in an easily comparable format. What mix of grants, loans, community investment, and partnerships made a project possible? In finance terms, that mix is the project's <b>capital stack</b>: the "layers" of funding that add up to the total project cost. </p><p>{slot}</p>
+
+          <p><b>Ownership matters too.</b> It shapes who makes decisions, where benefits flow, and whether value stays in the community over the long term.</p><p> {slot1}</p>
+
+          <p><b>Project outcomes and impacts</b> show what success looks like in practice, including jobs created, greenhouse gas reductions, and other community benefits. </p><p>{slot2}</p>
+
+          <p>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources.</p>
+
+          <p>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. </p>
         font_size: 18
         format: restricted_html
       type: RichText
@@ -70,7 +79,7 @@ components_by_slot:
           <li>researchers and policymakers lack evidence on what supports success and community benefit
           </ul>
           The Navigator helps make this knowledge visible, comparable, and usable.
-        font_size: 16
+        font_size: 18
         format: restricted_html
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ ITKZWY,OMCXJP'}
@@ -212,7 +221,7 @@ components_by_slot:
           - event_bindings: {click: proj_btn_click}
             layout_properties: {grid_position: 'ZBRYZY,QNXAIC'}
             name: capital_btn_2
-            properties: {align: right, background_color: '', bold: true, font_size: 18, icon: 'mi:arrow_forward', icon_size: 18, text: Project Explorer, text_color: 'theme:On Secondary Container'}
+            properties: {align: right, background_color: '', bold: true, font_size: 18, icon: 'mi:arrow_forward', icon_size: 18, text: Project Explorer, text_color: 'theme:On Secondary Container', visible: false}
             type: form:dep_9kcxnwm3upyjd:_Components.Link
           layout_properties: {slot: card-content-container-slot}
           name: column_panel_2

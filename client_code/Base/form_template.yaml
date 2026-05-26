@@ -62,7 +62,7 @@ components:
       text: Outcomes & Impacts
     type: Link
   - components: []
-    event_bindings: {click: projects_nav_click}
+    event_bindings: {}
     layout_properties: {grid_position: 'VQCDQV,KDUHBA'}
     name: projects_nav
     properties:

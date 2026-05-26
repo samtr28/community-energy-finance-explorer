@@ -31,114 +31,54 @@ components_by_slot:
       name: spacer_2
       properties: {}
       type: Spacer
-    - components:
-      - layout_properties: {full_width_row: true, grid_position: 'AFIAEX,PCXQFS'}
-        name: avatar_2
-        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/C5603AQHgxHpqU-GsUg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1654489293253?e=1779926400&v=beta&t=HVQnY3fvaQMjUCW9jjbOiGzJ5BVJFdp170mPZurEZm4', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'AFIAEX,ZFGCEB HQWENM,MBWAEX'}
-        name: heading_2
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Basma Majerbi}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'AFIAEX,ZFGCEB YHZZKS,IAURCR'}
-        name: text_2
-        properties: {font_size: 18, text: 'University of Victoria, Project Lead '}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'AFIAEX,RVHOYB'}
-        name: avatar_1
-        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D4D03AQGejTOcCjpvQQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706638526156?e=1779926400&v=beta&t=jp9PV-68U7KDFf2JRED5lBT_OMTg76pWCymvEQQ_NsU', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'AFIAEX,HDSTIT SXZHLW,ZRKWUS'}
-        name: heading_1
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Sam Treacy}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'AFIAEX,HDSTIT VEPHCA,SCTRMS'}
-        name: text_1
-        properties: {font_size: 18, text: Data Analyst and Digital Platform Developer}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'GDKHDA,WOMWDG'}
-        name: avatar_3
-        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/C4E03AQGAc8YIfiVocw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1600730696936?e=1779926400&v=beta&t=Db4zUdiVSsfDQE7-ot_ynsuuSfMCjDqGRWUdhci4Xoo', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'GDKHDA,FYEZZE OSBRYY,EAVICT'}
-        name: heading_3
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Pavel Soriano Hernandez}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'GDKHDA,FYEZZE TLEIGZ,UNABNG'}
-        name: text_3
-        properties: {font_size: 18, text: 'PhD Candidate, Lead Researcher '}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'GDKHDA,DCIJYH'}
-        name: avatar_5
-        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D5603AQG3n8vuBerjuw/profile-displayphoto-shrink_800_800/B56ZaNF9B7G4Ac-/0/1746123870604?e=1779926400&v=beta&t=qhrCRggNsdsKATqt4uEyYir0MugzgAKMiYo3i2pXEnI', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'GDKHDA,IQNYMP IBVNAX,UNIQDQ'}
-        name: heading_5
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Julie MacArthur}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'GDKHDA,IQNYMP TIZNDI,BZQNOK'}
-        name: text_5
-        properties: {font_size: 18, text: 'Royal Roads University, Research Collaborator '}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'JWSIWY,SLIFAF'}
-        name: avatar_4
-        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D4E03AQF3e__h-3nbng/profile-displayphoto-crop_800_800/B4EZqZVycrGYAI-/0/1763509222454?e=1779926400&v=beta&t=MKK5rNg3UO30FD8DFt1kX95HfTyliN8wMa3mo1DDXmQ', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'JWSIWY,DMXZQN USSPAS,CKSQCR'}
-        name: heading_4
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Jeff Scanlon}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'JWSIWY,DMXZQN MHKWUK,EYLHPJ'}
-        name: text_4
-        properties: {font_size: 18, text: 'University of Victoria, Research Associate'}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'JWSIWY,BDYWAC'}
-        name: avatar_9
-        properties: {align: center, fallback_icon: 'mi:person', image: 'https://media.licdn.com/dms/image/v2/D5603AQGwOdNRDygpsw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1698691253864?e=1779926400&v=beta&t=1a9Uq6bSWT2AUaXhx0gQG_ajUcLEUaSGgWOhB377oHw', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'JWSIWY,ORILBL IPNVJJ,BCGWDL'}
-        name: heading_9
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Laurel Sabur}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'JWSIWY,ORILBL DCZCWT,UPQTST'}
-        name: text_9
-        properties: {font_size: 18, text: 'University of Victoria, Research Manager  '}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'FHSJBW,GOIEFU'}
-        name: avatar_7
-        properties: {align: center, image: 'https://media.licdn.com/dms/image/v2/D5603AQHbSv-KracBDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1705001956058?e=1779926400&v=beta&t=gCm-VNiSu9zKsfeVDqajs9qS7C5CsNoP1-eMWXnLVso', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'FHSJBW,KMMKVN PTSRBO,LVDHOV'}
-        name: heading_7
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Tamara Krawchenko}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'FHSJBW,KMMKVN RCBJSP,HGGZEU'}
-        name: text_7
-        properties: {font_size: 18, text: 'University of Victoria, Research Committee Member '}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'FHSJBW,GNFGGF'}
-        name: avatar_8
-        properties: {align: center, fallback_icon: 'mi:person', image: '', size: 100}
-        type: form:dep_9kcxnwm3upyjd:_Components.Avatar
-      - layout_properties: {full_width_row: true, grid_position: 'FHSJBW,FSHSYF FDOVCB,GHTRFC'}
-        name: heading_8
-        properties: {bold: true, font_size: 18, scale: medium, style: title, text: Dave Atkinson}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'FHSJBW,FSHSYF DRQPYA,QKLOVP'}
-        name: text_8
-        properties: {font_size: 18, text: 'University of Victoria, Research Committee Member '}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {full_width_row: true, grid_position: 'FVDJNF,WKIKVH'}
-        name: spacer_1
-        properties: {}
-        type: Spacer
-      layout_properties: {full_width_row: true, grid_position: 'AKAJUR,AQWKOW'}
-      name: column_panel_1
-      properties: {col_widths: '{"PCXQFS":8,"ZFGCEB":22,"WOMWDG":8,"FYEZZE":22,"SLIFAF":8,"DMXZQN":22,"RVHOYB":8,"HDSTIT":22,"DCIJYH":8,"IQNYMP":22,"GOIEFU":8,"KMMKVN":22,"GNFGGF":8,"FSHSYF":22,"WKIKVH":30,"BDYWAC":8,"ORILBL":22}'}
-      type: ColumnPanel
+    - layout_properties: {full_width_row: true, grid_position: 'KOAHGA,PIRJIK'}
+      name: heading_1
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [2%, null, null, null]
+        text: Core Team
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: false, grid_position: 'KOCHZS,FXVSTQ'}
+      name: core_team_panel
+      properties:
+        item_template: team.team_member
+        role: [2-cols]
+      type: RepeatingPanel
+    - layout_properties: {full_width_row: true, grid_position: 'HYMWEY,MEPIMU'}
+      name: heading_2
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [4%, null, null, null]
+        text: Advisors & Research Committee Members
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: false, grid_position: 'KXVVVI,UGFGKE'}
+      name: advisory_panel
+      properties: {item_template: team.team_member, role: 2-cols}
+      type: RepeatingPanel
+    - layout_properties: {full_width_row: true, grid_position: 'GFDSPF,IHGRJZ PISJSI,ITQAZL'}
+      name: heading_3
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [4%, null, null, null]
+        text: Funding Acknowledgment
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'GFDSPF,IHGRJZ WQBVML,HVUPBZ'}
+      name: rich_text_1
+      properties: {content: '<p>With gratitude, we acknowledge that this project is funded by <a href="https://www.cfref-apogee.gc.ca/">Canada First Research Excellence Fund</a> (CFREF) via the <a href="https://www.uvic.ca/acet/">ACET</a> initiative, University of Victoria</p>', font_size: 18, format: restricted_html}
+      type: RichText
+    - layout_properties: {grid_position: 'GFDSPF,PYMPDH'}
+      name: image_1
+      properties: {display_mode: fill_width, source: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.uottawa.ca%2Fresearch-innovation%2Fsites%2Fg%2Ffiles%2Fbhrskd326%2Ffiles%2F2025-07%2FCFREF_Visual%2520Identifier_Roll%2520up%2520banner%2520Header_Working%2520file_FinalE.png&f=1&nofb=1&ipt=ceb157603129c4c5d4569df3117a33b10f626969348bd9c6eca7b0947244c632'}
+      type: Image
     layout_properties: {full_width_row: true}
     name: column_panel_4
-    properties: {col_widths: '{"BMSFOG":45,"JRUADH":15}'}
+    properties: {col_spacing: huge, col_widths: '{"BMSFOG":45,"JRUADH":15,"IHGRJZ":28,"PYMPDH":32}'}
     type: ColumnPanel
   title_slot:
   - components:
