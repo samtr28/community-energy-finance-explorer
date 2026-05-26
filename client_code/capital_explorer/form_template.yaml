@@ -41,6 +41,33 @@ components_by_slot:
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
+          name: heading_7
+          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_7
+          properties:
+            content: |-
+              <p>
+               This is a growing pilot dataset, not a complete national census of community-led clean energy in Canada. The results show patterns from participating projects only. As more project teams contribute data, the insights will become more complete and more reflective of the diversity of projects across the country. Help make the Navigator more accurate and representative by adding your project or encouraging your network to contribute data.
+              </p>
+            font_size: 16
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_4
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {grid_position: 'IIQWHR,BKECQL ZAMTPP,ZPMITX'}
+      name: card_4
+      properties: {background_color: 'theme:Error Overlay 2'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
           name: heading_6
           properties: {bold: true, font_family: ser, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
