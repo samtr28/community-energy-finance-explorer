@@ -222,7 +222,7 @@ class projects_explorer(projects_explorerTemplate):
   def _scroll_to_first_card(self):
     rows = self.project_cards.get_components()
     if rows:
-      anvil.js.call_js('smoothScroll', rows[0])
+      anvil.js.call_js('smoothScroll', anvil.js.get_dom_node(rows[0]))
 
   def first_page_btn_click(self, **event_args):
     if self._current_page != 1:
@@ -248,6 +248,15 @@ class projects_explorer(projects_explorerTemplate):
 
   def _select_index(self, idx: int):
     """Highlight point idx on the map and the matching card."""
+    # --- (3) clear previous highlight safely, before anything gets rebuilt ---
+    self._clear_card_highlight()
+
+    # --- (2) navigate FIRST so the map data + cards are rebuilt ---
+    target_page = (idx // self._page_size) + 1
+    if target_page != self._current_page:
+      self.apply_filters(page=target_page)
+
+    # --- (2) NOW set the selection, so it survives the data rebuild ---
     fig = self.project_map.figure
     if fig and fig.data:
       fig.data[0].selectedpoints = [idx]
@@ -261,36 +270,40 @@ class projects_explorer(projects_explorerTemplate):
           avg_lat = sum(c["lat"] for c in sub_coords) / len(sub_coords)
           avg_lon = sum(c["lon"] for c in sub_coords) / len(sub_coords)
           fig.layout.map.center = dict(lat=avg_lat, lon=avg_lon)
-          fig.layout.map.zoom = 4
+          fig.layout.map.zoom = 3        # (1) was 4
       else:
         coords = self._point_coords.get(str(idx))
         if coords and coords["lat"] != 0 and coords["lon"] != 0:
           fig.layout.map.center = dict(lat=coords["lat"], lon=coords["lon"])
-          fig.layout.map.zoom = 5
-
+          fig.layout.map.zoom = 3.5      # (1) was 5
       self.project_map.figure = fig
 
-    target_page = (idx // self._page_size) + 1
-    if target_page != self._current_page:
-      self.apply_filters(page=target_page)
-
+    # --- (3) highlight the card on the now-current page ---
     start_idx = (self._current_page - 1) * self._page_size
     card_idx  = idx - start_idx
     rows = self.project_cards.get_components()
     if 0 <= card_idx < len(rows):
       row = rows[card_idx]
-      anvil.js.call_js('smoothScroll', row)
-
-      if self._hi_card:
-        self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
-      if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
-        self._hi_row.clear_sub_highlight()
-
       row.project_card.role = ((row.project_card.role or "") + " card-highlight").strip()
       self._hi_card = row.project_card
       self._hi_row  = row
+      anvil.js.call_js('smoothScroll', anvil.js.get_dom_node(row))   # scroll last
 
     self._selected_idx = idx
+
+  def _clear_card_highlight(self):
+    if self._hi_card:
+      try:
+        self._hi_card.role = (self._hi_card.role or "").replace("card-highlight", "").strip()
+      except Exception:
+        pass
+      self._hi_card = None
+    if self._hi_row and hasattr(self._hi_row, 'clear_sub_highlight'):
+      try:
+        self._hi_row.clear_sub_highlight()
+      except Exception:
+        pass
+      self._hi_row = None
 
   def _unselect_all(self):
     """Clear selection from both map and cards."""
@@ -391,7 +404,7 @@ class projects_explorer(projects_explorerTemplate):
       row.highlight_sub_row(sub_id)
 
       if scroll:
-        anvil.js.call_js('smoothScroll', row)
+        anvil.js.call_js('smoothScroll', anvil.js.get_dom_node(row))
 
     self._selected_idx    = parent_pos
     self._selected_sub_id = sub_id
