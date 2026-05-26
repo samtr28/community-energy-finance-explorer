@@ -1,18 +1,18 @@
 components_by_slot:
   content_slot:
+  - layout_properties: {full_width_row: true}
+    name: heading_6
+    properties:
+      background_color: ''
+      bold: true
+      font_family: serif
+      spacing:
+        margin: ['', null, null, null]
+        padding: [null, 40%, null, null]
+      text: Explore reported outcomes and impacts across community energy projects.
+      text_color: ''
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF RKFXSK,DDBXEB'}
-      name: heading_6
-      properties:
-        background_color: ''
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-          padding: [null, 20%, null, null]
-        text: Explore reported outcomes and impacts across community energy projects.
-        text_color: ''
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF EBFGMK,IKRGXR'}
       name: rich_text_1
       properties:
@@ -24,6 +24,33 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
+    - components:
+      - components:
+        - layout_properties: {slot: card-content-container-slot}
+          name: heading_9
+          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Heading
+        - layout_properties: {slot: card-content-container-slot}
+          name: rich_text_7
+          properties:
+            content: |-
+              <p>
+               This is a growing pilot dataset, not a complete national census of community-led clean energy in Canada. The results show patterns from participating projects only. As more project teams contribute data, the insights will become more complete and more reflective of the diversity of projects across the country. Help make the Navigator more accurate and representative by adding your project or encouraging your network to contribute data.
+              </p>
+            font_size: 16
+            format: restricted_html
+            spacing:
+              margin: ['0', null, '0', null]
+              padding: ['0', null, '0', null]
+          type: RichText
+        layout_properties: {slot: card-content-slot}
+        name: card_content_container_1
+        properties: {}
+        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
+      layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF QNBQMD,JTWMXY'}
+      name: card_1
+      properties: {background_color: 'theme:Error Overlay 2'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Card
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -52,33 +79,6 @@ components_by_slot:
       name: info_btn
       properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
       type: form:dep_9kcxnwm3upyjd:_Components.Button
-    - components:
-      - components:
-        - layout_properties: {slot: card-content-container-slot}
-          name: heading_9
-          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
-          type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - layout_properties: {slot: card-content-container-slot}
-          name: rich_text_7
-          properties:
-            content: |-
-              <p>
-               This is a growing pilot dataset, not a complete national census of community-led clean energy in Canada. The results show patterns from participating projects only. As more project teams contribute data, the insights will become more complete and more reflective of the diversity of projects across the country. Help make the Navigator more accurate and representative by adding your project or encouraging your network to contribute data.
-              </p>
-            font_size: 16
-            format: restricted_html
-            spacing:
-              margin: ['0', null, '0', null]
-              padding: ['0', null, '0', null]
-          type: RichText
-        layout_properties: {slot: card-content-slot}
-        name: card_content_container_1
-        properties: {}
-        type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {full_width_row: true, grid_position: 'IIQWHR,BKECQL NDQIVY,VDNBHS'}
-      name: card_1
-      properties: {background_color: 'theme:Error Overlay 2'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Card
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -377,7 +377,7 @@ components_by_slot:
         font_family: ser
         spacing:
           margin: [null, 35%, null, null]
-        text: Do community energy projects expect to see a return?
+        text: Do community energy projects meeting their return expectations?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM'}
       name: return_expectations_plot

@@ -5,19 +5,19 @@ components_by_slot:
     name: filter_timer
     properties: {}
     type: Timer
+  - layout_properties: {full_width_row: true}
+    name: heading_4
+    properties:
+      background_color: ''
+      bold: true
+      font_family: serif
+      spacing:
+        margin: ['', 40%, null, null]
+        padding: [null, '', null, null]
+      text: Explore the sources & types of capital enabling community clean energy projects across Canada.
+      text_color: ''
+    type: form:dep_9kcxnwm3upyjd:_Components.Heading
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF NKJDDF,BFKKVI'}
-      name: heading_4
-      properties:
-        background_color: ''
-        bold: true
-        font_family: serif
-        spacing:
-          margin: ['', null, null, null]
-          padding: [null, 20%, null, null]
-        text: Explore the sources & types of capital enabling community clean energy projects across Canada.
-        text_color: ''
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF CEDBET,ICGXSM'}
       name: column_panel_4
       properties: {role: bg-image-ce}
@@ -33,11 +33,6 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
-    - event_bindings: {click: info_btn_click}
-      layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
-      name: info_btn
-      properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -61,10 +56,15 @@ components_by_slot:
         name: card_content_container_4
         properties: {}
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
-      layout_properties: {grid_position: 'IIQWHR,BKECQL ZAMTPP,ZPMITX'}
+      layout_properties: {grid_position: 'IIQWHR,IUGVIF IPSZYD,MFQZKF'}
       name: card_4
       properties: {background_color: 'theme:Error Overlay 2'}
       type: form:dep_9kcxnwm3upyjd:_Components.Card
+    - event_bindings: {click: info_btn_click}
+      layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
+      name: info_btn
+      properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
+      type: form:dep_9kcxnwm3upyjd:_Components.Button
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
@@ -82,6 +82,7 @@ components_by_slot:
                 <strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.<br><br>
                 <strong>Total project cost:</strong> the full capital cost of the project deployed through the construction phase until the project becomes operational. This is different from annual operating costs.
               </p>
+            font_size: 16
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -98,7 +99,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_3
-    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: null, wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20}', role: null, wrap_on: tablet}
     type: ColumnPanel
   - components:
     - components:
@@ -115,14 +116,15 @@ components_by_slot:
           type: RichText
         layout_properties: {slot: card-content-slot}
         name: card_content_container_3
-        properties: {}
+        properties:
+          margin: ['16', '16', '16', '16']
         type: form:dep_9kcxnwm3upyjd:_Components.Card.CardContentContainer
       layout_properties: {full_width_row: true, grid_position: 'KESETV,TIKZEK'}
       name: card_3
       properties:
         background_color: theme:Secondary Overlay
         spacing:
-          margin: [null, 25%, null, null]
+          margin: [null, 35%, null, null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     - layout_properties: {full_width_row: true, grid_position: 'IWDKGO,GJHQXH'}
       name: divider_1
