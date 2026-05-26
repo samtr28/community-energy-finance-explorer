@@ -47,7 +47,7 @@ components_by_slot:
           margin: [4%, null, null, null]
         text: Advisors & Research Committee Members
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: false, grid_position: 'KXVVVI,UGFGKE'}
+    - layout_properties: {full_width_row: true, grid_position: 'KXVVVI,UGFGKE'}
       name: advisory_panel
       properties:
         item_template: team.team_member

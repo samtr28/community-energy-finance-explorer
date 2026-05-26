@@ -18,6 +18,10 @@ components_by_slot:
         text: Explore the sources & types of capital enabling community clean energy projects across Canada.
         text_color: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF CEDBET,ICGXSM'}
+      name: column_panel_4
+      properties: {role: bg-image-ce}
+      type: ColumnPanel
     - components: []
       layout_properties: {full_width_row: true, grid_position: 'IIQWHR,IUGVIF ULHCAL,GWIGKH', row_background: 'theme:Secondary Container'}
       name: rich_text_1
@@ -67,7 +71,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     layout_properties: {full_width_row: true}
     name: column_panel_3
-    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: bg-image-ce, wrap_on: tablet}
+    properties: {col_spacing: huge, col_widths: '{"IUGVIF":40,"BKECQL":20,"BFKKVI":50}', role: null, wrap_on: tablet}
     type: ColumnPanel
   - components:
     - components:

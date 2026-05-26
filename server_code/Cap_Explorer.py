@@ -949,7 +949,7 @@ def create_scale_pies_internal(df):
   vis_avg       = [False, True]  * n_pies + [True] * n_legend
 
   fig.update_layout(
-    title=dict(text='Funding Distribution by Project Scale'),
+    title=dict(text='Funding Mix by Project Scale'),
     showlegend=True,
     legend=dict(orientation='h', y=-0.15, x=0.5, xanchor='center'),
     xaxis=dict(visible=False),
