@@ -31,19 +31,11 @@ components_by_slot:
       name: spacer_2
       properties: {}
       type: Spacer
-    - layout_properties: {full_width_row: true, grid_position: 'KOAHGA,PIRJIK'}
-      name: heading_1
-      properties:
-        bold: true
-        font_family: ser
-        spacing:
-          margin: [2%, null, null, null]
-        text: Core Team
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: false, grid_position: 'KOCHZS,FXVSTQ'}
+    - layout_properties: {full_width_row: true, grid_position: 'KOCHZS,FXVSTQ'}
       name: core_team_panel
       properties:
         item_template: team.team_member
+        margin: [null, 5%, null, 3%]
         role: [2-cols]
       type: RepeatingPanel
     - layout_properties: {full_width_row: true, grid_position: 'HYMWEY,MEPIMU'}
@@ -57,7 +49,10 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: false, grid_position: 'KXVVVI,UGFGKE'}
       name: advisory_panel
-      properties: {item_template: team.team_member, role: 2-cols}
+      properties:
+        item_template: team.team_member
+        margin: [null, 5%, null, 3%]
+        role: 2-cols
       type: RepeatingPanel
     - layout_properties: {full_width_row: true, grid_position: 'GFDSPF,IHGRJZ PISJSI,ITQAZL'}
       name: heading_3
