@@ -20,3 +20,7 @@ class team_member(team_memberTemplate):
     if self.item['linkedin']:
       self.link_linkedin.url = self.item['linkedin']
     # Any code you write here will run before the form opens.
+    # Position label: same pattern
+    self.role.visible = bool(self.item['position'])
+    if self.item['position']:
+      self.role.text = self.item['position']

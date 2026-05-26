@@ -2,47 +2,44 @@ components:
 - components:
   - data_bindings:
     - {code: 'self.item[''photo'']', property: image, writeback: false}
-    layout_properties: {}
+    layout_properties: {full_width_row: true, grid_position: 'UQTOST,IBIMPH'}
     name: photo
     properties: {align: left, size: 100}
     type: form:dep_9kcxnwm3upyjd:_Components.Avatar
   - data_bindings:
     - {code: 'self.item[''name'']', property: text, writeback: false}
-    layout_properties: {}
+    layout_properties: {full_width_row: true, grid_position: 'JVVWYD,TZCYUN'}
     name: name
     properties: {bold: true, font_family: ser, font_size: 22, style: title, text: ''}
     type: form:dep_9kcxnwm3upyjd:_Components.Heading
   - data_bindings:
-    - {code: 'self.item[''role'']', property: text, writeback: false}
-    layout_properties: {}
+    - {code: 'self.item[''position'']', property: text, writeback: false}
+    layout_properties: {full_width_row: true, grid_position: 'PSYPDT,CBLKSD'}
     name: role
     properties: {bold: true, font_size: 18}
     type: form:dep_9kcxnwm3upyjd:_Components.Text
   - data_bindings:
     - {code: 'self.item[''title'']', property: text, writeback: false}
+    layout_properties: {full_width_row: true, grid_position: 'GJXRGK,BDKYAM'}
     name: title
     properties: {font_size: 16}
     type: form:dep_9kcxnwm3upyjd:_Components.Text
-  - components:
-    - components: []
-      data_bindings:
-      - {code: 'self.item[''faculty_page'']', property: url, writeback: false}
-      layout_properties: {width: 150}
-      name: link_faculty
-      properties: {font_size: 16, text: Faculty Page}
-      type: form:dep_9kcxnwm3upyjd:_Components.Link
-    - data_bindings:
-      - {code: 'self.item[''linkedin'']', property: url, writeback: false}
-      layout_properties: {width: 150}
-      name: link_linkedin
-      properties: {font_size: 16, icon: '', text: LinkedIn}
-      type: form:dep_9kcxnwm3upyjd:_Components.Link
-    name: flow_panel_1
-    properties: {}
-    type: FlowPanel
-  layout_properties: {full_width_row: true, grid_position: 'AUJWBM,UKECCY'}
-  name: linear_panel_1
+  - components: []
+    data_bindings:
+    - {code: 'self.item[''faculty_page'']', property: url, writeback: false}
+    layout_properties: {full_width_row: true, grid_position: 'YCEJKM,MTRYPR'}
+    name: link_faculty
+    properties: {font_size: 16, text: Faculty Page}
+    type: form:dep_9kcxnwm3upyjd:_Components.Link
+  - data_bindings:
+    - {code: 'self.item[''linkedin'']', property: url, writeback: false}
+    layout_properties: {full_width_row: true, grid_position: 'GWBJOB,SFZNEU'}
+    name: link_linkedin
+    properties: {font_size: 16, icon: '', text: LinkedIn}
+    type: form:dep_9kcxnwm3upyjd:_Components.Link
+  layout_properties: {full_width_row: true, grid_position: 'FTKRPL,ZNHNSC'}
+  name: column_panel_1
   properties: {}
-  type: LinearPanel
+  type: ColumnPanel
 container: {type: ColumnPanel}
 is_package: true

@@ -33,9 +33,14 @@ components_by_slot:
       type: Spacer
     - layout_properties: {full_width_row: true, grid_position: 'KOAHGA,PIRJIK'}
       name: heading_1
-      properties: {bold: true, font_family: ser, text: Core Team}
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [2%, null, null, null]
+        text: Core Team
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'KOCHZS,FXVSTQ'}
+    - layout_properties: {full_width_row: false, grid_position: 'KOCHZS,FXVSTQ'}
       name: core_team_panel
       properties:
         item_template: team.team_member
@@ -43,23 +48,37 @@ components_by_slot:
       type: RepeatingPanel
     - layout_properties: {full_width_row: true, grid_position: 'HYMWEY,MEPIMU'}
       name: heading_2
-      properties: {bold: true, font_family: ser, text: Advisors & Research Committee Members}
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [4%, null, null, null]
+        text: Advisors & Research Committee Members
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {full_width_row: true, grid_position: 'KXVVVI,UGFGKE'}
+    - layout_properties: {full_width_row: false, grid_position: 'KXVVVI,UGFGKE'}
       name: advisory_panel
       properties: {item_template: team.team_member, role: 2-cols}
       type: RepeatingPanel
-    - layout_properties: {grid_position: 'UDZTHK,PSOEZC'}
+    - layout_properties: {full_width_row: true, grid_position: 'GFDSPF,IHGRJZ PISJSI,ITQAZL'}
       name: heading_3
-      properties: {bold: true, font_family: ser, text: Funding Acknowledgment}
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          margin: [4%, null, null, null]
+        text: Funding Acknowledgment
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - layout_properties: {grid_position: 'HMBAOY,FKPSKU'}
-      name: text_1
-      properties: {text: ''}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'GFDSPF,IHGRJZ WQBVML,HVUPBZ'}
+      name: rich_text_1
+      properties: {content: '<p>With gratitude, we acknowledge that this project is funded by <a href="https://www.cfref-apogee.gc.ca/">Canada First Research Excellence Fund</a> (CFREF) via the <a href="https://www.uvic.ca/acet/">ACET</a> initiative, University of Victoria</p>', font_size: 18, format: restricted_html}
+      type: RichText
+    - layout_properties: {grid_position: 'GFDSPF,PYMPDH'}
+      name: image_1
+      properties: {display_mode: fill_width, source: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.uottawa.ca%2Fresearch-innovation%2Fsites%2Fg%2Ffiles%2Fbhrskd326%2Ffiles%2F2025-07%2FCFREF_Visual%2520Identifier_Roll%2520up%2520banner%2520Header_Working%2520file_FinalE.png&f=1&nofb=1&ipt=ceb157603129c4c5d4569df3117a33b10f626969348bd9c6eca7b0947244c632'}
+      type: Image
     layout_properties: {full_width_row: true}
     name: column_panel_4
-    properties: {col_widths: '{"BMSFOG":45,"JRUADH":15}'}
+    properties: {col_spacing: huge, col_widths: '{"BMSFOG":45,"JRUADH":15,"IHGRJZ":28,"PYMPDH":32}'}
     type: ColumnPanel
   title_slot:
   - components:
