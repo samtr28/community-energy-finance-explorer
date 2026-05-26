@@ -4,7 +4,7 @@ components:
     - {code: 'self.item[''photo'']', property: image, writeback: false}
     layout_properties: {full_width_row: true, grid_position: 'UQTOST,IBIMPH'}
     name: photo
-    properties: {align: left, size: 100}
+    properties: {align: left, size: 150}
     type: form:dep_9kcxnwm3upyjd:_Components.Avatar
   - data_bindings:
     - {code: 'self.item[''name'']', property: text, writeback: false}
