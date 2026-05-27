@@ -1,0 +1,17 @@
+components:
+- components: []
+  data_bindings:
+  - {code: 'self.item[''url'']', property: url, writeback: false}
+  - {code: 'self.item[''title'']', property: text, writeback: false}
+  layout_properties: {column: title}
+  name: link_title
+  properties: {bold: true, font_size: 18}
+  type: form:dep_9kcxnwm3upyjd:_Components.Link
+- data_bindings:
+  - {code: 'self.item[''description'']', property: text, writeback: false}
+  layout_properties: {column: description}
+  name: text_1
+  properties: {}
+  type: form:dep_9kcxnwm3upyjd:_Components.Text
+container: {type: DataRowPanel}
+is_package: true

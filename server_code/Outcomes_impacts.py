@@ -587,7 +587,7 @@ def create_return_expectations_chart(df):
     )
 
   fig.update_layout(
-    title=dict(text='Return Expectations'),
+    title=dict(text='Reported Achievement of Financial Return Expectations in the Pilot Dataset'),
     showlegend=True,
     legend=dict(orientation='h', yanchor='top', y=-0.05, xanchor='center', x=0.5),
     margin=dict(t=50, b=0, l=0, r=0),

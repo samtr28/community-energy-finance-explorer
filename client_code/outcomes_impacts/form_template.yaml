@@ -457,13 +457,18 @@ components_by_slot:
         font_family: ser
         spacing:
           margin: [null, 35%, null, null]
-        text: Do community energy projects meet their return expectations?
+        text: Are projects community energy projects meeting their financial return expectations?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM LMYGZK,ZZJUGU'}
       name: return_expectations_plot
       properties: {height: 40vh}
       type: Plot
-    - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM UKDQTJ,QOUSLB'}
+    - components:
+      - layout_properties: {full_width_row: true, grid_position: 'ZBFUSO,WCWGIR'}
+        name: text_16
+        properties: {italic: true, text: 'Note: This chart is based on project-reported responses in the pilot dataset. It does not independently verify financial performance, and “financial return expectations” may mean different things depending on the project, including investor returns, project surplus, avoided costs, or other financial objectives.  '}
+        type: form:dep_9kcxnwm3upyjd:_Components.Text
+      layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM UKDQTJ,QOUSLB'}
       name: outlined_card_5
       properties: {role: outlined-card}
       type: ColumnPanel
@@ -473,7 +478,12 @@ components_by_slot:
         font_size: 16
         spacing:
           margin: [8%, null, null, null]
-        text: ''
+        text: |
+          Financial outcomes are one part of the broader impact story of community energy projects. Alongside environmental, social, and community benefits, projects may also have financial return expectations, such as meeting investor returns (both from within and outside of the community), surplus revenue, or funds available for reinvestment.
+
+          This chart shows whether project teams in the current filtered view reported that their projects met their financial return expectations. Responses distinguish between projects that met expectations, did not meet expectations, were too early to assess, or where respondents did not know.
+
+          For communities, this information is useful to highlights the importance of setting realistic financial expectations early and tracking whether a project is performing as expected over time. For funders and impact investors, it provides a useful signal about whether community energy projects are achieving the financial outcomes anticipated by project teams.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'ZCETRN,ANELNX'}
       name: heading_11
