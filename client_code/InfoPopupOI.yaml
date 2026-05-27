@@ -1,0 +1,27 @@
+components:
+- layout_properties: {grid_position: 'FVHIDA,IUDDKC'}
+  name: rich_text_1
+  properties:
+    content: |-
+      <p><strong>Start with the filters</strong></p>
+      <p>The default view gives you a broad picture of outcomes and impacts reported by projects in the current pilot dataset. Use the filters to focus on projects by technology, province or territory, project stage, project scale, and Indigenous ownership. Every chart on this page updates based on your selections.</p>
+
+      <p><strong>Read outcomes as reported signals</strong></p>
+      <p>This page shows outcomes, impacts, and objectives reported by project teams. Some may be measured results, while others may be intended, expected, or estimated benefits, depending on the project stage and the information available.</p>
+
+      <p><strong>Look across different kinds of value</strong></p>
+      <p>Community energy projects can create value in more than one way. The charts include environmental outcomes, such as GHG reductions; economic outcomes, such as jobs and financial returns; and community outcomes targeted by various projects such as energy cost reductions, resilience, education, and energy sovereignty.</p>
+
+      <p><strong>Use this for learning, not ranking</strong></p>
+      <p>The charts are designed to help users explore patterns and ask better questions, such as: What outcomes are projects aiming for? What kinds of benefits are commonly reported? How are climate, economic, financial, and community impacts being described? The visuals should not be read as a ranking of projects, technologies, communities, or impact types.</p>
+
+      <p><strong>Interpret impact data with caution</strong></p>
+      <p>Outcomes can be reported and measured in different ways. For example, GHG reductions may be calculated using different tools, jobs may be temporary or ongoing, and financial returns may mean different things across projects. Where possible, the Navigator shows how project teams reported or calculated these outcomes.</p>
+
+      <p><strong>Interpret results as a pilot dataset</strong></p>
+      <p>Results reflect the projects currently included in the Navigator. As more project teams contribute data, the outcome and impact patterns may shift as they become more complete and more representative.</p>
+    font_size: 16
+    format: restricted_html
+  type: RichText
+container: {type: ColumnPanel}
+is_package: false

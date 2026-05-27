@@ -9,7 +9,7 @@ from anvil.tables import app_tables
 from .. import config
 from ..chart_export import download_chart
 # Optional info popup — uncomment once you've created an info form for this page.
-# from ..InfoPopupOI import InfoPopupOI
+from ..InfoPopupOI import InfoPopupOI
 
 
 class outcomes_impacts(outcomes_impactsTemplate):
@@ -226,10 +226,10 @@ class outcomes_impacts(outcomes_impactsTemplate):
   # Create an info form (e.g. InfoPopupOI), uncomment its import at the top,
   # add an info button in the designer, and wire it to this handler.
   #
-  # def info_btn_click(self, **event_args):
-  #   alert(
-  #     content=InfoPopupOI(),
-  #     title="How to use this page",
-  #     large=True,
-  #     buttons=[("Close", None)],
-  #   )
+  def info_btn_click(self, **event_args):
+     alert(
+       content=InfoPopupOI(),
+       title="How to use this page",
+       large=True,
+       buttons=[("Close", None)],
+     )
