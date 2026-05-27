@@ -5,6 +5,20 @@ components_by_slot:
     name: filter_timer
     properties: {}
     type: Timer
+  - layout_properties: {full_width_row: true}
+    name: description
+    properties:
+      font_size: 18
+      scale: large
+      spacing:
+        margin: ['0', 35%, null, null]
+      style: body
+      text: 'Browse real-world community energy projects and see how they were financed. Each project shared their financing journey through our survey to inspire and inform future initiatives. Please note, this map only features projects that chose to have their projects shared publicly. There are some projects who chose to participate anonymously,with their projects only featured in aggregate data visualizations and statistics. '
+    type: form:dep_9kcxnwm3upyjd:_Components.Text
+  - layout_properties: {full_width_row: true}
+    name: divider_1
+    properties: {}
+    type: form:dep_9kcxnwm3upyjd:_Components.Divider
   - components:
     - components:
       - layout_properties: {width: 64.6}
@@ -82,16 +96,10 @@ components_by_slot:
           margin: ['0', null, '0', null]
         vertical_align: middle
       type: FlowPanel
-    - layout_properties: {full_width_row: true, grid_position: 'NVUPCC,YZPPBW'}
-      name: description
-      properties:
-        font_size: 16
-        scale: large
-        spacing:
-          margin: ['0', null, null, null]
-        style: body
-        text: 'Browse real-world community energy projects and see how they were financed. Each project shared their financing journey through our survey to inspire and inform future initiatives. Please note, this map only features projects that chose to have their projects featured publicly. There are some projects who chose to participate anonymously,with their projects only featured in aggregate data visualizations and statistics. '
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'QQTWDH,TTQZYS'}
+      name: divider_2
+      properties: {}
+      type: form:dep_9kcxnwm3upyjd:_Components.Divider
     - layout_properties: {full_width_row: true, grid_position: 'NVUPCC,LTQTQB'}
       name: spacer_1
       properties: {}
@@ -152,7 +160,7 @@ components_by_slot:
     name: column_panel_2
     properties:
       col_spacing: small
-      col_widths: '{"WSRNCB":35,"ZNMRWP":25,"YZPPBW":35,"LTQTQB":25}'
+      col_widths: '{"WSRNCB":35,"ZNMRWP":25,"LTQTQB":25}'
       role: null
       spacing:
         margin: ['0', null, '0', null]

@@ -555,7 +555,7 @@ def create_sankey_internal(df, proj_types=None):
         xref='paper', yref='paper',
         xanchor='left', yanchor='bottom',
         showarrow=False,
-        font=dict(family=FONT_FAMILY, size=13, color='#888888', weight='bold'),
+        font=dict(family=FONT_FAMILY, size=12, color='#888888', weight='bold'),
       ),
       dict(
         text='<u>INSTRUMENTS/MECHANISMS</u>',
@@ -563,7 +563,7 @@ def create_sankey_internal(df, proj_types=None):
         xref='paper', yref='paper',
         xanchor='center', yanchor='bottom',
         showarrow=False,
-        font=dict(family=FONT_FAMILY, size=13, color='#888888', weight='bold'),
+        font=dict(family=FONT_FAMILY, size=12, color='#888888', weight='bold'),
       ),
       dict(
         text='<u>ENERGY TECHNOLOGIES</u>',
@@ -571,7 +571,7 @@ def create_sankey_internal(df, proj_types=None):
         xref='paper', yref='paper',
         xanchor='right', yanchor='bottom',
         showarrow=False,
-        font=dict(family=FONT_FAMILY, size=13, color='#888888', weight='bold'),
+        font=dict(family=FONT_FAMILY, size=12, color='#888888', weight='bold'),
       ),
     ],
   )
