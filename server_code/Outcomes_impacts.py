@@ -285,7 +285,7 @@ def create_ghg_methodology_chart(df):
     )
 
   fig.update_layout(
-    title=dict(text='GHG Reduction Methodology'),
+    title=dict(text='GHG Reduction Calculation Methods Used by Projects in the Dataset'),
     height=500,
     margin=dict(t=50, b=0, l=0, r=0),
   )
@@ -388,7 +388,7 @@ def create_ghg_charts(df):
   fig.update_yaxes(title_text='Cumulative Mt CO2e')
 
   fig.update_layout(
-    title=dict(text=f'Cumulative Lifetime GHG Reductions through 2050 (n={len(ghg_time)} projects)'),
+    title=dict(text=f'Cumulative GHG Reductions Through 2050 From Projects in the Dataset (n={len(ghg_time)} projects)'),
     margin=dict(t=50, b=0, l=0, r=0),
   )
   return fig

@@ -74,7 +74,7 @@ components_by_slot:
         spacing:
           margin: [null, '8', null, null]
       type: form:dep_9kcxnwm3upyjd:_Components.Card
-    - event_bindings: {}
+    - event_bindings: {click: info_btn_click}
       layout_properties: {grid_position: 'IIQWHR,BKECQL MVPFBA,CLCMDG'}
       name: info_btn
       properties: {align: full, background_color: 'theme:On Secondary Container', bold: false, font_size: 16, icon: 'mi:more_up', icon_size: 20, text: How to use this page, text_color: 'theme:On Secondary'}
@@ -88,7 +88,15 @@ components_by_slot:
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
           properties:
-            content: ''
+            content: |-
+              <p>
+                <strong>Outcomes and impacts:</strong> the benefits, changes, or results associated with a project. These may include environmental, economic, financial, social, and community benefits.<br><br>
+                <strong>GHG reductions:</strong> estimated reductions in greenhouse gas emissions, usually expressed in tonnes of carbon dioxide equivalent.<br><br>
+                <strong>Cumulative GHG reductions:</strong> the total estimated annual emissions reductions added over a period of time, such as from project start through 2050.<br><br>
+                <strong>GHG reduction calculation method:</strong> the tool, model, spreadsheet, or process used to estimate a project's emissions reductions.<br><br>
+                <strong>Operational cost coverage:</strong> whether a project reports being able to cover ongoing operating expenses after it becomes operational. These could include maintenance, monitoring, insurance, administration, and other ongoing staff costs.<br><br>
+                <strong>Financial return expectations:</strong> the financial outcomes a project expected to achieve. These may include investor returns, surplus revenue, avoided energy costs, or funds available for reinvestment.
+              </p>
             font_size: 16
             format: restricted_html
             spacing:
@@ -196,21 +204,33 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'GBRYPR,RCMKOG'}
         name: heading_5
-        properties: {bold: true, font_family: ser, text: 'What are the key objectives of surveyed projects?'}
+        properties: {bold: true, font_family: ser, text: 'What outcomes are community energy projects trying to achieve?'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'GURWFZ,WAIANO'}
+      - layout_properties: {full_width_row: true, grid_position: 'GURWFZ,WAIANO QZPGVP,GUIWKJ'}
         name: key_objectives_plot
         properties:
           height: 40vh
           margin: [null, '4', null, null]
         type: Plot
+      - components:
+        - layout_properties: {grid_position: 'JSHOJV,NSWHLC'}
+          name: text_10
+          properties: {italic: true, text: 'Note: These are reported project objectives from participating projects in the pilot dataset. They may include intended, expected, or already observed outcomes depending on the project stage and available information.'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        layout_properties: {grid_position: 'GURWFZ,WAIANO GZYFIV,VWIUKI'}
+        name: outlined_card_1
+        properties: {role: outlined-card}
+        type: ColumnPanel
       - layout_properties: {full_width_row: true, grid_position: 'GURWFZ,LQFNIW'}
         name: text_6
         properties:
           font_size: 16
           spacing:
             margin: [8%, null, null, null]
-          text: ''
+          text: |
+            This chart shows the key objectives reported by project teams in the current filtered view. Respondents could identify multiple objectives, so the total number of selections may be higher than the number of projects.
+
+            This information helps users see the range of goals community energy projects are pursuing, from greenhouse gas reductions and lower energy costs to resilience, job creation, financial returns, education, reinvestment, and energy sovereignty. For communities, it can help show what benefits similar projects are aiming for. For funders, impact investors, and policymakers, it highlights the diversity of outcomes that community energy projects may be designed to support.
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'WIFMHD,HSHBIS'}
         name: image_5
@@ -227,19 +247,31 @@ components_by_slot:
           font_family: ser
           spacing:
             margin: [null, 35%, null, null]
-          text: How are our surveyed projects reducing emissions for their communities?
+          text: How are community energy projects reducing emissions over time?
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - layout_properties: {full_width_row: true, grid_position: 'HHLMZZ,FYUUAE'}
+      - layout_properties: {full_width_row: true, grid_position: 'HHLMZZ,FYUUAE JZPCDN,AIHQJD'}
         name: ghg_timeline_plot
         properties: {height: 35vh}
         type: Plot
+      - components:
+        - layout_properties: {grid_position: 'XPTDFH,HUKDWH'}
+          name: text_11
+          properties: {italic: true, text: 'Note: These figures reflect reported or estimated GHG reductions from participating projects in the pilot dataset. They should not be interpreted as a complete national estimate of emissions reductions from all community energy projects in Canada. Patterns and totals may change as filters are applied and as more projects contribute data.'}
+          type: form:dep_9kcxnwm3upyjd:_Components.Text
+        layout_properties: {grid_position: 'HHLMZZ,FYUUAE CXRSQO,IIQQRS'}
+        name: outlined_card_2
+        properties: {role: outlined-card}
+        type: ColumnPanel
       - layout_properties: {full_width_row: true, grid_position: 'HHLMZZ,IURPLS'}
         name: text_1
         properties:
           font_size: 16
           spacing:
             margin: [8%, null, null, null]
-          text: ''
+          text: |
+            This chart shows the estimated cumulative greenhouse gas reductions reported for projects in the current filtered view. It helps users see the long-term climate contribution of participating community energy projects, including how reported reductions accumulate over time toward 2030 and 2050, two key milestone dates in Canada’s commitment to the Paris Agreement.
+
+            This data is useful because clean energy projects deliver benefits over many years, not only in the year they are built. For communities, it helps show the climate value of local projects. For funders and impact investors looking for evidence of impact in their investment decisions, it provides a way to understand the scale of emissions reductions associated with community energy projects currently represented in the Navigator.
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'IJSRML,APHWDX'}
         name: image_4
@@ -268,7 +300,10 @@ components_by_slot:
           font_size: 16
           spacing:
             margin: [8%, null, null, null]
-          text: ''
+          text: |-
+            This chart shows how project teams reported calculating greenhouse gas reductions in the current filtered view. The left panel shows the tools or methods used, such as custom calculators, spreadsheet models, software tools, or established models. The right panel shows who calculated the reductions, such as the internal project team, an independent consultant, a utility, or a government agency.
+
+            For communities planning new projects, estimating GHG reductions can become important early in the development process, especially when applying for funding or explaining the project’s climate benefits. This chart helps users see how other project teams approached that task, including whether calculations were done internally, by consultants, or using specific tools and models.
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'MIVMRB,YORLKK'}
         name: image_6
@@ -295,6 +330,10 @@ components_by_slot:
       name: jobs_plot
       properties: {height: 40vh}
       type: Plot
+    - layout_properties: {grid_position: 'AWHXCC,WVVDMY EOGVUL,EVGZTA'}
+      name: outlined_card_3
+      properties: {role: outlined-card}
+      type: ColumnPanel
     - layout_properties: {full_width_row: true, grid_position: 'AWHXCC,WVVDMY NMJSJI,ZRTSMW'}
       name: image_3
       properties:
