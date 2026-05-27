@@ -213,7 +213,7 @@ components_by_slot:
           margin: [null, '4', null, null]
         type: Plot
       - components:
-        - layout_properties: {grid_position: 'JSHOJV,NSWHLC'}
+        - layout_properties: {full_width_row: true, grid_position: 'JSHOJV,NSWHLC'}
           name: text_10
           properties: {italic: true, text: 'Note: These are reported project objectives from participating projects in the pilot dataset. They may include intended, expected, or already observed outcomes depending on the project stage and available information.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -237,7 +237,7 @@ components_by_slot:
         properties:
           height: 1vh
           horizontal_align: left
-          margin: ['0', null, '8', null]
+          margin: ['16', null, '16', null]
           source: ' _/theme/dots.png'
         type: Image
       - layout_properties: {full_width_row: true, grid_position: 'KSSOXD,VTLSMH'}
@@ -254,7 +254,7 @@ components_by_slot:
         properties: {height: 35vh}
         type: Plot
       - components:
-        - layout_properties: {grid_position: 'XPTDFH,HUKDWH'}
+        - layout_properties: {full_width_row: true, grid_position: 'XPTDFH,HUKDWH'}
           name: text_11
           properties: {italic: true, text: 'Note: These figures reflect reported or estimated GHG reductions from participating projects in the pilot dataset. They should not be interpreted as a complete national estimate of emissions reductions from all community energy projects in Canada. Patterns and totals may change as filters are applied and as more projects contribute data.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -278,7 +278,7 @@ components_by_slot:
         properties:
           height: 1vh
           horizontal_align: left
-          margin: ['0', null, '8', null]
+          margin: ['16', null, '16', null]
           source: ' _/theme/dots.png'
         type: Image
       - layout_properties: {full_width_row: true, grid_position: 'QJZYGI,NUMYOJ'}
@@ -295,7 +295,7 @@ components_by_slot:
         properties: {height: 50vh}
         type: Plot
       - components:
-        - layout_properties: {grid_position: 'DZAYXD,WNZWMI'}
+        - layout_properties: {full_width_row: true, grid_position: 'DZAYXD,WNZWMI'}
           name: text_12
           properties: {italic: true, text: 'Note: This chart does not independently verify emissions reductions. It shows how participating project teams reported their GHG calculation approach. Methods may vary across projects, and some respondents may not know exactly which tool or method was used.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -319,7 +319,7 @@ components_by_slot:
         properties:
           height: 1vh
           horizontal_align: left
-          margin: ['0', null, '8', null]
+          margin: ['16', null, '16', null]
           source: ' _/theme/dots.png'
         type: Image
       layout_properties: {full_width_row: true, grid_position: 'DDPYJZ,GLOCDU'}
@@ -340,7 +340,7 @@ components_by_slot:
       properties: {height: 40vh}
       type: Plot
     - components:
-      - layout_properties: {grid_position: 'CFJAKZ,ULQVHH'}
+      - layout_properties: {full_width_row: true, grid_position: 'CFJAKZ,ULQVHH'}
         name: text_15
         properties: {italic: true, text: 'Note: Reported jobs reflect direct jobs created in the same economic region as each project, as reported by project teams.  Projects vary in how many of these jobs went to local or community members specifically. The chart should be read as a signal of regional job creation associated with participating projects, not as a complete measure of local employment impact.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -348,14 +348,6 @@ components_by_slot:
       name: outlined_card_3
       properties: {role: outlined-card}
       type: ColumnPanel
-    - layout_properties: {full_width_row: true, grid_position: 'AWHXCC,WVVDMY NMJSJI,ZRTSMW'}
-      name: image_3
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['0', null, '8', null]
-        source: ' _/theme/dots.png'
-      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'AWHXCC,ZLSAKR'}
       name: text_3
       properties:
@@ -368,6 +360,14 @@ components_by_slot:
 
           For communities, this view helps show that clean energy projects can contribute to local economic activity in different ways. Some projects may create short-term construction opportunities, while others may support ongoing roles during operation. The data helps connect energy investment to employment and community economic development in a more visible way.
       type: form:dep_9kcxnwm3upyjd:_Components.Text
+    - layout_properties: {full_width_row: true, grid_position: 'VXMXJQ,DVICDO'}
+      name: image_3
+      properties:
+        height: 1vh
+        horizontal_align: left
+        margin: ['16', null, '16', null]
+        source: ' _/theme/dots.png'
+      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'ISEBQT,BEBUTF'}
       name: heading_3
       properties:
@@ -382,7 +382,7 @@ components_by_slot:
       properties: {height: 30vh}
       type: Plot
     - components:
-      - layout_properties: {grid_position: 'MLJEWV,ABEZAR'}
+      - layout_properties: {full_width_row: true, grid_position: 'MLJEWV,ABEZAR'}
         name: text_13
         properties: {italic: true, text: 'Note: This chart reports the presence and type of agreements, not the quality, depth, or fairness of the relationship. The absence of a formal agreement does not necessarily mean there was no engagement, and the presence of an agreement does not fully describe the governance, consent, or benefit-sharing process behind it.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -406,7 +406,7 @@ components_by_slot:
       properties:
         height: 1vh
         horizontal_align: left
-        margin: ['0', null, '8', null]
+        margin: ['16', null, '16', null]
         source: ' _/theme/dots.png'
       type: Image
     - layout_properties: {full_width_row: true, grid_position: 'TXCLWP,GVEKMN'}
@@ -423,7 +423,7 @@ components_by_slot:
       properties: {height: 40vh}
       type: Plot
     - components:
-      - layout_properties: {grid_position: 'MLNGHE,BWHNPR'}
+      - layout_properties: {full_width_row: true, grid_position: 'MLNGHE,BWHNPR'}
         name: text_14
         properties: {italic: true, text: 'Note: This chart is based on project-reported responses in the pilot dataset. It does not independently verify financial performance, and responses may vary by project stage, revenue model, and how operating expenses are defined.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
@@ -449,7 +449,7 @@ components_by_slot:
       properties:
         height: 1vh
         horizontal_align: left
-        margin: ['0', null, '8', null]
+        margin: ['16', null, '16', null]
         source: ' _/theme/dots.png'
       type: Image
     - layout_properties: {full_width_row: true, grid_position: 'INHAHT,PDIFLU'}
@@ -465,7 +465,7 @@ components_by_slot:
       name: return_expectations_plot
       properties: {height: 40vh}
       type: Plot
-    - layout_properties: {grid_position: 'KCYDUG,TMBTNM UKDQTJ,QOUSLB'}
+    - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM UKDQTJ,QOUSLB'}
       name: outlined_card_5
       properties: {role: outlined-card}
       type: ColumnPanel

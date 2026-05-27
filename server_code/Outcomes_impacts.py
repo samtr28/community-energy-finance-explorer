@@ -155,7 +155,7 @@ def create_indigenous_agreements_chart(df):
 
   fig.update_layout(
     barmode='stack',
-    title=dict(text='Project Agreements with Indigenous Communities'),
+    title=dict(text='Types of Indigenous Partnership Agreements Reported by Project in the Dataset'),
     xaxis=dict(title='', range=[0, 100], ticksuffix='%', showgrid=False),
     yaxis=dict(title='', showticklabels=False),
     legend=dict(orientation='h', yanchor='top', y=-0.15, xanchor='center', x=0.5),
@@ -424,7 +424,7 @@ def create_key_objectives_bar_chart(df):
   ))
 
   fig.update_layout(
-    title=dict(text='Key Objectives of Community Energy Projects'),
+    title=dict(text='Reported Objectives of Community Energy Projects In Canada'),
     xaxis=dict(title='Number of projects', linecolor='grey', showline=True, tickformat='d'),
     yaxis=dict(title=''),
     showlegend=False,
