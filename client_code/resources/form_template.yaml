@@ -36,6 +36,52 @@ components_by_slot:
       item_template: resources.factsheets_box
       role: [3-cols]
     type: RepeatingPanel
+  - components:
+    - layout_properties: {full_width_row: true, grid_position: 'UDRNXA,OUPGTG'}
+      name: heading_2
+      properties:
+        bold: true
+        font_family: ser
+        spacing:
+          padding: [null, 35%, null, null]
+        text: Helpful External Resources
+      type: form:dep_9kcxnwm3upyjd:_Components.Heading
+    - components:
+      - layout_properties: {}
+        name: external_resources
+        properties:
+          item_template: resources.RowTemplate2
+          margin: [null, '10', null, '10']
+        type: RepeatingPanel
+      layout_properties: {full_width_row: true, grid_position: 'KHGXDR,RAOHAB'}
+      name: educational_grid
+      properties:
+        columns:
+        - {data_key: '', expand: false, id: EHIMKL, title: External Tools, width: 217.550048828125}
+        - {data_key: '', id: UWYOSZ, title: ''}
+        margin: [null, 35%, null, null]
+        rows_per_page: 5
+      type: DataGrid
+    - components:
+      - layout_properties: {}
+        name: funding_resources
+        properties:
+          item_template: resources.RowTemplate2
+          margin: [null, '10', null, '10']
+        type: RepeatingPanel
+      layout_properties: {full_width_row: true, grid_position: 'UHVFDO,MKKWDC'}
+      name: educational_grid_2
+      properties:
+        columns:
+        - {data_key: '', expand: false, id: EHIMKL, title: Funding Resources, width: 217.550048828125}
+        - {data_key: '', id: UWYOSZ, title: ''}
+        margin: [null, 35%, null, null]
+        rows_per_page: 5
+      type: DataGrid
+    layout_properties: {full_width_row: true}
+    name: column_panel_2
+    properties: {}
+    type: ColumnPanel
   title_slot:
   - components:
     - layout_properties: {expand: false, width: 222.4333}

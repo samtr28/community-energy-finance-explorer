@@ -8,11 +8,15 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from .factsheet_data import factsheets
 from ..chart_export import download_chart
+from .external_resources_data import educational_resources, funding_resources
 
 class resources(resourcesTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
     self._data_loaded = False
+    self.external_resources.items = educational_resources
+    self.funding_resources.items = funding_resources
+
 
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
