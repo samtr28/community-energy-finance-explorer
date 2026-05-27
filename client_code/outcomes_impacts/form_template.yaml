@@ -154,16 +154,14 @@ components_by_slot:
         multiple: false
         placeholder: Project Stage
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: indig_owners_dd_change}
+    - event_bindings: {change: indig_owners_dd_change}
       layout_properties: {expand: false, width: null}
       name: indig_owners_dd
       properties:
         items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
         placeholder: Indigenous Ownership
       type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: project_scale_dd_change}
+    - event_bindings: {change: project_scale_dd_change}
       layout_properties: {expand: false, width: null}
       name: project_scale_dd
       properties:
