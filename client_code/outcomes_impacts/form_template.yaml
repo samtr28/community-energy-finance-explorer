@@ -377,7 +377,7 @@ components_by_slot:
         font_family: ser
         spacing:
           margin: [null, 35%, null, null]
-        text: Do community energy projects meeting their return expectations?
+        text: Do community energy projects meet their return expectations?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM'}
       name: return_expectations_plot
@@ -391,14 +391,6 @@ components_by_slot:
           margin: [8%, null, null, null]
         text: ''
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'NEYSCN,TICNTT'}
-      name: image_9
-      properties:
-        height: 1vh
-        horizontal_align: left
-        margin: ['0', null, '8', null]
-        source: ' _/theme/dots.png'
-      type: Image
     - layout_properties: {full_width_row: true, grid_position: 'ZCETRN,ANELNX'}
       name: heading_11
       properties:
@@ -407,10 +399,11 @@ components_by_slot:
         spacing:
           margin: [null, 35%, null, null]
         text: What is the end use of energy created by community energy projects?
+        visible: false
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'DERCNN,FAQASQ'}
       name: end_use_plot
-      properties: {height: 65vh}
+      properties: {height: 65vh, visible: false}
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'DERCNN,JPNFOT'}
       name: text_5
@@ -419,6 +412,7 @@ components_by_slot:
         spacing:
           margin: [8%, null, null, null]
         text: ''
+        visible: false
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {full_width_row: true}
     name: column_panel_1

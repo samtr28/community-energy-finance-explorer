@@ -192,19 +192,25 @@ def create_jobs_chart(df):
 
   bar_width = 0.4
   for i, phase in enumerate(grouped.index):
-    # Explicit grey font — preserved through apply_display_template
-    fig.add_annotation(
-      x=i - bar_width / 2, y=grouped.loc[phase, 'full_time'],
-      text=f"{reporting_counts.loc[phase, 'full_time']} responses<br>{grouped.loc[phase, 'full_time']:.0f} jobs",
-      showarrow=False, yshift=20,
-      font=dict(family=FONT_FAMILY, size=12, color='gray'),
-    )
-    fig.add_annotation(
-      x=i + bar_width / 2, y=grouped.loc[phase, 'part_time'],
-      text=f"{reporting_counts.loc[phase, 'part_time']} responses<br>{grouped.loc[phase, 'part_time']:.0f} jobs",
-      showarrow=False, yshift=20,
-      font=dict(family=FONT_FAMILY, size=12, color='gray'),
-    )
+    for x_offset, col in [(-bar_width / 2, 'full_time'), (bar_width / 2, 'part_time')]:
+      bar_y = grouped.loc[phase, col]
+      n_responses = reporting_counts.loc[phase, col]
+      n_jobs = grouped.loc[phase, col]
+
+      # Jobs number — big, bold, black
+      fig.add_annotation(
+        x=i + x_offset, y=bar_y,
+        text=f"<b>{n_jobs:.0f} jobs</b>",
+        showarrow=False, yshift=28,
+        font=dict(family=FONT_FAMILY, size=16, color='black'),
+      )
+      # Response count — small, grey, below
+      fig.add_annotation(
+        x=i + x_offset, y=bar_y,
+        text=f"{n_responses} responses",
+        showarrow=False, yshift=10,
+        font=dict(family=FONT_FAMILY, size=10, color='gray'),
+      )
 
   fig.update_layout(
     barmode='group',
@@ -410,7 +416,7 @@ def create_key_objectives_bar_chart(df):
     x=obj_counts['count'],
     y=obj_counts['objective'],
     orientation='h',
-    marker_color=dunsparce_colors[6],
+    marker_color=dunsparce_colors[1],
     text=obj_counts['count'],
     textposition='outside',
     textfont=dict(family=FONT_FAMILY, size=FONT_SIZE, color=FONT_COLOR),
@@ -495,7 +501,7 @@ def create_op_expenses_chart(df):
     fig.add_annotation(
       text=(f"<b>{pct_covered:.0f}%</b>"
             f"<br><span style='font-size:11px'>cover opex</span>"
-            f"<br><span style='font-size:10px;color:gray'>(yes — consistently<br>or minor shortfalls)</span>"),
+            f"<br><span style='font-size:10px;color:gray'>(yes, consistently<br>or minor shortfalls)</span>"),
       x=0.5, y=0.5, showarrow=False,
       font=dict(family=FONT_FAMILY, size=20, color=FONT_COLOR),
     )
@@ -575,7 +581,7 @@ def create_return_expectations_chart(df):
     # Explicit fonts so the headline survives apply_display_template.
     fig.add_annotation(
       text=(f"<b>{pct_positive:.0f}%</b>"
-            f"<br><span style='font-size:11px'>expect a return</span>"),
+            f"<br><span style='font-size:11px'>meeting return<br>expectations</span>"),
       x=0.5, y=0.5, showarrow=False,
       font=dict(family=FONT_FAMILY, size=20, color=FONT_COLOR),
     )

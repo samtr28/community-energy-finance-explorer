@@ -15,7 +15,7 @@ components:
   - data_bindings:
     - {code: 'self.item[''position'']', property: text, writeback: false}
     layout_properties: {full_width_row: true, grid_position: 'PSYPDT,CBLKSD'}
-    name: role
+    name: position
     properties: {bold: true, font_size: 18}
     type: form:dep_9kcxnwm3upyjd:_Components.Text
   - data_bindings:
