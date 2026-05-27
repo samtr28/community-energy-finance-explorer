@@ -44,7 +44,7 @@ components_by_slot:
         font_family: ser
         spacing:
           padding: [null, 35%, null, null]
-        text: External Resources
+        text: Helpful External Resources
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
       - layout_properties: {}
@@ -57,20 +57,11 @@ components_by_slot:
       name: educational_grid
       properties:
         columns:
-        - {data_key: '', expand: false, id: EHIMKL, title: Title, width: 217.550048828125}
-        - {data_key: '', id: UWYOSZ, title: Description}
+        - {data_key: '', expand: false, id: EHIMKL, title: External Tools, width: 217.550048828125}
+        - {data_key: '', id: UWYOSZ, title: ''}
         margin: [null, 35%, null, null]
         rows_per_page: 5
       type: DataGrid
-    - layout_properties: {full_width_row: true, grid_position: 'ZSBNYQ,DDQZYY'}
-      name: heading_3
-      properties:
-        bold: true
-        font_family: ser
-        spacing:
-          padding: [null, 35%, null, null]
-        text: Funding Resources
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
       - layout_properties: {}
         name: funding_resources
@@ -82,8 +73,8 @@ components_by_slot:
       name: educational_grid_2
       properties:
         columns:
-        - {data_key: '', expand: false, id: EHIMKL, title: Title, width: 217.550048828125}
-        - {data_key: '', id: UWYOSZ, title: Description}
+        - {data_key: '', expand: false, id: EHIMKL, title: Funding Resources, width: 217.550048828125}
+        - {data_key: '', id: UWYOSZ, title: ''}
         margin: [null, 35%, null, null]
         rows_per_page: 5
       type: DataGrid
