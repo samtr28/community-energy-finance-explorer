@@ -50,6 +50,7 @@ unique_ids:
   modules:
     chart_export: '1776717885549981665053013.2372'
     config: '1761843729959440190662753.931'
+    resources.external_resources_data: '1779898408228438995364838.48553'
     resources.factsheet_data: '1779731390884759115228048.4307'
     team.team_data: '1779768991624869883095859.5856'
   scripts: {}
