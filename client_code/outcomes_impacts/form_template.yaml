@@ -500,7 +500,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     layout_properties: {}
     name: column_panel_1
-    properties: {col_widths: '{"WVVDMY":42,"ZLSAKR":18,"KPOENJ":42,"DHOWVA":18,"HCWLBO":40,"QXMGHE":20,"TMBTNM":42,"KSDRAY":18,"FAQASQ":42,"JPNFOT":18}'}
+    properties: {col_spacing: huge, col_widths: '{"WVVDMY":42,"ZLSAKR":18,"KPOENJ":42,"DHOWVA":18,"HCWLBO":42,"QXMGHE":18,"TMBTNM":42,"KSDRAY":18,"FAQASQ":42,"JPNFOT":18}', wrap_on: tablet}
     type: ColumnPanel
   - event_bindings: {tick: filter_timer_tick}
     layout_properties: {}
