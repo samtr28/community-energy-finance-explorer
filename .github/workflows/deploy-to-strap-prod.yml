@@ -1,0 +1,38 @@
+name: Deploy to production server (rs) on STRAP
+run-name: Deploy app to production server (rs) on STRAP
+on:
+  push:
+    branches:
+      - production
+jobs:
+  Deploy-to-STRAP:
+    runs-on: ubuntu-latest
+    env:
+      REGISTRY_HOST: ${{ secrets.PRODUCTION_REGISTRY_HOST }}
+      REGISTRY_USER: ${{ secrets.PRODUCTION_REGISTRY_USER }}
+      REGISTRY_PASSWORD: ${{ secrets.PRODUCTION_REGISTRY_PASSWORD }}
+    steps:
+      - name: Clone deploy repo from ARCsoft's Gitlab
+        run: |
+          git clone https://gitlab.com/uvic-arcsoft/misc/community-energy-finance-explorer.git app
+          cd app
+          make install-update-submodules
+          cd community_energy_finance_explorer
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git checkout production
+          git apply staging.patch
+          cd ..
+
+      - name: Build Docker image
+        run: |
+          cd app
+          DOCKER_BUILDKIT=1
+          IMAGE_NAME=${REGISTRY_HOST}/community-energy-finance/app:latest
+          echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
+          docker build --platform linux/amd64 -t ${IMAGE_NAME} .
+
+      - name: Push Docker image
+        run: |
+          docker login ${REGISTRY_HOST} -u "${REGISTRY_USER}" -p "${REGISTRY_PASSWORD}"
+          docker push ${IMAGE_NAME}

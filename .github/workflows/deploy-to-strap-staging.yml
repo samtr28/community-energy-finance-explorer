@@ -1,5 +1,5 @@
-name: Deploy to STRAP
-run-name: Deploy app to STRAP
+name: Deploy to staging server (rs-dev) on STRAP
+run-name: Deploy app to staging server (rs-dev) on STRAP
 on:
   push:
     branches:
@@ -8,9 +8,9 @@ jobs:
   Deploy-to-STRAP:
     runs-on: ubuntu-latest
     env:
-      REGISTRY_HOST: ${{ secrets.REGISTRY_HOST }}
-      REGISTRY_USER: ${{ secrets.REGISTRY_USER }}
-      REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+      REGISTRY_HOST: ${{ secrets.STAGING_REGISTRY_HOST }}
+      REGISTRY_USER: ${{ secrets.STAGING_REGISTRY_USER }}
+      REGISTRY_PASSWORD: ${{ secrets.STAGING_REGISTRY_PASSWORD }}
     steps:
       - name: Clone deploy repo from ARCsoft's Gitlab
         run: |
