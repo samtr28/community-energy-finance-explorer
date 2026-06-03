@@ -140,12 +140,6 @@ educational_resources = [
     "notes": "Canada-wide scope; useful for policy and finance framing of co-op energy enterprise models.",
   },
   {
-    "title": "Bridging the Finance Gap: The Role of Blended Finance in Building a Climate-Resilient Economy",
-    "description": "Research brief by Smart Prosperity Institute providing an overview of blended finance and commonly used instruments and structures, outlining project and investor-related challenges, and showing what blended finance can do to address them.",
-    "url": "https://institute.smartprosperity.ca/bridging-the-finance-gap",
-    "notes": "",
-  },
-  {
     "title": "Employee Ownership Models",
     "description": "Different models for involving employees in financing a community energy enterprise. Some models have tax advantages.",
     "url": "https://www.employee-ownership.ca/types-of-employee-ownership/",

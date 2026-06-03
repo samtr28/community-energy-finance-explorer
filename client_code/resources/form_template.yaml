@@ -44,7 +44,7 @@ components_by_slot:
         font_family: ser
         spacing:
           padding: [null, 35%, null, null]
-        text: Helpful External Resources
+        text: External Resources
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
       - layout_properties: {}
@@ -57,7 +57,7 @@ components_by_slot:
       name: educational_grid
       properties:
         columns:
-        - {data_key: '', expand: false, id: EHIMKL, title: External Tools, width: 217.550048828125}
+        - {data_key: '', expand: false, id: EHIMKL, title: External Reports & Guides, width: 217.550048828125}
         - {data_key: '', id: UWYOSZ, title: ''}
         margin: [null, 35%, null, null]
         rows_per_page: 5
