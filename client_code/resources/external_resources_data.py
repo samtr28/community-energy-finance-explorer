@@ -11,10 +11,10 @@ from anvil.tables import app_tables
 #
 funding_resources = [
   {
-    "title": "Green Municipal Fund – Community Energy Systems: Capital Projects",
-    "description": "FCM funding for municipal/community energy systems, including renewable electricity, district energy, and related capital projects. Provides a combined grant and loan for up to 80% of eligible costs to a maximum of $10 million.",
-    "url": "https://greenmunicipalfund.ca/funding/capital-project-community-energy-systems",
-    "notes": "Canada-wide; municipal/community-scale projects",
+    "title": "BC Community Climate Funding Guide",
+    "description": "Find funding opportunities for your community climate action projects. This guide simplifies your search and connects you to programs that support sustainable, resilient communities across British Columbia. The guide includes a filter for funding programs related to clean energy.",
+    "url": "https://communityclimatefunding.gov.bc.ca/",
+    "notes": "",
   },
   {
     "title": "Green Municipal Fund – Community Energy Systems: Study",
