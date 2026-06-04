@@ -117,7 +117,7 @@ components_by_slot:
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP HSTXCL,ORHLRU'}
       name: text_1
-      properties: {bold: true, font_size: 18, text: 'Further project exploration features are coming soon,  we are currently in process of obtaining final approval from project owners. Please note that this map only displays projects that chose to be featured, not the entirety of our dataset.'}
+      properties: {bold: true, font_size: 18, text: 'Further project exploration features, including project level funding and financing mix, ownership structure, and more, are coming soon. We are currently in process of obtaining final approval from project owners to show their project details. Please note that this map only displays projects that chose to be featured, not the entirety of our dataset.'}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'IDXYRC,QCGQZJ CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
       name: project_cards
