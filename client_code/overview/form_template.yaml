@@ -313,7 +313,7 @@ components_by_slot:
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
           - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
             name: rich_text_7
-            properties: {content: '<p>Help expand the database, improve its content, increase participation across your network, and shape the next features and insights so the Navigator serves community needs.</p>', font_size: 16, format: restricted_html}
+            properties: {content: '<p>Help expand the database, improve its content, increase participation across your network. Your feedback will shape future features and insights so the Navigator serves community needs.</p>', font_size: 16, format: restricted_html}
             type: RichText
           - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
             name: survey_link_2
