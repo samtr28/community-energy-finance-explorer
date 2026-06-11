@@ -119,13 +119,19 @@ educational_resources = [
     "title": "Clean Electricity Project Equity Guide",
     "description": "Developed by Indigenous Clean Energy in collaboration with Clean Energy BC, this guide helps leadership understand how equity positions in major utility-scale clean electricity projects can secure greater economic and social benefits for Nations.",
     "url": "https://indigenouscleanenergy.com/wp-content/uploads/2025/12/ICE_clean-electricity-projects-equity-guide-digital.pdf",
-    "notes": "Shared by Chris Henderson.",
+    "notes": "",
+  },
+  {
+    "title": "Canadian Community Finance Intermediaries",
+    "description": "",
+    "url": "https://opportunityfinancecan.netlify.app/",
+    "notes": "",
   },
   {
     "title": "Regenerative Energy – National Survey 2026",
     "description": "The third annual survey report by Indigenous Clean Energy, presenting a national snapshot of how First Nations, Inuit, and Métis peoples and communities are shaping Canada's energy future through innovation, stewardship, and community-driven solutions.",
     "url": "https://indigenouscleanenergy.com/regenerative-energy-national-survey-2026/",
-    "notes": "Shared by Chris Henderson.",
+    "notes": "",
   },
   {
     "title": "The Case for Investing in Clean Energy in Remote Communities",

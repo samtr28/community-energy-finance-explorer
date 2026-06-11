@@ -25,7 +25,7 @@ dependencies:
 - dep_id: dep_ar2wlcmlppsllr
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
   version: {version_tag: v3.6.3}
-metadata: {description: Community Energy Finance Navigator, logo_img: 'asset:IIH-Logo-Full-Colour.png', title: Community Energy Finance Navigator}
+metadata: {description: Community Energy Finance Navigator, logo_img: 'asset:Logos/IIH-Logo-Full-Colour.png', title: Community Energy Finance Navigator}
 name: Comunity Energy Finance Navigator
 native_deps:
   head_html: |-
