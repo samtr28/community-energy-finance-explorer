@@ -60,7 +60,7 @@ advisory_team = [
     'position': '',
     'title': 'Professor, Mechanical Engineering\n'
     'ACET Executive Director, University of Victoria',
-    'photo': 'https://media.licdn.com/dms/image/v2/D5603AQG17WGZKVHncw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1692747536304?e=1781136000&v=beta&t=6EtjNq1iZSKVD_cK4L9wMmIKHYWaUavQl0mx5hngX9g',
+    'photo': 'https://www.uvic.ca/ecs/mechanical/_assets/images/profiles/curran-crawford-headshot.png',
     'faculty_page': 'https://www.uvic.ca/ecs/mechanical/faculty-staff/faculty-profiles/crawford-curran.php',
     'linkedin': 'https://www.uvic.ca/acet/_assets/images/profiles/curran-crawford_240x303.jpg',
   },
@@ -87,7 +87,7 @@ advisory_team = [
     'position': '',
     'title': 'Associate Professor, Public Administration\n'
     'ACET Strategic Research Area Lead, University of Victoria',
-    'photo': 'https://media.licdn.com/dms/image/v2/D5603AQHbSv-KracBDA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1705001956058?e=1781136000&v=beta&t=7ZrDe3xjN_3ptfIy4YtDrQX_0MPzYOxtHQkf-dfH598',
+    'photo': 'https://www.uvic.ca/socialsciences/publicadmin/_assets/images/profiles/tamara-krawchenko.jpg',
     'faculty_page': 'https://www.uvic.ca/socialsciences/publicadmin/faculty-staff/faculty/krawchenko-tamara.php',
     'linkedin': 'https://www.linkedin.com/in/tamara-krawchenko-468372aa/',
   },
