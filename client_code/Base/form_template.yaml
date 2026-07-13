@@ -237,9 +237,9 @@ components:
   name: iih_logo
   properties:
     display_mode: shrink_to_fit
-    height: ''
+    height: 53.26666259765625
     margin: ['0', null, null, null]
-    source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
+    source: _/theme/Logos/Horizontal-IIH-Acet-Lockup-White 1.png
     vertical_align: bottom
   type: Image
 container:
