@@ -233,15 +233,6 @@ components:
       margin: ['0', '0', null, null]
       padding: ['0', null, '0', null]
   type: RichText
-- layout_properties: {slot: nav-right}
-  name: iih_logo
-  properties:
-    display_mode: shrink_to_fit
-    height: ''
-    margin: ['0', null, null, null]
-    source: _/theme/Horizontal-IIH-Acet-Lockup-White.png
-    vertical_align: bottom
-  type: Image
 container:
   properties: {html: '@theme:standard-page.html'}
   type: HtmlTemplate
