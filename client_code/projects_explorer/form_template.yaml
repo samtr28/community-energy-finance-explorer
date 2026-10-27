@@ -117,7 +117,7 @@ components_by_slot:
       type: Plot
     - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP HSTXCL,ORHLRU'}
       name: text_1
-      properties: {bold: true, font_size: 18, text: 'Further project exploration features, including project level funding and financing mix, ownership structure, and more, are coming soon. We are currently in process of obtaining final approval from project owners to show their project details. Please note that this map only displays projects that chose to be featured, not the entirety of our dataset.'}
+      properties: {bold: true, font_size: 18, text: 'Further project exploration features, including project level funding and financing mix, ownership structure, and more, are coming soon. We are currently in process of obtaining final approval from project owners to show their project details. Please note that this map only displays projects that chose to be featured, not the entirety of our dataset.', visible: false}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - layout_properties: {full_width_row: true, grid_position: 'IDXYRC,QCGQZJ CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
       name: project_cards
@@ -125,11 +125,11 @@ components_by_slot:
         item_template: projects_explorer.Project_Card
         margin: ['0', null, '0', null]
         role: vertical-repeater
-        visible: false
+        visible: true
       type: RepeatingPanel
     - layout_properties: {grid_position: 'CWYAPV,ZNMRWP GXGWXO,AFIWLE'}
       name: page_info_label
-      properties: {align: center, font_size: 12, text: '', visible: false}
+      properties: {align: center, font_size: 12, text: '', visible: true}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - components:
       - event_bindings: {click: first_page_btn_click}
@@ -159,7 +159,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Button
       layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MPEPZQ,JMFNVF'}
       name: pagination_container
-      properties: {visible: false}
+      properties: {visible: true}
       type: FlowPanel
     layout_properties: {full_width_row: true}
     name: column_panel_2
