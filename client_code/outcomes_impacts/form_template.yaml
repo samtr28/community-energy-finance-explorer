@@ -457,7 +457,7 @@ components_by_slot:
         font_family: ser
         spacing:
           margin: [null, 35%, null, null]
-        text: Are projects community energy projects meeting their financial return expectations?
+        text: Are community energy projects meeting their financial return expectations?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM LMYGZK,ZZJUGU'}
       name: return_expectations_plot
