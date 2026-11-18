@@ -14,10 +14,7 @@ class Base(BaseTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
-    if innerWidth < 998:
-      self.iih_logo.width = 150
-    else:
-      self.iih_logo.width = 300
+    self.iih_logo.width = max(180, min(380, int(innerWidth * 0.28)))
     # Any code you write here will run before the form opens.
 
   def overview_nav_click(self, **event_args):
