@@ -1472,3 +1472,14 @@ html {
   row-gap: 16px;
 }
 
+/* Small vertical nudges in the header bar (desktop only) */
+@media (min-width: 999px) {
+  .app-bar > .sidebar-toggle {
+    position: relative;
+    top: 13px;      /* moves the menu icon down; bigger number = lower */
+  }
+  .anvil-role-beta-pill {
+    position: relative;
+    top: 4px;       /* moves the Beta pill down */
+  }
+}

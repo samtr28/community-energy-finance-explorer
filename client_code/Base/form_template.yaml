@@ -238,7 +238,7 @@ components:
   properties:
     display_mode: shrink_to_fit
     height: 53.26666259765625
-    margin: ['15', null, '15', null]
+    margin: ['20', null, '20', null]
     source: _/theme/Logos/IIH%20ACET%20Lockup%20-%20Horizontal%20-%20White%20-%20small.png
     vertical_align: bottom
   type: Image
