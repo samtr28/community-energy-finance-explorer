@@ -30,14 +30,15 @@ components_by_slot:
         content: |-
           <p>Community energy projects often rely on more than one source of capital. A project may combine grants, loans, community investment, owner contributions, partner funding, and other financing mechanisms to reach full project cost. These combinations are often hard to see because financing information is scattered across announcements, reports, funding programs, and project documents.</p>
           <p>The Capital Explorer makes this information easier to understand by showing the <b>capital stacks</b> behind community energy projects in the current dataset. Use this page to explore what sources of capital are being used, how financing mixes vary across different kinds of projects, and where common financing challenges appear.</p>
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: '', font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          properties: {bold: true, font_family: '', font_size: null, icon: 'mi:notification_important', scale: large, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_7
@@ -46,7 +47,7 @@ components_by_slot:
               <p>
                This is a growing pilot dataset, not a complete national census of community-led clean energy in Canada. The results show patterns from participating projects only. As more project teams contribute data, the insights will become more complete and more reflective of the diversity of projects across the country. Help make the Navigator more accurate and representative by adding your project or encouraging your network to contribute data.
               </p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -82,7 +83,7 @@ components_by_slot:
                 <strong>Financing mechanism:</strong> the practical way capital is raised or provided, including through the use of financial instruments such as a term loan, grant, community bond, co-op share, or other arrangements such as crowdfunding campaigns, or owner contributions.<br><br>
                 <strong>Total project cost:</strong> the full capital cost of the project deployed through the construction phase until the project becomes operational. This is different from annual operating costs.
               </p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -108,7 +109,7 @@ components_by_slot:
           name: rich_text_4
           properties:
             content: <p><b>Use the filters</b> to focus on projects by technology, province or territory, project stage, total project cost, and Indigenous ownership. The charts update as you filter, helping you explore patterns that are most relevant to your community, organization, or research question.</p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', '0', '0', null]
@@ -256,7 +257,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'JDUVTD,YDSMDU'}
       name: sankey_text
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
           padding: ['', null, null, null]
@@ -318,7 +319,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'NIBPDH,JDOFXB'}
       name: text_1
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: This panel shows common financing challenges reported by project teams in the current filtered view. These bottlenecks can help communities prepare for early conversations with funders and partners. They can also help policymakers, lenders, and intermediaries identify where better support may be needed.
@@ -366,7 +367,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'SYBLXX,MXHLFQ'}
       name: text_2
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [null, '0', null, null]
         text: |-
@@ -430,7 +431,7 @@ components_by_slot:
           <p><strong>By Project Count:</strong> shows which mechanisms are used most frequently by survey respondents.</p>
           <p><strong>By Dollar Amount:</strong> shows which mechanisms account for the largest share of financing in the current filtered view.</p>
           <p>These two views can tell different stories. A mechanism may appear frequently but represent a smaller dollar amount, while another may appear in fewer projects but contributes a larger share of total financing. This distinction is useful for communities, funders, and researchers trying to understand both access and scale.</p>
-        font_size: 16
+        font_size: null
         format: restricted_html
         spacing:
           margin: [10%, null, '0', null]
@@ -478,7 +479,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'ENMWCZ,OFQLVY LDCRXR,EZSODP'}
       name: text_6
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: ['10', null, null, null]
           padding: [null, null, null, null]
@@ -513,8 +514,9 @@ components_by_slot:
       - layout_properties: {grid_position: 'VOYDOF,INSWHW'}
         name: text_7
         properties:
-          font_size: 14
+          font_size: null
           italic: true
+          scale: small
           spacing:
             margin: ['10', null, null, null]
           text: It is worth noting that while grants typically come from governments, other grant providers reported in our dataset include utilities, foundations, or philanthropic funders. Sources of debt also vary and go beyond conventional banking institutions. They include credit unions, public lenders, community loan funds, or other types of specialized lenders. Community financing may include less familiar mechanisms such as community bonds, co-op shares, member contributions, or crowdfunding.
@@ -565,7 +567,7 @@ components_by_slot:
     - layout_properties: {grid_position: 'BMHPNZ,ZRSYOP'}
       name: text_1_copy_copy
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: |-
@@ -603,7 +605,7 @@ components_by_slot:
     - layout_properties: {grid_position: 'OGAYPN,ODYRPF'}
       name: text_1_copy_copy_2
       properties:
-        font_size: 16
+        font_size: null
         text: |-
           Some project teams reported financing structures or support mechanisms that do not fit into the main capital stack categories. These mechanisms may not always provide capital directly, but they can make a project easier to finance by improving revenue certainty, reducing risk, lowering costs, or shaping how the project is owned and delivered.  These mechanisms matter because they can affect whether lenders, investors, funders, or community members are willing to support a project.
 
