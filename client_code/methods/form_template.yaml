@@ -3,7 +3,7 @@ components_by_slot:
   - components:
     - layout_properties: {full_width_row: true, grid_position: 'BDGCCR,VAGSXA'}
       name: heading_1
-      properties: {bold: true, font_family: ser, scale: small, text: 'How the Navigator’s data is gathered, verified and presented'}
+      properties: {bold: true, font_family: '', scale: small, text: 'How the Navigator’s data is gathered, verified and presented'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'TKWJGI,WJRQJQ'}
       name: text_2
@@ -829,7 +829,7 @@ components_by_slot:
   - components:
     - layout_properties: {expand: false, width: 320}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Data & Methods}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Data & Methods}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel
