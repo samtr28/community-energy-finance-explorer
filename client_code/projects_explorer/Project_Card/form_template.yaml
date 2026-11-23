@@ -6,7 +6,7 @@ components:
         - {code: 'self.item[''project_name'']', property: text, writeback: false}
         layout_properties: {grid_position: 'ZIOHFB,DMFPRR'}
         name: project_lbl
-        properties: {bold: true, font_size: 20, scale: large, style: title, text_color: 'theme:On Primary'}
+        properties: {bold: true, font_size: null, scale: large, style: title, text_color: 'theme:On Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - data_bindings:
         - {code: 'self.item[''data_source'']', property: message, writeback: false}
@@ -76,7 +76,7 @@ components:
           - {code: 'self.item[''total_cost'']', property: text, writeback: false}
           layout_properties: {slot: cost_slot}
           name: cost
-          properties: {bold: true, font_size: 16}
+          properties: {bold: true, font_size: null}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {full_width_row: true, grid_position: 'ZWSBYP,ACMTFS'}
         name: total_cost_rich_text
@@ -87,7 +87,7 @@ components:
           - {code: 'self.item[''location_text'']', property: text, writeback: false}
           layout_properties: {slot: community_slot}
           name: community
-          properties: {bold: true, font_size: 16}
+          properties: {bold: true, font_size: null}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'ZWSBYP,ZETNWC'}
         name: total_cost_rich_text_3
@@ -98,7 +98,7 @@ components:
           - {code: 'self.item[''stage'']', property: text, writeback: false}
           layout_properties: {slot: stage_slot}
           name: stage
-          properties: {bold: true, font_size: 16}
+          properties: {bold: true, font_size: null}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'ZWSBYP,YCTHKK'}
         name: total_cost_rich_text_2
@@ -127,7 +127,7 @@ components:
           align: full
           appearance: text
           background_color: theme:On Primary Container
-          font_size: 20
+          font_size: 18
           icon: mi:grid_view
           icon_color: theme:On Primary
           icon_size: 20
