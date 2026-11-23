@@ -364,7 +364,7 @@ components_by_slot:
       properties: {role: outlined-card}
       type: ColumnPanel
     event_bindings: {}
-    layout_properties: {full_width_row: true}
+    layout_properties: {full_width_row: true, row_background: ''}
     name: column_panel_1
     properties: {col_spacing: large, col_widths: '{"DCBHVQ":31,"ANKGAX":29}'}
     type: ColumnPanel

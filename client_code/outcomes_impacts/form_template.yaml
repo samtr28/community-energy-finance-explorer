@@ -84,7 +84,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Key terms used on this page}
+          properties: {bold: true, font_family: '', font_size: null, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
@@ -503,7 +503,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'DERCNN,JPNFOT'}
       name: text_5
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: ''
