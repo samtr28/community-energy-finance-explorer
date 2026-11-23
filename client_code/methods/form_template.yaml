@@ -29,7 +29,7 @@ components_by_slot:
       background_color: ''
       bold: true
       border: none
-      font_size: 28
+      font_size: 18
       icon: mi:expand_circle_down
       icon_align: left
       icon_color: ''
@@ -755,7 +755,7 @@ components_by_slot:
         align: center
         background_color: theme:Primary Container
         bold: true
-        font_size: 22
+        font_size: 18
         role: button-link
         spacing:
           padding: ['5', '5', '5', '5']
@@ -811,8 +811,9 @@ components_by_slot:
           </ol>
           <p>You do not need to ask permission first. There are no additional restrictions, though you may not apply legal terms or technological measures that prevent others from doing anything the license permits.</p>
           <p>For full license details, visit <a href="https://creativecommons.org/licenses/by-sa/4.0/">creativecommons.org/licenses/by-sa/4.0</a>.
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,IUEJCM'}
       name: spacer_13
