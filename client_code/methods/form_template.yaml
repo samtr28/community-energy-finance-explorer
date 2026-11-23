@@ -103,8 +103,7 @@ components_by_slot:
       text: What kind of information is collected in the survey?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF BCXJLX,CPIDEZ'}
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF BCXJLX,CPIDEZ'}
       name: rich_text_1
       properties:
         content: |-
@@ -423,8 +422,7 @@ components_by_slot:
       text: Can I update my project information after submitting?  How often is the Navigator updated?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,AMTVWF'}
       name: rich_text_11
       properties:
         content: |-
@@ -492,8 +490,7 @@ components_by_slot:
       text: How do we ensure privacy, consent, and respectful use of data?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - components: []
-      layout_properties: {grid_position: 'RFTLOI,AMTVWF OOQEIX,KLGDUI'}
+    - layout_properties: {grid_position: 'RFTLOI,AMTVWF OOQEIX,KLGDUI'}
       name: rich_text_12
       properties:
         content: |-
@@ -653,8 +650,7 @@ components_by_slot:
       text: Who is behind the Navigator? How can I get in touch?
     type: form:dep_9kcxnwm3upyjd:_Components.Button
   - components:
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB FUGOJB,EHBVXC'}
+    - layout_properties: {full_width_row: true, grid_position: 'URCEHL,IWZUKB FUGOJB,EHBVXC'}
       name: rich_text_9
       properties: {content: 'The Community Energy Finance Navigator is a research initiative led by the Impact Investing Hub and Accelerating Community Energy Transformation (ACET) at the University of Victoria. The project is funded by the Canada First Research Excellence Fund (CFREF). ', font_size: 18, format: restricted_html}
       type: RichText
@@ -718,8 +714,7 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'RFTLOI,MPIGUV ELFFWH,QKNADA'}
+    - layout_properties: {full_width_row: true, grid_position: 'RFTLOI,MPIGUV ELFFWH,QKNADA'}
       name: link_1
       properties:
         align: center
@@ -734,8 +729,7 @@ components_by_slot:
         underline: false
         url: https://redcap.link/comm_energy
       type: form:dep_9kcxnwm3upyjd:_Components.Link
-    - components: []
-      layout_properties: {grid_position: 'RFTLOI,MPIGUV FJRRNA,ZGSLDQ'}
+    - layout_properties: {grid_position: 'RFTLOI,MPIGUV FJRRNA,ZGSLDQ'}
       name: rich_text_8
       properties:
         content: |-
@@ -744,8 +738,7 @@ components_by_slot:
         font_size: 18
         format: restricted_html
       type: RichText
-    - components: []
-      layout_properties: {grid_position: 'RFTLOI,MPIGUV'}
+    - layout_properties: {grid_position: 'RFTLOI,MPIGUV'}
       name: link_2
       properties:
         align: center
@@ -840,7 +833,6 @@ components_by_slot:
         margin: ['0', null, '0', null]
       vertical_align: middle
     type: FlowPanel
-is_package: true
 layout:
   form_event_bindings: {show: form_show}
   type: form:Base
