@@ -42,8 +42,9 @@ components_by_slot:
           <p>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources.</p>
 
           <p>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. </p>
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ IAACCY,VGCBFF'}
       name: image_2
@@ -77,8 +78,9 @@ components_by_slot:
           <li>researchers and policymakers lack evidence on what supports success and community benefit
           </ul>
           The Navigator helps make this knowledge visible, comparable, and usable.
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ ITKZWY,OMCXJP'}
       name: image_3
@@ -103,7 +105,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'RVTIBR,GEFAYA'}
         name: heading_1
-        properties: {bold: true, font_size: 18, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'PDXQAF,RKAMSD'}
         name: text_1
@@ -111,7 +113,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'OYSRNR,UZXZJG'}
         name: heading_2
-        properties: {bold: true, font_size: 18, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'UZPKAI,HKWTVH'}
         name: text_2
@@ -119,7 +121,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'QQXLEO,LASFNC'}
         name: heading_3
-        properties: {bold: true, font_size: 18, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'WUZEJQ,PSZWHB'}
         name: text_3
@@ -127,7 +129,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'QYPBFN,VSFCJF'}
         name: heading_4
-        properties: {bold: true, font_size: 18, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'DKZDBM,MDYWWN'}
         name: text_4
@@ -156,7 +158,7 @@ components_by_slot:
           name: rich_text_2
           properties:
             content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
-            font_size: 16
+            font_size: null
             foreground: ''
             format: restricted_html
           type: RichText
@@ -171,7 +173,7 @@ components_by_slot:
               properties:
                 align: center
                 bold: true
-                font_size: 18
+                font_size: null
                 scale: medium
                 spacing:
                   margin: ['-20', null, null, null]
@@ -193,7 +195,7 @@ components_by_slot:
               properties:
                 align: center
                 bold: true
-                font_size: 18
+                font_size: null
                 scale: medium
                 spacing:
                   margin: ['-20', null, null, null]
@@ -259,7 +261,7 @@ components_by_slot:
                 <b>What you will share:</b> high-level project, financing, ownership, and outcomes information
                 <br><br>
                 <b>Why it helps:</b> it strengthens the dataset and improves comparability across projects
-              font_size: 16
+              font_size: null
               foreground: theme:On Tertiary Container
               format: restricted_html
             type: RichText
@@ -270,7 +272,7 @@ components_by_slot:
               background_color: theme:Yellow
               bold: true
               border: ''
-              font_size: 25
+              font_size: 18
               icon: mi:forum
               role: button-link
               spacing:
@@ -310,7 +312,7 @@ components_by_slot:
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
           - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
             name: rich_text_7
-            properties: {content: '<p>Help expand the database, improve its content, increase participation across your network. Your feedback will shape future features and insights so the Navigator serves community needs.</p>', font_size: 16, format: restricted_html}
+            properties: {content: '<p>Help expand the database, improve its content, increase participation across your network. Your feedback will shape future features and insights so the Navigator serves community needs.</p>', font_size: null, format: restricted_html}
             type: RichText
           - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
             name: survey_link_2
@@ -319,7 +321,7 @@ components_by_slot:
               background_color: theme:Primary
               bold: true
               border: ''
-              font_size: 25
+              font_size: 18
               icon: mi:forum
               role: button-link
               spacing:
