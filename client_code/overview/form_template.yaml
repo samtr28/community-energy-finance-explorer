@@ -167,7 +167,7 @@ components_by_slot:
           - components:
             - layout_properties: {slot: stat1}
               name: project_number
-              properties: {align: center, font_family: serif, style: display, text_color: 'theme:Accent Text'}
+              properties: {align: center, font_family: '', style: display, text_color: 'theme:Accent Text'}
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             - layout_properties: {slot: desc1}
               name: project_number_caption
@@ -375,7 +375,7 @@ components_by_slot:
   - components:
     - layout_properties: {expand: false, width: 150}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Overview}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Overview}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel
