@@ -17,9 +17,10 @@ components_by_slot:
           </ul>
 
           <p><em>Participation is voluntary. Interviewees can review their contributions before publication.</em></p>
-        font_size: 18
+        font_size: null
         foreground: ''
         format: restricted_html
+        role: lead
         spacing:
           margin: ['0', null, '0', null]
           padding: ['0', null, '0', null]
@@ -28,11 +29,11 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_2
-          properties: {bold: true, font_size: 20, icon: 'mi:chat', icon_color: 'theme:On Primary Container', scale: medium, style: title, text: 'Involved in a community energy project?', text_color: 'theme:On Primary Container'}
+          properties: {bold: true, font_size: null, icon: 'mi:chat', icon_color: 'theme:On Primary Container', scale: large, style: title, text: 'Involved in a community energy project?', text_color: 'theme:On Primary Container'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: text_1
-          properties: {font_size: 18, text: 'Take our survey to share your project details,  and sign up for an interview to tell the deeper story.'}
+          properties: {font_size: null, scale: large, text: 'Take our survey to share your project details,  and sign up for an interview to tell the deeper story.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         - layout_properties: {slot: card-content-container-slot}
           name: link_1
@@ -40,7 +41,7 @@ components_by_slot:
             align: center
             background_color: theme:On Primary Container
             bold: true
-            font_size: 22
+            font_size: 18
             icon: mi:forms_add_on
             role: button-link
             spacing:
@@ -57,7 +58,7 @@ components_by_slot:
             align: center
             background_color: '#f5aa1c'
             bold: true
-            font_size: 22
+            font_size: 18
             icon: mi:interpreter_mode
             role: button-link
             spacing:
@@ -92,7 +93,7 @@ components_by_slot:
             <h5>PHASE 1</h5>
             <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Project selection</h4>
             </div>
-          font_size: 16
+          font_size: null
           foreground: theme:On Primary
           format: restricted_html
           role: null
@@ -111,7 +112,7 @@ components_by_slot:
             <h5>PHASE 2</h5>
             <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Interviews</h4>
             </div>
-          font_size: 16
+          font_size: null
           foreground: theme:On Secondary
           format: restricted_html
           spacing:
@@ -128,7 +129,7 @@ components_by_slot:
             <h5>PHASE 3</h5>
             <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;">Drafting</h4>
             </div>
-          font_size: 16
+          font_size: null
           foreground: ''
           format: restricted_html
           spacing:
@@ -143,7 +144,7 @@ components_by_slot:
           content: |
             <h5>PHASE 4</h5>
             <h4 style="font-family: serif; margin-top: 0; font-weight: bold; font-size: 1.2em;"> Publication</h4>
-          font_size: 16
+          font_size: null
           foreground: ''
           format: restricted_html
           spacing:
