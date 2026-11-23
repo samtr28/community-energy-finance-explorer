@@ -5,7 +5,7 @@ components_by_slot:
     properties:
       background_color: ''
       bold: true
-      font_family: serif
+      font_family: ''
       spacing:
         margin: ['', null, null, null]
         padding: [null, 40%, null, null]
@@ -28,7 +28,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_9
-          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          properties: {bold: true, font_family: '', font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_7
@@ -83,7 +83,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: ser, font_size: 18, scale: medium, style: title, text: Key terms used on this page}
+          properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
@@ -202,7 +202,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'GBRYPR,RCMKOG'}
         name: heading_5
-        properties: {bold: true, font_family: ser, text: 'What outcomes are community energy projects trying to achieve?'}
+        properties: {bold: true, font_family: '', text: 'What outcomes are community energy projects trying to achieve?'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'GURWFZ,WAIANO QZPGVP,GUIWKJ'}
         name: key_objectives_plot
@@ -242,7 +242,7 @@ components_by_slot:
         name: heading_1
         properties:
           bold: true
-          font_family: ser
+          font_family: ''
           spacing:
             margin: [null, 35%, null, null]
           text: How are community energy projects reducing emissions over time?
@@ -283,7 +283,7 @@ components_by_slot:
         name: heading_2
         properties:
           bold: true
-          font_family: ser
+          font_family: ''
           spacing:
             margin: [null, 35%, null, null]
           text: How are emissions reductions calculated?
@@ -328,7 +328,7 @@ components_by_slot:
       name: heading_4
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: How are community energy projects contributing to local economic activity?
@@ -370,7 +370,7 @@ components_by_slot:
       name: heading_3
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: How are projects structuring agreements with Indigenous communities?
@@ -411,7 +411,7 @@ components_by_slot:
       name: heading_8
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: Are projects financially sustainable after they are built?
@@ -454,7 +454,7 @@ components_by_slot:
       name: heading_10
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: Are community energy projects meeting their financial return expectations?
@@ -489,7 +489,7 @@ components_by_slot:
       name: heading_11
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: What is the end use of energy created by community energy projects?
@@ -521,7 +521,7 @@ components_by_slot:
   - components:
     - layout_properties: {}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Outcomes & Impacts}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Outcomes & Impacts}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

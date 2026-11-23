@@ -10,7 +10,7 @@ components_by_slot:
     properties:
       background_color: ''
       bold: true
-      font_family: serif
+      font_family: ''
       spacing:
         margin: ['', 40%, null, null]
         padding: [null, '', null, null]
@@ -37,7 +37,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          properties: {bold: true, font_family: '', font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_7
@@ -69,7 +69,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_6
-          properties: {bold: true, font_family: ser, scale: medium, style: title, text: Key terms used on this page}
+          properties: {bold: true, font_family: '', scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
@@ -224,7 +224,7 @@ components_by_slot:
       properties:
         background_color: ''
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 25%, null, null]
           padding: [null, '', null, null]
@@ -280,7 +280,7 @@ components_by_slot:
       properties:
         background_color: ''
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 25%, null, null]
           padding: [null, '', null, null]
@@ -335,7 +335,7 @@ components_by_slot:
       name: heading_3
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 25%, null, null]
         text: How does a project's size affect its capital stack?
@@ -395,7 +395,7 @@ components_by_slot:
       name: heading_1_copy
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 25%, null, null]
         text: Which financing mechanisms are used most often?
@@ -448,7 +448,7 @@ components_by_slot:
       name: heading_2
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: [null, 25%, null, null]
         text: Who provides capital, and how long does it take to secure?
@@ -535,7 +535,7 @@ components_by_slot:
       name: heading_2_copy
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: [null, 25%, null, null]
         text: How much does each capital source typically contribute to total project costs?
@@ -585,7 +585,7 @@ components_by_slot:
       type: Image
     - layout_properties: {full_width_row: true, grid_position: 'ZBLRWT,VLFGMX'}
       name: heading_2_copy_2
-      properties: {bold: true, font_family: serif, text: 'What support mechanisms make projects more financeable?'}
+      properties: {bold: true, font_family: '', text: 'What support mechanisms make projects more financeable?'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'OGAYPN,NGQDRW MBMSTX,SXCYIQ'}
       name: alt_financing_bar_plot
@@ -625,7 +625,7 @@ components_by_slot:
   - components:
     - layout_properties: {expand: true, width: null}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Capital Explorer}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Capital Explorer}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

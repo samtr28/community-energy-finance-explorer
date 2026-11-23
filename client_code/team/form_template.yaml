@@ -42,7 +42,7 @@ components_by_slot:
       name: heading_2
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [4%, null, null, null]
         text: Advisors & Research Committee Members
@@ -58,7 +58,7 @@ components_by_slot:
       name: heading_3
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [4%, null, null, null]
         text: Funding Acknowledgment
@@ -79,7 +79,7 @@ components_by_slot:
   - components:
     - layout_properties: {expand: false, width: 788}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Our Team}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Our Team}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

@@ -189,7 +189,7 @@ components:
     align: right
     content: '<p>The Community Energy Finance Navigator © 2026 by<a href="https://impactinvestinghub.ca/" style="color: #c2ddff">Impact Investing Hub</a> &amp; <a href="https://www.uvic.ca/acet/index.php" style="color: #c2ddff">ACET</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color: #C2DDFF">CC BY-SA 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1.5em;max-height:2em;margin-left:.3em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width:3em;max-height:2em;margin-left:.3em;vertical-align:middle;"></p>'
     enable_slots: false
-    font: ser
+    font: ''
     font_size: 11
     format: restricted_html
     spacing:

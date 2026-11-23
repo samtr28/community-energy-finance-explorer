@@ -1,6 +1,19 @@
 /**
  This CSS implements the Material Design 3 look and feel for Anvil apps.
  **/
+/* ===== FONTS: change these two lines to re-font the whole app ===== */
+:root {
+  --heading-font: "Century Gothic", "Questrial", Arial, sans-serif;
+  --body-font: Arial, Helvetica, sans-serif;
+}
+
+/* All Heading components and HTML headings use the heading font */
+.anvil-m3-heading-display,
+.anvil-m3-heading-headline,
+.anvil-m3-heading-title,
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+}
 
 /* define variables */
 :root {
@@ -105,7 +118,7 @@ a>.anvil-component-icon.right_edge-icon,
 
 /* Typography */
 body {
-  font-family: Noto, Noto, Arial, sans-serif;
+  font-family: var(--body-font);
   font-size: 14px;
   line-height: 1.4286;
   color: %color:On Surface%;
@@ -1171,8 +1184,7 @@ footer a, .footer .anvil-component {
 }
 
 .maplibregl-map {
-  font: 12px/20px Noto Sans, Roboto, Noto, Arial, sans-serif;
-  font-family: Noto Sans, Roboto, Noto, Arial, sans-serif;
+  font: 12px/20px var(--body-font);
 }
 
 .maplibregl-ctrl-attrib-inner {

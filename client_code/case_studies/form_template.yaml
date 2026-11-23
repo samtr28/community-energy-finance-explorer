@@ -78,7 +78,7 @@ components_by_slot:
       type: form:dep_9kcxnwm3upyjd:_Components.Card
     - layout_properties: {full_width_row: true, grid_position: 'ZVDKFB,LXUYYY'}
       name: heading_1
-      properties: {font_family: ser, scale: small, text: Our progress on case studies so far}
+      properties: {font_family: '', scale: small, text: Our progress on case studies so far}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'REJOKE,NFJLZP'}
@@ -194,7 +194,7 @@ components_by_slot:
   - components:
     - layout_properties: {}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Case Studies}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Case Studies}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: flow_panel_1

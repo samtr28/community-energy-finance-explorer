@@ -6,7 +6,7 @@ components_by_slot:
       properties:
         background_color: ''
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 40%, null, null]
           padding: [null, '', null, null]
@@ -33,7 +33,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          properties: {bold: true, font_family: '', font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_7
@@ -98,7 +98,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_6
-          properties: {bold: true, font_family: ser, font_size: 18, scale: medium, style: title, text: Key terms used on this page}
+          properties: {bold: true, font_family: '', font_size: 18, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components: []
           layout_properties: {slot: card-content-container-slot}
@@ -242,7 +242,7 @@ components_by_slot:
       name: heading_1
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 33%, null, null]
         text: Who owns community energy projects in Canada?
@@ -294,7 +294,7 @@ components_by_slot:
       name: heading_1_copy_7
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: Which owner types fully own their energy projects?
@@ -332,7 +332,7 @@ components_by_slot:
       name: heading_1_copy_6
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: What does working together look like?
@@ -375,7 +375,7 @@ components_by_slot:
       name: heading_2
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 33%, null, null]
         text: What is the range of participation in project ownership by owner type?
@@ -407,7 +407,7 @@ components_by_slot:
       name: heading_1_copy_3
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: How does ownership vary by project scale?
@@ -452,7 +452,7 @@ components_by_slot:
       name: heading_1_copy_4
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: How are ownership structures connected to financing mechanisms?
@@ -502,7 +502,7 @@ components_by_slot:
       name: heading_1_copy_5
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: Do owner types differ in their key objectives?
@@ -549,7 +549,7 @@ components_by_slot:
   - components:
     - layout_properties: {}
       name: title_copy
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Explorer}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Explorer}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel
