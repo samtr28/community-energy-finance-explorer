@@ -845,7 +845,6 @@ components_by_slot:
         margin: ['0', null, '0', null]
       vertical_align: middle
     type: FlowPanel
-is_package: true
 layout:
   form_event_bindings: {show: form_show}
   type: form:Base
