@@ -14,8 +14,7 @@ components_by_slot:
         text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
-      - components: []
-        event_bindings: {click: owner_btn_click}
+      - event_bindings: {click: owner_btn_click}
         layout_properties: {slot: slot1}
         name: owner_btn
         properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Ownership models data, text_color: 'theme:Primary'}
@@ -66,8 +65,7 @@ components_by_slot:
         style: headline
         text: Why this matters
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XZWAEU,BHRKXU'}
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XZWAEU,BHRKXU'}
       name: rich_text_3
       properties:
         content: |
@@ -154,8 +152,7 @@ components_by_slot:
             text: Tracking Community Energy Projects in Canada
             text_color: ''
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - components: []
-          layout_properties: {slot: card-content-container-slot}
+        - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
           properties:
             content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
@@ -369,8 +366,6 @@ components_by_slot:
     name: column_panel_1
     properties: {col_spacing: large, col_widths: '{"DCBHVQ":31,"ANKGAX":29}'}
     type: ColumnPanel
-  slot_1: []
-  slot_2: []
   title_slot:
   - components:
     - layout_properties: {expand: false, width: 150}
@@ -386,7 +381,6 @@ components_by_slot:
         margin: ['0', null, '0', null]
       vertical_align: middle
     type: FlowPanel
-is_package: true
 layout:
   form_event_bindings: {show: form_show}
   type: form:Base
