@@ -23,8 +23,9 @@ components:
 
       <p><strong>Use case studies for deeper governance stories</strong></p>
       <p>The dashboard focuses on ownership structures that can be summarized across projects. More detailed questions about governance, decision-making, benefit sharing, and partnership arrangements are explored in the Navigator's case studies, where individual project stories can be described in more context (coming soon).</p>
-    font_size: 16
+    font_size: null
     format: restricted_html
+    role: lead
   type: RichText
 container: {type: ColumnPanel}
 is_package: false

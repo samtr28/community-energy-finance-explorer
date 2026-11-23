@@ -14,7 +14,8 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'CNHJAC,PEGHDF'}
       name: text_1
       properties:
-        font_size: 18
+        font_size: null
+        scale: large
         spacing:
           margin: [2%, '0', 2%, null]
           padding: [null, null, null, null]
