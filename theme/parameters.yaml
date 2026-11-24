@@ -1,15 +1,15 @@
 color_scheme:
   colors:
-  - {color: '#005694', name: Primary}
-  - {color: '#C2DDFF', name: Primary Container}
+  - {color: '#182C56', name: Primary}
+  - {color: '#D1D5DD', name: Primary Container}
   - {color: '#FFFFFF', name: On Primary}
   - {color: '#182C56', name: On Primary Container}
-  - {color: '#0FAFB9', name: Secondary}
-  - {color: '#CAEFF1', name: Secondary Container}
-  - {color: '#FFFFFF', name: On Secondary}
-  - {color: '#00504a', name: On Secondary Container}
+  - {color: '#0fafb9', name: Secondary}
+  - {color: '#CFEFF1', name: Secondary Container}
+  - {color: '#182C56', name: On Secondary}
+  - {color: '#045259', name: On Secondary Container}
   - {color: '#7e570f', name: Tertiary}
-  - {color: '#F9D88B', name: Tertiary Container}
+  - {color: '#FDEDD2', name: Tertiary Container}
   - {color: '#ffffff', name: On Tertiary}
   - {color: '#392000', name: On Tertiary Container}
   - {color: '#c63527', name: Error}
