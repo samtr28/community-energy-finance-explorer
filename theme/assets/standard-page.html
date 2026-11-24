@@ -134,6 +134,10 @@
   
   addMarginToContent()
   window.addEventListener('resize', addMarginToContent);
- 
+  
+  // Re-measure whenever the header changes height (logo/fonts loading, title wrapping)
+  if (window.ResizeObserver) {
+    new ResizeObserver(function() { addMarginToContent(); }).observe(appBar);
+  }
 </script>
 

@@ -1441,34 +1441,7 @@ footer a, .footer .anvil-component {
   box-shadow: none !important;
 }
 
-@media (max-width: 998px) {
-  .app-bar > .title {
-    padding: 0;
-    margin: 0;
-  }
-  .app-bar > .title .anvil-component {
-    padding: 0;
-    margin: 0;
-    line-height: 1.2;
-  }
-  .app-bar > .app-bar-nav {
-    float: none;
-    clear: both;
-    text-align: right;
-    padding: 0;
-    margin: 0;
-    min-height: 0;
-  }
-  .app-bar > .app-bar-nav .anvil-container {
-    min-height: 0;
-    padding: 0;
-    margin: 0;
-  }
-  .app-bar > .app-bar-nav img {
-    margin: 0;
-    padding: 0;
-  }
-}
+
 
 .anvil-role-beta-pill {
   border-radius: 20px;
@@ -1529,14 +1502,146 @@ html {
   row-gap: 16px;
 }
 
-/* Small vertical nudges in the header bar (desktop only) */
-@media (min-width: 999px) {
-  .app-bar > .sidebar-toggle {
-    position: relative;
-    top: 13px;      /* moves the menu icon down; bigger number = lower */
+/* ===== HEADER: desktop looks as before; smaller screens tidy up ===== */
+/* --header-right lines the logo up with the page content's right edge.
+   Nudge it if needed: a bigger number moves the logo left. */
+:root {
+  --header-right: calc(2% + 24px);
+}
+@media (max-width: 990px) {
+  :root {
+    --header-right: calc(2% + 2px);
   }
-  .anvil-role-beta-pill {
-    position: relative;
-    top: 4px;       /* moves the Beta pill down */
+}
+
+.app-bar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px var(--header-right) 20px 12px;
+}
+/* Old-layout pieces with negative margins: neutralise them */
+.app-bar > .sidebar-toggle,
+.app-bar > .top-left-btn {
+  float: none !important;
+  position: static !important;
+  margin: 0 !important;
+  flex: 0 0 auto;
+}
+.app-bar > .top-left-btn:empty,
+.app-bar > div[style*="clear"] {
+  display: none;
+}
+.app-bar > .title {
+  float: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+.app-bar > .title .anvil-component {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  line-height: 1.15;
+}
+body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+  font-size: 32px;
+  line-height: 1.15;
+  margin: 0;
+}
+
+/* Beta pill (the role class sits on the Text's inner box) */
+.app-bar .anvil-role-beta-pill {
+  margin: 0 0 0 20px !important;
+}
+
+/* Logo on the right */
+.app-bar > .app-bar-nav {
+  float: none;
+  flex: 0 0 auto;
+  margin: 0 0 0 auto;
+  padding: 0;
+  min-height: 0;
+}
+/* Logo size: the Image component's box sets the height; the picture fits inside it */
+.app-bar > .app-bar-nav > .anvil-component {
+  height: 53px !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0;
+  min-height: 0;
+}
+.app-bar > .app-bar-nav img {
+  display: block;
+  height: 100% !important;
+  width: auto !important;
+  max-height: 100% !important;
+  margin-left: auto;
+}
+
+/* iPad sideways and small laptops: smaller pill under the title, smaller logo */
+@media (max-width: 1199px) {
+  .app-bar {
+    padding: 12px var(--header-right) 12px 12px;
+  }
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+    font-size: 26px;
+  }
+  /* the pill's outer box goes on its own line */
+  .app-bar > .title :has(> .anvil-role-beta-pill) {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .app-bar .anvil-role-beta-pill {
+    display: inline-flex !important;
+    margin: 6px 0 0 0 !important;
+    padding: 2px 10px !important;
+  }
+  .app-bar .anvil-role-beta-pill,
+  .app-bar .anvil-role-beta-pill .anvil-m3-text {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+  .app-bar .anvil-role-beta-pill .anvil-m3-text-icon {
+    font-size: 14px !important;
+  }
+  .app-bar > .app-bar-nav > .anvil-component {
+    height: 40px !important;
+  }
+}
+
+/* iPad upright */
+@media (max-width: 998px) {
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+    font-size: 21px;
+  }
+  .app-bar > .app-bar-nav > .anvil-component {
+    height: 32px !important;
+  }
+}
+
+/* Phones: small logo stays on the right, Beta pill hidden */
+@media (max-width: 600px) {
+  .app-bar {
+    gap: 8px;
+    padding: 8px var(--header-right) 8px 4px;
+  }
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+    font-size: 17px;
+  }
+  .app-bar > .app-bar-nav > .anvil-component {
+    height: 26px !important;
+  }
+  .app-bar .anvil-role-beta-pill,
+  .app-bar > .title :has(> .anvil-role-beta-pill) {
+    display: none !important;
   }
 }
