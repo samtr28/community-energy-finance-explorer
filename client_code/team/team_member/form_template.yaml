@@ -10,19 +10,19 @@ components:
     - {code: 'self.item[''name'']', property: text, writeback: false}
     layout_properties: {full_width_row: true, grid_position: 'JVVWYD,TZCYUN'}
     name: name
-    properties: {bold: true, font_family: ser, font_size: 22, style: title, text: ''}
+    properties: {bold: true, font_family: '', font_size: null, scale: large, style: title, text: ''}
     type: form:dep_9kcxnwm3upyjd:_Components.Heading
   - data_bindings:
     - {code: 'self.item[''position'']', property: text, writeback: false}
     layout_properties: {full_width_row: true, grid_position: 'PSYPDT,CBLKSD'}
     name: position
-    properties: {bold: true, font_size: 18}
+    properties: {bold: true, font_size: null, scale: large}
     type: form:dep_9kcxnwm3upyjd:_Components.Text
   - data_bindings:
     - {code: 'self.item[''title'']', property: text, writeback: false}
     layout_properties: {full_width_row: true, grid_position: 'GJXRGK,BDKYAM'}
     name: title
-    properties: {font_size: 16}
+    properties: {font_size: null}
     type: form:dep_9kcxnwm3upyjd:_Components.Text
   - components: []
     data_bindings:

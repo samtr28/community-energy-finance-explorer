@@ -12,8 +12,9 @@ components:
         <strong>Other / unknown:</strong> ownership reported as "Other" or "Don't know," where the owner type does not clearly fit one of the main categories.<br><br>
         <em>Note: these categories simplify diverse ownership types for visualization. Some real-world ownership structures may fit more than one description, but each reported owner type is assigned to one category for consistency.</em>
       </p>
-    font_size: 18
+    font_size: null
     format: restricted_html
+    role: lead
   type: RichText
 container: {type: ColumnPanel}
 is_package: true

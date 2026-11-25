@@ -5,7 +5,7 @@ components_by_slot:
       name: main_heading
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         scale: medium
         spacing:
           margin: [null, null, '0', null]
@@ -14,8 +14,7 @@ components_by_slot:
         text: Learn how communities are funding clean energy projects, and how financing and ownership models shape outcomes.
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - components:
-      - components: []
-        event_bindings: {click: owner_btn_click}
+      - event_bindings: {click: owner_btn_click}
         layout_properties: {slot: slot1}
         name: owner_btn
         properties: {background_color: '', bold: true, icon: 'mi:arrow_forward', icon_size: 18, text: Ownership models data, text_color: 'theme:Primary'}
@@ -43,8 +42,9 @@ components_by_slot:
           <p>This Navigator makes financing, ownership, and outcomes easier to see through dashboards, maps, case studies, and accessible financial education resources.</p>
 
           <p>While many tools track energy investment at a broad level, and others list projects or ownership, our Navigator connects these at the community-project level by making financing structures, ownership models, and outcomes <i><b>visible, comparable, and learnable</i></b>. The result is practical peer learning that helps communities move faster and helps more community-led projects get built. </p>
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ IAACCY,VGCBFF'}
       name: image_2
@@ -58,7 +58,7 @@ components_by_slot:
       name: main_heading_2
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         scale: medium
         spacing:
           margin: [null, null, '0', null]
@@ -66,8 +66,7 @@ components_by_slot:
         style: headline
         text: Why this matters
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - components: []
-      layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XZWAEU,BHRKXU'}
+    - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ XZWAEU,BHRKXU'}
       name: rich_text_3
       properties:
         content: |
@@ -79,8 +78,9 @@ components_by_slot:
           <li>researchers and policymakers lack evidence on what supports success and community benefit
           </ul>
           The Navigator helps make this knowledge visible, comparable, and usable.
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - layout_properties: {full_width_row: true, grid_position: 'IZDOGX,DCBHVQ ITKZWY,OMCXJP'}
       name: image_3
@@ -95,7 +95,7 @@ components_by_slot:
         name: main_heading_3
         properties:
           bold: true
-          font_family: ser
+          font_family: ''
           scale: medium
           spacing:
             margin: [null, null, '0', null]
@@ -105,7 +105,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'RVTIBR,GEFAYA'}
         name: heading_1
-        properties: {bold: true, font_size: 18, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:diversity_2', scale: medium, style: title, text: Communities and project teams, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'PDXQAF,RKAMSD'}
         name: text_1
@@ -113,7 +113,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'OYSRNR,UZXZJG'}
         name: heading_2
-        properties: {bold: true, font_size: 18, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:monetization_on', scale: medium, style: title, text: 'Investors, lenders, funders, and practitioners', text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'UZPKAI,HKWTVH'}
         name: text_2
@@ -121,7 +121,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'QQXLEO,LASFNC'}
         name: heading_3
-        properties: {bold: true, font_size: 18, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:school', scale: medium, style: title, text: Researchers and students, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'WUZEJQ,PSZWHB'}
         name: text_3
@@ -129,7 +129,7 @@ components_by_slot:
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       - layout_properties: {full_width_row: true, grid_position: 'QYPBFN,VSFCJF'}
         name: heading_4
-        properties: {bold: true, font_size: 18, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
+        properties: {bold: true, font_size: null, icon: 'mi:network_node', scale: medium, style: title, text: Associations and member-based clean energy networks, text_color: 'theme:Primary'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'DKZDBM,MDYWWN'}
         name: text_4
@@ -145,7 +145,7 @@ components_by_slot:
           name: card_header
           properties:
             bold: true
-            font_family: serif
+            font_family: ''
             scale: small
             spacing:
               margin: [null, null, '0', null]
@@ -154,12 +154,11 @@ components_by_slot:
             text: Tracking Community Energy Projects in Canada
             text_color: ''
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
-        - components: []
-          layout_properties: {slot: card-content-container-slot}
+        - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
           properties:
             content: "<b>This is a pilot version</b>. We are starting with these projects and \ngrowing the dataset through a survey completed by project teams. "
-            font_size: 16
+            font_size: null
             foreground: ''
             format: restricted_html
           type: RichText
@@ -167,14 +166,14 @@ components_by_slot:
           - components:
             - layout_properties: {slot: stat1}
               name: project_number
-              properties: {align: center, font_family: serif, style: display, text_color: 'theme:Accent Text'}
+              properties: {align: center, font_family: '', style: display, text_color: 'theme:Accent Text'}
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             - layout_properties: {slot: desc1}
               name: project_number_caption
               properties:
                 align: center
                 bold: true
-                font_size: 18
+                font_size: null
                 scale: medium
                 spacing:
                   margin: ['-20', null, null, null]
@@ -196,7 +195,7 @@ components_by_slot:
               properties:
                 align: center
                 bold: true
-                font_size: 18
+                font_size: null
                 scale: medium
                 spacing:
                   margin: ['-20', null, null, null]
@@ -206,7 +205,7 @@ components_by_slot:
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             - layout_properties: {slot: stat2}
               name: total_funding_number
-              properties: {align: center, font_family: serif, style: display, text_color: 'theme:Accent Text'}
+              properties: {align: center, font_family: '', style: display, text_color: 'theme:Accent Text'}
               type: form:dep_9kcxnwm3upyjd:_Components.Heading
             layout_properties: {grid_position: 'QRVIKA,XYXOTH'}
             name: rich_text_5
@@ -242,7 +241,7 @@ components_by_slot:
             name: card_header_2
             properties:
               bold: true
-              font_family: serif
+              font_family: ''
               scale: small
               spacing:
                 margin: [null, null, '0', null]
@@ -262,7 +261,7 @@ components_by_slot:
                 <b>What you will share:</b> high-level project, financing, ownership, and outcomes information
                 <br><br>
                 <b>Why it helps:</b> it strengthens the dataset and improves comparability across projects
-              font_size: 16
+              font_size: null
               foreground: theme:On Tertiary Container
               format: restricted_html
             type: RichText
@@ -273,7 +272,7 @@ components_by_slot:
               background_color: theme:Yellow
               bold: true
               border: ''
-              font_size: 25
+              font_size: 18
               icon: mi:forum
               role: button-link
               spacing:
@@ -303,7 +302,7 @@ components_by_slot:
             name: card_header_3
             properties:
               bold: true
-              font_family: serif
+              font_family: ''
               scale: small
               spacing:
                 margin: [null, null, '0', null]
@@ -313,7 +312,7 @@ components_by_slot:
             type: form:dep_9kcxnwm3upyjd:_Components.Heading
           - layout_properties: {full_width_row: true, grid_position: 'ZGGVJY,VKDIKD'}
             name: rich_text_7
-            properties: {content: '<p>Help expand the database, improve its content, increase participation across your network. Your feedback will shape future features and insights so the Navigator serves community needs.</p>', font_size: 16, format: restricted_html}
+            properties: {content: '<p>Help expand the database, improve its content, increase participation across your network. Your feedback will shape future features and insights so the Navigator serves community needs.</p>', font_size: null, format: restricted_html}
             type: RichText
           - layout_properties: {full_width_row: true, grid_position: 'VSVMOU,HYUUBI', row_background: ''}
             name: survey_link_2
@@ -322,7 +321,7 @@ components_by_slot:
               background_color: theme:Primary
               bold: true
               border: ''
-              font_size: 25
+              font_size: 18
               icon: mi:forum
               role: button-link
               spacing:
@@ -348,7 +347,7 @@ components_by_slot:
     - components:
       - layout_properties: {grid_position: 'UTODDE,ADUOLF'}
         name: heading_5
-        properties: {bold: true, font_family: ser, italic: false, scale: large, style: title, text: Trust & Transparency}
+        properties: {bold: true, font_family: '', italic: false, scale: large, style: title, text: Trust & Transparency}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {grid_position: 'QRKDFV,OTMWAA'}
         name: text_5
@@ -365,17 +364,15 @@ components_by_slot:
       properties: {role: outlined-card}
       type: ColumnPanel
     event_bindings: {}
-    layout_properties: {full_width_row: true}
+    layout_properties: {full_width_row: true, row_background: ''}
     name: column_panel_1
     properties: {col_spacing: large, col_widths: '{"DCBHVQ":31,"ANKGAX":29}'}
     type: ColumnPanel
-  slot_1: []
-  slot_2: []
   title_slot:
   - components:
     - layout_properties: {expand: false, width: 150}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Overview}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Overview}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

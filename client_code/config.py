@@ -12,7 +12,7 @@ from anvil import app
 # and available to client forms for any custom UI styling.
 
 FONT_FAMILY  = 'Arial, sans-serif'   # body — tick labels, legend, bar text
-TITLE_FONT_FAMILY = 'Georgia, serif' # title — serif contrasts clearly with sans-serif body
+TITLE_FONT_FAMILY = '"Century Gothic", Questrial, Arial, sans-serif'  # title — matches site headings
 FONT_SIZE   = 14   # base size — tick labels, legend, hover, bar text
 FONT_COLOR  = 'black'
 TITLE_SIZE  = 20    # noticeably larger than body text

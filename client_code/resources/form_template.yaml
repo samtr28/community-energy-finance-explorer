@@ -5,7 +5,7 @@ components_by_slot:
       name: heading_1
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, '0', null, null]
           padding: [null, 35%, null, null]
@@ -14,7 +14,8 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'CNHJAC,PEGHDF'}
       name: text_1
       properties:
-        font_size: 18
+        font_size: null
+        scale: large
         spacing:
           margin: [2%, '0', 2%, null]
           padding: [null, null, null, null]
@@ -41,7 +42,7 @@ components_by_slot:
       name: heading_2
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           padding: [null, 35%, null, null]
         text: External Resources
@@ -86,7 +87,7 @@ components_by_slot:
   - components:
     - layout_properties: {expand: false, width: 222.4333}
       name: title_copy
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Resources}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Resources}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel_copy

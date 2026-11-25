@@ -20,8 +20,9 @@ components:
 
       <p><strong>Interpret results as a pilot dataset</strong></p>
       <p>Results reflect the projects currently included in the Navigator. As more project teams contribute data, the outcome and impact patterns may shift as they become more complete and more representative.</p>
-    font_size: 16
+    font_size: null
     format: restricted_html
+    role: lead
   type: RichText
 container: {type: ColumnPanel}
 is_package: false

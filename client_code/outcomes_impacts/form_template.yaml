@@ -5,7 +5,7 @@ components_by_slot:
     properties:
       background_color: ''
       bold: true
-      font_family: serif
+      font_family: ''
       spacing:
         margin: ['', null, null, null]
         padding: [null, 40%, null, null]
@@ -21,14 +21,15 @@ components_by_slot:
           <p>Outcomes and impacts are often central to how community energy projects are described and justified: to funders, to local governments, and to communities themselves. They can include economic contributions like local jobs and revenue, environmental results like avoided greenhouse gas emissions, and broader benefits like energy affordability or energy sovereignty and security. <strong>For communities, tangible outcomes can help demonstrate the value of participation in the energy transition and support the case for deeper local involvement over time.</strong></p>
 
           <p>Outcomes are also uneven in how they are measured, reported, and verified. Not all projects track the same indicators, and definitions can vary across contexts. The data shown here reflects what projects have reported, which means gaps and inconsistencies should be expected. We present this information to help users explore patterns and compare across projects, while recognizing that the full picture of any project's impact is rarely captured in a single number.</p>
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_9
-          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          properties: {bold: true, font_family: '', font_size: null, icon: 'mi:notification_important', scale: large, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_7
@@ -37,7 +38,7 @@ components_by_slot:
               <p>
                This is a growing pilot dataset, not a complete national census of community-led clean energy in Canada. The results show patterns from participating projects only. As more project teams contribute data, the insights will become more complete and more reflective of the diversity of projects across the country. Help make the Navigator more accurate and representative by adding your project or encouraging your network to contribute data.
               </p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -57,7 +58,7 @@ components_by_slot:
           name: rich_text_4
           properties:
             content: <p><b>Use the filters</b> to explore outcomes and impacts by technology, province or territory, project size, and when Indigenous ownership is part of the mix. The charts update as you filter, helping you explore structures relevant to your community project or research question.</p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', '0', '0', null]
@@ -83,7 +84,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: ser, font_size: 18, scale: medium, style: title, text: Key terms used on this page}
+          properties: {bold: true, font_family: '', font_size: null, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_2
@@ -97,7 +98,7 @@ components_by_slot:
                 <strong>Operational cost coverage:</strong> whether a project reports being able to cover ongoing operating expenses after it becomes operational. These could include maintenance, monitoring, insurance, administration, and other ongoing staff costs.<br><br>
                 <strong>Financial return expectations:</strong> the financial outcomes a project expected to achieve. These may include investor returns, surplus revenue, avoided energy costs, or funds available for reinvestment.
               </p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -202,7 +203,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'GBRYPR,RCMKOG'}
         name: heading_5
-        properties: {bold: true, font_family: ser, text: 'What outcomes are community energy projects trying to achieve?'}
+        properties: {bold: true, font_family: '', text: 'What outcomes are community energy projects trying to achieve?'}
         type: form:dep_9kcxnwm3upyjd:_Components.Heading
       - layout_properties: {full_width_row: true, grid_position: 'GURWFZ,WAIANO QZPGVP,GUIWKJ'}
         name: key_objectives_plot
@@ -213,7 +214,7 @@ components_by_slot:
       - components:
         - layout_properties: {full_width_row: true, grid_position: 'JSHOJV,NSWHLC'}
           name: text_10
-          properties: {italic: true, text: 'Note: These are reported project objectives from participating projects in the pilot dataset. They may include intended, expected, or already observed outcomes depending on the project stage and available information.'}
+          properties: {italic: true, scale: small, text: 'Note: These are reported project objectives from participating projects in the pilot dataset. They may include intended, expected, or already observed outcomes depending on the project stage and available information.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'GURWFZ,WAIANO GZYFIV,VWIUKI'}
         name: outlined_card_1
@@ -222,7 +223,7 @@ components_by_slot:
       - layout_properties: {full_width_row: true, grid_position: 'GURWFZ,LQFNIW'}
         name: text_6
         properties:
-          font_size: 16
+          font_size: null
           spacing:
             margin: [8%, null, null, null]
           text: |
@@ -242,7 +243,7 @@ components_by_slot:
         name: heading_1
         properties:
           bold: true
-          font_family: ser
+          font_family: ''
           spacing:
             margin: [null, 35%, null, null]
           text: How are community energy projects reducing emissions over time?
@@ -254,7 +255,7 @@ components_by_slot:
       - components:
         - layout_properties: {full_width_row: true, grid_position: 'XPTDFH,HUKDWH'}
           name: text_11
-          properties: {italic: true, text: 'Note: These figures reflect reported or estimated GHG reductions from participating projects in the pilot dataset. They should not be interpreted as a complete national estimate of emissions reductions from all community energy projects in Canada. Patterns and totals may change as filters are applied and as more projects contribute data.'}
+          properties: {italic: true, scale: small, text: 'Note: These figures reflect reported or estimated GHG reductions from participating projects in the pilot dataset. They should not be interpreted as a complete national estimate of emissions reductions from all community energy projects in Canada. Patterns and totals may change as filters are applied and as more projects contribute data.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'HHLMZZ,FYUUAE CXRSQO,IIQQRS'}
         name: outlined_card_2
@@ -263,7 +264,7 @@ components_by_slot:
       - layout_properties: {full_width_row: true, grid_position: 'HHLMZZ,IURPLS'}
         name: text_1
         properties:
-          font_size: 16
+          font_size: null
           spacing:
             margin: [8%, null, null, null]
           text: |
@@ -283,7 +284,7 @@ components_by_slot:
         name: heading_2
         properties:
           bold: true
-          font_family: ser
+          font_family: ''
           spacing:
             margin: [null, 35%, null, null]
           text: How are emissions reductions calculated?
@@ -295,7 +296,7 @@ components_by_slot:
       - components:
         - layout_properties: {full_width_row: true, grid_position: 'DZAYXD,WNZWMI'}
           name: text_12
-          properties: {italic: true, text: 'Note: This chart does not independently verify emissions reductions. It shows how participating project teams reported their GHG calculation approach. Methods may vary across projects, and some respondents may not know exactly which tool or method was used.'}
+          properties: {italic: true, scale: small, text: 'Note: This chart does not independently verify emissions reductions. It shows how participating project teams reported their GHG calculation approach. Methods may vary across projects, and some respondents may not know exactly which tool or method was used.'}
           type: form:dep_9kcxnwm3upyjd:_Components.Text
         layout_properties: {grid_position: 'AHCJUH,RVAHDR CQRVCO,VSZAEA'}
         name: outlined_card_4
@@ -304,7 +305,7 @@ components_by_slot:
       - layout_properties: {grid_position: 'AHCJUH,LVCTES'}
         name: text_2
         properties:
-          font_size: 16
+          font_size: null
           spacing:
             margin: [8%, null, null, null]
           text: |-
@@ -328,7 +329,7 @@ components_by_slot:
       name: heading_4
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: How are community energy projects contributing to local economic activity?
@@ -340,7 +341,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'CFJAKZ,ULQVHH'}
         name: text_15
-        properties: {italic: true, text: 'Note: Reported jobs reflect direct jobs created in the same economic region as each project, as reported by project teams.  Projects vary in how many of these jobs went to local or community members specifically. The chart should be read as a signal of regional job creation associated with participating projects, not as a complete measure of local employment impact.'}
+        properties: {italic: true, scale: small, text: 'Note: Reported jobs reflect direct jobs created in the same economic region as each project, as reported by project teams.  Projects vary in how many of these jobs went to local or community members specifically. The chart should be read as a signal of regional job creation associated with participating projects, not as a complete measure of local employment impact.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {grid_position: 'AWHXCC,WVVDMY EOGVUL,EVGZTA'}
       name: outlined_card_3
@@ -350,7 +351,7 @@ components_by_slot:
       name: text_3
       properties:
         align: left
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: |-
@@ -370,7 +371,7 @@ components_by_slot:
       name: heading_3
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: How are projects structuring agreements with Indigenous communities?
@@ -382,7 +383,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'MLJEWV,ABEZAR'}
         name: text_13
-        properties: {italic: true, text: 'Note: This chart reports the presence and type of agreements, not the quality, depth, or fairness of the relationship. The absence of a formal agreement does not necessarily mean there was no engagement, and the presence of an agreement does not fully describe the governance, consent, or benefit-sharing process behind it.'}
+        properties: {italic: true, scale: small, text: 'Note: This chart reports the presence and type of agreements, not the quality, depth, or fairness of the relationship. The absence of a formal agreement does not necessarily mean there was no engagement, and the presence of an agreement does not fully describe the governance, consent, or benefit-sharing process behind it.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {grid_position: 'EUNAEN,KPOENJ PDSJDI,PUFOST'}
       name: outlined_card_6
@@ -391,7 +392,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'EUNAEN,DHOWVA'}
       name: text_4
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: |
@@ -411,7 +412,7 @@ components_by_slot:
       name: heading_8
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: Are projects financially sustainable after they are built?
@@ -423,7 +424,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'MLNGHE,BWHNPR'}
         name: text_14
-        properties: {italic: true, text: 'Note: This chart is based on project-reported responses in the pilot dataset. It does not independently verify financial performance, and responses may vary by project stage, revenue model, and how operating expenses are defined.'}
+        properties: {italic: true, scale: small, text: 'Note: This chart is based on project-reported responses in the pilot dataset. It does not independently verify financial performance, and responses may vary by project stage, revenue model, and how operating expenses are defined.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {grid_position: 'FFUIDK,HCWLBO JBSJJT,FGPIDN'}
       name: outlined_card_7
@@ -432,7 +433,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'FFUIDK,QXMGHE'}
       name: text_9
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: |
@@ -454,10 +455,10 @@ components_by_slot:
       name: heading_10
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
-        text: Are projects community energy projects meeting their financial return expectations?
+        text: Are community energy projects meeting their financial return expectations?
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM LMYGZK,ZZJUGU'}
       name: return_expectations_plot
@@ -466,7 +467,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'ZBFUSO,WCWGIR'}
         name: text_16
-        properties: {italic: true, text: 'Note: This chart is based on project-reported responses in the pilot dataset. It does not independently verify financial performance, and “financial return expectations” may mean different things depending on the project, including investor returns, project surplus, avoided costs, or other financial objectives.  '}
+        properties: {italic: true, scale: small, text: 'Note: This chart is based on project-reported responses in the pilot dataset. It does not independently verify financial performance, and “financial return expectations” may mean different things depending on the project, including investor returns, project surplus, avoided costs, or other financial objectives.  '}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {full_width_row: true, grid_position: 'KCYDUG,TMBTNM UKDQTJ,QOUSLB'}
       name: outlined_card_5
@@ -475,7 +476,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'KCYDUG,KSDRAY'}
       name: text_8
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: |
@@ -489,7 +490,7 @@ components_by_slot:
       name: heading_11
       properties:
         bold: true
-        font_family: ser
+        font_family: ''
         spacing:
           margin: [null, 35%, null, null]
         text: What is the end use of energy created by community energy projects?
@@ -502,7 +503,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'DERCNN,JPNFOT'}
       name: text_5
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [8%, null, null, null]
         text: ''
@@ -521,7 +522,7 @@ components_by_slot:
   - components:
     - layout_properties: {}
       name: title
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Outcomes & Impacts}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Outcomes & Impacts}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

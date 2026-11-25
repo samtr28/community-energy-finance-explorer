@@ -3,7 +3,7 @@ color_scheme:
   - {color: '#005694', name: Primary}
   - {color: '#C2DDFF', name: Primary Container}
   - {color: '#FFFFFF', name: On Primary}
-  - {color: '#002754', name: On Primary Container}
+  - {color: '#182C56', name: On Primary Container}
   - {color: '#0FAFB9', name: Secondary}
   - {color: '#CAEFF1', name: Secondary Container}
   - {color: '#FFFFFF', name: On Secondary}
@@ -36,6 +36,7 @@ color_scheme:
   - {color: 'rgba(126, 87, 15,0.15)', name: Tertiary Overlay 2}
   - {color: 'rgb(198, 53, 39,0.15)', name: Error container}
   - {color: '#f5aa1c', name: Yellow}
+  - {color: '#087A83', name: Dark Teal}
   preset_groups:
   - name: Colour Scheme
     options:
@@ -358,3 +359,4 @@ roles:
 - {name: bg-image-om}
 - {name: sticky-btn}
 - {name: 2-cols}
+- {name: lead}
