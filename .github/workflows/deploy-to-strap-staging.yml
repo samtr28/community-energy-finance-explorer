@@ -1,5 +1,5 @@
-name: Deploy to staging server (rs-dev) on STRAP
-run-name: Deploy app to staging server (rs-dev) on STRAP
+name: Deploy to staging server (cef-dev) on STRAP
+run-name: Deploy app to staging server (cef-dev) on STRAP
 on:
   push:
     branches:
