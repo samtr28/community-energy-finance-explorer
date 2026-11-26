@@ -4,9 +4,40 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import plotly.graph_objects as go
 from .Global_Server_Functions import get_data
-from .filter_config import FILTERS
+from .filter_config import (FILTERS, MIN_RESPONSES_SHOWN,
+                            ANON_COLUMN, ANON_VALUE, MESSAGES)
 
+def count_responses(df):
+  """Number of distinct survey responses (record_id) in a dataframe."""
+  if df is None or df.empty or 'record_id' not in df.columns:
+    return 0
+  return int(df['record_id'].nunique())
+
+
+def count_projects(df):
+  """
+  Number of projects, using the same figure as the Overview page:
+  the num_projects_response column, summed once per survey response.
+  Falls back to counting sub_projects (or 1) only for a record with no value.
+  """
+  if df is None or df.empty or 'record_id' not in df.columns:
+    return 0
+  records = df.drop_duplicates('record_id')
+
+  def per_record(row):
+    n = row.get('num_projects_response') if 'num_projects_response' in records.columns else None
+    try:
+      if n is not None and n == n and n > 0:      # n == n filters out NaN
+        return int(n)
+    except TypeError:
+      pass
+    s = row.get('sub_projects') if 'sub_projects' in records.columns else None
+    return len(s) if isinstance(s, list) and len(s) > 0 else 1
+
+  return int(sum(per_record(r) for _, r in records.iterrows()))
+  
 
 def apply_filters(df, filters):
   """
@@ -69,3 +100,45 @@ def get_filter_options(project_privacy=False):
           values.add(item)
     options[spec['key']] = sorted(values, key=lambda s: str(s).lower())
   return options
+
+def apply_privacy(df_raw, filters):
+  """
+  Privacy rule for any page. Call this first, then build the page's own
+  frames from the returned df_raw.
+
+  If fewer than MIN_RESPONSES_SHOWN survey responses match and an anonymous
+  one is among them, anonymous projects are removed from the data.
+
+  Returns (df_raw, df_filtered, summary):
+    df_raw       raw data to build the page's frames from (anonymous removed if needed)
+    df_filtered  df_raw with the filters applied
+    summary      {'project_count', 'total_projects', 'no_results', 'anon_excluded'}
+  """
+  n_total     = count_projects(df_raw)
+  anon_ids    = set(df_raw.loc[df_raw[ANON_COLUMN] == ANON_VALUE, 'record_id'])
+  df_filtered = apply_filters(df_raw, filters)
+
+  small_with_anon = (count_responses(df_filtered) < MIN_RESPONSES_SHOWN
+                     and bool(set(df_filtered['record_id']) & anon_ids))
+  if small_with_anon:
+    df_raw      = df_raw[~df_raw['record_id'].isin(anon_ids)]
+    df_filtered = apply_filters(df_raw, filters)
+
+  no_results = count_responses(df_filtered) == 0
+  summary = {
+    'project_count':  count_projects(df_filtered),
+    'total_projects': n_total,
+    'no_results':     no_results,
+    'anon_excluded':  small_with_anon and not no_results,
+  }
+  return df_raw, df_filtered, summary
+
+
+def blank_result(chart_keys, summary):
+  """Empty figures plus the standard 'nothing to show' summary."""
+  fig = go.Figure()
+  fig.update_layout(title=dict(text=MESSAGES['hidden']))
+  result = {k: fig for k in chart_keys}
+  result.update(project_count=0, total_projects=summary['total_projects'],
+                no_results=True, anon_excluded=False)
+  return result

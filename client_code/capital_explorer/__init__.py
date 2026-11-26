@@ -9,7 +9,7 @@ from anvil.tables import app_tables
 from .. import config
 from ..chart_export import download_chart
 from ..InfoPopupCE import InfoPopupCE
-from ..filter_manager import FilterManager
+from ..filter_bar import build_filter_bar
 
 
 class capital_explorer(capital_explorerTemplate):
@@ -19,47 +19,28 @@ class capital_explorer(capital_explorerTemplate):
   def __init__(self, **properties):
     self.init_components(**properties)
 
-    # Prevent filter events firing during setup
-    self._initializing = True
     self._filters_loaded = False
+    self._load_id = 0
 
-    self.filters = FilterManager(
-      self.filter_panel,
-      on_change=self.schedule_filter_update,
+    self.filters = build_filter_bar(
+      self.filter_bar,
+      on_apply=self.apply_filters,
       defaults={'project_scale': [
         "Micro (< $100K)", "Small ($100K-$1M)", "Medium ($1M-$5M)",
         "Large ($5M-$25M)", "Very Large ($25M-$100M)"
       ]},
     )
 
-    self._initializing = False
-
   def form_show(self, **event_args):
     """Load data once on first show, and highlight the nav link."""
     self.layout.reset_links()
     self.layout.capital_nav.role = 'selected'
-    
+
     if not self._filters_loaded:
       self._filters_loaded = True
       self.apply_filters()
 
-
-  # ==================== FILTER MANAGEMENT ====================
-
-  def schedule_filter_update(self):
-    """Debounce filter changes — waits 1s after the last change before reloading."""
-    if getattr(self, '_initializing', False):
-      return
-    self.filter_timer.interval = 1
-
-  def filter_timer_tick(self, **event_args):
-    """Fires after the debounce delay — stops the timer and applies filters."""
-    self.filter_timer.interval = 0
-    self.apply_filters()
-
-  def remove_filter(self, filter_type, value):
-    """Remove a single filter chip value and trigger a refresh."""
-    self.filters.remove(filter_type, value)
+  # ==================== FILTERS ====================
 
   def _get_filter_kwargs(self):
     return self.filters.get_kwargs()
@@ -68,8 +49,6 @@ class capital_explorer(capital_explorerTemplate):
     """Human-readable filter labels for export annotations."""
     return self.filters.get_active_labels()
 
-  def _build_filter_chips(self):
-    return self.filters.get_chips()
   # ==================== CHART LOADING ====================
 
   def apply_filters(self):
@@ -77,11 +56,16 @@ class capital_explorer(capital_explorerTemplate):
     Single server call that reloads all charts and indicators
     based on the current filter state.
     """
-    # Update filter chips display
-    self.filter_chips_panel.items = self._build_filter_chips()
+    self._load_id += 1
+    load_id = self._load_id
 
-    # Fetch all charts and indicators in one server call
+    self.filters.refresh_ui()
+    self.filters.show_loading()
+
     all_charts = anvil.server.call('get_all_capital_charts', **self._get_filter_kwargs())
+    if load_id != self._load_id:
+      return                       # a newer change started while this one loaded
+    self.filters.show_count(all_charts)
 
     # ── Charts ──
     self.funding_time_plot.figure = all_charts['time_chart']
@@ -146,3 +130,4 @@ class capital_explorer(capital_explorerTemplate):
       large=True,                     # wider modal — good for lots of text
       buttons=[("Close", None)],      # single Close button
     )
+

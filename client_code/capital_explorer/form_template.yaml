@@ -131,43 +131,10 @@ components_by_slot:
       name: divider_1
       properties: {}
       type: form:dep_9kcxnwm3upyjd:_Components.Divider
-    - components:
-      - layout_properties: {width: 67.1}
-        name: filter_heading
-        properties:
-          bold: true
-          scale: small
-          spacing:
-            margin: [null, 0.1%, null, null]
-          style: title
-          text: 'Filter by:'
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      layout_properties: {full_width_row: true, grid_position: 'BAHSHH,XGQQGY'}
-      name: filter_panel
-      properties:
-        gap: tiny
-        spacing:
-          margin: [null, null, '0', null]
-      type: FlowPanel
-    - components:
-      - layout_properties: {}
-        name: text_5
-        properties: {scale: small, text: 'Selected:'}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {expand: false, width: null}
-        name: filter_chips_panel
-        properties:
-          item_template: capital_explorer.FilterChip
-          margin: ['0', null, '0', null]
-          role: 'horizontal-repeater '
-        type: RepeatingPanel
-      layout_properties: {full_width_row: true, grid_position: 'HCHIGA,QZUJRK'}
-      name: flow_panel_1
-      properties:
-        spacing:
-          margin: ['0', null, '0', null]
-        vertical_align: middle
-      type: FlowPanel
+    - layout_properties: {full_width_row: true, grid_position: 'CBXIRO,XXQNMO'}
+      name: filter_bar
+      properties: {}
+      type: LinearPanel
     - layout_properties: {full_width_row: true, grid_position: 'HOXEDG,JCTWOI'}
       name: divider_2
       properties: {}

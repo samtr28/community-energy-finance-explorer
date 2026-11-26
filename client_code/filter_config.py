@@ -21,6 +21,25 @@ depends_on  this dropdown's items depend on another filter's selection
 expand      maps a dropdown choice to the real data values it stands for
 """
 
+MIN_RESPONSES_SHOWN        = 3    # survey responses; below this, anonymous ones are hidden
+SMALL_SAMPLE_WARNING_BELOW = 5    # projects; below this, add the small-sample note
+NARROW_SCREEN_PX           = 998  # filters start collapsed below this width
+DROPDOWN_PADDING_PX   = 72    # room for the chevron and padding around the label
+DROPDOWN_MIN_WIDTH_PX = 110
+FILTER_DEBOUNCE_SECONDS = 0.4
+
+# How the data marks anonymous projects (same column get_data() already uses)
+ANON_COLUMN = 'anonymous_status'
+ANON_VALUE  = 'anon'
+
+MESSAGES = {
+  'hidden':   "Either there is no data for these filters, or the data cannot be shown to protect anonymity.",
+  'count':    "Showing {n} of {total} projects.",
+  'partial':  "Showing {n} {noun}. Some projects are hidden to protect anonymity.",
+  'excluded': "{label} filter excludes {items}.",
+  'small':    "Based on a small number of projects, so interpret with caution.",
+  'excluded_default': "The {label} filter excludes {items} by default, because very large projects can skew the results. Clear the filters to include them.",
+}
 # Left side = text shown in the dropdown. Right side = the real values in the data.
 INDIG_MAP = {
   'Majority (51-100%)': [
@@ -63,6 +82,7 @@ FILTERS = [
 
   {'key': 'project_scale', 'column': 'project_scale', 'kind': 'in',
    'label': 'Project Scale', 'chip': 'Scale', 'export': 'Project Scale',
+   'note_excluded': True,
    'items': ['Micro (< $100K)', 'Small ($100K-$1M)', 'Medium ($1M-$5M)',
              'Large ($5M-$25M)', 'Very Large ($25M-$100M)', 'Mega (> $100M)']},
 ]
