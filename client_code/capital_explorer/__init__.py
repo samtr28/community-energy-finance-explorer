@@ -51,6 +51,7 @@ class capital_explorer(capital_explorerTemplate):
       self.proj_types_dd,
       self.stages_dd,
       self.indig_owners_dd,
+      self.owner_cat_dd,  
       self.project_scale_dd,
     ):
       def make_formatter(label):
@@ -87,6 +88,9 @@ class capital_explorer(capital_explorerTemplate):
   def project_scale_dd_change(self, **event_args):
     self.schedule_filter_update()
 
+  def owner_cat_dd_change(self, **event_args):
+    self.schedule_filter_update()
+
   def remove_filter(self, filter_type, value):
     """Remove a single filter chip value and trigger a refresh."""
     targets = {
@@ -94,6 +98,7 @@ class capital_explorer(capital_explorerTemplate):
       'proj_types':         self.proj_types_dd,
       'stages':             self.stages_dd,
       'indigenous_ownership': self.indig_owners_dd,
+      'owner_categories':   self.owner_cat_dd,
       'project_scale':      self.project_scale_dd,
     }
     if filter_type in targets:
@@ -131,6 +136,8 @@ class capital_explorer(capital_explorerTemplate):
       kwargs['indigenous_ownership'] = expanded
     if self.project_scale_dd.selected:
       kwargs['project_scale'] = self.project_scale_dd.selected
+    if self.owner_cat_dd.selected:
+      kwargs['owner_categories'] = self.owner_cat_dd.selected
     return kwargs
 
   def _get_active_filters(self):
@@ -142,6 +149,7 @@ class capital_explorer(capital_explorerTemplate):
       "Project Types": fmt(self.proj_types_dd.selected),
       "Stages":        fmt(self.stages_dd.selected),
       "Indigenous":    fmt(self.indig_owners_dd.selected),
+      "Owner Type":    fmt(self.owner_cat_dd.selected),
       "Project Scale": fmt(self.project_scale_dd.selected),
     }
 
@@ -153,6 +161,7 @@ class capital_explorer(capital_explorerTemplate):
       (self.proj_types_dd.selected,      'proj_types',          'Technology'),
       (self.stages_dd.selected,          'stages',              'Stage'),
       (self.indig_owners_dd.selected,    'indigenous_ownership','Indigenous Ownership'),
+      (self.owner_cat_dd.selected,       'owner_categories',    'Owner Type'),
       (self.project_scale_dd.selected,   'project_scale',       'Scale'),
     ]
     for selected, filter_type, label in mappings:

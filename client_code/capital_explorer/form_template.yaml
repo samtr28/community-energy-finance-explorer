@@ -179,6 +179,13 @@ components_by_slot:
           items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
           placeholder: Indigenous Ownership
         type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
+      - event_bindings: {change: owner_cat_dd_change}
+        layout_properties: {}
+        name: owner_cat_dd
+        properties:
+          items: ['Community-based ', Indigenous, Private sector, Public sector, Non-profit, Other / Unknown]
+          placeholder: Owner Type(s)
+        type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
       - event_bindings: {change: project_scale_dd_change}
         layout_properties: {width: null}
         name: project_scale_dd

@@ -156,7 +156,8 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
 # ==================== DATA FILTERING ====================
 
 def apply_filters(df, provinces=None, proj_types=None, stages=None,
-                  indigenous_ownership=None, project_scale=None):
+                  indigenous_ownership=None, project_scale=None,
+                  owner_categories=None):
   """
   Apply user-selected filters to a dataframe. Returns a filtered copy.
   Silently returns the original dataframe if it is already empty.
@@ -169,6 +170,10 @@ def apply_filters(df, provinces=None, proj_types=None, stages=None,
   if stages:               df = df[df['stage'].isin(stages)]
   if indigenous_ownership: df = df[df['indigenous_ownership'].isin(indigenous_ownership)]
   if project_scale:        df = df[df['project_scale'].isin(project_scale)]
+  if owner_categories:
+    df = df[df['owner_categories'].apply(
+      lambda x: any(c in x for c in owner_categories) if isinstance(x, list) else False
+    )]
   return df
 
 
@@ -208,6 +213,7 @@ def process_capital_mix_data(df):
         'community_time':           row.get('community_finance_time'),
         'crowdfunding_time':        row.get('crowdfunding_time'),
         'indigenous_ownership':     row.get('indigenous_ownership'),
+        'owner_categories':         row.get('owner_categories'),
         'all_financing_mechanisms': row.get('all_financing_mechanisms'),
       })
 
@@ -216,7 +222,8 @@ def process_capital_mix_data(df):
     return pd.DataFrame(columns=[
       'record_id', 'total_cost', 'name', 'source', 'category', 'item_type',
       'amount', 'project_type', 'stage', 'province', 'project_scale',
-      'indigenous_ownership', 'all_financing_mechanisms', 'time_to_funding'
+      'indigenous_ownership', 'all_financing_mechanisms', 'time_to_funding',
+      'owner_categories'
     ])
 
   # Step 2 — Explode debt list
@@ -307,7 +314,7 @@ def get_category_order(df):
 
 @anvil.server.callable
 def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
-                           indigenous_ownership=None, project_scale=None):
+                           indigenous_ownership=None, project_scale=None,owner_categories=None):
   """
   Single server call returning all chart figures and indicator values.
   Data is loaded and processed once, shared across all chart builders.
@@ -323,9 +330,10 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
   df_capital_mix = process_capital_mix_data(df_raw)
 
   # ── Three filter variants ──
-  df_raw_filtered           = apply_filters(df_raw,         provinces, proj_types, stages, indigenous_ownership, project_scale)
-  df_capital_filtered       = apply_filters(df_capital_mix, provinces, proj_types, stages, indigenous_ownership, project_scale)
-  df_capital_no_proj_filter = apply_filters(df_capital_mix, provinces, None,       stages, indigenous_ownership, project_scale)
+  df_raw_filtered           = apply_filters(df_raw,         provinces, proj_types, stages, indigenous_ownership, project_scale, owner_categories)
+  df_capital_filtered       = apply_filters(df_capital_mix, provinces, proj_types, stages, indigenous_ownership, project_scale, owner_categories)
+  df_capital_no_proj_filter = apply_filters(df_capital_mix, provinces, None,       stages, indigenous_ownership, project_scale, owner_categories)
+  df_capital_no_proj_filter = apply_filters(df_capital_mix, provinces, None,       stages, indigenous_ownership, project_scale, owner_categories)
   # ^ Sankey excludes proj_type filter so all project types appear as destination nodes
 
   # ── Guard: return empty figures if nothing matches ──
