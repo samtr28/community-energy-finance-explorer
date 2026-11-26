@@ -1,6 +1,51 @@
 /**
  This CSS implements the Material Design 3 look and feel for Anvil apps.
  **/
+/* ===== FONTS: change these two lines to re-font the whole app ===== */
+:root {
+  --heading-font: "Century Gothic", "Questrial", Arial, sans-serif;
+  --body-font: Arial, Helvetica, sans-serif;
+}
+
+/* ===== TYPE SCALE: sizes, weights, line heights ===== */
+/* Headings: Century Gothic, always bold */
+body .anvil-m3-heading-display,
+body .anvil-m3-heading-headline,
+body .anvil-m3-heading-title { font-weight: 700; }
+
+body .anvil-m3-heading-display.anvil-m3-heading-large   { font-size: 52px; line-height: 1.1; }
+body .anvil-m3-heading-display.anvil-m3-heading-medium  { font-size: 44px; line-height: 1.1; }  /* Overview stat numbers */
+body .anvil-m3-heading-display.anvil-m3-heading-small   { font-size: 36px; line-height: 1.15; }
+body .anvil-m3-heading-headline.anvil-m3-heading-large  { font-size: 36px; line-height: 1.2; }  /* page titles */
+body .anvil-m3-heading-headline.anvil-m3-heading-medium { font-size: 26px; line-height: 1.25; } /* section questions */
+body .anvil-m3-heading-headline.anvil-m3-heading-small  { font-size: 22px; line-height: 1.3; }
+body .anvil-m3-heading-title.anvil-m3-heading-large     { font-size: 20px; line-height: 1.3; }
+body .anvil-m3-heading-title.anvil-m3-heading-medium    { font-size: 18px; line-height: 1.35; } /* card titles */
+body .anvil-m3-heading-title.anvil-m3-heading-small     { font-size: 16px; line-height: 1.4; }
+
+/* Body text: Arial, regular */
+body .anvil-m3-text-body { font-weight: 400; }
+body .anvil-m3-text-body.anvil-m3-text-large  { font-size: 18px; line-height: 1.55; } /* intro paragraphs */
+body .anvil-m3-text-body.anvil-m3-text-medium { font-size: 16px; line-height: 1.5; }  /* default */
+body .anvil-m3-text-body.anvil-m3-text-small  { font-size: 14px; line-height: 1.45; } /* notes, captions */
+
+/* Labels and buttons: Arial, bold */
+body .anvil-m3-text-label { font-weight: 700; }
+body .anvil-m3-text-label.anvil-m3-text-large  { font-size: 14px; line-height: 1.4; }
+body .anvil-m3-text-label.anvil-m3-text-medium { font-size: 13px; line-height: 1.35; }
+body .anvil-m3-text-label.anvil-m3-text-small  { font-size: 12px; line-height: 1.3; }
+body .anvil-m3-button-text { font-weight: 700; }
+
+/* Larger intro paragraph for RichText components */
+.anvil-role-lead { font-size: 18px; line-height: 1.55; }
+
+/* All Heading components and HTML headings use the heading font */
+.anvil-m3-heading-display,
+.anvil-m3-heading-headline,
+.anvil-m3-heading-title,
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+}
 
 /* define variables */
 :root {
@@ -105,9 +150,9 @@ a>.anvil-component-icon.right_edge-icon,
 
 /* Typography */
 body {
-  font-family: Noto, Noto, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.4286;
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.5;
   color: %color:On Surface%;
   background-color: %color:Background%;
   min-height: calc(100vh - 56px)
@@ -143,7 +188,7 @@ color: %color:On Primary Container%;
 .anvil-role-title {
   font-size: 22px;
   line-height: 28px;
-  font-weight: 500;
+  font-weight: 700;
   margin-top: 0px !important;
 }
 
@@ -286,7 +331,7 @@ color: %color:On Primary Container%;
   background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
 /*   border-right: 1px solid #e0e0e0; */
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   color: %color:On Surface Variant%; 
   overflow-x: hidden;
   overflow-y: auto;
@@ -387,6 +432,18 @@ opacity: 100%;
   background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), %color:Primary%;
 color: %color:On Primary%;
 }
+
+/* Sidebar nav text */
+.left-nav a {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+/* Current page shows in bold */
+.left-nav a.anvil-role-selected {
+  font-weight: 700;
+}
+
 /*ICON STYLING - hover and selected icon colours */
 .left-nav a:hover .anvil-component-icon {
   color: #005493;  /* icon color on hover */
@@ -601,7 +658,7 @@ body>div[data-notify="container"] {
 body>div[data-notify="container"]>span[data-notify="title"] {
   display: block;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   color: %color:On Surface%;
 }
 
@@ -646,7 +703,8 @@ button.close > span, button.close {
 .btn, .btn-default, .file-loader>label {
   border-radius: 100px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 7
+    00;
   padding: 10px 24px;
   min-height: 40px;
   letter-spacing: 0.1px;
@@ -1112,7 +1170,7 @@ div.plot-container.plotly svg.main-svg {
   bottom: 0;
   width: 100%;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 700;
   background-color:  %color:On Primary Container%;
   color: black;
   min-height: var(--footer-height);
@@ -1171,8 +1229,7 @@ footer a, .footer .anvil-component {
 }
 
 .maplibregl-map {
-  font: 12px/20px Noto Sans, Roboto, Noto, Arial, sans-serif;
-  font-family: Noto Sans, Roboto, Noto, Arial, sans-serif;
+  font: 12px/20px var(--body-font);
 }
 
 .maplibregl-ctrl-attrib-inner {
@@ -1272,18 +1329,22 @@ footer a, .footer .anvil-component {
   --ae-ms-option-subtext-active: rgba(255,255,255,.5);
 }
 
+/* Filter chips: size to their text, smaller */
 .anvil-role-horizontal-repeater {
   display: flex;
 }
 .anvil-role-horizontal-repeater>div {
-  min-width: 200px;
+  min-width: 0;
   display: flex;
-  flex-wrap: wrap;  /* Add this */
-  overflow: visible;  /* Change from overflow-x: auto */
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  overflow: visible;
 }
 .anvil-role-horizontal-repeater .anvil-panel-col {
-  min-width: 200px;
-}  
+  min-width: 0;
+  width: auto;
+}
+
 .anvil-role-twod-repeater .anvil-role-horizontal-repeater>div {
   overflow: hidden;
 }
@@ -1384,34 +1445,7 @@ footer a, .footer .anvil-component {
   box-shadow: none !important;
 }
 
-@media (max-width: 998px) {
-  .app-bar > .title {
-    padding: 0;
-    margin: 0;
-  }
-  .app-bar > .title .anvil-component {
-    padding: 0;
-    margin: 0;
-    line-height: 1.2;
-  }
-  .app-bar > .app-bar-nav {
-    float: none;
-    clear: both;
-    text-align: right;
-    padding: 0;
-    margin: 0;
-    min-height: 0;
-  }
-  .app-bar > .app-bar-nav .anvil-container {
-    min-height: 0;
-    padding: 0;
-    margin: 0;
-  }
-  .app-bar > .app-bar-nav img {
-    margin: 0;
-    padding: 0;
-  }
-}
+
 
 .anvil-role-beta-pill {
   border-radius: 20px;
@@ -1437,10 +1471,13 @@ html {
 }
 
 .ae-chip {
-  font-size: 12px !important;
-  height: 25px !important;
+  font-size: 11px !important;
+  height: auto !important;
+  min-height: 22px !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
 }
-
 
 .anvil-role-bg-image-ce {
   background-image: url('_/theme/Graphics/IM-Banner-Illustration-1-Cropped.png');
@@ -1472,14 +1509,146 @@ html {
   row-gap: 16px;
 }
 
-/* Small vertical nudges in the header bar (desktop only) */
-@media (min-width: 999px) {
-  .app-bar > .sidebar-toggle {
-    position: relative;
-    top: 13px;      /* moves the menu icon down; bigger number = lower */
+/* ===== HEADER: desktop looks as before; smaller screens tidy up ===== */
+/* --header-right lines the logo up with the page content's right edge.
+   Nudge it if needed: a bigger number moves the logo left. */
+:root {
+  --header-right: calc(2% + 24px);
+}
+@media (max-width: 990px) {
+  :root {
+    --header-right: calc(2% + 2px);
   }
-  .anvil-role-beta-pill {
-    position: relative;
-    top: 4px;       /* moves the Beta pill down */
+}
+
+.app-bar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px var(--header-right) 20px 12px;
+}
+/* Old-layout pieces with negative margins: neutralise them */
+.app-bar > .sidebar-toggle,
+.app-bar > .top-left-btn {
+  float: none !important;
+  position: static !important;
+  margin: 0 !important;
+  flex: 0 0 auto;
+}
+.app-bar > .top-left-btn:empty,
+.app-bar > div[style*="clear"] {
+  display: none;
+}
+.app-bar > .title {
+  float: none;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+.app-bar > .title .anvil-component {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  line-height: 1.15;
+}
+body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+  font-size: 32px;
+  line-height: 1.15;
+  margin: 0;
+}
+
+/* Beta pill (the role class sits on the Text's inner box) */
+.app-bar .anvil-role-beta-pill {
+  margin: 0 0 0 20px !important;
+}
+
+/* Logo on the right */
+.app-bar > .app-bar-nav {
+  float: none;
+  flex: 0 0 auto;
+  margin: 0 0 0 auto;
+  padding: 0;
+  min-height: 0;
+}
+/* Logo size: the Image component's box sets the height; the picture fits inside it */
+.app-bar > .app-bar-nav > .anvil-component {
+  height: 53px !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0;
+  min-height: 0;
+}
+.app-bar > .app-bar-nav img {
+  display: block;
+  height: 100% !important;
+  width: auto !important;
+  max-height: 100% !important;
+  margin-left: auto;
+}
+
+/* iPad sideways and small laptops: smaller pill under the title, smaller logo */
+@media (max-width: 1199px) {
+  .app-bar {
+    padding: 12px var(--header-right) 12px 12px;
+  }
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+    font-size: 26px;
+  }
+  /* the pill's outer box goes on its own line */
+  .app-bar > .title :has(> .anvil-role-beta-pill) {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .app-bar .anvil-role-beta-pill {
+    display: inline-flex !important;
+    margin: 6px 0 0 0 !important;
+    padding: 2px 10px !important;
+  }
+  .app-bar .anvil-role-beta-pill,
+  .app-bar .anvil-role-beta-pill .anvil-m3-text {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+  .app-bar .anvil-role-beta-pill .anvil-m3-text-icon {
+    font-size: 14px !important;
+  }
+  .app-bar > .app-bar-nav > .anvil-component {
+    height: 40px !important;
+  }
+}
+
+/* iPad upright */
+@media (max-width: 998px) {
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+    font-size: 21px;
+  }
+  .app-bar > .app-bar-nav > .anvil-component {
+    height: 32px !important;
+  }
+}
+
+/* Phones: small logo stays on the right, Beta pill hidden */
+@media (max-width: 600px) {
+  .app-bar {
+    gap: 8px;
+    padding: 8px var(--header-right) 8px 4px;
+  }
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-large,
+  body .app-bar .anvil-m3-heading-headline.anvil-m3-heading-medium {
+    font-size: 17px;
+  }
+  .app-bar > .app-bar-nav > .anvil-component {
+    height: 26px !important;
+  }
+  .app-bar .anvil-role-beta-pill,
+  .app-bar > .title :has(> .anvil-role-beta-pill) {
+    display: none !important;
   }
 }

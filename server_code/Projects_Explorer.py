@@ -10,6 +10,8 @@ import plotly.graph_objects as go
 from collections.abc import Iterable
 from .Global_Server_Functions import add_formatted_list_columns, format_number_column, get_data
 from .config import COLOUR_MAPPING, gradient_palette, dunsparce_colors
+from .Filtering import apply_filters, count_projects
+from .filter_config import FILTERS
 
 # ============= COLOR PALETTE CONFIGURATION =============
 def create_palette_from_hex(hex_color, num_shades=5):
@@ -56,6 +58,24 @@ OWNERSHIP_COLORS = gradient_palette[::-1]
 # ============= DATA LOADING =============
 # Load data ONCE at module level - cached in memory
 DATA = get_data(project_privacy=True)
+
+# Light copy holding only the columns the filters need. Filtering this (instead of the
+# full frame) is fast, and the surviving row index is then used to pick rows from DATA.
+# Columns come from filter_config.FILTERS, so a new filter works here automatically.
+_FILTER_COLS = ['record_id'] + sorted({spec['column'] for spec in FILTERS})
+DATA_FILTER  = DATA.loc[:, _FILTER_COLS]
+
+# Columns count_projects() needs (same figure as the Overview page)
+_COUNT_COLS = [c for c in ('record_id', 'num_projects_response', 'sub_projects') if c in DATA.columns]
+_TOTAL_PROJECTS = None
+
+
+def _total_projects():
+  """Total number of named projects (computed once)."""
+  global _TOTAL_PROJECTS
+  if _TOTAL_PROJECTS is None:
+    _TOTAL_PROJECTS = count_projects(DATA.loc[:, _COUNT_COLS])
+  return _TOTAL_PROJECTS
 
 # ============= REMOVED - DON'T BUILD TRACES AT MODULE LEVEL =============
 # BEFORE (SLOW):
@@ -199,32 +219,6 @@ def build_capital_mix_traces(capital_mix, category_palettes):
   return traces
 
 
-def apply_filters(df, provinces=None, proj_types=None, stages=None, 
-                  indigenous_ownership=None, project_scale=None):
-  """
-  Apply filters to dataframe. Returns filtered copy.
-  Uses list filtering for now - will be updated to set filtering later.
-  """
-  df = df.copy()
-
-  if provinces:
-    df = df[df["province"].isin(provinces)]
-
-  if proj_types:
-    df = df[df["project_type"].apply(lambda lst: any(t in lst for t in proj_types))]
-
-  if stages:
-    df = df[df["stage"].isin(stages)]
-
-  if indigenous_ownership:
-    df = df[df["indigenous_ownership"].isin(indigenous_ownership)]
-
-  if project_scale:
-    df = df[df["project_scale"].isin(project_scale)]
-
-  return df
-
-
 def get_map_data_internal(df):
   """Internal function to create map trace from filtered data."""
   map_data = go.Scattermap(
@@ -263,32 +257,37 @@ def get_project_card_data_internal(df):
 
 # ============= CALLABLE FUNCTION =============
 @anvil.server.callable
-def get_all_map_and_cards(provinces=None, proj_types=None, stages=None, 
-                          indigenous_ownership=None, project_scale=None,
-                          page=1, page_size=50):
+def get_all_map_and_cards(page=1, page_size=50, **filters):
   """
-  Single server call that returns BOTH map data and project cards.
+  Single server call that returns BOTH map data and project cards, plus the count
+  summary (project_count, total_projects, no_results, anon_excluded).
   Map shows ALL filtered points. Cards are paginated.
   OPTIMIZED: Only builds traces for current page.
+  This page only ever uses named projects (DATA excludes anonymous ones), so the
+  anonymity rule in Filtering.apply_privacy() is not needed here.
   """
+
+  # Filter the light frame once, then pick the surviving rows from DATA
+  idx = apply_filters(DATA_FILTER, filters).index
 
   # Select columns needed for map
   map_cols = ["record_id", "project_name", "community", "latitude", "longitude", 
               "province", "stage", "project_type", "indigenous_ownership", "project_scale","sub_projects"]
-  df_map = DATA.loc[:, map_cols].copy()
+  df_map_filtered = DATA.loc[idx, map_cols].copy()
 
   # Select columns needed for cards - NOTE: NO TRACES IN INITIAL COLUMNS
   card_cols = ["record_id", "project_name", "data_source", "stage", "project_type", 
                "province", "total_cost", "project_scale", "all_financing_mechanisms", 
                "owners", "indigenous_ownership", "capital_mix", "sub_projects",
                "community", "province_abbr"]  # Raw data only
-  df_cards = DATA.loc[:, card_cols].copy()
+  df_cards_filtered = DATA.loc[idx, card_cols].copy()
 
-  # Apply filters to BOTH dataframes
-  df_map_filtered = apply_filters(df_map, provinces, proj_types, stages, 
-                                  indigenous_ownership, project_scale)
-  df_cards_filtered = apply_filters(df_cards, provinces, proj_types, stages, 
-                                    indigenous_ownership, project_scale)
+  summary = {
+    'project_count':  count_projects(DATA.loc[idx, _COUNT_COLS]),
+    'total_projects': _total_projects(),
+    'no_results':     len(idx) == 0,
+    'anon_excluded':  False,
+  }
 
   # Generate map data (ALL points)
   map_data = get_map_data_internal(df_map_filtered)
@@ -388,5 +387,6 @@ def get_all_map_and_cards(provinces=None, proj_types=None, stages=None,
     'start_idx': start_idx,
     'end_idx': end_idx
   }
+  results.update(summary)
 
   return results

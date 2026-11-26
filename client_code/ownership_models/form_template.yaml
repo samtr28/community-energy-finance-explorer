@@ -6,7 +6,7 @@ components_by_slot:
       properties:
         background_color: ''
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 40%, null, null]
           padding: [null, '', null, null]
@@ -26,14 +26,15 @@ components_by_slot:
           <p>Ownership is a key design choice in a community energy project. It helps show who has financial stake, who may share in the value created over time, and whether benefits are more likely to stay connected to local priorities. <strong>For communities, ownership can be a pathway to participating in the energy transition as partners, investors, and long-term beneficiaries, not only as hosts or customers.</strong> Ownership also matters for financing because different owner types may bring different kinds of relationships, eligibility, credibility, risk profiles, and funding pathways.</p>
 
           <p>The Ownership Explorer shows how ownership is structured across projects in the current dataset. For simplicity, we group different types of organizations and owners into broad ownership categories (see key terms for more details). These categories make it easier to visualize ownership patterns across projects while recognizing that real-world ownership structures can be more complex. We also show ownership structures alongside capital sources to help users see how projects are being organized and financed in practice.</p>
-        font_size: 18
+        font_size: null
         format: restricted_html
+        role: lead
       type: RichText
     - components:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_7
-          properties: {bold: true, font_family: ser, font_size: 20, icon: 'mi:notification_important', scale: medium, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
+          properties: {bold: true, font_family: '', font_size: null, icon: 'mi:notification_important', scale: large, style: title, text: Pilot Dataset Notice, text_color: 'theme:Error'}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - layout_properties: {slot: card-content-container-slot}
           name: rich_text_7
@@ -42,7 +43,7 @@ components_by_slot:
               <p>
                This is a growing pilot dataset, not a complete national census of community-led clean energy in Canada. The results show patterns from participating projects only. As more project teams contribute data, the insights will become more complete and more reflective of the diversity of projects across the country. Help make the Navigator more accurate and representative by adding your project or encouraging your network to contribute data.
               </p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -62,7 +63,7 @@ components_by_slot:
           name: rich_text_5
           properties:
             content: <p><strong>Important note:</strong> Ownership is not the same as governance, although the two are related. Ownership can show who has a financial stake and who may share in project value, but it does not fully describe decision-making authority, voting rights, board structures, partnership agreements, or other governance arrangements. The Navigator explores these governance dimensions in more detail through project case studies (coming soon).</p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', '0', '0', null]
@@ -72,7 +73,7 @@ components_by_slot:
           name: rich_text_4
           properties:
             content: <p><b>Use the filters</b> to explore ownership patterns by technology, province or territory, project size, and when Indigenous ownership is part of the mix. The charts update as you filter, helping you explore structures relevant to your community project or research question.</p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', '0', '0', null]
@@ -98,7 +99,7 @@ components_by_slot:
       - components:
         - layout_properties: {slot: card-content-container-slot}
           name: heading_6
-          properties: {bold: true, font_family: ser, font_size: 18, scale: medium, style: title, text: Key terms used on this page}
+          properties: {bold: true, font_family: '', font_size: null, scale: medium, style: title, text: Key terms used on this page}
           type: form:dep_9kcxnwm3upyjd:_Components.Heading
         - components: []
           layout_properties: {slot: card-content-container-slot}
@@ -112,7 +113,7 @@ components_by_slot:
                 <strong>Owner type:</strong> the kind of organization or entity that holds an ownership stake in a project. Survey responses included many owner types (27), which we grouped into broader categories to make the dashboard easier to read.<br><br>
                 <strong>Ownership category:</strong> a simplified grouping of owner types used for visualization.
               </p>
-            font_size: 16
+            font_size: null
             format: restricted_html
             spacing:
               margin: ['0', null, '0', null]
@@ -147,92 +148,10 @@ components_by_slot:
     name: divider_1
     properties: {}
     type: form:dep_9kcxnwm3upyjd:_Components.Divider
-  - components:
-    - layout_properties: {width: 64.1}
-      name: filter_heading_copy_2
-      properties:
-        bold: true
-        scale: small
-        spacing:
-          margin: [null, 0.1%, null, null]
-        style: title
-        text: 'Filter by:'
-      type: form:dep_9kcxnwm3upyjd:_Components.Heading
-    - event_bindings: {change: proj_types_dd_change}
-      layout_properties: {width: null}
-      name: proj_types_dd
-      properties:
-        background: ''
-        foreground: ''
-        items: [Biofuel/Biogas, Biomass, Building efficiency upgrades, Electro-mobility, Energy storage, Geothermal, Hydro, Hydrogen, Microgrid, Solar, Tidal/wave, Waste to energy, Wind]
-        placeholder: Technology
-        width: 170px
-      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings:
-      - {code: 'self.item['''']', property: multiple, writeback: false}
-      event_bindings: {change: provinces_dd_change}
-      layout_properties: {expand: false, width: null}
-      name: provinces_dd
-      properties:
-        background: ''
-        foreground: ''
-        items: [Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon]
-        placeholder: Province/Territory
-      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - event_bindings: {change: stages_dd_change}
-      layout_properties: {expand: false, width: null}
-      name: stages_dd
-      properties:
-        align: left
-        background: ''
-        foreground: ''
-        items: [Construction, Operation]
-        multiple: true
-        placeholder: Project Stage
-      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - event_bindings: {change: indig_owners_dd_change}
-      layout_properties: {width: null}
-      name: indig_owners_dd
-      properties:
-        items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
-        placeholder: Indigenous Ownership
-      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    - data_bindings: []
-      event_bindings: {change: project_scale_dd_change}
-      layout_properties: {width: null}
-      name: project_scale_dd
-      properties:
-        items: [Micro (< $100K), Small ($100K-$1M), Medium ($1M-$5M), Large ($5M-$25M), Very Large ($25M-$100M), Mega (> $100M)]
-        placeholder: Project Scale
-      type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-    layout_properties: {full_width_row: true}
-    name: filter_panel
-    properties:
-      gap: tiny
-      spacing:
-        margin: [null, null, '0', null]
-    type: FlowPanel
-  - components:
-    - layout_properties: {}
-      name: text_5
-      properties: {scale: small, text: 'Selected:'}
-      type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {expand: true, width: null}
-      name: filter_chips_panel
-      properties:
-        item_template: ownership_models.FilterChip1
-        margin: ['0', null, '0', null]
-        role: 'horizontal-repeater '
-      type: RepeatingPanel
-    data_bindings: []
-    layout_properties: {full_width_row: true, row_background: ''}
-    name: selected_panel
-    properties:
-      spacing:
-        margin: ['0', null, '0', null]
-      vertical_align: middle
-      visible: true
-    type: FlowPanel
+  - layout_properties: {}
+    name: filter_bar
+    properties: {}
+    type: LinearPanel
   - layout_properties: {full_width_row: true}
     name: divider_2
     properties: {}
@@ -242,7 +161,7 @@ components_by_slot:
       name: heading_1
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 33%, null, null]
         text: Who owns community energy projects in Canada?
@@ -251,7 +170,7 @@ components_by_slot:
       name: rich_text_3
       properties:
         content: <p>Ownership can be viewed in more than one way. Some charts show the scale of ownership value, while others show the number of projects or how ownership is shared among different owner categories.  Together, these views help users see both who holds financial stakes and how ownership structures are organized across projects in the current filtered view. </p>
-        font_size: 16
+        font_size: null
         format: restricted_html
         spacing:
           margin: [null, 35%, null, null]
@@ -265,7 +184,7 @@ components_by_slot:
     - components:
       - layout_properties: {grid_position: 'SCETEZ,LZRREF'}
         name: text_2
-        properties: {italic: true, text: 'Note: This chart reflects reported ownership value in the current filtered view. It should not be interpreted as a ranking of owner types or as a measure of governance control. Keep in mind the landscape will shift as you apply various filters.'}
+        properties: {italic: true, scale: small, text: 'Note: This chart reflects reported ownership value in the current filtered view. It should not be interpreted as a ranking of owner types or as a measure of governance control. Keep in mind the landscape will shift as you apply various filters.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {full_width_row: true, grid_position: 'SIONUB,SCDLYW IZXAIT,ERFBXP'}
       name: outlined_card_2
@@ -274,7 +193,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'SIONUB,YDYLWX'}
       name: text_1
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [15%, null, null, null]
         text: |
@@ -294,7 +213,7 @@ components_by_slot:
       name: heading_1_copy_7
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: Which owner types fully own their energy projects?
@@ -306,7 +225,7 @@ components_by_slot:
     - components:
       - layout_properties: {grid_position: 'MKUWCA,BZUFQG'}
         name: text_4
-        properties: {italic: true, text: 'Note on project count: Some survey responses represent a portfolio of similar projects under one reporting umbrella. In these cases, the portfolio is counted once in this chart to avoid giving disproportionate weight to a single respondent or ownership structure. As a result, the count may understate the number of individual assets represented within some owner types, such as cooperative associations.'}
+        properties: {italic: true, scale: small, text: 'Note on project count: Some survey responses represent a portfolio of similar projects under one reporting umbrella. In these cases, the portfolio is counted once in this chart to avoid giving disproportionate weight to a single respondent or ownership structure. As a result, the count may understate the number of individual assets represented within some owner types, such as cooperative associations.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {full_width_row: true, grid_position: 'OPDATL,PSFOTO EVFZRI,ADFIBI'}
       name: outlined_card_3
@@ -315,7 +234,7 @@ components_by_slot:
     - layout_properties: {grid_position: 'OPDATL,JKDSYE'}
       name: text_1_copy_copy_copy_2
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [10%, null, null, null]
         text: "This chart focuses on projects that are fully owned by one owner type or one ownership category. Each bar shows the number of projects in the current filtered view that fall under that ownership category. \n\nThe chart shows the breadth of participation across owner types. It complements the ownership-value chart because an ownership category may appear in many projects even if those projects are smaller in dollar terms. Together, the two views help users see both how widely different owner types participate and where larger ownership values are concentrated."
@@ -332,7 +251,7 @@ components_by_slot:
       name: heading_1_copy_6
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: What does working together look like?
@@ -346,7 +265,7 @@ components_by_slot:
     - components:
       - layout_properties: {grid_position: 'DPGLBP,EJQLVB'}
         name: text_6
-        properties: {font_size: 14, italic: true, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
+        properties: {font_size: null, italic: true, scale: small, text: 'Note: Shared ownership does not automatically describe governance or control. Decision-making may depend on voting rights, board structures, shareholder agreements, partnership contracts, or other arrangements that are explored more fully in the Navigator’s case studies and additional primers on ownership models.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {full_width_row: true, grid_position: 'FZLSNM,NIZCCD NYPBKA,PDUMGW'}
       name: outlined_card_4
@@ -355,7 +274,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'FZLSNM,WMUBQD'}
       name: text_1_copy_copy_copy
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [10%, null, null, null]
         text: |
@@ -375,7 +294,7 @@ components_by_slot:
       name: heading_2
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', 33%, null, null]
         text: What is the range of participation in project ownership by owner type?
@@ -387,7 +306,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'CTYEQH,KEWIUF'}
       name: text_1_copy_copy_3
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [10%, null, null, null]
         text: |
@@ -407,7 +326,7 @@ components_by_slot:
       name: heading_1_copy_3
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: How does ownership vary by project scale?
@@ -426,7 +345,7 @@ components_by_slot:
           <p>For each project, ownership value is estimated by multiplying the owner category’s reported ownership share by the project’s total cost. These estimated values are then added together within each project scale group. Because this is a value-weighted view, larger projects within a scale group have more influence on the chart than smaller projects.</p>
 
 
-        font_size: 16
+        font_size: null
         format: restricted_html
         spacing:
           margin: [null, '0', null, null]
@@ -434,7 +353,7 @@ components_by_slot:
     - components:
       - layout_properties: {grid_position: 'ZWJCUF,PYLRNI'}
         name: text_3
-        properties: {font_size: 14, italic: true, text: 'Note: If you filter the dashboard to one project scale category, the ownership percentages in that pie will match the ownership value shares shown in the first treemap chart for the same filtered view. This chart is included to show those scale categories side by side, making it easier to see how ownership value changes across project scales. In the current pilot dataset, more complex and shared ownership structures appear more often in larger projects, although this pattern may evolve as more projects are added.'}
+        properties: {font_size: null, italic: true, scale: small, text: 'Note: If you filter the dashboard to one project scale category, the ownership percentages in that pie will match the ownership value shares shown in the first treemap chart for the same filtered view. This chart is included to show those scale categories side by side, making it easier to see how ownership value changes across project scales. In the current pilot dataset, more complex and shared ownership structures appear more often in larger projects, although this pattern may evolve as more projects are added.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {grid_position: 'PZQABG,JEAFUX'}
       name: outlined_card_1
@@ -452,7 +371,7 @@ components_by_slot:
       name: heading_1_copy_4
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: How are ownership structures connected to financing mechanisms?
@@ -460,7 +379,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'UGGXQN,SDHEFN'}
       name: text_9
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: ['', 35%, null, null]
           padding: [null, null, 1%, null]
@@ -473,7 +392,7 @@ components_by_slot:
     - components:
       - layout_properties: {full_width_row: true, grid_position: 'ULKOWD,SHAISK'}
         name: text_7
-        properties: {font_size: 14, italic: true, text: 'Note: This chart shows co-occurrence, not causation. It does not prove that an ownership category leads to a particular financing mechanism. It shows which combinations are reported together in the current dataset. The pattern may shift as more projects are added.'}
+        properties: {font_size: null, italic: true, scale: small, text: 'Note: This chart shows co-occurrence, not causation. It does not prove that an ownership category leads to a particular financing mechanism. It shows which combinations are reported together in the current dataset. The pattern may shift as more projects are added.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {grid_position: 'DDAZWJ,FVMCOG VAMDQY,EARVGN'}
       name: outlined_card_5
@@ -482,7 +401,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'DDAZWJ,YPNZXR'}
       name: text_1_copy_copy
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [10%, null, null, null]
         text: |-
@@ -502,7 +421,7 @@ components_by_slot:
       name: heading_1_copy_5
       properties:
         bold: true
-        font_family: serif
+        font_family: ''
         spacing:
           margin: ['', null, null, null]
         text: Do owner types differ in their key objectives?
@@ -510,7 +429,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'MAQFJB,GNJJVW'}
       name: text_8
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [null, 35%, 1%, null]
         text: Ownership structures often shape the kinds of outcomes projects aim to deliver. This section helps communities, researchers, policymakers, and clean energy networks explore which reported social, environmental, and economic outcomes appear alongside different ownership categories. A more detailed view of outcomes and impacts is available on the dedicated Outcomes and Impacts page.
@@ -522,7 +441,7 @@ components_by_slot:
     - components:
       - layout_properties: {grid_position: 'ZKKIWB,TPGNAU'}
         name: text_10
-        properties: {font_size: 14, italic: true, text: 'Important caution: This chart does not prove that an ownership category causes a particular outcome. It also does not necessarily measure final achieved impacts. It reflects outcomes or impact objectives reported by project teams in the current dataset, which may include intended, expected, or observed benefits depending on the project stage and available information. Patterns may shift as filters are applied and as more projects are added to the Navigator.'}
+        properties: {font_size: null, italic: true, scale: small, text: 'Important caution: This chart does not prove that an ownership category causes a particular outcome. It also does not necessarily measure final achieved impacts. It reflects outcomes or impact objectives reported by project teams in the current dataset, which may include intended, expected, or observed benefits depending on the project stage and available information. Patterns may shift as filters are applied and as more projects are added to the Navigator.'}
         type: form:dep_9kcxnwm3upyjd:_Components.Text
       layout_properties: {full_width_row: true, grid_position: 'GQCIPB,XEJFLG DWZPZV,UILPMF'}
       name: outlined_card_6
@@ -531,7 +450,7 @@ components_by_slot:
     - layout_properties: {full_width_row: true, grid_position: 'GQCIPB,JFIKRQ'}
       name: text_1_copy_copy_4
       properties:
-        font_size: 16
+        font_size: null
         spacing:
           margin: [10%, null, null, null]
         text: "This heatmap shows how often each ownership category appears alongside reported project key objectives, outcomes or intended impacts in the current filtered view. \n\nUse this chart to explore how ownership structures appear alongside goals such as greenhouse gas reductions, reduced energy costs, community resilience, job creation, financial returns, energy sovereignty, education or training, reinvestment in community initiatives, and other benefits. This can help users ask better questions about how ownership structures, project purpose, and community benefits may be connected in practice."
@@ -540,16 +459,11 @@ components_by_slot:
     name: column_panel_1
     properties: {col_spacing: huge, col_widths: '{"FVMCOG":40,"YPNZXR":20,"SCDLYW":40,"YDYLWX":20,"IVDJCB":40,"KEWIUF":20,"XEJFLG":40,"JFIKRQ":20,"PSFOTO":40,"JKDSYE":20,"NIZCCD":40,"WMUBQD":20,"SZTZYL":40,"JEAFUX":20}', wrap_on: tablet}
     type: ColumnPanel
-  - event_bindings: {tick: filter_timer_tick}
-    layout_properties: {}
-    name: filter_timer
-    properties: {interval: 0.5}
-    type: Timer
   title_slot:
   - components:
     - layout_properties: {}
       name: title_copy
-      properties: {font_family: ser, font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Explorer}
+      properties: {font_family: '', font_size: null, icon_size: 0, line_height: '', role: null, scale: large, style: headline, text: Ownership Explorer}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     layout_properties: {}
     name: title_panel

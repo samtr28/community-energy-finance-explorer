@@ -35,6 +35,7 @@ COLOUR_MAPPING, gradient_palette, dunsparce_colors,
 FONT_FAMILY, FONT_SIZE, FONT_COLOR,
 )
 from .Global_Server_Functions import get_data
+from .Filtering import apply_filters, apply_privacy, blank_result, count_responses
 from .Export_Utils import export_figure_from_bytes, apply_display_template
 
 
@@ -153,24 +154,6 @@ def group_small_sources(df, by='amount', threshold=None, min_count=None,
   df[source_col] = df.apply(relabel, axis=1)
   return df
 
-# ==================== DATA FILTERING ====================
-
-def apply_filters(df, provinces=None, proj_types=None, stages=None,
-                  indigenous_ownership=None, project_scale=None):
-  """
-  Apply user-selected filters to a dataframe. Returns a filtered copy.
-  Silently returns the original dataframe if it is already empty.
-  """
-  if df.empty:
-    return df
-  df = df.copy()
-  if provinces:            df = df[df['province'].isin(provinces)]
-  if proj_types:           df = df[df['project_type'].apply(lambda lst: any(t in lst for t in proj_types))]
-  if stages:               df = df[df['stage'].isin(stages)]
-  if indigenous_ownership: df = df[df['indigenous_ownership'].isin(indigenous_ownership)]
-  if project_scale:        df = df[df['project_scale'].isin(project_scale)]
-  return df
-
 
 # ==================== DATA PROCESSING ====================
 
@@ -209,6 +192,8 @@ def process_capital_mix_data(df):
         'crowdfunding_time':        row.get('crowdfunding_time'),
         'indigenous_ownership':     row.get('indigenous_ownership'),
         'all_financing_mechanisms': row.get('all_financing_mechanisms'),
+        'owner_categories':         row.get('owner_categories'),
+        'owner_types':              row.get('owner_types'),       # NEW
       })
 
   df_long = pd.DataFrame(rows)
@@ -216,7 +201,8 @@ def process_capital_mix_data(df):
     return pd.DataFrame(columns=[
       'record_id', 'total_cost', 'name', 'source', 'category', 'item_type',
       'amount', 'project_type', 'stage', 'province', 'project_scale',
-      'indigenous_ownership', 'all_financing_mechanisms', 'time_to_funding'
+      'indigenous_ownership', 'all_financing_mechanisms', 'time_to_funding',
+      'owner_categories', 'owner_types'
     ])
 
   # Step 2 — Explode debt list
@@ -304,48 +290,38 @@ def get_category_order(df):
 
 
 # ==================== MAIN CALLABLE ====================
+CHART_KEYS = [
+  'box_plot', 'sankey', 'time_chart', 'stacked_bar',
+  'bottleneck_chart', 'treemap', 'scale_pies', 'alt_financing_bar',
+]
+
 
 @anvil.server.callable
-def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
-                           indigenous_ownership=None, project_scale=None):
+def get_all_capital_charts(**filters):
   """
-  Single server call returning all chart figures and indicator values.
-  Data is loaded and processed once, shared across all chart builders.
-  apply_display_template() is called here on every figure — chart functions
-  only need to set chart-specific properties.
-
-  Returns a dict with keys:
-    time_chart, sankey, stacked_bar, box_plot, bottleneck_chart,
-    treemap, scale_pies, indicators
+  Single server call returning all chart figures plus the count summary
+  (project_count, total_projects, no_results, anon_excluded).
+  The privacy rule lives in Filtering.apply_privacy().
   """
-  # ── Load and process data once ──
-  df_raw         = get_data()
-  df_capital_mix = process_capital_mix_data(df_raw)
+  df_raw, df_raw_filtered, summary = apply_privacy(get_data(), filters)
 
-  # ── Three filter variants ──
-  df_raw_filtered           = apply_filters(df_raw,         provinces, proj_types, stages, indigenous_ownership, project_scale)
-  df_capital_filtered       = apply_filters(df_capital_mix, provinces, proj_types, stages, indigenous_ownership, project_scale)
-  df_capital_no_proj_filter = apply_filters(df_capital_mix, provinces, None,       stages, indigenous_ownership, project_scale)
+  df_capital_mix            = process_capital_mix_data(df_raw)
+  df_capital_filtered       = apply_filters(df_capital_mix, filters)
+  df_capital_no_proj_filter = apply_filters(df_capital_mix, {**filters, 'proj_types': None})
   # ^ Sankey excludes proj_type filter so all project types appear as destination nodes
 
-  # ── Guard: return empty figures if nothing matches ──
-  if df_capital_filtered.empty:
-    empty_fig = go.Figure()
-    empty_fig.update_layout(title=dict(text='No data available for selected filters'))
-    return {k: empty_fig for k in [
-      'box_plot', 'sankey', 'time_chart', 'stacked_bar',
-      'bottleneck_chart', 'treemap', 'scale_pies', 'alt_financing_bar',
-    ]}
+  if summary['no_results'] or count_responses(df_capital_filtered) == 0:
+    return blank_result(CHART_KEYS, summary)
 
   # ── Category order — computed once, reused across charts ──
   cat_order     = get_category_order(df_capital_filtered)
   cat_order_rev = list(reversed(cat_order))
 
-    # ── Build all charts and apply the display template to each ──
-  sankey_fig = apply_display_template(create_sankey_internal(df_capital_no_proj_filter, proj_types))
-  sankey_fig.update_layout(margin=dict(t=80)) 
+  # ── Build all charts and apply the display template to each ──
+  sankey_fig = apply_display_template(create_sankey_internal(df_capital_no_proj_filter, filters.get('proj_types')))
+  sankey_fig.update_layout(margin=dict(t=80))
 
-  return {
+  result = {
     'time_chart':         apply_display_template(create_time_chart_internal(df_capital_filtered,       cat_order)),
     'sankey':             sankey_fig,
     'stacked_bar':        apply_display_template(create_stacked_bar_internal(df_capital_filtered,      cat_order_rev)),
@@ -353,9 +329,10 @@ def get_all_capital_charts(provinces=None, proj_types=None, stages=None,
     'bottleneck_chart':   apply_display_template(create_bottleneck_lollipop_internal(df_raw_filtered)),
     'treemap':            apply_display_template(create_treemap_internal(df_raw_filtered)),
     'scale_pies':         apply_display_template(create_scale_pies_internal(df_capital_filtered)),
-    'alt_financing_bar': apply_display_template(create_alt_financing_bar_internal(df_raw_filtered)),
+    'alt_financing_bar':  apply_display_template(create_alt_financing_bar_internal(df_raw_filtered)),
   }
-
+  result.update(summary)
+  return result
 
 # ==================== CHART CREATION ====================
 # Each function sets only chart-specific properties.

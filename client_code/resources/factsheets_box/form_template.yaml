@@ -11,13 +11,13 @@ components:
       - {code: 'self.item[''title'']', property: text, writeback: false}
       layout_properties: {slot: card-content-container-slot}
       name: title
-      properties: {bold: true, font_family: ser, text_color: 'theme:On Primary Container'}
+      properties: {bold: true, font_family: '', text_color: 'theme:On Primary Container'}
       type: form:dep_9kcxnwm3upyjd:_Components.Heading
     - data_bindings:
       - {code: 'self.item[''summary'']', property: text, writeback: false}
       layout_properties: {slot: card-content-container-slot}
       name: summary
-      properties: {font_size: 16, scale: large, style: body}
+      properties: {font_size: null, scale: large, style: body}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
     - data_bindings:
       - {code: 'self.item[''pdf_url'']', property: url, writeback: false}
@@ -26,7 +26,7 @@ components:
       properties:
         align: right
         bold: true
-        font_family: ser
+        font_family: ''
         font_size: 18
         icon: mi:file_save
         spacing:

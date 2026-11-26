@@ -1,5 +1,5 @@
-name: Deploy to staging server (rs-dev) on STRAP
-run-name: Deploy app to staging server (rs-dev) on STRAP
+name: Deploy to staging server (cef-dev) on STRAP
+run-name: Deploy app to staging server (cef-dev) on STRAP
 on:
   push:
     branches:
@@ -28,7 +28,7 @@ jobs:
         run: |
           cd app
           DOCKER_BUILDKIT=1
-          IMAGE_NAME=${REGISTRY_HOST}/community-energy-finance/app:latest
+          IMAGE_NAME=${REGISTRY_HOST}/cef-dev/app:latest
           echo "IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
           docker build --platform linux/amd64 -t ${IMAGE_NAME} .
 
