@@ -55,6 +55,7 @@ get_owner_type_colors_categorical, CATEGORY_COLOUR_SCHEME, CATEGORY_ORDER_OWNERS
 )
 from .Global_Server_Functions import get_data
 from .Export_Utils import apply_display_template, export_figure_from_bytes
+from .Filtering import apply_privacy, blank_result
 
 
 # ==================== UTILITY FUNCTIONS ====================
@@ -89,41 +90,6 @@ def _cat_colour(cat):
   return scheme.get('base', '#808080')
 
 
-# ==================== DATA FILTERING ====================
-
-def apply_filters(df, provinces=None, proj_types=None, stages=None,
-                  indigenous_ownership=None, project_scale=None):
-  """
-  Apply user-selected filters to a dataframe. Returns a filtered copy.
-
-  project_scale is normalised to plain stripped strings before comparison.
-  This handles the case where df_raw has a pandas Categorical dtype for
-  project_scale while df_owners (built row-by-row) has object dtype — without
-  normalisation, .isin() silently fails to match Mega rows in df_owners_filtered.
-  """
-  if df.empty:
-    return df
-  df = df.copy()
-
-  if 'project_scale' in df.columns:
-    df['project_scale'] = df['project_scale'].astype(str).str.strip()
-
-  if provinces:
-    df = df[df['province'].isin(provinces)]
-  if proj_types:
-    df = df[df['project_type'].apply(
-      lambda x: any(t in x for t in proj_types) if isinstance(x, list) else False
-    )]
-  if stages:
-    df = df[df['stage'].isin(stages)]
-  if indigenous_ownership:
-    df = df[df['indigenous_ownership'].isin(indigenous_ownership)]
-  if project_scale:
-    clean = [str(s).strip() for s in project_scale]
-    df = df[df['project_scale'].isin(clean)]
-  return df
-
-
 # ==================== DATA PROCESSING ====================
 
 def process_owners_data(df):
@@ -156,19 +122,30 @@ def process_owners_data(df):
 
 # ==================== MAIN CALLABLE ====================
 
+CHART_KEYS = [
+  'ownership_treemap', 'scale_pies', 'ownership_boxplot',
+  'ownership_tiers_histogram', 'all_financing_heatmap',
+  'single_owner_breakdown', 'multi_owner_semicircles', 'objectives_heatmap',
+]
+
+
 @anvil.server.callable
-def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
-                             indigenous_ownership=None, project_scale=None):
+def get_all_ownership_charts(**filters):
   """
-  Single server call returning all chart figures.
-  Data is loaded and processed once, shared across all chart builders.
+  Single server call returning all chart figures plus the count summary
+  (project_count, total_projects, no_results, anon_excluded).
+  The privacy rule lives in Filtering.apply_privacy().
+
+  The flat owners frame is built from the already-filtered projects, so a
+  filter always keeps or drops whole projects (all of a project's owners).
   Each builder is wrapped individually so one failure doesn't silence the rest.
   """
-  df_raw    = get_data()
-  df_owners = process_owners_data(df_raw)
+  _, df_raw_filtered, summary = apply_privacy(get_data(), filters)
 
-  df_raw_filtered    = apply_filters(df_raw,    provinces, proj_types, stages, indigenous_ownership, project_scale)
-  df_owners_filtered = apply_filters(df_owners, provinces, proj_types, stages, indigenous_ownership, project_scale)
+  if summary['no_results'] or df_raw_filtered.empty:
+    return blank_result(CHART_KEYS, summary)
+
+  df_owners_filtered = process_owners_data(df_raw_filtered)
 
   def _empty(msg='No data available for selected filters'):
     f = go.Figure()
@@ -210,6 +187,7 @@ def get_all_ownership_charts(provinces=None, proj_types=None, stages=None,
       result[k] = v   # no template — figure manages its own styling
     else:
       result[k] = apply_display_template(v)
+  result.update(summary)
   return result
 
 

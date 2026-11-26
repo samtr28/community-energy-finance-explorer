@@ -3,9 +3,9 @@ Outcomes_Explorer.py — Server module for the Outcomes & Impacts page
 ====================================================================
 Structure:
   1. Imports
-  2. Data filtering            — apply_filters()
-  3. Main callable             — get_all_outcomes_charts()
-  4. Chart creation functions  — one per chart type
+  2. Helpers                   — _no_data_figure(), _safe_chart()
+  3. Chart creation functions  — one per chart type
+  4. Main callable             — get_all_outcomes_charts() (filters via Filtering.py)
   5. Export callable           — export_outcomes_chart()
 
 Display template is applied centrally in get_all_outcomes_charts() via
@@ -35,66 +35,32 @@ FONT_FAMILY, FONT_SIZE, FONT_COLOR,
 from .Global_Server_Functions import get_data
 from .Export_Utils import export_figure_from_bytes, apply_display_template
 
+from .Filtering import apply_privacy, blank_result
 
-# ==================== DATA FILTERING ====================
 
-def apply_filters(df, provinces=None, proj_types=None, stages=None,
-                  indigenous_ownership=None, project_scale=None):
+# ==================== HELPERS ====================
+
+def _no_data_figure(message='No data available for selected filters'):
+  """Empty chart with a title message, same style as Capital Explorer."""
+  fig = go.Figure()
+  fig.update_layout(title=dict(text=message))
+  return fig
+
+
+def _safe_chart(builder, df, name):
   """
-  Apply user-selected filters to a dataframe. Returns a filtered copy.
-  Silently returns the original dataframe if it is already empty.
+  Build one chart and apply the display template. If the chart comes back with
+  no data, or fails because this selection is missing something it expects,
+  return the standard 'no data' figure instead. The failure is logged.
   """
-  if df.empty:
-    return df
-  df = df.copy()
-  if provinces:            df = df[df['province'].isin(provinces)]
-  if proj_types:           df = df[df['project_type'].apply(lambda x: any(t in x for t in proj_types) if isinstance(x, list) else False)]
-  if stages:               df = df[df['stage'].isin(stages)]
-  if indigenous_ownership: df = df[df['indigenous_ownership'].isin(indigenous_ownership)]
-  if project_scale:        df = df[df['project_scale'].isin(project_scale)]
-  return df
-
-
-# ==================== MAIN CALLABLE ====================
-
-@anvil.server.callable
-def get_all_outcomes_charts(provinces=None, proj_types=None, stages=None,
-                            indigenous_ownership=None, project_scale=None):
-  """
-  Single server call returning all outcomes/impacts chart figures.
-  apply_display_template() is called here on every figure — chart functions
-  only need to set chart-specific properties.
-
-  Returns a dict with keys:
-    indigenous_agreements, jobs_chart, ghg_methodology,
-    ghg_timeline, key_objectives, op_expenses,
-    return_expectations, end_use_composition
-  """
-  df          = get_data()
-  df_filtered = apply_filters(df, provinces, proj_types, stages,
-                              indigenous_ownership, project_scale)
-
-  # ── Guard: return empty figures if nothing matches ──
-  if df_filtered.empty:
-    empty_fig = go.Figure()
-    empty_fig.update_layout(title=dict(text='No data available for selected filters'))
-    return {k: empty_fig for k in [
-      'indigenous_agreements', 'jobs_chart', 'ghg_methodology',
-      'ghg_timeline', 'key_objectives', 'op_expenses',
-      'return_expectations', 'end_use_composition',
-    ]}
-
-  # ── Build all charts and apply the display template to each ──
-  return {
-    'indigenous_agreements': apply_display_template(create_indigenous_agreements_chart(df_filtered)),
-    'jobs_chart':            apply_display_template(create_jobs_chart(df_filtered)),
-    'ghg_methodology':       apply_display_template(create_ghg_methodology_chart(df_filtered)),
-    'ghg_timeline':          apply_display_template(create_ghg_charts(df_filtered)),
-    'key_objectives':        apply_display_template(create_key_objectives_bar_chart(df_filtered)),
-    'op_expenses':           apply_display_template(create_op_expenses_chart(df_filtered)),
-    'return_expectations':   apply_display_template(create_return_expectations_chart(df_filtered)),
-    'end_use_composition':   apply_display_template(create_end_use_composition_chart(df_filtered)),
-  }
+  try:
+    fig = builder(df)
+  except Exception as e:
+    print(f"[outcomes charts] '{name}' could not be built for this selection: {type(e).__name__}: {e}")
+    fig = None
+  if fig is None or len(fig.data) == 0:
+    fig = _no_data_figure()
+  return apply_display_template(fig)
 
 
 # ==================== CHART CREATION ====================
@@ -173,11 +139,18 @@ def create_jobs_chart(df):
       jobs_list.extend(job_entries)
 
   if not jobs_list:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No jobs data'))
-    return fig
+    return _no_data_figure()
 
   jobs_df = pd.DataFrame(jobs_list)
+  if 'phase' not in jobs_df.columns:
+    return _no_data_figure()
+
+  # A narrow selection may have entries without one of these keys, so make sure both exist
+  for col in ('full_time', 'part_time'):
+    if col not in jobs_df.columns:
+      jobs_df[col] = float('nan')
+    jobs_df[col] = pd.to_numeric(jobs_df[col], errors='coerce')
+
   grouped = jobs_df.groupby('phase')[['full_time', 'part_time']].sum().fillna(0)
   reporting_counts = jobs_df.groupby('phase').agg({
     'full_time': lambda x: x.notna().sum(),
@@ -304,16 +277,22 @@ def create_ghg_charts(df):
   """
   TONNES_PER_MEGATONNE = 1_000_000
 
-  ghg_time = df[['completion_date', 'ghg_reduction']].dropna()
-  if ghg_time.empty:
-    fig = go.Figure()
-    fig.update_layout(title=dict(text='No GHG data available'))
-    return fig
+  n_selected = len(df)
+  ghg_time = df[['completion_date', 'ghg_reduction']].copy()
 
-  ghg_time = ghg_time.copy()
-  ghg_time['year'] = pd.to_datetime(ghg_time['completion_date']).dt.year
+  # Coerce bad values to missing instead of failing, then drop incomplete rows
+  ghg_time['ghg_reduction']   = pd.to_numeric(ghg_time['ghg_reduction'], errors='coerce')
+  ghg_time['completion_date'] = pd.to_datetime(ghg_time['completion_date'], errors='coerce')
+  ghg_time = ghg_time.dropna()
+
+  if ghg_time.empty:
+    return _no_data_figure()
+
+  ghg_time['year'] = ghg_time['completion_date'].dt.year
   min_year = int(ghg_time['year'].min())
   max_year = 2050
+  if min_year > max_year:
+    return _no_data_figure()
   all_years = list(range(min_year, max_year + 1))
 
   # ── Cumulative lifetime reductions through 2050 (Mt), vectorized ──
@@ -388,10 +367,12 @@ def create_ghg_charts(df):
   fig.update_yaxes(title_text='Cumulative Mt CO2e')
 
   fig.update_layout(
-    title=dict(text=f'Cumulative GHG Reductions Through 2050 From Projects in the Dataset (n={len(ghg_time)} projects)'),
+    title=dict(text=f'Cumulative GHG Reductions Through 2050 From Projects in the Dataset '
+                    f'(n={len(ghg_time)} of {n_selected} projects reported)'),
     margin=dict(t=50, b=0, l=0, r=0),
   )
   return fig
+
 
 
 def create_key_objectives_bar_chart(df):
@@ -688,6 +669,40 @@ def create_end_use_composition_chart(df):
   )
   return fig
 
+
+# ==================== MAIN CALLABLE ====================
+# Defined below the chart functions because CHARTS refers to them by name.
+
+CHARTS = {
+  'indigenous_agreements': create_indigenous_agreements_chart,
+  'jobs_chart':            create_jobs_chart,
+  'ghg_methodology':       create_ghg_methodology_chart,
+  'ghg_timeline':          create_ghg_charts,
+  'key_objectives':        create_key_objectives_bar_chart,
+  'op_expenses':           create_op_expenses_chart,
+  'return_expectations':   create_return_expectations_chart,
+  'end_use_composition':   create_end_use_composition_chart,
+}
+CHART_KEYS = list(CHARTS)
+
+
+@anvil.server.callable
+def get_all_outcomes_charts(**filters):
+  """
+  Single server call returning all outcomes/impacts chart figures plus the
+  count summary (project_count, total_projects, no_results, anon_excluded).
+  The privacy rule lives in Filtering.apply_privacy(). Every chart goes
+  through _safe_chart(), so one chart with no data never breaks the others.
+  """
+  _, df_filtered, summary = apply_privacy(get_data(), filters)
+
+  if summary['no_results'] or df_filtered.empty:
+    return blank_result(CHART_KEYS, summary)
+
+  result = {name: _safe_chart(builder, df_filtered, name)
+            for name, builder in CHARTS.items()}
+  result.update(summary)
+  return result
 
 
 # ==================== EXPORT CALLABLE ====================
