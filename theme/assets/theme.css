@@ -1329,18 +1329,22 @@ footer a, .footer .anvil-component {
   --ae-ms-option-subtext-active: rgba(255,255,255,.5);
 }
 
+/* Filter chips: size to their text, smaller */
 .anvil-role-horizontal-repeater {
   display: flex;
 }
 .anvil-role-horizontal-repeater>div {
-  min-width: 200px;
+  min-width: 0;
   display: flex;
-  flex-wrap: wrap;  /* Add this */
-  overflow: visible;  /* Change from overflow-x: auto */
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  overflow: visible;
 }
 .anvil-role-horizontal-repeater .anvil-panel-col {
-  min-width: 200px;
-}  
+  min-width: 0;
+  width: auto;
+}
+
 .anvil-role-twod-repeater .anvil-role-horizontal-repeater>div {
   overflow: hidden;
 }
@@ -1467,10 +1471,13 @@ html {
 }
 
 .ae-chip {
-  font-size: 12px !important;
-  height: 25px !important;
+  font-size: 11px !important;
+  height: auto !important;
+  min-height: 22px !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow: visible !important;
 }
-
 
 .anvil-role-bg-image-ce {
   background-image: url('_/theme/Graphics/IM-Banner-Illustration-1-Cropped.png');

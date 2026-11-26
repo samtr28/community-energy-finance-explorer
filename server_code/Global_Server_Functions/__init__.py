@@ -10,12 +10,28 @@ import pandas as pd
 
 _DATA_CACHE = None
 
+def _owner_categories(owners):
+  """Sorted unique owner categories for one project (blank -> 'Other / Unknown')."""
+  if not isinstance(owners, list):
+    return []
+  return sorted({str(o.get('owner_category') or 'Other / Unknown').strip()
+                 for o in owners if isinstance(o, dict)})
+
+
+def _owner_types(owners):
+  """Sorted unique owner types (the subcategories) for one project."""
+  if not isinstance(owners, list):
+    return []
+  return sorted({str(o['owner_type']).strip()
+                 for o in owners if isinstance(o, dict) and o.get('owner_type')})
+  
 def get_data(project_privacy=False):
   global _DATA_CACHE
   # Load data once
   if _DATA_CACHE is None:
     _DATA_CACHE = pd.read_pickle(data_files['synthetic_data.pkl'])
-
+    _DATA_CACHE['owner_categories'] = _DATA_CACHE['owners'].apply(_owner_categories)
+    _DATA_CACHE['owner_types']      = _DATA_CACHE['owners'].apply(_owner_types)       # NEW
   df = _DATA_CACHE  # start from cached data
 
   # Apply privacy filter if requested

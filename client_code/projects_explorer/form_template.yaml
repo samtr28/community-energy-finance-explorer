@@ -1,10 +1,5 @@
 components_by_slot:
   content_slot:
-  - event_bindings: {tick: filter_timer_tick}
-    layout_properties: {}
-    name: filter_timer
-    properties: {}
-    type: Timer
   - layout_properties: {full_width_row: true}
     name: description
     properties:
@@ -20,82 +15,10 @@ components_by_slot:
     properties: {}
     type: form:dep_9kcxnwm3upyjd:_Components.Divider
   - components:
-    - components:
-      - layout_properties: {width: 64.6}
-        name: filter_heading
-        properties: {bold: true, scale: small, style: title, text: 'Filter by:'}
-        type: form:dep_9kcxnwm3upyjd:_Components.Heading
-      - event_bindings: {change: proj_types_dd_change}
-        layout_properties: {}
-        name: proj_types_dd
-        properties:
-          background: ''
-          foreground: ''
-          items: [Biofuel/Biogas, Biomass, Building efficiency upgrades, Electro-mobility, Energy storage, Geothermal, Hydro, Hydrogen, Microgrid, Solar, Tidal/wave, Waste to energy, Wind]
-          placeholder: Technology
-        type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-      - event_bindings: {change: provinces_dd_change}
-        layout_properties: {}
-        name: provinces_dd
-        properties:
-          background: ''
-          foreground: ''
-          items: [Alberta, British Columbia, Manitoba, New Brunswick, Newfoundland and Labrador, Northwest Territories, Nova Scotia, Nunavut, Ontario, Prince Edward Island, Quebec, Saskatchewan, Yukon]
-          placeholder: Province/Territory
-        type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-      - event_bindings: {change: stages_dd_change}
-        layout_properties: {}
-        name: stages_dd
-        properties:
-          align: left
-          background: ''
-          foreground: ''
-          items: [Construction, Operation]
-          multiple: false
-          placeholder: Project Stage
-        type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-      - data_bindings: []
-        event_bindings: {change: indig_owners_dd_change}
-        layout_properties: {expand: false, width: null}
-        name: indig_owners_dd
-        properties:
-          items: [Majority owned (51-100%), Minority owned (1-50%), No Indigenous ownership]
-          placeholder: Indigenous Ownership
-        type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-      - data_bindings: []
-        event_bindings: {change: project_scale_dd_change}
-        layout_properties: {expand: false, width: null}
-        name: project_scale_dd
-        properties:
-          items: [Micro (< $100K), Small ($100K-$1M), Medium ($1M-$5M), Large ($5M-$25M), Very Large ($25M-$100M), Mega (> $100M)]
-          placeholder: Project Scale
-        type: form:dep_ar2wlcmlppsllr:MultiSelectDropDown
-      layout_properties: {full_width_row: true, grid_position: 'GTRFWU,CNHVPB'}
-      name: filter_panel
-      properties:
-        gap: tiny
-        spacing:
-          margin: [null, null, 1.5%, '0']
-      type: FlowPanel
-    - components:
-      - layout_properties: {}
-        name: text_5
-        properties: {scale: small, text: 'Selected:'}
-        type: form:dep_9kcxnwm3upyjd:_Components.Text
-      - layout_properties: {expand: true, width: null}
-        name: filter_chips_panel
-        properties:
-          item_template: projects_explorer.FilterChip2
-          margin: ['0', null, '0', null]
-          role: 'horizontal-repeater '
-        type: RepeatingPanel
-      layout_properties: {full_width_row: true, grid_position: 'CJLFYO,GXNSBX'}
-      name: flow_panel_1
-      properties:
-        spacing:
-          margin: ['0', null, '0', null]
-        vertical_align: middle
-      type: FlowPanel
+    - layout_properties: {full_width_row: true, grid_position: 'JCLLZJ,KVYKBJ'}
+      name: filter_bar
+      properties: {}
+      type: LinearPanel
     - layout_properties: {full_width_row: true, grid_position: 'QQTWDH,TTQZYS'}
       name: divider_2
       properties: {}
@@ -119,7 +42,7 @@ components_by_slot:
       name: text_1
       properties: {bold: true, font_size: null, scale: large, text: 'Further project exploration features, including project level funding and financing mix, ownership structure, and more, are coming soon. We are currently in process of obtaining final approval from project owners to show their project details. Please note that this map only displays projects that chose to be featured, not the entirety of our dataset.', visible: true}
       type: form:dep_9kcxnwm3upyjd:_Components.Text
-    - layout_properties: {full_width_row: true, grid_position: 'IDXYRC,QCGQZJ CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
+    - layout_properties: {full_width_row: true, grid_position: 'CWYAPV,ZNMRWP MFHLHT,NWQOBB'}
       name: project_cards
       properties:
         item_template: projects_explorer.Project_Card

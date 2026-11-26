@@ -13,6 +13,8 @@ unique_ids:
     Graphics/IM-Banner-Illustration-2.png: '1779295556054547836090040.5679'
     Graphics/IM-CommunityDiscussion.png: '1779645809327105743292301.8935'
     Logos/.gitkeep: '178093768410435623402984.15967'
+    Logos/ACET-UVIC-white.png: '1795722300813951575178254.1206'
+    Logos/ACET_Wordmark_Horizontal_White_RGB.png: '179572244242968829038631.53789'
     Logos/Horizontal-IIH-Acet-Lockup-White 1.png: '1780939549804496378869736.1948'
     Logos/IIH ACET Lockup - Horizontal - Reverse - small.png: '1795030737731825391718710.1179'
     Logos/IIH ACET Lockup - Horizontal - White - small.png: '1795030917321621023702176.4438'
@@ -59,6 +61,9 @@ unique_ids:
   modules:
     chart_export: '1776717885549981665053013.2372'
     config: '1761843729959440190662753.931'
+    filter_bar: '1795726533046249342908054.47302'
+    filter_config: '1795720444863877997907120.9338'
+    filter_manager: '1795720953147104972781197.73001'
     resources.external_resources_data: '1779898408228438995364838.48553'
     resources.factsheet_data: '1779731390884759115228048.4307'
     team.team_data: '1779768991624869883095859.5856'
@@ -66,6 +71,7 @@ unique_ids:
   server_modules:
     Cap_Explorer: '1763095019811400443194487.3749'
     Export_Utils: '1776716462011482826950742.38135'
+    Filtering: '1795720485089832905902269.9293'
     Global_Server_Functions: '1761089667203605883020578.4802'
     Outcomes_impacts: '1771272294097743732759725.1798'
     Overview: '176134232373339473832137.29949'
