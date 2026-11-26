@@ -38,6 +38,7 @@ MESSAGES = {
   'partial':  "Showing {n} {noun}. Some projects are hidden to protect anonymity.",
   'excluded': "{label} filter excludes {items}.",
   'small':    "Based on a small number of projects, so interpret with caution.",
+  'named_only': "Projects that chose to stay anonymous aren't displayed.",
   'excluded_default': "The {label} filter excludes {items} by default, because very large projects can skew the results. Clear the filters to include them.",
 }
 # Left side = text shown in the dropdown. Right side = the real values in the data.

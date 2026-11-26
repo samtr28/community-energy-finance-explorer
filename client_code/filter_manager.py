@@ -42,7 +42,7 @@ class FilterManager:
     # Owner categories and subtypes, for dropdowns marked items_from: 'owner_options'
     self._owner_options = {}
     if any(s.get('items_from') == 'owner_options' for s in self._specs):
-      self._owner_options = anvil.server.call('get_owner_type_options')
+      self._owner_options = anvil.server.call('get_owner_type_options', project_privacy)
 
     for spec in self._specs:
       dd = MultiSelectDropDown(
@@ -222,7 +222,7 @@ class FilterManager:
       notes.append(template.format(label=spec['chip'], items=", ".join(excluded)))
     return notes
 
-  def show_count(self, charts):
+  def show_count(self, charts, small_warning=True, note=None):
     """Call after each server call: writes the count/anonymity line."""
     if self._count_lbl is None:
       return
@@ -235,10 +235,12 @@ class FilterManager:
     else:
       parts = [MESSAGES['count'].format(n=n, total=charts.get('total_projects'))]
     parts.extend(self._excluded_notes())
-    if n < SMALL_SAMPLE_WARNING_BELOW:
+    if small_warning and n < SMALL_SAMPLE_WARNING_BELOW:
       parts.append(MESSAGES['small'])
+    if note:
+      parts.append(note)
     self._count_lbl.text = " ".join(parts)
 
   def show_loading(self):
     if self._count_lbl is not None:
-      self._count_lbl.text = "Updating…"
+      self._count_lbl.text = "Loading…"

@@ -65,10 +65,10 @@ def apply_filters(df, filters):
 
 
 @anvil.server.callable
-def get_owner_type_options():
+def get_owner_type_options(project_privacy=False):
   """{owner_category: [owner_type, ...]} built from the data (labels only)."""
   options = {}
-  for owners in get_data()['owners']:
+  for owners in get_data(project_privacy=project_privacy)['owners']:
     if not isinstance(owners, list):
       continue
     for o in owners:
