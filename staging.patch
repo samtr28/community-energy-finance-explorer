@@ -1,8 +1,8 @@
 diff --git a/anvil.yaml b/anvil.yaml
-index 329081e..0cbc547 100644
+index c9f4cfb..fa5aa2e 100644
 --- a/anvil.yaml
 +++ b/anvil.yaml
-@@ -45,6 +45,7 @@ runtime_options:
+@@ -48,6 +48,7 @@ runtime_options:
    legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
    server_spec: {base: python310-datascience}
    server_version: python3-sandbox
@@ -11,7 +11,7 @@ index 329081e..0cbc547 100644
  services:
  - client_config: {}
 diff --git a/client_code/Base/__init__.py b/client_code/Base/__init__.py
-index ec205ce..2dd6ca1 100644
+index ba14c22..751691f 100644
 --- a/client_code/Base/__init__.py
 +++ b/client_code/Base/__init__.py
 @@ -8,6 +8,7 @@ from anvil.tables import app_tables
@@ -23,7 +23,7 @@ index ec205ce..2dd6ca1 100644
  class Base(BaseTemplate):
    def __init__(self, **properties):
 diff --git a/server_code/Global_Server_Functions/__init__.py b/server_code/Global_Server_Functions/__init__.py
-index e5c123a..2bd33a0 100644
+index f5a5c56..cb2d176 100644
 --- a/server_code/Global_Server_Functions/__init__.py
 +++ b/server_code/Global_Server_Functions/__init__.py
 @@ -1,3 +1,5 @@
@@ -32,7 +32,7 @@ index e5c123a..2bd33a0 100644
  import anvil.files
  from anvil.files import data_files
  import anvil.tables as tables
-@@ -6,15 +8,18 @@ from anvil.tables import app_tables
+@@ -6,8 +8,11 @@ from anvil.tables import app_tables
  import anvil.server
  from collections.abc import Iterable
  import pandas as pd
@@ -43,12 +43,13 @@ index e5c123a..2bd33a0 100644
 +engine = create_engine(os.getenv("SQL_CONNECTION"))
  _DATA_CACHE = None
  
- def get_data(project_privacy=False):
+ def _owner_categories(owners):
+@@ -29,7 +34,7 @@ def get_data(project_privacy=False):
    global _DATA_CACHE
    # Load data once
    if _DATA_CACHE is None:
 -    _DATA_CACHE = pd.read_pickle(data_files['synthetic_data.pkl'])
 +    _DATA_CACHE = pd.read_sql_table("app_data", con=engine)
- 
+     _DATA_CACHE['owner_categories'] = _DATA_CACHE['owners'].apply(_owner_categories)
+     _DATA_CACHE['owner_types']      = _DATA_CACHE['owners'].apply(_owner_types)       # NEW
    df = _DATA_CACHE  # start from cached data
- 
